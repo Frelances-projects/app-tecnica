@@ -1,0 +1,22 @@
+{
+  "extends": ["@rocketseat/eslint-config/react"],
+  "rules": {
+    "camelcase": "off",
+    "import/order": ["error", {
+      "newlines-between": "always",
+      "groups": [ 
+          "internal", 
+          "external", 
+          "builtin", 
+          "unknown", 
+          ["parent", "sibling", "index"] 
+      ],
+      "pathGroups": [
+        {
+          "pattern": "@/**",
+          "group": "unknown"
+        }
+      ]
+    }]
+  }
+}
