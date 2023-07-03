@@ -4,11 +4,16 @@ import Svg, { Path } from 'react-native-svg'
 interface LogoProps {
   width?: number
   height?: number
+  marginBottom?: number
 }
 
-export default function Logo({ height = 117, width = 295 }: LogoProps) {
+export default function Logo({
+  height = 117,
+  width = 295,
+  marginBottom = 0,
+}: LogoProps) {
   return (
-    <View>
+    <View style={{ marginBottom }}>
       <Svg width={width} height={height} fill="none" viewBox="0 0 295 117">
         <Path
           fill="#000"

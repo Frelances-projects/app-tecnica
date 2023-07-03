@@ -1,4 +1,3 @@
-import { View } from 'react-native'
 import { SplashScreen, Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import {
@@ -11,7 +10,6 @@ import {
 } from '@expo-google-fonts/inter'
 
 import { AppProvider } from '@/contexts/AppProvider'
-import Logo from '@/assets/Logo'
 
 export const unstable_settings = {
   initialRouteName: 'index',
