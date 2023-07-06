@@ -18,6 +18,7 @@ export default function Login() {
           <Input
             Icon={<UserSquare size={24} weight="fill" color={'#000000'} />}
             placeholder="Nº de Aluno"
+            keyboardType="numeric"
           />
         </View>
 
@@ -25,6 +26,8 @@ export default function Login() {
           <Input
             Icon={<Lock size={24} weight="fill" color={'#000000'} />}
             placeholder="Password"
+            autoCapitalize="none"
+            secureTextEntry
           />
         </View>
         <SubmitButton onPress={() => router.push('(drawer)')} title="Entrar" />

@@ -2,7 +2,7 @@ import { TouchableOpacity, View } from 'react-native'
 import { useNavigation } from 'expo-router/src/useNavigation'
 import { DrawerActions } from '@react-navigation/routers'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { List, User } from 'phosphor-react-native'
+import { List } from 'phosphor-react-native'
 
 import Logo from '@/assets/Logo'
 
@@ -19,14 +19,10 @@ export function DrawerHeader({ title }: StackHeaderProps) {
 
   return (
     <View
-      className="flex-row items-center justify-between gap-4 bg-transparent px-5 pb-6"
-      style={{ paddingTop: insets.top, marginTop: 10 }}
+      className="flex-row items-center gap-4 bg-transparent px-5 pb-6"
+      style={{ paddingTop: insets.top, marginTop: 10, marginLeft: 36 }}
     >
-      <TouchableOpacity onPress={navigation.goBack}>
-        <User size={30} weight="bold" color={theme.colors.dark[500]} />
-      </TouchableOpacity>
-
-      <View className="mt-10 flex-1 flex-row items-center justify-center">
+      <View className="ml-14 mt-10 flex-1 flex-row items-center justify-center">
         <Logo width={190} height={83} />
       </View>
 

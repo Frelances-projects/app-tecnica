@@ -25,6 +25,8 @@ export default function Register() {
           <Input
             Icon={<Lock size={24} weight="fill" color={'#000000'} />}
             placeholder="Password"
+            autoCapitalize="none"
+            secureTextEntry
           />
         </View>
 

@@ -11,6 +11,7 @@ export default function DrawerLayout() {
       }}
     >
       <Drawer.Screen name="index" options={{ title: 'Home' }} />
+      <Drawer.Screen name="classes" options={{ title: 'Classes' }} />
     </Drawer>
   )
 }
