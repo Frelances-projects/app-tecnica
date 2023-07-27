@@ -19,7 +19,7 @@ export default function PanelLayout({
 
       <div className='mx-auto max-w-[1440px] w-full h-[1px] bg-black'/>
 
-      <div className="w-full max-w-7xl h-full flex items-center justify-center">
+      <div className="w-full max-w-7xl h-full mx-auto flex items-center justify-center">
         {children}
       </div>
     </>
