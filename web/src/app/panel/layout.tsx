@@ -18,6 +18,10 @@ export default function PanelLayout({
       <Navigation />
 
       <div className='mx-auto max-w-[1440px] w-full h-[1px] bg-black'/>
+
+      <div className=" w-full h-full flex items-center justify-center">
+        {children}
+      </div>
     </>
   )
 }
