@@ -7,12 +7,13 @@ import * as Select from '@radix-ui/react-select'
 interface SelectComponentProps extends SelectProps {
   placeHolder: string
   className?: string
+  id?: string
   data: any
 }
 
-export function SelectComponent({ className, placeHolder, ...rest }: SelectComponentProps) {
+export function SelectComponent({ className, placeHolder, id, ...rest }: SelectComponentProps) {
   return (
-    <Select.Root {...rest}>
+    <Select.Root {...rest} >
     <Select.Trigger className={`flex px-5 items-center py-2 text-xs w-[18.188rem] border border-[#C6C6C6] rounded-lg text-black ${className}`}>
       {placeHolder}
       <CaretDown className='ml-auto text-[#C6C6C6]' weight='bold' size={20}/>
