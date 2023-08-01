@@ -1,0 +1,99 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Information {
+  id          String @id
+  name        String
+  description String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("information")
+}
+
+model Class {
+  id         String @id
+  name       String
+  code       Int    @unique
+  categoryId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  category Category? @relation(fields: [categoryId], references: [id])
+
+  scheduledClass ScheduledClass[]
+
+  @@map("classes")
+}
+
+model Category {
+  id   String @id
+  name String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  classes Class[]
+
+  @@map("categories")
+}
+
+model Calendar {
+  id      String @id
+  fileUrl String
+  date    String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("calendars")
+}
+
+model Student {
+  id         String @id
+  name       String
+  email      String @unique
+  number     Int    @unique
+  enrolledAt String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  scheduledClass ScheduledClass[]
+
+  @@map("students")
+}
+
+enum ScheduledClassStatus {
+  PENDING
+  CONFIRMED
+  CANCELED
+  COMPLETED
+}
+
+model ScheduledClass {
+  id             String               @id
+  schedulingDate String
+  status         ScheduledClassStatus @default(PENDING)
+  studentId      String
+  classId        String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  student Student @relation(fields: [studentId], references: [id])
+  class   Class   @relation(fields: [classId], references: [id])
+
+  @@map("scheduled_classes")
+}
