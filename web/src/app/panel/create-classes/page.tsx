@@ -17,8 +17,8 @@ export default function CreateClasses() {
   }
 
   return (
-    <main className="w-full flex justify-center items-center gap-32 mt-24 mb-16">
-      <section className="max-w-lg">
+    <main className="w-full flex justify-center items-start gap-32 mt-24 mb-16">
+      <section className="max-w-lg pt-6">
         <h1 className='mb-11 text-xl font-medium'>Inserir Aulas de Código</h1>
         <form action={handleInsetClasses} className="space-y-10">
           <fieldset className='flex items-center gap-14'>
@@ -37,7 +37,7 @@ export default function CreateClasses() {
 
       <span className='border border-black h-[30rem]' />
 
-      <section className="max-w-lg">
+      <section className="max-w-lg pt-6">
         <h1 className='mb-11 text-xl font-medium'>Listagem das Aulas de Código</h1>
         <form  className="flex flex-col gap-[2.08rem]">
           <fieldset className='flex items-center gap-14'>
