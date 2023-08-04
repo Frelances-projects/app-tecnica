@@ -30,7 +30,7 @@ export class PrismaInformationRepository implements InformationRepository {
   async save(information: Information): Promise<void> {
     const raw = PrismaInformationMapper.toPrisma(information);
 
-    await this.prisma.notification.update({
+    await this.prisma.information.update({
       where: {
         id: raw.id,
       },
