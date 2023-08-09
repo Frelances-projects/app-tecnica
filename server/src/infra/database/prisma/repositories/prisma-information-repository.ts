@@ -27,6 +27,16 @@ export class PrismaInformationRepository implements InformationRepository {
     return PrismaInformationMapper.toDomain(information);
   }
 
+  async findMany(): Promise<Information[]> {
+    const information = await this.prisma.information.findMany();
+
+    const informationToDomain = information.map((info) =>
+      PrismaInformationMapper.toDomain(info),
+    );
+
+    return informationToDomain;
+  }
+
   async save(information: Information): Promise<void> {
     const raw = PrismaInformationMapper.toPrisma(information);
 

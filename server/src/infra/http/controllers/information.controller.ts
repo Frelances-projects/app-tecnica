@@ -3,6 +3,7 @@ import { Body, Controller, Get, Param, Put, Post } from '@nestjs/common';
 import { CreateInformation } from '../../../application/use-cases/information/create-information';
 import { GetInformationById } from '../../../application/use-cases/information/get-information-by-id';
 import { UpdateInformation } from '../../../application/use-cases/information/update-information';
+import { GetManyInformation } from '../../../application/use-cases/information/get-many-informations';
 
 import { InformationViewModel } from '../view-models/information-view-model';
 
@@ -15,6 +16,7 @@ export class InformationController {
     private createInformation: CreateInformation,
     private getInformationById: GetInformationById,
     private updateInformation: UpdateInformation,
+    private getManyInformation: GetManyInformation,
   ) {}
 
   @Get(':informationId')
@@ -25,6 +27,19 @@ export class InformationController {
 
     return {
       information: InformationViewModel.toHTTP(information),
+    };
+  }
+
+  @Get()
+  async getMany() {
+    const { information } = await this.getManyInformation.execute();
+
+    const informationToHTTP = information.map((info) =>
+      InformationViewModel.toHTTP(info),
+    );
+
+    return {
+      information: informationToHTTP,
     };
   }
 
