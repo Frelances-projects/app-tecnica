@@ -5,6 +5,7 @@ import { DatabaseModule } from '../database/database.module';
 // CONTROLLERS
 import { InformationController } from './controllers/information.controller';
 import { StudentController } from './controllers/student.controller';
+import { CalendarController } from './controllers/calendar.controller';
 
 // INFORMATION
 import { CreateInformation } from '../../application/use-cases/information/create-information';
@@ -20,9 +21,14 @@ import { GetStudentById } from '../../application/use-cases/student/get-student-
 import { GetStudentByNumber } from '../../application/use-cases/student/get-student-by-number';
 import { UpdateStudent } from '../../application/use-cases/student/update-student';
 
+// CALENDAR
+import { CreateCalendar } from '../../application/use-cases/calendar/create-calendar';
+import { GetCalendarById } from '../../application/use-cases/calendar/get-calendar-by-id';
+import { GetManyCalendar } from '../../application/use-cases/calendar/get-many-calendars';
+
 @Module({
   imports: [DatabaseModule],
-  controllers: [InformationController, StudentController],
+  controllers: [InformationController, StudentController, CalendarController],
   providers: [
     // INFORMATION
     CreateInformation,
@@ -37,6 +43,11 @@ import { UpdateStudent } from '../../application/use-cases/student/update-studen
     GetStudentById,
     GetStudentByNumber,
     UpdateStudent,
+
+    // CALENDAR
+    CreateCalendar,
+    GetCalendarById,
+    GetManyCalendar
   ],
 })
 export class HttpModule {}
