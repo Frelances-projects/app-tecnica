@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common'
 
-import { InformationRepository } from '../../repositories/information-repository';
-import { Information } from '../../entities/information';
+import { InformationRepository } from '../../repositories/information-repository'
+import { Information } from '../../entities/information'
 
 interface GetManyInformationResponse {
-  information: Information[];
+  information: Information[]
 }
 
 @Injectable()
@@ -13,13 +13,13 @@ export class GetManyInformation {
 
   async execute(): Promise<GetManyInformationResponse> {
     try {
-      const information = await this.informationRepository.findMany();
+      const information = await this.informationRepository.findMany()
 
       return {
         information,
-      };
+      }
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 }

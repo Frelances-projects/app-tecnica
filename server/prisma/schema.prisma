@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,68 +8,123 @@ datasource db {
 }
 
 model Information {
-  id          String @id
+  id          String   @id
   name        String
   description String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  date        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@map("information")
 }
 
 model Class {
-  id         String @id
-  name       String
-  code       Int    @unique
-  categoryId String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  category Category? @relation(fields: [categoryId], references: [id])
-
+  id             String           @id
+  name           String
+  code           Int              @unique
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
   scheduledClass ScheduledClass[]
 
   @@map("classes")
 }
 
-model Category {
-  id   String @id
-  name String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  classes Class[]
-
-  @@map("categories")
-}
-
 model Calendar {
-  id      String @id
-  fileUrl String
-  date    String
-
+  id        String   @id
+  fileUrl   String
+  date      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("calendars")
 }
 
+model School {
+  id        String    @id
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Student   Student[]
+
+  @@map("schools")
+}
+
 model Student {
-  id         String @id
-  name       String
-  email      String @unique
-  number     Int    @unique
-  enrolledAt String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  scheduledClass ScheduledClass[]
+  id                    String                @id
+  name                  String
+  email                 String                @unique
+  number                Int                   @unique
+  enrolledAt            String
+  driverLicenseCategory DriverLicenseCategory @default(A)
+  schoolId              String
+  paymentId             String
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
+  scheduledClass        ScheduledClass[]
+  payment               Payment               @relation(fields: [paymentId], references: [id])
+  school                School                @relation(fields: [schoolId], references: [id])
 
   @@map("students")
+}
+
+model ScheduledClass {
+  id             String               @id
+  schedulingDate String
+  schedulingHour String
+  status         ScheduledClassStatus @default(PENDING)
+  studentId      String
+  classId        String
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+  class          Class                @relation(fields: [classId], references: [id])
+  student        Student              @relation(fields: [studentId], references: [id])
+
+  @@map("scheduled_classes")
+}
+
+model Test {
+  id        String       @id
+  testDate  String
+  testHour  String
+  status    TestStatus   @default(MARKED)
+  category  TestCategory @default(THEORETICAL)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@map("tests")
+}
+
+model Payment {
+  id           String         @id
+  method       PaymentMethod  @default(INCASH)
+  total        Int
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  installments Installments[]
+  student      Student[]
+
+  @@map("payments")
+}
+
+model Installments {
+  id                            String   @id
+  valueOfAnInstallment          Int
+  amountOfInstallments          Int
+  amountOfInstallmentsPaid      Int
+  amountOfRemainingInstallments Int
+  paymentId                     String
+  createdAt                     DateTime @default(now())
+  updatedAt                     DateTime @updatedAt
+  payment                       Payment  @relation(fields: [paymentId], references: [id])
+
+  @@map("installments")
+}
+
+enum DriverLicenseCategory {
+  A
+  B
+  C
+  ALL
 }
 
 enum ScheduledClassStatus {
@@ -82,18 +134,18 @@ enum ScheduledClassStatus {
   COMPLETED
 }
 
-model ScheduledClass {
-  id             String               @id
-  schedulingDate String
-  status         ScheduledClassStatus @default(PENDING)
-  studentId      String
-  classId        String
+enum TestStatus {
+  APPROVED
+  DISAPPROVED
+  MARKED
+}
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+enum TestCategory {
+  THEORETICAL
+  PRACTICAL
+}
 
-  student Student @relation(fields: [studentId], references: [id])
-  class   Class   @relation(fields: [classId], references: [id])
-
-  @@map("scheduled_classes")
+enum PaymentMethod {
+  INSTALLMENTS
+  INCASH
 }

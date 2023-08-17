@@ -1,15 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common'
 
-import { CalendarRepository } from '../../repositories/calendar-repository';
-import { Calendar } from '../../entities/calendar';
+import { CalendarRepository } from '../../repositories/calendar-repository'
+import { Calendar } from '../../entities/calendar'
 
 interface CreateCalendarRequest {
-  fileUrl: string;
-  date: string;
+  fileUrl: string
+  date: string
 }
 
 interface CreateCalendarResponse {
-  calendar: Calendar;
+  calendar: Calendar
 }
 
 @Injectable()
@@ -20,17 +20,17 @@ export class CreateCalendar {
     request: CreateCalendarRequest,
   ): Promise<CreateCalendarResponse> {
     try {
-      const { date, fileUrl } = request;
+      const { date, fileUrl } = request
 
-      const calendar = new Calendar({ date, fileUrl });
+      const calendar = new Calendar({ date, fileUrl })
 
-      await this.calendarRepository.create(calendar);
+      await this.calendarRepository.create(calendar)
 
       return {
         calendar,
-      };
+      }
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 }

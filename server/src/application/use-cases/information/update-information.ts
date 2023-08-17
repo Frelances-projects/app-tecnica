@@ -1,17 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common'
 
-import { InformationRepository } from '../../repositories/information-repository';
-import { Information } from '../../entities/information';
-import { GetInformationById } from './get-information-by-id';
+import { InformationRepository } from '../../repositories/information-repository'
+import { Information } from '../../entities/information'
+import { GetInformationById } from './get-information-by-id'
 
 interface UpdateInformationRequest {
-  informationId: string;
-  name?: string;
-  description?: string;
+  informationId: string
+  name?: string
+  description?: string
+  date?: string
 }
 
 interface UpdateInformationResponse {
-  information: Information;
+  information: Information
 }
 
 @Injectable()
@@ -25,22 +26,23 @@ export class UpdateInformation {
     request: UpdateInformationRequest,
   ): Promise<UpdateInformationResponse> {
     try {
-      const { informationId, name, description } = request;
+      const { informationId, name, description, date } = request
 
       const { information } = await this.getInformationById.execute(
         informationId,
-      );
+      )
 
-      information.name = name ?? information.name;
-      information.description = description ?? information.description;
+      information.name = name ?? information.name
+      information.description = description ?? information.description
+      information.date = date ?? information.date
 
-      await this.informationRepository.save(information);
+      await this.informationRepository.save(information)
 
       return {
         information,
-      };
+      }
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 }

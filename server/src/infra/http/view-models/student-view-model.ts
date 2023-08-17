@@ -1,4 +1,4 @@
-import { Student } from '../../../application/entities/student';
+import { Student } from '../../../application/entities/student'
 
 export class StudentViewModel {
   static toHTTP(student: Student) {
@@ -9,6 +9,6 @@ export class StudentViewModel {
       number: student.number,
       enrolledAt: student.enrolledAt,
       createdAt: student.createdAt,
-    };
+    }
   }
 }

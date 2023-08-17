@@ -1,13 +1,19 @@
-import { Length, IsEmail, IsNumber, IsString } from 'class-validator';
+import { Length, IsEmail, IsNumber, IsString } from 'class-validator'
 
 export class UpdateStudentBody {
   @IsString()
-  name: string;
+  name: string
 
   @Length(5, 300)
   @IsEmail()
-  email: string;
+  email: string
+
+  @IsString()
+  schoolId: string
+
+  @IsString()
+  enrolledAt: string
 
   @IsNumber()
-  number: number;
+  number: number
 }

@@ -1,8 +1,10 @@
-import { Length } from 'class-validator';
+import { Length } from 'class-validator'
 
 export class UpdateInformationBody {
-  name: string;
+  name: string
 
   @Length(5, 460)
-  description: string;
+  description: string
+
+  date: string
 }

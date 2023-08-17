@@ -1,6 +1,6 @@
-import { Student as RawStudent } from '@prisma/client';
+import { Student as RawStudent } from '@prisma/client'
 
-import { Student } from '../../../../application/entities/student';
+import { Student } from '../../../../application/entities/student'
 
 export class PrismaStudentMapper {
   static toPrisma(student: Student) {
@@ -8,10 +8,13 @@ export class PrismaStudentMapper {
       id: student.id,
       name: student.name,
       email: student.email,
+      schoolId: student.schoolId,
+      paymentId: student.paymentId,
+      driverLicenseCategory: student.driverLicenseCategory,
       number: student.number,
       enrolledAt: student.enrolledAt,
       createdAt: student.createdAt,
-    };
+    }
   }
 
   static toDomain(raw: RawStudent): Student {
@@ -19,11 +22,14 @@ export class PrismaStudentMapper {
       {
         name: raw.name,
         email: raw.email,
+        schoolId: raw.schoolId,
+        paymentId: raw.paymentId,
+        driverLicenseCategory: raw.driverLicenseCategory,
         number: raw.number,
         enrolledAt: raw.enrolledAt,
         createdAt: raw.createdAt,
       },
       raw.id,
-    );
+    )
   }
 }

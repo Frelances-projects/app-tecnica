@@ -1,18 +1,24 @@
-import { IsNotEmpty, Length, IsEmail, IsNumber } from 'class-validator';
+import { IsNotEmpty, Length, IsEmail, IsNumber } from 'class-validator'
 
 export class CreateStudentBody {
   @IsNotEmpty()
-  name: string;
+  name: string
 
   @IsNotEmpty()
   @Length(5, 300)
   @IsEmail()
-  email: string;
+  email: string
+
+  @IsNotEmpty()
+  schoolId: string
+
+  @IsNotEmpty()
+  enrolledAt: string
 
   @IsNotEmpty()
   @IsNumber()
-  number: number;
+  number: number
 
   @IsNotEmpty()
-  enrolledAt: string;
+  driverLicenseCategory: 'A' | 'B' | 'C' | 'ALL'
 }

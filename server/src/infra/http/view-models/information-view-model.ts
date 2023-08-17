@@ -1,4 +1,4 @@
-import { Information } from '../../../application/entities/information';
+import { Information } from '../../../application/entities/information'
 
 export class InformationViewModel {
   static toHTTP(information: Information) {
@@ -6,7 +6,8 @@ export class InformationViewModel {
       id: information.id,
       name: information.name,
       description: information.description,
+      date: information.date,
       createdAt: information.createdAt,
-    };
+    }
   }
 }

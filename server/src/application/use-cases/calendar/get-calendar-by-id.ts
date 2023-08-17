@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common'
 
-import { CalendarRepository } from '../../repositories/calendar-repository';
-import { Calendar } from '../../entities/calendar';
+import { CalendarRepository } from '../../repositories/calendar-repository'
+import { Calendar } from '../../entities/calendar'
 
 interface GetCalendarByIdResponse {
-  calendar: Calendar;
+  calendar: Calendar
 }
 
 @Injectable()
@@ -13,19 +13,17 @@ export class GetCalendarById {
 
   async execute(calendarId: string): Promise<GetCalendarByIdResponse> {
     try {
-      const calendar = await this.calendarRepository.findById(
-        calendarId,
-      );
+      const calendar = await this.calendarRepository.findById(calendarId)
 
       if (!calendar) {
-        throw new Error('calendar not found');
+        throw new Error('calendar not found')
       }
 
       return {
         calendar,
-      };
+      }
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Calendar } from '../../../application/entities/calendar';
+import { Calendar } from '../../../application/entities/calendar'
 
 export class CalendarViewModel {
   static toHTTP(calendar: Calendar) {
@@ -7,6 +7,6 @@ export class CalendarViewModel {
       date: calendar.date,
       fileUrl: calendar.fileUrl,
       createdAt: calendar.createdAt,
-    };
+    }
   }
 }

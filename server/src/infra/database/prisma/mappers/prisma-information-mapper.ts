@@ -1,6 +1,6 @@
-import { Information as RawInformation } from '@prisma/client';
+import { Information as RawInformation } from '@prisma/client'
 
-import { Information } from '../../../../application/entities/information';
+import { Information } from '../../../../application/entities/information'
 
 export class PrismaInformationMapper {
   static toPrisma(information: Information) {
@@ -8,8 +8,9 @@ export class PrismaInformationMapper {
       id: information.id,
       name: information.name,
       description: information.description,
+      date: information.date,
       createdAt: information.createdAt,
-    };
+    }
   }
 
   static toDomain(raw: RawInformation): Information {
@@ -17,9 +18,10 @@ export class PrismaInformationMapper {
       {
         name: raw.name,
         description: raw.description,
+        date: raw.date,
         createdAt: raw.createdAt,
       },
       raw.id,
-    );
+    )
   }
 }

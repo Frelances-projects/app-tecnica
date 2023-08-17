@@ -1,10 +1,13 @@
-import { IsNotEmpty, Length } from 'class-validator';
+import { IsNotEmpty, Length } from 'class-validator'
 
 export class CreateInformationBody {
   @IsNotEmpty()
-  name: string;
+  name: string
 
   @IsNotEmpty()
   @Length(5, 460)
-  description: string;
+  description: string
+
+  @IsNotEmpty()
+  date: string
 }

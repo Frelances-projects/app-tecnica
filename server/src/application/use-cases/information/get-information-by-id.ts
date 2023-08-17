@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common'
 
-import { InformationRepository } from '../../repositories/information-repository';
-import { Information } from '../../entities/information';
+import { InformationRepository } from '../../repositories/information-repository'
+import { Information } from '../../entities/information'
 
 interface GetInformationByIdResponse {
-  information: Information;
+  information: Information
 }
 
 @Injectable()
@@ -15,17 +15,17 @@ export class GetInformationById {
     try {
       const information = await this.informationRepository.findById(
         informationId,
-      );
+      )
 
       if (!information) {
-        throw new Error('Information not found');
+        throw new Error('Information not found')
       }
 
       return {
         information,
-      };
+      }
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 }

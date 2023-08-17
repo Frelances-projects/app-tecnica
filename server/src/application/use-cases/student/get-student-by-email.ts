@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common'
 
-import { StudentsRepository } from '../../repositories/students-repository';
-import { Student } from '../../entities/student';
+import { StudentsRepository } from '../../repositories/students-repository'
+import { Student } from '../../entities/student'
 
 interface GetStudentByEmailResponse {
-  student: Student | null;
+  student: Student | null
 }
 
 @Injectable()
@@ -13,17 +13,17 @@ export class GetStudentByEmail {
 
   async execute(email: string): Promise<GetStudentByEmailResponse> {
     try {
-      const student = await this.studentsRepository.findByEmail(email);
+      const student = await this.studentsRepository.findByEmail(email)
 
       if (!student) {
-        return { student: null };
+        return { student: null }
       }
 
       return {
         student,
-      };
+      }
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 }

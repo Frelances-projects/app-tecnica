@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common'
 
-import { StudentsRepository } from '../../repositories/students-repository';
-import { Student } from '../../entities/student';
+import { StudentsRepository } from '../../repositories/students-repository'
+import { Student } from '../../entities/student'
 
 interface GetManyStudentsResponse {
-  students: Student[];
+  students: Student[]
 }
 
 @Injectable()
@@ -13,13 +13,13 @@ export class GetManyStudents {
 
   async execute(): Promise<GetManyStudentsResponse> {
     try {
-      const students = await this.studentsRepository.findMany();
+      const students = await this.studentsRepository.findMany()
 
       return {
         students,
-      };
+      }
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 }

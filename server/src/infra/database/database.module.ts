@@ -1,15 +1,15 @@
-import { Module } from '@nestjs/common';
+import { Module } from '@nestjs/common'
 
-import { PrismaService } from './prisma/prisma.service';
+import { PrismaService } from './prisma/prisma.service'
 
-import { InformationRepository } from '../../application/repositories/information-repository';
-import { PrismaInformationRepository } from './prisma/repositories/prisma-information-repository';
+import { InformationRepository } from '../../application/repositories/information-repository'
+import { PrismaInformationRepository } from './prisma/repositories/prisma-information-repository'
 
-import { StudentsRepository } from '../../application/repositories/students-repository';
-import { PrismaStudentsRepository } from './prisma/repositories/prisma-student-repository';
+import { StudentsRepository } from '../../application/repositories/students-repository'
+import { PrismaStudentsRepository } from './prisma/repositories/prisma-student-repository'
 
-import { CalendarRepository } from "../../application/repositories/calendar-repository";
-import { PrismaCalendarRepository } from "./prisma/repositories/prisma-calendar-repository";
+import { CalendarRepository } from '../../application/repositories/calendar-repository'
+import { PrismaCalendarRepository } from './prisma/repositories/prisma-calendar-repository'
 
 @Module({
   providers: [
