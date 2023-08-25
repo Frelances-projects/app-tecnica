@@ -9,6 +9,7 @@ interface CreateStudentRequest {
   name: string
   email: string
   schoolId: string
+  paymentId: string
   driverLicenseCategory: 'A' | 'B' | 'C' | 'ALL'
   number: number
   enrolledAt: string

@@ -1,4 +1,4 @@
-import { IsNotEmpty, Length, IsEmail, IsNumber } from 'class-validator'
+import { IsNotEmpty, Length, IsEmail, IsNumber, IsUUID } from 'class-validator'
 
 export class CreateStudentBody {
   @IsNotEmpty()
@@ -10,7 +10,12 @@ export class CreateStudentBody {
   email: string
 
   @IsNotEmpty()
+  @IsUUID()
   schoolId: string
+
+  @IsNotEmpty()
+  @IsUUID()
+  paymentId: string
 
   @IsNotEmpty()
   enrolledAt: string
