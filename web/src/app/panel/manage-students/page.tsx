@@ -1,8 +1,7 @@
-'use client'
+import { Pencil, Trash } from 'lucide-react'
 
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
-import { Pencil, Trash } from "@phosphor-icons/react";
 
 export default function ManageStudents() {
   return (
