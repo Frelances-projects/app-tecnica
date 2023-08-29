@@ -1,7 +1,7 @@
 import { Input } from '../../components/Input'
 import { TextArea } from '../../components/TextArea'
 import { Button } from '../../components/Button'
-import { SelectComponent } from '@/components/Select'
+import { Select } from '@/components/Select'
 
 export default function Panel() {
   async function handleCreateInformation(data: FormData) {
@@ -71,7 +71,7 @@ export default function Panel() {
         <form action={handleUpdateInformation} className="flex flex-col gap-[2.08rem]">
           <fieldset className='flex items-center gap-14'>
             <label htmlFor="information-name" className='text-xs'>Nome da informação</label>
-            <SelectComponent placeHolder='Novas Aulas' data={[]}/>
+            <Select />
           </fieldset>
 
           <fieldset className='flex items-center gap-[1.6rem]'>

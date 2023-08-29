@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useState } from "react";
 import { Button } from "@/components/Button";
-import { SelectComponent } from "@/components/Select";
+import { Select } from "@/components/Select";
 
 import Image from "next/image";
 import PdfIcon from '../../../assets/PDF-Icon.svg'
@@ -25,7 +25,7 @@ export default function CreateCodeCalendar() {
     <form className="flex flex-col gap-[2.08rem] mr-auto mt-24 mb-16">
       <fieldset className='flex items-center gap-14'>
         <label htmlFor="information-name" className='text-xs'>Nome da Categoria</label>
-        <SelectComponent placeHolder='Mes X' data={[]}/>
+        <Select />
       </fieldset>
       <div className="flex justify-between items-end">
         <fieldset className="bg-[#F3F3F3] border border-dashed border-red-500 px-3 py-3 w-56 rounded">

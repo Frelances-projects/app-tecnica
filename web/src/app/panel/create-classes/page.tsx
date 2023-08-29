@@ -1,6 +1,6 @@
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
-import { SelectComponent } from "@/components/Select";
+import { Select } from "@/components/Select";
 
 export default function CreateClasses() {
   async function handleInsetClasses(data: FormData) {
@@ -42,11 +42,11 @@ export default function CreateClasses() {
         <form  className="flex flex-col gap-[2.08rem]">
           <fieldset className='flex items-center gap-14'>
             <label htmlFor="information-name" className='text-xs'>Nome da Categoria</label>
-            <SelectComponent placeHolder='Categoria X' data={[]}/>
+            <Select />
           </fieldset>
           <fieldset className='flex items-center gap-[5.5rem]'>
             <label htmlFor="information-name" className='text-xs'>Nome da Aula</label>
-            <SelectComponent placeHolder='Aula X' data={[]}/>
+            <Select />
           </fieldset>
           <div className="flex justify-end">
             <Button title="Editar" type='submit' />
