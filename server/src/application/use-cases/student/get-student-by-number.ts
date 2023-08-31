@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, InternalServerErrorException } from '@nestjs/common'
 
 import { StudentsRepository } from '../../repositories/students-repository'
 import { Student } from '../../entities/student'
@@ -23,7 +23,8 @@ export class GetStudentByNumber {
         student,
       }
     } catch (error) {
-      throw error
+      if (error) throw error
+      throw new InternalServerErrorException()
     }
   }
 }

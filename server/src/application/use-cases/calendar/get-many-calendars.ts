@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, InternalServerErrorException } from '@nestjs/common'
 
 import { CalendarRepository } from '../../repositories/calendar-repository'
 import { Calendar } from '../../entities/calendar'
@@ -19,7 +19,8 @@ export class GetManyCalendar {
         calendar,
       }
     } catch (error) {
-      throw error
+      if (error) throw error
+      throw new InternalServerErrorException()
     }
   }
 }

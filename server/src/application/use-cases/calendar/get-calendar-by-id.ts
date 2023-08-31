@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common'
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common'
 
 import { CalendarRepository } from '../../repositories/calendar-repository'
 import { Calendar } from '../../entities/calendar'
@@ -16,14 +20,15 @@ export class GetCalendarById {
       const calendar = await this.calendarRepository.findById(calendarId)
 
       if (!calendar) {
-        throw new Error('calendar not found')
+        throw new NotFoundException('calendar not found')
       }
 
       return {
         calendar,
       }
     } catch (error) {
-      throw error
+      if (error) throw error
+      throw new InternalServerErrorException()
     }
   }
 }

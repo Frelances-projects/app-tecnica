@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common'
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common'
 
 import { StudentsRepository } from '../../repositories/students-repository'
 import { GetStudentById } from './get-student-by-id'
@@ -39,14 +43,14 @@ export class UpdateStudent {
         await this.getStudentByEmail.execute(email)
 
       if (foundStudentByEmail.email === email) {
-        throw new Error('This email has already been used')
+        throw new ConflictException('This email has already been used')
       }
 
       const { student: foundStudentByNumber } =
         await this.getStudentByNumber.execute(number)
 
       if (foundStudentByNumber.number === number) {
-        throw new Error('This number has already been used')
+        throw new ConflictException('This number has already been used')
       }
 
       student.name = name ?? student.name
@@ -62,7 +66,8 @@ export class UpdateStudent {
         student,
       }
     } catch (error) {
-      throw error
+      if (error) throw error
+      throw new InternalServerErrorException()
     }
   }
 }
