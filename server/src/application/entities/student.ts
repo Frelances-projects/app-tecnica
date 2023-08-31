@@ -5,10 +5,12 @@ import { Replace } from '../../helpers/Replace'
 interface StudentProps {
   name: string
   email: string
+  password?: string | null
   number: number
   enrolledAt: string
   schoolId: string
-  paymentId: string
+  paymentId?: string | null
+  token?: string | null
   driverLicenseCategory: 'A' | 'B' | 'C' | 'ALL'
   createdAt?: Date | null
 }
@@ -45,6 +47,14 @@ export class Student {
     return this.props.email
   }
 
+  public set password(password: string | null) {
+    this.props.password = password
+  }
+
+  public get password(): string | null {
+    return this.props.password
+  }
+
   public set number(number: number) {
     this.props.number = number
   }
@@ -69,12 +79,20 @@ export class Student {
     return this.props.schoolId
   }
 
-  public set paymentId(paymentId: string) {
+  public set paymentId(paymentId: string | null) {
     this.props.paymentId = paymentId
   }
 
-  public get paymentId(): string {
+  public get paymentId(): string | null {
     return this.props.paymentId
+  }
+
+  public set token(token: string) {
+    this.props.token = token
+  }
+
+  public get token(): string {
+    return this.props.token
   }
 
   public set driverLicenseCategory(

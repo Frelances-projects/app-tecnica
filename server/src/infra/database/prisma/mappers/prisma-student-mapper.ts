@@ -8,6 +8,7 @@ export class PrismaStudentMapper {
       id: student.id,
       name: student.name,
       email: student.email,
+      password: student.password,
       schoolId: student.schoolId,
       paymentId: student.paymentId,
       driverLicenseCategory: student.driverLicenseCategory,
@@ -22,6 +23,7 @@ export class PrismaStudentMapper {
       {
         name: raw.name,
         email: raw.email,
+        password: raw.password,
         schoolId: raw.schoolId,
         paymentId: raw.paymentId,
         driverLicenseCategory: raw.driverLicenseCategory,

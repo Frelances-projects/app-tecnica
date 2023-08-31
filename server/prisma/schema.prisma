@@ -49,20 +49,36 @@ model School {
   @@map("schools")
 }
 
+model User {
+  id        String       @id
+  name      String
+  email     String       @unique
+  password  String
+  schoolId  String
+  function  UserFunction @default(ADMIN)
+  token     String?
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@map("users")
+}
+
 model Student {
-  id                    String                @id
+  id                    String                 @id
   name                  String
-  email                 String                @unique
-  number                Int                   @unique
+  email                 String                 @unique
+  password              String?
+  number                Int                    @unique
   enrolledAt            String
-  driverLicenseCategory DriverLicenseCategory @default(A)
+  driverLicenseCategory DriverLicenseCategory?
   schoolId              String
-  paymentId             String
-  createdAt             DateTime              @default(now())
-  updatedAt             DateTime              @updatedAt
+  paymentId             String?                @unique
+  token                 String?
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
   scheduledClass        ScheduledClass[]
-  payment               Payment               @relation(fields: [paymentId], references: [id])
-  school                School                @relation(fields: [schoolId], references: [id])
+  payment               Payment?               @relation(fields: [paymentId], references: [id])
+  school                School                 @relation(fields: [schoolId], references: [id])
 
   @@map("students")
 }
@@ -101,7 +117,7 @@ model Payment {
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   installments Installments[]
-  student      Student[]
+  student      Student?
 
   @@map("payments")
 }
@@ -118,6 +134,12 @@ model Installments {
   payment                       Payment  @relation(fields: [paymentId], references: [id])
 
   @@map("installments")
+}
+
+enum UserFunction {
+  ADMIN
+  DIRECTOR
+  STRUCTURER
 }
 
 enum DriverLicenseCategory {

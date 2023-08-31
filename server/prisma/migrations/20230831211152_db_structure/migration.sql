@@ -1,4 +1,7 @@
 -- CreateEnum
+CREATE TYPE "UserFunction" AS ENUM ('ADMIN', 'DIRECTOR', 'STRUCTURER');
+
+-- CreateEnum
 CREATE TYPE "DriverLicenseCategory" AS ENUM ('A', 'B', 'C', 'ALL');
 
 -- CreateEnum
@@ -58,15 +61,32 @@ CREATE TABLE "schools" (
 );
 
 -- CreateTable
+CREATE TABLE "users" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "schoolId" TEXT NOT NULL,
+    "function" "UserFunction" NOT NULL DEFAULT 'ADMIN',
+    "token" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "students" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "password" TEXT,
     "number" INTEGER NOT NULL,
     "enrolledAt" TEXT NOT NULL,
-    "driverLicenseCategory" "DriverLicenseCategory" NOT NULL DEFAULT 'A',
+    "driverLicenseCategory" "DriverLicenseCategory",
     "schoolId" TEXT NOT NULL,
-    "paymentId" TEXT NOT NULL,
+    "paymentId" TEXT,
+    "token" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -129,13 +149,19 @@ CREATE TABLE "installments" (
 CREATE UNIQUE INDEX "classes_code_key" ON "classes"("code");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "students_email_key" ON "students"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "students_number_key" ON "students"("number");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "students_paymentId_key" ON "students"("paymentId");
+
 -- AddForeignKey
-ALTER TABLE "students" ADD CONSTRAINT "students_paymentId_fkey" FOREIGN KEY ("paymentId") REFERENCES "payments"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "students" ADD CONSTRAINT "students_paymentId_fkey" FOREIGN KEY ("paymentId") REFERENCES "payments"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "students" ADD CONSTRAINT "students_schoolId_fkey" FOREIGN KEY ("schoolId") REFERENCES "schools"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
