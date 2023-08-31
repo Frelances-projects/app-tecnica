@@ -8,14 +8,17 @@ interface InstallmentsProps {
   amountOfInstallmentsPaid: number
   amountOfRemainingInstallments: number
   paymentId: string
-  createdAt?: Date | null 
+  createdAt?: Date | null
 }
 
 export class Installments {
   private _id: string
   private props: InstallmentsProps
 
-  constructor(props: Replace<InstallmentsProps, { createdAt?: Date }>, id?: string) {
+  constructor(
+    props: Replace<InstallmentsProps, { createdAt?: Date }>,
+    id?: string,
+  ) {
     this._id = id ?? randomUUID()
     this.props = {
       ...props,
@@ -51,7 +54,9 @@ export class Installments {
     return this.props.amountOfInstallmentsPaid
   }
 
-  public set amountOfRemainingInstallments(amountOfRemainingInstallments: number) {
+  public set amountOfRemainingInstallments(
+    amountOfRemainingInstallments: number,
+  ) {
     this.props.amountOfRemainingInstallments = amountOfRemainingInstallments
   }
 

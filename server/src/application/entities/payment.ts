@@ -3,7 +3,7 @@ import { randomUUID } from 'node:crypto'
 import { Replace } from '../../helpers/Replace'
 
 interface PaymentProps {
-  method: 'INSTALLMENTS' |'INCASH'
+  method: 'INSTALLMENTS' | 'INCASH'
   total: number
   createdAt?: Date | null
 }
@@ -24,11 +24,11 @@ export class Payment {
     return this._id
   }
 
-  public set method(method: 'INSTALLMENTS' |'INCASH') {
+  public set method(method: 'INSTALLMENTS' | 'INCASH') {
     this.props.method = method
   }
 
-  public get method(): 'INSTALLMENTS' |'INCASH' {
+  public get method(): 'INSTALLMENTS' | 'INCASH' {
     return this.props.method
   }
 

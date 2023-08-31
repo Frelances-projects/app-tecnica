@@ -1,13 +1,13 @@
 import { Body, Controller, Get, Param, Put, Post } from '@nestjs/common'
 
-import { InstallmentsViewModel } from '../view-models/installments-view-model';
+import { InstallmentsViewModel } from '../view-models/installments-view-model'
 
 import { CreateInstallments } from 'src/application/use-cases/installments/create-installments'
 import { GetInstallmentsById } from 'src/application/use-cases/installments/get-installments-by-id'
-import { UpdateInstallments } from '../../../application/use-cases/installments/update-installments';
+import { UpdateInstallments } from '../../../application/use-cases/installments/update-installments'
 
-import { CreateInstallmentsBody } from '../dtos/installments/create-installments-body';
-import { UpdateInstallmentsBody } from '../dtos/installments/update-installments-body';
+import { CreateInstallmentsBody } from '../dtos/installments/create-installments-body'
+import { UpdateInstallmentsBody } from '../dtos/installments/update-installments-body'
 
 @Controller('installments')
 export class InstallmentsController {
@@ -19,7 +19,9 @@ export class InstallmentsController {
 
   @Get(':installmentsId')
   async getById(@Param('installmentsId') installmentsId: string) {
-    const { installments } = await this.getInstallmentsById.execute(installmentsId)
+    const { installments } = await this.getInstallmentsById.execute(
+      installmentsId,
+    )
 
     return {
       installments: InstallmentsViewModel.toHTTP(installments),
@@ -40,7 +42,12 @@ export class InstallmentsController {
     @Param('installmentsId') installmentsId: string,
     @Body() body: UpdateInstallmentsBody,
   ) {
-    const { amountOfInstallments, amountOfInstallmentsPaid, amountOfRemainingInstallments, valueOfAnInstallment } = body
+    const {
+      amountOfInstallments,
+      amountOfInstallmentsPaid,
+      amountOfRemainingInstallments,
+      valueOfAnInstallment,
+    } = body
 
     const { installments } = await this.updateInstallments.execute({
       id: installmentsId,
