@@ -4,6 +4,9 @@
   "description": "",
   "author": "",
   "private": true,
+  "prisma": {
+    "seed": "ts-node ./src/infra/database/seed.ts"
+  },
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
