@@ -1,4 +1,4 @@
-import { Payment } from "../../../application/entities/payment";
+import { Payment } from '../../../application/entities/payment'
 
 export class PaymentViewModel {
   static toHTTP(payment: Payment) {
@@ -7,6 +7,6 @@ export class PaymentViewModel {
       method: payment.method,
       total: payment.total,
       createdAt: payment.createdAt,
-    };
+    }
   }
 }
