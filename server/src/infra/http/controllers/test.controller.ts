@@ -38,9 +38,12 @@ export class TestController {
     }
   }
 
-  @Post()
-  async create(@Body() body: CreateTestBody) {
-    const { test } = await this.createTest.execute(body)
+  @Post(':studentId')
+  async create(
+    @Param('studentId') studentId: string,
+    @Body() body: CreateTestBody,
+  ) {
+    const { test } = await this.createTest.execute({ ...body, studentId })
 
     return {
       test: TestViewModel.toHTTP(test),

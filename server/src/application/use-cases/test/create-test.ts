@@ -1,17 +1,18 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, InternalServerErrorException } from '@nestjs/common'
 
-import { Test } from "src/application/entities/tests";
-import { TestRepository } from "src/application/repositories/tests-repository";
+import { Test } from 'src/application/entities/tests'
+import { TestRepository } from 'src/application/repositories/tests-repository'
 
 interface CreateTestRequest {
-  testDate: string;
-  testHour: string;
-  status: "APPROVED" | "DISAPPROVED" | "MARKED";
-  category: "THEORETICAL" | "PRACTICAL";
+  testDate: string
+  testHour: string
+  studentId: string
+  status: 'APPROVED' | 'DISAPPROVED' | 'MARKED'
+  category: 'THEORETICAL' | 'PRACTICAL'
 }
 
 interface CreateTestResponse {
-  test: Test;
+  test: Test
 }
 
 @Injectable()
@@ -20,15 +21,16 @@ export class CreateTest {
 
   async execute(request: CreateTestRequest): Promise<CreateTestResponse> {
     try {
-      const { testDate, testHour, status, category } = request;
-      const test = new Test({ testDate, testHour, status, category });
+      const { testDate, testHour, studentId, status, category } = request
+      const test = new Test({ testDate, testHour, studentId, status, category })
 
-      await this.testRepository.create(test);
+      await this.testRepository.create(test)
       return {
         test,
-      };
+      }
     } catch (error) {
-      throw error;
+      if (error) throw error
+      throw new InternalServerErrorException()
     }
   }
 }

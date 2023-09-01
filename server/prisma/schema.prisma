@@ -79,6 +79,7 @@ model Student {
   scheduledClass        ScheduledClass[]
   payment               Payment?               @relation(fields: [paymentId], references: [id])
   school                School                 @relation(fields: [schoolId], references: [id])
+  tests                 Test[]
 
   @@map("students")
 }
@@ -103,9 +104,11 @@ model Test {
   testDate  String
   testHour  String
   status    TestStatus   @default(MARKED)
+  studentId String
   category  TestCategory @default(THEORETICAL)
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
+  student   Student      @relation(fields: [studentId], references: [id])
 
   @@map("tests")
 }
