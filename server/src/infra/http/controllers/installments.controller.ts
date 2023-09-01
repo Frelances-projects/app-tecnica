@@ -28,9 +28,15 @@ export class InstallmentsController {
     }
   }
 
-  @Post()
-  async create(@Body() body: CreateInstallmentsBody) {
-    const { installments } = await this.createInstallments.execute(body)
+  @Post(':paymentId')
+  async create(
+    @Param('paymentId') paymentId: string,
+    @Body() body: CreateInstallmentsBody,
+  ) {
+    const { installments } = await this.createInstallments.execute({
+      ...body,
+      paymentId,
+    })
 
     return {
       installments: InstallmentsViewModel.toHTTP(installments),

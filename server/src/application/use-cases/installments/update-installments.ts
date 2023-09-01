@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, InternalServerErrorException } from '@nestjs/common'
 
 import { InstallmentsRepository } from 'src/application/repositories/installments-repository'
 
@@ -24,20 +24,32 @@ export class UpdateInstallments {
     private getInstallmentsById: GetInstallmentsById,
   ) {}
 
-  async execute(request: UpdateInstallmentsRequest): Promise<UpdateInstallmentsResponse> {
+  async execute(
+    request: UpdateInstallmentsRequest,
+  ): Promise<UpdateInstallmentsResponse> {
     try {
-      const { id, amountOfInstallments, amountOfInstallmentsPaid, amountOfRemainingInstallments, valueOfAnInstallment  } =
-        request
+      const {
+        id,
+        amountOfInstallments,
+        amountOfInstallmentsPaid,
+        amountOfRemainingInstallments,
+        valueOfAnInstallment,
+      } = request
 
       const { installments } = await this.getInstallmentsById.execute(id)
 
-      installments.amountOfInstallments = amountOfInstallments ?? installments.amountOfInstallments
+      installments.amountOfInstallments =
+        amountOfInstallments ?? installments.amountOfInstallments
 
-      installments.amountOfInstallmentsPaid = amountOfInstallmentsPaid ?? installments.amountOfInstallmentsPaid
+      installments.amountOfInstallmentsPaid =
+        amountOfInstallmentsPaid ?? installments.amountOfInstallmentsPaid
 
-      installments.amountOfRemainingInstallments = amountOfRemainingInstallments ?? installments.amountOfRemainingInstallments
+      installments.amountOfRemainingInstallments =
+        amountOfRemainingInstallments ??
+        installments.amountOfRemainingInstallments
 
-      installments.valueOfAnInstallment = valueOfAnInstallment ?? installments.valueOfAnInstallment
+      installments.valueOfAnInstallment =
+        valueOfAnInstallment ?? installments.valueOfAnInstallment
 
       await this.installmentsRepository.save(installments)
 
@@ -45,7 +57,8 @@ export class UpdateInstallments {
         installments,
       }
     } catch (error) {
-      throw error
+      if (error) throw error
+      throw new InternalServerErrorException()
     }
   }
 }
