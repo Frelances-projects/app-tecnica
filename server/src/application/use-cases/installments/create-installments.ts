@@ -35,7 +35,7 @@ export class CreateInstallments {
         amountOfInstallments,
         amountOfInstallmentsPaid,
         amountOfRemainingInstallments,
-        valueOfAnInstallment,
+        valueOfAnInstallment: Number(valueOfAnInstallment) * 100,
         paymentId,
       })
 
