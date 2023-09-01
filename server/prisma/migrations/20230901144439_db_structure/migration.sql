@@ -1,5 +1,8 @@
 -- CreateEnum
-CREATE TYPE "UserFunction" AS ENUM ('ADMIN', 'DIRECTOR', 'STRUCTURER');
+CREATE TYPE "ClassCategory" AS ENUM ('THEORETICAL', 'PRACTICAL');
+
+-- CreateEnum
+CREATE TYPE "UserFunction" AS ENUM ('ADMIN', 'DIRECTOR', 'INSTRUCTOR');
 
 -- CreateEnum
 CREATE TYPE "DriverLicenseCategory" AS ENUM ('A', 'B', 'C', 'ALL');
@@ -32,7 +35,9 @@ CREATE TABLE "information" (
 CREATE TABLE "classes" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "description" TEXT,
     "code" INTEGER NOT NULL,
+    "category" "ClassCategory" NOT NULL DEFAULT 'THEORETICAL',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -125,7 +130,7 @@ CREATE TABLE "tests" (
 CREATE TABLE "payments" (
     "id" TEXT NOT NULL,
     "method" "PaymentMethod" NOT NULL DEFAULT 'INCASH',
-    "total" INTEGER NOT NULL,
+    "total" DOUBLE PRECISION NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -135,7 +140,7 @@ CREATE TABLE "payments" (
 -- CreateTable
 CREATE TABLE "installments" (
     "id" TEXT NOT NULL,
-    "valueOfAnInstallment" INTEGER NOT NULL,
+    "valueOfAnInstallment" DOUBLE PRECISION NOT NULL,
     "amountOfInstallments" INTEGER NOT NULL,
     "amountOfInstallmentsPaid" INTEGER NOT NULL,
     "amountOfRemainingInstallments" INTEGER NOT NULL,
@@ -160,6 +165,9 @@ CREATE UNIQUE INDEX "students_number_key" ON "students"("number");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "students_paymentId_key" ON "students"("paymentId");
+
+-- AddForeignKey
+ALTER TABLE "users" ADD CONSTRAINT "users_schoolId_fkey" FOREIGN KEY ("schoolId") REFERENCES "schools"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "students" ADD CONSTRAINT "students_paymentId_fkey" FOREIGN KEY ("paymentId") REFERENCES "payments"("id") ON DELETE SET NULL ON UPDATE CASCADE;

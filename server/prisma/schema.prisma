@@ -21,7 +21,9 @@ model Information {
 model Class {
   id             String           @id
   name           String
+  description    String?
   code           Int              @unique
+  category       ClassCategory    @default(THEORETICAL)
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   scheduledClass ScheduledClass[]
@@ -44,7 +46,8 @@ model School {
   name      String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  Student   Student[]
+  students  Student[]
+  users     User[]
 
   @@map("schools")
 }
@@ -59,6 +62,7 @@ model User {
   token     String?
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
+  school    School       @relation(fields: [schoolId], references: [id])
 
   @@map("users")
 }
@@ -116,7 +120,7 @@ model Test {
 model Payment {
   id           String         @id
   method       PaymentMethod  @default(INCASH)
-  total        Int
+  total        Float
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   installments Installments[]
@@ -127,7 +131,7 @@ model Payment {
 
 model Installments {
   id                            String   @id
-  valueOfAnInstallment          Int
+  valueOfAnInstallment          Float
   amountOfInstallments          Int
   amountOfInstallmentsPaid      Int
   amountOfRemainingInstallments Int
@@ -139,10 +143,15 @@ model Installments {
   @@map("installments")
 }
 
+enum ClassCategory {
+  THEORETICAL
+  PRACTICAL
+}
+
 enum UserFunction {
   ADMIN
   DIRECTOR
-  STRUCTURER
+  INSTRUCTOR
 }
 
 enum DriverLicenseCategory {
