@@ -113,6 +113,7 @@ CREATE TABLE "tests" (
     "testDate" TEXT NOT NULL,
     "testHour" TEXT NOT NULL,
     "status" "TestStatus" NOT NULL DEFAULT 'MARKED',
+    "studentId" TEXT NOT NULL,
     "category" "TestCategory" NOT NULL DEFAULT 'THEORETICAL',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -171,6 +172,9 @@ ALTER TABLE "scheduled_classes" ADD CONSTRAINT "scheduled_classes_classId_fkey" 
 
 -- AddForeignKey
 ALTER TABLE "scheduled_classes" ADD CONSTRAINT "scheduled_classes_studentId_fkey" FOREIGN KEY ("studentId") REFERENCES "students"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "tests" ADD CONSTRAINT "tests_studentId_fkey" FOREIGN KEY ("studentId") REFERENCES "students"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "installments" ADD CONSTRAINT "installments_paymentId_fkey" FOREIGN KEY ("paymentId") REFERENCES "payments"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
