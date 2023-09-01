@@ -1,6 +1,5 @@
-import { View, Text } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Dispatch, SetStateAction, useState } from 'react'
+import { View, Text, TouchableOpacity } from 'react-native'
 import { Barcode, CaretDown, CaretUp } from 'phosphor-react-native'
 
 import { Input } from '@/components/Input'
