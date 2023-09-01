@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, InternalServerErrorException } from '@nestjs/common'
 
 import { Installments } from 'src/application/entities/installments'
 import { InstallmentsRepository } from 'src/application/repositories/installments-repository'
@@ -17,13 +17,19 @@ interface CreateInstallmentsResponse {
 
 @Injectable()
 export class CreateInstallments {
-  constructor(
-    private installmentsRepository: InstallmentsRepository,
-  ) {}
+  constructor(private installmentsRepository: InstallmentsRepository) {}
 
-  async execute(request: CreateInstallmentsRequest): Promise<CreateInstallmentsResponse> {
+  async execute(
+    request: CreateInstallmentsRequest,
+  ): Promise<CreateInstallmentsResponse> {
     try {
-      const { amountOfInstallments, amountOfInstallmentsPaid, amountOfRemainingInstallments, paymentId, valueOfAnInstallment} = request
+      const {
+        amountOfInstallments,
+        amountOfInstallmentsPaid,
+        amountOfRemainingInstallments,
+        paymentId,
+        valueOfAnInstallment,
+      } = request
 
       const installments = new Installments({
         amountOfInstallments,
@@ -39,7 +45,8 @@ export class CreateInstallments {
         installments,
       }
     } catch (error) {
-      throw error
+      if (error) throw error
+      throw new InternalServerErrorException()
     }
   }
 }

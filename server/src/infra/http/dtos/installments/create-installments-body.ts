@@ -16,7 +16,4 @@ export class CreateInstallmentsBody {
   @IsNotEmpty()
   @IsNumber()
   amountOfRemainingInstallments: number
-  
-  @IsNotEmpty()
-  paymentId: string
 }

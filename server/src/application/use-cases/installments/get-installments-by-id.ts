@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common'
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common'
 
 import { InstallmentsRepository } from 'src/application/repositories/installments-repository'
 import { Installments } from 'src/application/entities/installments'
@@ -13,17 +17,20 @@ export class GetInstallmentsById {
 
   async execute(installmentsId: string): Promise<GetInstallmentsByIdResponse> {
     try {
-      const installments = await this.installmentsRepository.findById(installmentsId)
+      const installments = await this.installmentsRepository.findById(
+        installmentsId,
+      )
 
       if (!installments) {
-        throw new Error('installments not found')
+        throw new NotFoundException('installments not found')
       }
 
       return {
         installments,
       }
     } catch (error) {
-      throw error
+      if (error) throw error
+      throw new InternalServerErrorException()
     }
   }
 }

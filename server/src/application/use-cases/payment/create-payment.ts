@@ -1,10 +1,10 @@
-import { Injectable } from "@nestjs/common"
+import { Injectable, InternalServerErrorException } from '@nestjs/common'
 
-import { Payment } from "src/application/entities/payment"
-import { PaymentRepository } from "src/application/repositories/payment-repository"
+import { Payment } from 'src/application/entities/payment'
+import { PaymentRepository } from 'src/application/repositories/payment-repository'
 
 interface CreatePaymentRequest {
-  method: 'INSTALLMENTS' |'INCASH'
+  method: 'INSTALLMENTS' | 'INCASH'
   total: number
 }
 
@@ -14,16 +14,15 @@ interface CreatePaymentResponse {
 
 @Injectable()
 export class CreatePayment {
-  constructor(
-    private paymentRepository: PaymentRepository,
-  ) {}
+  constructor(private paymentRepository: PaymentRepository) {}
 
   async execute(request: CreatePaymentRequest): Promise<CreatePaymentResponse> {
     try {
-      const {method, total} = request
+      const { method, total } = request
 
       const payment = new Payment({
-        method, total
+        method,
+        total: Number(total) * 100,
       })
 
       await this.paymentRepository.create(payment)
@@ -32,7 +31,8 @@ export class CreatePayment {
         payment,
       }
     } catch (error) {
-      throw error
+      if (error) throw error
+      throw new InternalServerErrorException()
     }
   }
 }

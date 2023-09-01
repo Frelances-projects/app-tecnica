@@ -1,10 +1,14 @@
-import { Injectable } from "@nestjs/common";
-import { Payment } from "src/application/entities/payment";
-import { PaymentRepository } from "src/application/repositories/payment-repository";
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common'
 
+import { Payment } from 'src/application/entities/payment'
+import { PaymentRepository } from 'src/application/repositories/payment-repository'
 
 interface GetPaymentByIdResponse {
-  payment: Payment;
+  payment: Payment
 }
 
 @Injectable()
@@ -13,15 +17,16 @@ export class GetPaymentById {
 
   async execute(paymentId: string): Promise<GetPaymentByIdResponse> {
     try {
-      const payment = await this.paymentRepository.findById(paymentId);
+      const payment = await this.paymentRepository.findById(paymentId)
 
-      if (!payment) throw new Error("payment not found");
+      if (!payment) throw new NotFoundException('payment not found')
 
       return {
         payment,
-      };
+      }
     } catch (error) {
-      throw error;
+      if (error) throw error
+      throw new InternalServerErrorException()
     }
   }
 }

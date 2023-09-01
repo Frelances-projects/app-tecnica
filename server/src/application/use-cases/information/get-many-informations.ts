@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, InternalServerErrorException } from '@nestjs/common'
 
 import { InformationRepository } from '../../repositories/information-repository'
 import { Information } from '../../entities/information'
@@ -19,7 +19,8 @@ export class GetManyInformation {
         information,
       }
     } catch (error) {
-      throw error
+      if (error) throw error
+      throw new InternalServerErrorException()
     }
   }
 }

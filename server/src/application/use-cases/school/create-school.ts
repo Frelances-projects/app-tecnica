@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, InternalServerErrorException } from '@nestjs/common'
 
 import { SchoolRepository } from '../../repositories/school-repository'
 import { School } from '../../entities/school'
@@ -27,7 +27,8 @@ export class CreateSchool {
         school,
       }
     } catch (error) {
-      throw error
+      if (error) throw error
+      throw new InternalServerErrorException()
     }
   }
 }
