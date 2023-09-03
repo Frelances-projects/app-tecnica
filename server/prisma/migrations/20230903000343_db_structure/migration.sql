@@ -101,8 +101,8 @@ CREATE TABLE "students" (
 -- CreateTable
 CREATE TABLE "scheduled_classes" (
     "id" TEXT NOT NULL,
-    "schedulingDate" TEXT NOT NULL,
-    "schedulingHour" TEXT NOT NULL,
+    "schedulingDate" TEXT,
+    "schedulingHour" TEXT,
     "status" "ScheduledClassStatus" NOT NULL DEFAULT 'PENDING',
     "studentId" TEXT NOT NULL,
     "classId" TEXT NOT NULL,
