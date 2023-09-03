@@ -9,4 +9,8 @@ export abstract class ClassRepository {
   ): Promise<Class[]>
 
   abstract findMany(): Promise<Class[]>
+  abstract findManyByCategoryAndStudent(
+    category: 'THEORETICAL' | 'PRACTICAL',
+    studentId: string,
+  ): Promise<Class[]>
 }

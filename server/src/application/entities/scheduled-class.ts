@@ -3,8 +3,8 @@ import { randomUUID } from 'node:crypto'
 import { Replace } from '../../helpers/Replace'
 
 interface ScheduledClassProps {
-  schedulingDate: string
-  schedulingHour: string
+  schedulingDate?: string | null
+  schedulingHour?: string | null
   status?: 'PENDING' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED' | null
   studentId: string
   classId: string
@@ -31,19 +31,19 @@ export class ScheduledClass {
     return this._id
   }
 
-  public set schedulingDate(schedulingDate: string) {
+  public set schedulingDate(schedulingDate: string | null) {
     this.props.schedulingDate = schedulingDate
   }
 
-  public get schedulingDate(): string {
+  public get schedulingDate(): string | null {
     return this.props.schedulingDate
   }
 
-  public set schedulingHour(schedulingHour: string) {
+  public set schedulingHour(schedulingHour: string | null) {
     this.props.schedulingHour = schedulingHour
   }
 
-  public get schedulingHour(): string {
+  public get schedulingHour(): string | null {
     return this.props.schedulingHour
   }
 

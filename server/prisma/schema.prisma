@@ -90,8 +90,8 @@ model Student {
 
 model ScheduledClass {
   id             String               @id
-  schedulingDate String
-  schedulingHour String
+  schedulingDate String?
+  schedulingHour String?
   status         ScheduledClassStatus @default(PENDING)
   studentId      String
   classId        String

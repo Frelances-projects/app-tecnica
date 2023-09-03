@@ -4,8 +4,8 @@ import { ScheduledClassRepository } from '../../repositories/scheduled-class-rep
 import { ScheduledClass } from '../../entities/scheduled-class'
 
 interface CreateScheduledClassRequest {
-  schedulingDate: string
-  schedulingHour: string
+  schedulingDate?: string
+  schedulingHour?: string
   studentId: string
   classId: string
 }
