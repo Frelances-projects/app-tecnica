@@ -61,6 +61,7 @@ import { CreateClass } from 'src/application/use-cases/class/create-class'
 import { GetClassById } from 'src/application/use-cases/class/get-class-by-id'
 import { GetManyClasses } from 'src/application/use-cases/class/get-many-classes'
 import { GetManyClassesByCategory } from 'src/application/use-cases/class/get-many-classes-by-category'
+import { GetManyClassesByCategoryAndStudent } from 'src/application/use-cases/class/get-many-classes-by-category-and-student'
 
 // SCHEDULE CLASS
 import { CreateScheduledClass } from 'src/application/use-cases/scheduled-class/create-scheduled-class'
@@ -145,6 +146,7 @@ import { CreateToken } from 'src/helpers/create-token'
     GetClassById,
     GetManyClasses,
     GetManyClassesByCategory,
+    GetManyClassesByCategoryAndStudent,
 
     // SCHEDULE CLASS
     CreateScheduledClass,

@@ -4,6 +4,7 @@ import { CreateClass } from 'src/application/use-cases/class/create-class'
 import { GetClassById } from '../../../application/use-cases/class/get-class-by-id'
 import { GetManyClasses } from '../../../application/use-cases/class/get-many-classes'
 import { GetManyClassesByCategory } from '../../../application/use-cases/class/get-many-classes-by-category'
+import { GetManyClassesByCategoryAndStudent } from '../../../application/use-cases/class/get-many-classes-by-category-and-student'
 
 import { ClassViewModel } from '../view-models/class-view-model'
 import { CreateClassBody } from '../dtos/class/create-class-body'
@@ -16,6 +17,7 @@ export class ClassController {
     private getClassById: GetClassById,
     private getManyClasses: GetManyClasses,
     private getManyClassesByCategory: GetManyClassesByCategory,
+    private getManyClassesByCategoryAndStudent: GetManyClassesByCategoryAndStudent,
   ) {}
 
   @Get(':classId')
@@ -43,6 +45,23 @@ export class ClassController {
     const { classes } = await this.getManyClassesByCategory.execute(
       body.category,
     )
+
+    const classesToHTTP = classes.map((lesson) => ClassViewModel.toHTTP(lesson))
+
+    return {
+      classes: classesToHTTP,
+    }
+  }
+
+  @Get('category/:studentId')
+  async getManyByCategoryAndStudent(
+    @Param('studentId') studentId: string,
+    @Body() body: GetClassesByCategoryBody,
+  ) {
+    const { classes } = await this.getManyClassesByCategoryAndStudent.execute({
+      category: body.category,
+      studentId,
+    })
 
     const classesToHTTP = classes.map((lesson) => ClassViewModel.toHTTP(lesson))
 
