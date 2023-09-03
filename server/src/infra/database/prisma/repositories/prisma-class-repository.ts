@@ -50,6 +50,22 @@ export class PrismaClassRepository implements ClassRepository {
     return classToDomain
   }
 
+  async findManyByCategoryAndStudent(
+    category: 'THEORETICAL' | 'PRACTICAL',
+    studentId: string,
+  ): Promise<Class[]> {
+    const lessons = await this.prisma.class.findMany({
+      where: { category },
+      include: { scheduledClass: { where: { studentId } } },
+    })
+
+    const classToDomain = lessons.map((lesson) =>
+      PrismaClassMapper.toDomain(lesson),
+    )
+
+    return classToDomain
+  }
+
   async save(lesson: Class): Promise<void> {
     const raw = PrismaClassMapper.toPrisma(lesson)
 
