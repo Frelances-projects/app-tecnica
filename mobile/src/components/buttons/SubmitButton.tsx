@@ -1,5 +1,4 @@
-import { TouchableOpacity, TouchableOpacityProps, Text } from 'react-native'
-import { Spinner } from 'tamagui'
+import { TouchableOpacity, TouchableOpacityProps, Text, ActivityIndicator } from 'react-native'
 
 interface SubmitButtonProps extends TouchableOpacityProps {
   title: string
@@ -14,7 +13,7 @@ export function SubmitButton({ title, isLoading, ...rest }: SubmitButtonProps) {
       {...rest}
     >
       {isLoading ? (
-        <Spinner size='small' color="white" />
+        <ActivityIndicator animating color="#FFF" />
       ) : (
         <Text className="text-sm font-medium text-white">{title}</Text>
       )}
