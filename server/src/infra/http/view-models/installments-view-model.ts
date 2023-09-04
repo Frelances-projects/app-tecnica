@@ -1,4 +1,4 @@
-import { Installments } from "src/application/entities/installments";
+import { Installments } from 'src/application/entities/installments'
 
 export class InstallmentsViewModel {
   static toHTTP(installments: Installments) {

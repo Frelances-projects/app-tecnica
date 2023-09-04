@@ -18,6 +18,7 @@ export class PrismaPaymentRepository implements PaymentRepository {
   async findById(paymentId: string): Promise<Payment> {
     const payment = await this.prisma.payment.findUnique({
       where: { id: paymentId },
+      include: { installments: true },
     })
 
     if (!payment) {

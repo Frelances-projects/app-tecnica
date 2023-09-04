@@ -44,6 +44,7 @@ import { GetManySchool } from '../../application/use-cases/school/get-many-schoo
 import { CreateTest } from 'src/application/use-cases/test/create-test'
 import { GetTestById } from 'src/application/use-cases/test/get-test-by-id'
 import { GetManyTests } from '../../application/use-cases/test/get-many-tests'
+import { GetManyTestsByStudent } from '../../application/use-cases/test/get-many-tests-by-student'
 import { UpdateTest } from 'src/application/use-cases/test/update-test'
 
 // PAYMENT
@@ -129,6 +130,7 @@ import { CreateToken } from 'src/helpers/create-token'
     CreateTest,
     GetTestById,
     GetManyTests,
+    GetManyTestsByStudent,
     UpdateTest,
 
     // PAYMENT

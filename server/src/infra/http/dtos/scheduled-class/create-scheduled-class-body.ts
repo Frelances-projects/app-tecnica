@@ -5,6 +5,8 @@ export class CreateScheduledClassBody {
 
   schedulingHour: string
 
+  status: 'PENDING' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
+
   @IsNotEmpty()
   @IsUUID()
   studentId: string

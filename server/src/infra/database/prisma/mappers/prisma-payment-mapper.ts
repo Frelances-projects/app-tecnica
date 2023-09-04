@@ -18,6 +18,7 @@ export class PrismaPaymentMapper {
         method: raw.method,
         total: raw.total,
         createdAt: raw.createdAt,
+        ...raw,
       },
       raw.id,
     )

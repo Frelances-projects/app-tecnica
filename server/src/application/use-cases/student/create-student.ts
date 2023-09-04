@@ -8,12 +8,14 @@ import { Student } from '../../entities/student'
 import { StudentsRepository } from '../../repositories/students-repository'
 import { GetStudentByEmail } from './get-student-by-email'
 import { GetStudentByNumber } from './get-student-by-number'
+import { CreatePayment } from '../payment/create-payment'
+import { CreateInstallments } from '../installments/create-installments'
 
 interface CreateStudentRequest {
   name: string
   email: string
   schoolId: string
-  paymentId: string
+  paymentMethod: 'INSTALLMENTS' | 'INCASH'
   driverLicenseCategory: 'A' | 'B' | 'C' | 'ALL'
   number: number
   enrolledAt: string
@@ -29,6 +31,8 @@ export class CreateStudent {
     private studentsRepository: StudentsRepository,
     private getStudentByEmail: GetStudentByEmail,
     private getStudentByNumber: GetStudentByNumber,
+    private createPayment: CreatePayment,
+    private createInstallments: CreateInstallments,
   ) {}
 
   async execute(request: CreateStudentRequest): Promise<CreateStudentResponse> {
@@ -38,7 +42,7 @@ export class CreateStudent {
         name,
         enrolledAt,
         schoolId,
-        paymentId,
+        paymentMethod,
         driverLicenseCategory,
         number,
       } = request
@@ -66,13 +70,28 @@ export class CreateStudent {
         throw new ConflictException('This number has already been used')
       }
 
+      const { payment } = await this.createPayment.execute({
+        method: paymentMethod,
+        total: 2400,
+      })
+
+      if (paymentMethod === 'INSTALLMENTS') {
+        await this.createInstallments.execute({
+          amountOfInstallments: 4,
+          amountOfInstallmentsPaid: 0,
+          amountOfRemainingInstallments: 4,
+          valueOfAnInstallment: 600,
+          paymentId: payment.id,
+        })
+      }
+
       const student = new Student({
         email,
         name,
         enrolledAt,
         number,
         schoolId,
-        paymentId,
+        paymentId: payment.id,
         driverLicenseCategory,
       })
 

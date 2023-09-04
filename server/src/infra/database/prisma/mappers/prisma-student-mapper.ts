@@ -13,6 +13,7 @@ export class PrismaStudentMapper {
       paymentId: student.paymentId,
       driverLicenseCategory: student.driverLicenseCategory,
       number: student.number,
+      token: student.token,
       enrolledAt: student.enrolledAt,
       createdAt: student.createdAt,
     }
@@ -28,6 +29,7 @@ export class PrismaStudentMapper {
         paymentId: raw.paymentId,
         driverLicenseCategory: raw.driverLicenseCategory,
         number: raw.number,
+        token: raw.token,
         enrolledAt: raw.enrolledAt,
         createdAt: raw.createdAt,
       },

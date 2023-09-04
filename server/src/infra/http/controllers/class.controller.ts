@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common'
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common'
 
 import { CreateClass } from 'src/application/use-cases/class/create-class'
 import { GetClassById } from '../../../application/use-cases/class/get-class-by-id'
@@ -8,7 +8,6 @@ import { GetManyClassesByCategoryAndStudent } from '../../../application/use-cas
 
 import { ClassViewModel } from '../view-models/class-view-model'
 import { CreateClassBody } from '../dtos/class/create-class-body'
-import { GetClassesByCategoryBody } from '../dtos/class/get-classes-by-category-body'
 
 @Controller('class')
 export class ClassController {
@@ -41,10 +40,10 @@ export class ClassController {
   }
 
   @Get('category')
-  async getManyByCategory(@Body() body: GetClassesByCategoryBody) {
-    const { classes } = await this.getManyClassesByCategory.execute(
-      body.category,
-    )
+  async getManyByCategory(
+    @Query('category') category: 'THEORETICAL' | 'PRACTICAL',
+  ) {
+    const { classes } = await this.getManyClassesByCategory.execute(category)
 
     const classesToHTTP = classes.map((lesson) => ClassViewModel.toHTTP(lesson))
 
@@ -56,10 +55,10 @@ export class ClassController {
   @Get('category/:studentId')
   async getManyByCategoryAndStudent(
     @Param('studentId') studentId: string,
-    @Body() body: GetClassesByCategoryBody,
+    @Query('category') category: 'THEORETICAL' | 'PRACTICAL',
   ) {
     const { classes } = await this.getManyClassesByCategoryAndStudent.execute({
-      category: body.category,
+      category,
       studentId,
     })
 

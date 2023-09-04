@@ -1,6 +1,8 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common'
+
 import { CreateTest } from 'src/application/use-cases/test/create-test'
 import { GetManyTests } from 'src/application/use-cases/test/get-many-tests'
+import { GetManyTestsByStudent } from 'src/application/use-cases/test/get-many-tests-by-student'
 import { GetTestById } from 'src/application/use-cases/test/get-test-by-id'
 import { UpdateTest } from 'src/application/use-cases/test/update-test'
 
@@ -16,6 +18,7 @@ export class TestController {
     private updateTest: UpdateTest,
     private getTestById: GetTestById,
     private getManyTests: GetManyTests,
+    private getManyTestsByStudent: GetManyTestsByStudent,
   ) {}
 
   @Get(':testId')
@@ -30,6 +33,17 @@ export class TestController {
   @Get()
   async getMany() {
     const { test } = await this.getManyTests.execute()
+
+    const testToHTTP = test.map((test) => TestViewModel.toHTTP(test))
+
+    return {
+      test: testToHTTP,
+    }
+  }
+
+  @Get('/student/:studentId')
+  async getManyByStudent(@Param('studentId') studentId: string) {
+    const { test } = await this.getManyTestsByStudent.execute(studentId)
 
     const testToHTTP = test.map((test) => TestViewModel.toHTTP(test))
 

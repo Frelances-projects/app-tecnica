@@ -33,6 +33,14 @@ export class PrismaTestRepository implements TestRepository {
     return testToDomain
   }
 
+  async findManyByStudent(studentId: string): Promise<Test[]> {
+    const test = await this.prisma.test.findMany({ where: { studentId } })
+
+    const testToDomain = test.map((test) => PrismaTestMapper.toDomain(test))
+
+    return testToDomain
+  }
+
   async save(test: Test): Promise<void> {
     const raw = PrismaTestMapper.toPrisma(test)
 

@@ -14,8 +14,7 @@ export class CreateStudentBody {
   schoolId: string
 
   @IsNotEmpty()
-  @IsUUID()
-  paymentId: string
+  paymentMethod: 'INSTALLMENTS' | 'INCASH'
 
   @IsNotEmpty()
   enrolledAt: string

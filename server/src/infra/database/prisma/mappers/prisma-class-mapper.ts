@@ -22,6 +22,7 @@ export class PrismaClassMapper {
         code: raw.code,
         category: raw.category,
         createdAt: raw.createdAt,
+        ...raw,
       },
       raw.id,
     )

@@ -1,7 +1,7 @@
 import { Class } from '../../../application/entities/class'
 
 export class ClassViewModel {
-  static toHTTP(lesson: Class) {
+  static toHTTP(lesson: any) {
     return {
       id: lesson.id,
       name: lesson.name,
@@ -9,6 +9,7 @@ export class ClassViewModel {
       description: lesson.description,
       category: lesson.category,
       createdAt: lesson.createdAt,
+      scheduledClass: lesson.props.scheduledClass[0],
     }
   }
 }
