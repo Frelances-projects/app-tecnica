@@ -7,5 +7,6 @@ if (!API_BASE_URL) {
 }
 
 export const api = axios.create({
-  baseURL: 'http://172.31.217.7:3333',
+  // baseURL: 'http://172.31.217.7:3333',
+  baseURL: 'https://app-tecnica-api.onrender.com',
 })
