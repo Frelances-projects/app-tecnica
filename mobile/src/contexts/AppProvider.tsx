@@ -12,9 +12,11 @@ type AppProviderProps = {
 export function AppProvider({ children }: AppProviderProps) {
   return (
     <TamaguiProvider config={config}>
-      <AuthProvider>
-        <ReactQueryProvider>{children}</ReactQueryProvider>
-      </AuthProvider>
+      <ReactQueryProvider>
+        <AuthProvider>
+          {children}
+        </AuthProvider>
+      </ReactQueryProvider>
     </TamaguiProvider>
   )
 }
