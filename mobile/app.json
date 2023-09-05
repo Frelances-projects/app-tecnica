@@ -16,6 +16,11 @@
     },
     "ios": {
       "bundleIdentifier": "com.apptecnica"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "27217042-9844-4cfb-a0cf-5578a76a81b4"
+      }
     }
   }
 }

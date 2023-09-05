@@ -1,4 +1,4 @@
-import { View, Text, Alert } from 'react-native'
+import { View, Text, Alert, ScrollView } from 'react-native'
 import { useQuery } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 
@@ -85,7 +85,7 @@ export default function Info() {
       <Text className="mb-2 text-xl font-semibold">Bem-vindo(a), {student?.name}</Text>
       <Text className="mb-12 font-regular text-sm">Aluno(a) N° {student?.number}</Text>
 
-      <View className="mt-5 w-full">
+      <ScrollView className="mt-5 w-full">
         <Text className="mb-5 text-lg font-semibold">Informações</Text>
 
         <View>
@@ -163,7 +163,7 @@ export default function Info() {
             </>
           )}
         </View>
-      </View>
+      </ScrollView>
     </View>
   )
 }
