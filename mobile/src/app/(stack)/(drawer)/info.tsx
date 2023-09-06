@@ -1,9 +1,11 @@
 import { View, Text, Alert, ScrollView } from 'react-native'
 import { useQuery } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
+import Toast from 'react-native-toast-message'
 
 import { useAuth } from '@/hooks/useAuth'
 import { api } from '@/lib/axios'
+import { errorMessages } from '@/utils/errors/errorMessages'
 
 import { Skeleton } from '@/components/Skeleton'
 
@@ -76,6 +78,28 @@ export default function Info() {
       if (error instanceof AxiosError) {
         console.log("🚀 ~ file: AuthContext.tsx:52 ~ const{mutateAsync:createSession}=useMutation ~ error:", error.response?.data.message[0])
         Alert.alert('Eita', error.response?.data.message[0])
+        if (error.response?.data.message === errorMessages.schoolNotFound) {
+          Toast.show({
+            text1: 'Escola não encontrada',
+            text2: 'Por favor entre em contado com o administrador',
+            type: 'error',
+            visibilityTime: 8000
+          });
+        } else if (error.response?.data.message === errorMessages.paymentNotFound) {
+          Toast.show({
+            text1: 'Informações do pagamento não encontradas',
+            text2: 'Por favor entre em contado com o administrador',
+            type: 'error',
+            visibilityTime: 8000
+          });
+        } else {
+          Toast.show({
+            text1: 'Ops! Erro no servidor',
+            text2: 'Tente novamente mais tarde',
+            type: 'error',
+            visibilityTime: 8000
+          });
+        }
       }
     }
   })
