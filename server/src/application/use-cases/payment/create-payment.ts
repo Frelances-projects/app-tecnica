@@ -5,6 +5,9 @@ import { PaymentRepository } from 'src/application/repositories/payment-reposito
 
 interface CreatePaymentRequest {
   method: 'INSTALLMENTS' | 'INCASH'
+  amountOfInstallments?: number
+  amountOfInstallmentsPaid?: number
+  amountOfRemainingInstallments?: number
   total: number
 }
 
@@ -18,11 +21,20 @@ export class CreatePayment {
 
   async execute(request: CreatePaymentRequest): Promise<CreatePaymentResponse> {
     try {
-      const { method, total } = request
+      const {
+        method,
+        amountOfInstallments,
+        amountOfRemainingInstallments,
+        amountOfInstallmentsPaid,
+        total,
+      } = request
 
       const payment = new Payment({
         method,
-        total: Number(total) * 100,
+        amountOfInstallments,
+        amountOfRemainingInstallments,
+        amountOfInstallmentsPaid,
+        total: Number(total),
       })
 
       await this.paymentRepository.create(payment)

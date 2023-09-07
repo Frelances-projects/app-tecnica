@@ -11,7 +11,7 @@ interface StudentProps {
   schoolId: string
   paymentId?: string | null
   token?: string | null
-  driverLicenseCategory: 'A' | 'B' | 'C' | 'ALL'
+  driverLicenseCategoryId: string
   createdAt?: Date | null
 }
 
@@ -95,14 +95,12 @@ export class Student {
     return this.props.token
   }
 
-  public set driverLicenseCategory(
-    driverLicenseCategory: 'A' | 'B' | 'C' | 'ALL',
-  ) {
-    this.props.driverLicenseCategory = driverLicenseCategory
+  public set driverLicenseCategoryId(driverLicenseCategoryId: string) {
+    this.props.driverLicenseCategoryId = driverLicenseCategoryId
   }
 
-  public get driverLicenseCategory(): 'A' | 'B' | 'C' | 'ALL' {
-    return this.props.driverLicenseCategory
+  public get driverLicenseCategoryId(): string {
+    return this.props.driverLicenseCategoryId
   }
 
   public get createdAt(): Date {

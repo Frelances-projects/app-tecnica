@@ -17,11 +17,11 @@ import { PrismaPaymentRepository } from './prisma/repositories/prisma-payment-re
 import { SchoolRepository } from '../../application/repositories/school-repository'
 import { PrismaSchoolRepository } from './prisma/repositories/prisma-school-repository'
 
+import { DriverLicenseCategoryRepository } from '../../application/repositories/driver-license-category-repository'
+import { PrismaDriverLicenseCategoryRepository } from './prisma/repositories/prisma-driver-license-category-repository'
+
 import { TestRepository } from '../../application/repositories/tests-repository'
 import { PrismaTestRepository } from './prisma/repositories/prisma-test-repository'
-
-import { InstallmentsRepository } from '../../application/repositories/installments-repository'
-import { PrismaInstallmentsRepository } from './prisma/repositories/prisma-installments-repository'
 
 import { ClassRepository } from '../../application/repositories/class-repository'
 import { PrismaClassRepository } from './prisma/repositories/prisma-class-repository'
@@ -56,12 +56,12 @@ import { PrismaUserRepository } from './prisma/repositories/prisma-user-reposito
       useClass: PrismaSchoolRepository,
     },
     {
-      provide: TestRepository,
-      useClass: PrismaTestRepository,
+      provide: DriverLicenseCategoryRepository,
+      useClass: PrismaDriverLicenseCategoryRepository,
     },
     {
-      provide: InstallmentsRepository,
-      useClass: PrismaInstallmentsRepository,
+      provide: TestRepository,
+      useClass: PrismaTestRepository,
     },
     {
       provide: ClassRepository,
@@ -82,8 +82,8 @@ import { PrismaUserRepository } from './prisma/repositories/prisma-user-reposito
     CalendarRepository,
     PaymentRepository,
     SchoolRepository,
+    DriverLicenseCategoryRepository,
     TestRepository,
-    InstallmentsRepository,
     ClassRepository,
     ScheduledClassRepository,
     UserRepository,

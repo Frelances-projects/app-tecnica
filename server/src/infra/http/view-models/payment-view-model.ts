@@ -6,6 +6,9 @@ export class PaymentViewModel {
       id: payment.id,
       method: payment.method,
       total: payment.total,
+      amountOfInstallments: payment.amountOfInstallments,
+      amountOfInstallmentsPaid: payment.amountOfInstallmentsPaid,
+      amountOfRemainingInstallments: payment.amountOfRemainingInstallments,
       createdAt: payment.createdAt,
       installments: payment.props.installments,
     }

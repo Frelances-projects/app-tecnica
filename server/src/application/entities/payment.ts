@@ -5,6 +5,9 @@ import { Replace } from '../../helpers/Replace'
 interface PaymentProps {
   method: 'INSTALLMENTS' | 'INCASH'
   total: number
+  amountOfInstallments?: number | null
+  amountOfInstallmentsPaid?: number | null
+  amountOfRemainingInstallments?: number | null
   createdAt?: Date | null
 }
 
@@ -38,6 +41,32 @@ export class Payment {
 
   public get total(): number {
     return this.props.total
+  }
+
+  public set amountOfInstallments(amountOfInstallments: number | null) {
+    this.props.amountOfInstallments = amountOfInstallments
+  }
+
+  public get amountOfInstallments(): number | null {
+    return this.props.amountOfInstallments
+  }
+
+  public set amountOfInstallmentsPaid(amountOfInstallmentsPaid: number | null) {
+    this.props.amountOfInstallmentsPaid = amountOfInstallmentsPaid
+  }
+
+  public get amountOfInstallmentsPaid(): number | null {
+    return this.props.amountOfInstallmentsPaid
+  }
+
+  public set amountOfRemainingInstallments(
+    amountOfRemainingInstallments: number | null,
+  ) {
+    this.props.amountOfRemainingInstallments = amountOfRemainingInstallments
+  }
+
+  public get amountOfRemainingInstallments(): number | null {
+    return this.props.amountOfRemainingInstallments
   }
 
   public get createdAt(): Date {

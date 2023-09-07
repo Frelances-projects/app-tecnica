@@ -15,7 +15,7 @@ interface UpdateStudentRequest {
   name?: string
   email?: string
   schoolId?: string
-  driverLicenseCategory?: 'A' | 'B' | 'C' | 'ALL'
+  driverLicenseCategoryId?: string
   number?: number
 }
 
@@ -34,7 +34,7 @@ export class UpdateStudent {
 
   async execute(request: UpdateStudentRequest): Promise<UpdateStudentResponse> {
     try {
-      const { id, email, name, number, schoolId, driverLicenseCategory } =
+      const { id, email, name, number, schoolId, driverLicenseCategoryId } =
         request
 
       const { student } = await this.getStudentById.execute(id)
@@ -56,8 +56,8 @@ export class UpdateStudent {
       student.name = name ?? student.name
       student.email = email ?? student.email
       student.schoolId = schoolId ?? student.schoolId
-      student.driverLicenseCategory =
-        driverLicenseCategory ?? student.driverLicenseCategory
+      student.driverLicenseCategoryId =
+        driverLicenseCategoryId ?? student.driverLicenseCategoryId
       student.number = number ?? student.number
 
       await this.studentsRepository.save(student)

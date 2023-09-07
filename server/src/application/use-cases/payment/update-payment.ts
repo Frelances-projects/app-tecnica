@@ -6,6 +6,9 @@ import { GetPaymentById } from './get-payment-by-id'
 interface UpdatePaymentRequest {
   id: string
   method?: 'INSTALLMENTS' | 'INCASH'
+  amountOfInstallments?: number
+  amountOfInstallmentsPaid?: number
+  amountOfRemainingInstallments?: number
   total?: number
 }
 
@@ -22,11 +25,24 @@ export class UpdatePayment {
 
   async execute(request: UpdatePaymentRequest): Promise<UpdatePaymentResponse> {
     try {
-      const { id, method, total } = request
+      const {
+        id,
+        method,
+        amountOfInstallments,
+        amountOfRemainingInstallments,
+        amountOfInstallmentsPaid,
+        total,
+      } = request
 
       const { payment } = await this.getPaymentById.execute(id)
 
       payment.method = method ?? payment.method
+      payment.amountOfInstallments =
+        amountOfInstallments ?? payment.amountOfInstallments
+      payment.amountOfRemainingInstallments =
+        amountOfRemainingInstallments ?? payment.amountOfRemainingInstallments
+      payment.amountOfInstallmentsPaid =
+        amountOfInstallmentsPaid ?? payment.amountOfInstallmentsPaid
       payment.total = total ?? payment.total
 
       await this.paymentRepository.save(payment)

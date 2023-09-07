@@ -8,9 +8,9 @@ import { InformationController } from './controllers/information.controller'
 import { StudentController } from './controllers/student.controller'
 import { CalendarController } from './controllers/calendar.controller'
 import { SchoolController } from './controllers/school.controller'
+import { DriverLicenseCategoryController } from './controllers/driver-license-category.controller'
 import { TestController } from './controllers/test.controller'
 import { PaymentController } from './controllers/payment.controller'
-import { InstallmentsController } from './controllers/installments.controller'
 import { ClassController } from './controllers/class.controller'
 import { ScheduledClassController } from './controllers/scheduled-class.controller'
 import { UserController } from './controllers/user.controller'
@@ -28,17 +28,24 @@ import { GetStudentByEmail } from '../../application/use-cases/student/get-stude
 import { GetStudentById } from '../../application/use-cases/student/get-student-by-id'
 import { GetStudentByNumber } from '../../application/use-cases/student/get-student-by-number'
 import { UpdateStudent } from '../../application/use-cases/student/update-student'
+import { CreateStudentSession } from 'src/application/use-cases/student/create-student-session'
 
 // CALENDAR
 import { CreateCalendar } from '../../application/use-cases/calendar/create-calendar'
 import { GetCalendarById } from '../../application/use-cases/calendar/get-calendar-by-id'
 import { GetManyCalendar } from '../../application/use-cases/calendar/get-many-calendars'
 
-// STUDENT
+// SCHOOL
 import { CreateSchool } from '../../application/use-cases/school/create-school'
-import { CreateStudentSession } from 'src/application/use-cases/student/create-student-session'
 import { GetSchoolById } from '../../application/use-cases/school/get-school-by-id'
 import { GetManySchool } from '../../application/use-cases/school/get-many-school'
+
+// DRIVER LICENSE CATEGORY
+import { CreateDriverLicenseCategory } from '../../application/use-cases/driver-license-category/create-driver-license-category'
+import { GetDriverLicenseCategoryById } from '../../application/use-cases/driver-license-category/get-driver-license-category-by-id'
+import { GetManyDriverLicenseCategory } from '../../application/use-cases/driver-license-category/get-many-driver-license-categories'
+import { GetManyDriverLicenseCategoryBySchool } from '../../application/use-cases/driver-license-category/get-many-driver-license-categories-by-school'
+import { UpdateDriverLicenseCategory } from '../../application/use-cases/driver-license-category/update-driver-license-category'
 
 // TEST
 import { CreateTest } from 'src/application/use-cases/test/create-test'
@@ -51,11 +58,6 @@ import { UpdateTest } from 'src/application/use-cases/test/update-test'
 import { CreatePayment } from 'src/application/use-cases/payment/create-payment'
 import { GetPaymentById } from 'src/application/use-cases/payment/get-payment-by-id'
 import { UpdatePayment } from 'src/application/use-cases/payment/update-payment'
-
-// INSTALLMENTS
-import { CreateInstallments } from 'src/application/use-cases/installments/create-installments'
-import { GetInstallmentsById } from 'src/application/use-cases/installments/get-installments-by-id'
-import { UpdateInstallments } from 'src/application/use-cases/installments/update-installments'
 
 // CLASS
 import { CreateClass } from 'src/application/use-cases/class/create-class'
@@ -93,9 +95,9 @@ import { CreateToken } from 'src/helpers/create-token'
     StudentController,
     CalendarController,
     SchoolController,
+    DriverLicenseCategoryController,
     TestController,
     PaymentController,
-    InstallmentsController,
     ClassController,
     ScheduledClassController,
     UserController,
@@ -126,6 +128,13 @@ import { CreateToken } from 'src/helpers/create-token'
     GetSchoolById,
     GetManySchool,
 
+    // DRIVER LICENSE CATEGORY
+    CreateDriverLicenseCategory,
+    GetDriverLicenseCategoryById,
+    GetManyDriverLicenseCategory,
+    GetManyDriverLicenseCategoryBySchool,
+    UpdateDriverLicenseCategory,
+
     // TEST
     CreateTest,
     GetTestById,
@@ -137,11 +146,6 @@ import { CreateToken } from 'src/helpers/create-token'
     CreatePayment,
     GetPaymentById,
     UpdatePayment,
-
-    // INSTALLMENTS
-    CreateInstallments,
-    GetInstallmentsById,
-    UpdateInstallments,
 
     // CLASS
     CreateClass,

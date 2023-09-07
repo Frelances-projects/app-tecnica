@@ -9,14 +9,14 @@ import { StudentsRepository } from '../../repositories/students-repository'
 import { GetStudentByEmail } from './get-student-by-email'
 import { GetStudentByNumber } from './get-student-by-number'
 import { CreatePayment } from '../payment/create-payment'
-import { CreateInstallments } from '../installments/create-installments'
+import { GetDriverLicenseCategoryById } from '../driver-license-category/get-driver-license-category-by-id'
 
 interface CreateStudentRequest {
   name: string
   email: string
   schoolId: string
   paymentMethod: 'INSTALLMENTS' | 'INCASH'
-  driverLicenseCategory: 'A' | 'B' | 'C' | 'ALL'
+  driverLicenseCategoryId: string
   number: number
   enrolledAt: string
 }
@@ -32,7 +32,7 @@ export class CreateStudent {
     private getStudentByEmail: GetStudentByEmail,
     private getStudentByNumber: GetStudentByNumber,
     private createPayment: CreatePayment,
-    private createInstallments: CreateInstallments,
+    private getDriverLicenseCategoryById: GetDriverLicenseCategoryById,
   ) {}
 
   async execute(request: CreateStudentRequest): Promise<CreateStudentResponse> {
@@ -43,7 +43,7 @@ export class CreateStudent {
         enrolledAt,
         schoolId,
         paymentMethod,
-        driverLicenseCategory,
+        driverLicenseCategoryId,
         number,
       } = request
 
@@ -70,20 +70,26 @@ export class CreateStudent {
         throw new ConflictException('This number has already been used')
       }
 
+      const { driverLicenseCategory } =
+        await this.getDriverLicenseCategoryById.execute(driverLicenseCategoryId)
+
       const { payment } = await this.createPayment.execute({
         method: paymentMethod,
-        total: 2400,
+        total: driverLicenseCategory.price,
+        amountOfInstallments:
+          paymentMethod === 'INSTALLMENTS'
+            ? Object.values(driverLicenseCategory.installments).filter(
+                (value) => value !== undefined && value !== null,
+              ).length
+            : null,
+        amountOfRemainingInstallments:
+          paymentMethod === 'INSTALLMENTS'
+            ? Object.values(driverLicenseCategory.installments).filter(
+                (value) => value !== undefined && value !== null,
+              ).length
+            : null,
+        amountOfInstallmentsPaid: paymentMethod === 'INSTALLMENTS' ? 0 : null,
       })
-
-      if (paymentMethod === 'INSTALLMENTS') {
-        await this.createInstallments.execute({
-          amountOfInstallments: 4,
-          amountOfInstallmentsPaid: 0,
-          amountOfRemainingInstallments: 4,
-          valueOfAnInstallment: 600,
-          paymentId: payment.id,
-        })
-      }
 
       const student = new Student({
         email,
@@ -92,7 +98,7 @@ export class CreateStudent {
         number,
         schoolId,
         paymentId: payment.id,
-        driverLicenseCategory,
+        driverLicenseCategoryId,
       })
 
       await this.studentsRepository.create(student)

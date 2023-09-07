@@ -8,6 +8,9 @@ export class PrismaPaymentMapper {
       id: payment.id,
       method: payment.method,
       total: payment.total,
+      amountOfInstallments: payment.amountOfInstallments,
+      amountOfInstallmentsPaid: payment.amountOfInstallmentsPaid,
+      amountOfRemainingInstallments: payment.amountOfRemainingInstallments,
       createdAt: payment.createdAt,
     }
   }
@@ -17,6 +20,9 @@ export class PrismaPaymentMapper {
       {
         method: raw.method,
         total: raw.total,
+        amountOfInstallments: raw.amountOfInstallments,
+        amountOfInstallmentsPaid: raw.amountOfInstallmentsPaid,
+        amountOfRemainingInstallments: raw.amountOfRemainingInstallments,
         createdAt: raw.createdAt,
         ...raw,
       },

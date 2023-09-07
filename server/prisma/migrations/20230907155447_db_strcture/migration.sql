@@ -5,9 +5,6 @@ CREATE TYPE "ClassCategory" AS ENUM ('THEORETICAL', 'PRACTICAL');
 CREATE TYPE "UserFunction" AS ENUM ('ADMIN', 'DIRECTOR', 'INSTRUCTOR');
 
 -- CreateEnum
-CREATE TYPE "DriverLicenseCategory" AS ENUM ('A', 'B', 'C', 'ALL');
-
--- CreateEnum
 CREATE TYPE "ScheduledClassStatus" AS ENUM ('PENDING', 'CONFIRMED', 'CANCELED', 'COMPLETED');
 
 -- CreateEnum
@@ -66,6 +63,19 @@ CREATE TABLE "schools" (
 );
 
 -- CreateTable
+CREATE TABLE "driver_license_categories" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "price" DOUBLE PRECISION NOT NULL,
+    "installments" JSONB NOT NULL,
+    "schoolId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "driver_license_categories_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "users" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
@@ -88,7 +98,7 @@ CREATE TABLE "students" (
     "password" TEXT,
     "number" INTEGER NOT NULL,
     "enrolledAt" TEXT NOT NULL,
-    "driverLicenseCategory" "DriverLicenseCategory",
+    "driverLicenseCategoryId" TEXT NOT NULL,
     "schoolId" TEXT NOT NULL,
     "paymentId" TEXT,
     "token" TEXT,
@@ -131,24 +141,13 @@ CREATE TABLE "payments" (
     "id" TEXT NOT NULL,
     "method" "PaymentMethod" NOT NULL DEFAULT 'INCASH',
     "total" DOUBLE PRECISION NOT NULL,
+    "amountOfInstallments" INTEGER,
+    "amountOfInstallmentsPaid" INTEGER,
+    "amountOfRemainingInstallments" INTEGER,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "payments_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "installments" (
-    "id" TEXT NOT NULL,
-    "valueOfAnInstallment" DOUBLE PRECISION NOT NULL,
-    "amountOfInstallments" INTEGER NOT NULL,
-    "amountOfInstallmentsPaid" INTEGER NOT NULL,
-    "amountOfRemainingInstallments" INTEGER NOT NULL,
-    "paymentId" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "installments_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -167,6 +166,9 @@ CREATE UNIQUE INDEX "students_number_key" ON "students"("number");
 CREATE UNIQUE INDEX "students_paymentId_key" ON "students"("paymentId");
 
 -- AddForeignKey
+ALTER TABLE "driver_license_categories" ADD CONSTRAINT "driver_license_categories_schoolId_fkey" FOREIGN KEY ("schoolId") REFERENCES "schools"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "users" ADD CONSTRAINT "users_schoolId_fkey" FOREIGN KEY ("schoolId") REFERENCES "schools"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -176,6 +178,9 @@ ALTER TABLE "students" ADD CONSTRAINT "students_paymentId_fkey" FOREIGN KEY ("pa
 ALTER TABLE "students" ADD CONSTRAINT "students_schoolId_fkey" FOREIGN KEY ("schoolId") REFERENCES "schools"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "students" ADD CONSTRAINT "students_driverLicenseCategoryId_fkey" FOREIGN KEY ("driverLicenseCategoryId") REFERENCES "driver_license_categories"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "scheduled_classes" ADD CONSTRAINT "scheduled_classes_classId_fkey" FOREIGN KEY ("classId") REFERENCES "classes"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -183,6 +188,3 @@ ALTER TABLE "scheduled_classes" ADD CONSTRAINT "scheduled_classes_studentId_fkey
 
 -- AddForeignKey
 ALTER TABLE "tests" ADD CONSTRAINT "tests_studentId_fkey" FOREIGN KEY ("studentId") REFERENCES "students"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "installments" ADD CONSTRAINT "installments_paymentId_fkey" FOREIGN KEY ("paymentId") REFERENCES "payments"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
