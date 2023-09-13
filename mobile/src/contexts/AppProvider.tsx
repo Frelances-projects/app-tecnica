@@ -9,8 +9,10 @@ type AppProviderProps = {
 
 export function AppProvider({ children }: AppProviderProps) {
   return (
-    <AuthProvider>
-      <ReactQueryProvider>{children}</ReactQueryProvider>
-    </AuthProvider>
+    <ReactQueryProvider>
+      <AuthProvider>
+        {children}
+      </AuthProvider>
+    </ReactQueryProvider>
   )
 }

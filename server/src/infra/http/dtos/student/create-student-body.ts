@@ -14,8 +14,7 @@ export class CreateStudentBody {
   schoolId: string
 
   @IsNotEmpty()
-  @IsUUID()
-  paymentId: string
+  paymentMethod: 'INSTALLMENTS' | 'INCASH'
 
   @IsNotEmpty()
   enrolledAt: string
@@ -25,5 +24,6 @@ export class CreateStudentBody {
   number: number
 
   @IsNotEmpty()
-  driverLicenseCategory: 'A' | 'B' | 'C' | 'ALL'
+  @IsUUID()
+  driverLicenseCategoryId: string
 }

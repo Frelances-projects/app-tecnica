@@ -1,6 +1,6 @@
-import { Test as RawTest } from "@prisma/client";
+import { Test as RawTest } from '@prisma/client'
 
-import { Test } from "src/application/entities/tests";
+import { Test } from 'src/application/entities/tests'
 
 export class PrismaTestMapper {
   static toPrisma(test: Test) {
@@ -10,8 +10,9 @@ export class PrismaTestMapper {
       status: test.status,
       testDate: test.testDate,
       testHour: test.testHour,
+      studentId: test.studentId,
       createdAt: test.createdAt,
-    };
+    }
   }
 
   static toDomain(raw: RawTest): Test {
@@ -21,9 +22,10 @@ export class PrismaTestMapper {
         status: raw.status,
         testDate: raw.testDate,
         testHour: raw.testHour,
+        studentId: raw.studentId,
         createdAt: raw.createdAt,
       },
-      raw.id
-    );
+      raw.id,
+    )
   }
 }

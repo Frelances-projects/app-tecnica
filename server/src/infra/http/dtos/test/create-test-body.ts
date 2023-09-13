@@ -1,15 +1,15 @@
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty } from 'class-validator'
 
 export class CreateTestBody {
   @IsNotEmpty()
-  testDate: string;
+  testDate: string
 
   @IsNotEmpty()
-  testHour: string;
+  testHour: string
 
   @IsNotEmpty()
-  status: "APPROVED" | "DISAPPROVED" | "MARKED";
+  status: 'APPROVED' | 'DISAPPROVED' | 'MARKED'
 
   @IsNotEmpty()
-  category: "THEORETICAL" | "PRACTICAL";
+  category: 'THEORETICAL' | 'PRACTICAL'
 }

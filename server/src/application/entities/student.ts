@@ -5,11 +5,13 @@ import { Replace } from '../../helpers/Replace'
 interface StudentProps {
   name: string
   email: string
+  password?: string | null
   number: number
   enrolledAt: string
   schoolId: string
-  paymentId: string
-  driverLicenseCategory: 'A' | 'B' | 'C' | 'ALL'
+  paymentId?: string | null
+  token?: string | null
+  driverLicenseCategoryId: string
   createdAt?: Date | null
 }
 
@@ -45,6 +47,14 @@ export class Student {
     return this.props.email
   }
 
+  public set password(password: string | null) {
+    this.props.password = password
+  }
+
+  public get password(): string | null {
+    return this.props.password
+  }
+
   public set number(number: number) {
     this.props.number = number
   }
@@ -69,22 +79,28 @@ export class Student {
     return this.props.schoolId
   }
 
-  public set paymentId(paymentId: string) {
+  public set paymentId(paymentId: string | null) {
     this.props.paymentId = paymentId
   }
 
-  public get paymentId(): string {
+  public get paymentId(): string | null {
     return this.props.paymentId
   }
 
-  public set driverLicenseCategory(
-    driverLicenseCategory: 'A' | 'B' | 'C' | 'ALL',
-  ) {
-    this.props.driverLicenseCategory = driverLicenseCategory
+  public set token(token: string) {
+    this.props.token = token
   }
 
-  public get driverLicenseCategory(): 'A' | 'B' | 'C' | 'ALL' {
-    return this.props.driverLicenseCategory
+  public get token(): string {
+    return this.props.token
+  }
+
+  public set driverLicenseCategoryId(driverLicenseCategoryId: string) {
+    this.props.driverLicenseCategoryId = driverLicenseCategoryId
+  }
+
+  public get driverLicenseCategoryId(): string {
+    return this.props.driverLicenseCategoryId
   }
 
   public get createdAt(): Date {

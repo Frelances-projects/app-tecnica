@@ -1,10 +1,10 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, InternalServerErrorException } from '@nestjs/common'
 
-import { Test } from "src/application/entities/tests";
-import { TestRepository } from "src/application/repositories/tests-repository";
+import { Test } from 'src/application/entities/tests'
+import { TestRepository } from 'src/application/repositories/tests-repository'
 
 interface GetManyTestsResponse {
-  test: Test[];
+  test: Test[]
 }
 
 @Injectable()
@@ -13,13 +13,14 @@ export class GetManyTests {
 
   async execute(): Promise<GetManyTestsResponse> {
     try {
-      const test = await this.testRepository.findMany();
+      const test = await this.testRepository.findMany()
 
       return {
         test,
-      };
+      }
     } catch (error) {
-      throw error;
+      if (error) throw error
+      throw new InternalServerErrorException()
     }
   }
 }

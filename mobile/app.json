@@ -5,6 +5,22 @@
       "bundler": "metro"
     },
     "name": "app-tecnica",
-    "slug": "app-tecnica"
+    "slug": "app-tecnica",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#FFF"
+    },
+    "android": {
+      "package": "com.apptecnica"
+    },
+    "ios": {
+      "bundleIdentifier": "com.apptecnica"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "27217042-9844-4cfb-a0cf-5578a76a81b4"
+      }
+    }
   }
 }

@@ -1,5 +1,6 @@
 import { TouchableOpacity, View } from 'react-native'
 import { useNavigation } from 'expo-router/src/useNavigation'
+import { useRoute } from '@react-navigation/native';
 import { DrawerActions } from '@react-navigation/routers'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { List } from 'phosphor-react-native'
@@ -14,6 +15,7 @@ type StackHeaderProps = {
 
 export function DrawerHeader({ title }: StackHeaderProps) {
   const navigation = useNavigation()
+  const router = useRoute()
 
   const insets = useSafeAreaInsets()
 
@@ -26,11 +28,14 @@ export function DrawerHeader({ title }: StackHeaderProps) {
         <Logo width={190} height={83} />
       </View>
 
-      <TouchableOpacity
+      {router.name !== 'index' ? (
+        <TouchableOpacity
         onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
       >
         <List size={36} color={theme.colors.dark[500]} />
-      </TouchableOpacity>
+        </TouchableOpacity>
+      ) : <TouchableOpacity className='mr-9'>
+      </TouchableOpacity>}
     </View>
   )
 }

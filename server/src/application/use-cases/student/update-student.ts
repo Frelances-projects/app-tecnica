@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common'
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common'
 
 import { StudentsRepository } from '../../repositories/students-repository'
 import { GetStudentById } from './get-student-by-id'
@@ -11,7 +15,7 @@ interface UpdateStudentRequest {
   name?: string
   email?: string
   schoolId?: string
-  driverLicenseCategory?: 'A' | 'B' | 'C' | 'ALL'
+  driverLicenseCategoryId?: string
   number?: number
 }
 
@@ -30,7 +34,7 @@ export class UpdateStudent {
 
   async execute(request: UpdateStudentRequest): Promise<UpdateStudentResponse> {
     try {
-      const { id, email, name, number, schoolId, driverLicenseCategory } =
+      const { id, email, name, number, schoolId, driverLicenseCategoryId } =
         request
 
       const { student } = await this.getStudentById.execute(id)
@@ -39,21 +43,21 @@ export class UpdateStudent {
         await this.getStudentByEmail.execute(email)
 
       if (foundStudentByEmail.email === email) {
-        throw new Error('This email has already been used')
+        throw new ConflictException('This email has already been used')
       }
 
       const { student: foundStudentByNumber } =
         await this.getStudentByNumber.execute(number)
 
       if (foundStudentByNumber.number === number) {
-        throw new Error('This number has already been used')
+        throw new ConflictException('This number has already been used')
       }
 
       student.name = name ?? student.name
       student.email = email ?? student.email
       student.schoolId = schoolId ?? student.schoolId
-      student.driverLicenseCategory =
-        driverLicenseCategory ?? student.driverLicenseCategory
+      student.driverLicenseCategoryId =
+        driverLicenseCategoryId ?? student.driverLicenseCategoryId
       student.number = number ?? student.number
 
       await this.studentsRepository.save(student)
@@ -62,7 +66,8 @@ export class UpdateStudent {
         student,
       }
     } catch (error) {
-      throw error
+      if (error) throw error
+      throw new InternalServerErrorException()
     }
   }
 }

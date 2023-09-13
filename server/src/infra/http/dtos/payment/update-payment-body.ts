@@ -1,9 +1,17 @@
-import { IsNotEmpty } from "class-validator";
+import { IsNumber } from 'class-validator'
 
 export class UpdatePaymentBody {
-  @IsNotEmpty()
-  method: 'INSTALLMENTS' |'INCASH'
+  method: 'INSTALLMENTS' | 'INCASH'
 
-  @IsNotEmpty()
+  @IsNumber()
+  amountOfInstallments: number
+
+  @IsNumber()
+  amountOfInstallmentsPaid: number
+
+  @IsNumber()
+  amountOfRemainingInstallments: number
+
+  @IsNumber()
   total: number
 }

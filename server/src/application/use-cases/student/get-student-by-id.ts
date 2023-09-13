@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common'
+import {
+  Injectable,
+  NotFoundException,
+  InternalServerErrorException,
+} from '@nestjs/common'
 
 import { StudentsRepository } from '../../repositories/students-repository'
 import { Student } from '../../entities/student'
@@ -16,14 +20,15 @@ export class GetStudentById {
       const student = await this.studentsRepository.findById(studentId)
 
       if (!student) {
-        throw new Error('student not found')
+        throw new NotFoundException('student not found')
       }
 
       return {
         student,
       }
     } catch (error) {
-      throw error
+      if (error) throw error
+      throw new InternalServerErrorException()
     }
   }
 }

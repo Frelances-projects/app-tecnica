@@ -1,16 +1,22 @@
-import { Injectable } from '@nestjs/common'
+import {
+  Injectable,
+  InternalServerErrorException,
+  ConflictException,
+} from '@nestjs/common'
 
+import { Student } from '../../entities/student'
 import { StudentsRepository } from '../../repositories/students-repository'
 import { GetStudentByEmail } from './get-student-by-email'
 import { GetStudentByNumber } from './get-student-by-number'
-import { Student } from '../../entities/student'
+import { CreatePayment } from '../payment/create-payment'
+import { GetDriverLicenseCategoryById } from '../driver-license-category/get-driver-license-category-by-id'
 
 interface CreateStudentRequest {
   name: string
   email: string
   schoolId: string
-  paymentId: string
-  driverLicenseCategory: 'A' | 'B' | 'C' | 'ALL'
+  paymentMethod: 'INSTALLMENTS' | 'INCASH'
+  driverLicenseCategoryId: string
   number: number
   enrolledAt: string
 }
@@ -25,6 +31,8 @@ export class CreateStudent {
     private studentsRepository: StudentsRepository,
     private getStudentByEmail: GetStudentByEmail,
     private getStudentByNumber: GetStudentByNumber,
+    private createPayment: CreatePayment,
+    private getDriverLicenseCategoryById: GetDriverLicenseCategoryById,
   ) {}
 
   async execute(request: CreateStudentRequest): Promise<CreateStudentResponse> {
@@ -34,8 +42,8 @@ export class CreateStudent {
         name,
         enrolledAt,
         schoolId,
-        paymentId,
-        driverLicenseCategory,
+        paymentMethod,
+        driverLicenseCategoryId,
         number,
       } = request
 
@@ -47,18 +55,41 @@ export class CreateStudent {
           foundStudentByEmail.email &&
           foundStudentByEmail.number === number
         ) {
-          throw new Error('This email and number has already been used')
+          throw new ConflictException(
+            'This email and number has already been used',
+          )
         }
 
-        throw new Error('This email has already been used')
+        throw new ConflictException('This email has already been used')
       }
 
       const { student: foundStudentByNumber } =
         await this.getStudentByNumber.execute(number)
 
       if (foundStudentByNumber) {
-        throw new Error('This number has already been used')
+        throw new ConflictException('This number has already been used')
       }
+
+      const { driverLicenseCategory } =
+        await this.getDriverLicenseCategoryById.execute(driverLicenseCategoryId)
+
+      const { payment } = await this.createPayment.execute({
+        method: paymentMethod,
+        total: driverLicenseCategory.price,
+        amountOfInstallments:
+          paymentMethod === 'INSTALLMENTS'
+            ? Object.values(driverLicenseCategory.installments).filter(
+                (value) => value !== undefined && value !== null,
+              ).length
+            : null,
+        amountOfRemainingInstallments:
+          paymentMethod === 'INSTALLMENTS'
+            ? Object.values(driverLicenseCategory.installments).filter(
+                (value) => value !== undefined && value !== null,
+              ).length
+            : null,
+        amountOfInstallmentsPaid: paymentMethod === 'INSTALLMENTS' ? 0 : null,
+      })
 
       const student = new Student({
         email,
@@ -66,8 +97,8 @@ export class CreateStudent {
         enrolledAt,
         number,
         schoolId,
-        paymentId,
-        driverLicenseCategory,
+        paymentId: payment.id,
+        driverLicenseCategoryId,
       })
 
       await this.studentsRepository.create(student)
@@ -76,7 +107,8 @@ export class CreateStudent {
         student,
       }
     } catch (error) {
-      throw error
+      if (error) throw error
+      throw new InternalServerErrorException()
     }
   }
 }

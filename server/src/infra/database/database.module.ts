@@ -17,11 +17,20 @@ import { PrismaPaymentRepository } from './prisma/repositories/prisma-payment-re
 import { SchoolRepository } from '../../application/repositories/school-repository'
 import { PrismaSchoolRepository } from './prisma/repositories/prisma-school-repository'
 
+import { DriverLicenseCategoryRepository } from '../../application/repositories/driver-license-category-repository'
+import { PrismaDriverLicenseCategoryRepository } from './prisma/repositories/prisma-driver-license-category-repository'
+
 import { TestRepository } from '../../application/repositories/tests-repository'
 import { PrismaTestRepository } from './prisma/repositories/prisma-test-repository'
 
-import { InstallmentsRepository } from '../../application/repositories/installments-repository'
-import { PrismaInstallmentsRepository } from './prisma/repositories/prisma-installments-repository'
+import { ClassRepository } from '../../application/repositories/class-repository'
+import { PrismaClassRepository } from './prisma/repositories/prisma-class-repository'
+
+import { ScheduledClassRepository } from '../../application/repositories/scheduled-class-repository'
+import { PrismaScheduledClassRepository } from './prisma/repositories/prisma-scheduled-class-repository'
+
+import { UserRepository } from '../../application/repositories/user-repository'
+import { PrismaUserRepository } from './prisma/repositories/prisma-user-repository'
 
 @Module({
   providers: [
@@ -47,14 +56,37 @@ import { PrismaInstallmentsRepository } from './prisma/repositories/prisma-insta
       useClass: PrismaSchoolRepository,
     },
     {
+      provide: DriverLicenseCategoryRepository,
+      useClass: PrismaDriverLicenseCategoryRepository,
+    },
+    {
       provide: TestRepository,
       useClass: PrismaTestRepository,
     },
     {
-      provide: InstallmentsRepository,
-      useClass: PrismaInstallmentsRepository,
+      provide: ClassRepository,
+      useClass: PrismaClassRepository,
+    },
+    {
+      provide: ScheduledClassRepository,
+      useClass: PrismaScheduledClassRepository,
+    },
+    {
+      provide: UserRepository,
+      useClass: PrismaUserRepository,
     },
   ],
-  exports: [InformationRepository, StudentsRepository, CalendarRepository, PaymentRepository, SchoolRepository, TestRepository, InstallmentsRepository],
+  exports: [
+    InformationRepository,
+    StudentsRepository,
+    CalendarRepository,
+    PaymentRepository,
+    SchoolRepository,
+    DriverLicenseCategoryRepository,
+    TestRepository,
+    ClassRepository,
+    ScheduledClassRepository,
+    UserRepository,
+  ],
 })
 export class DatabaseModule {}

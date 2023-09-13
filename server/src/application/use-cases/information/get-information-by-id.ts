@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common'
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common'
 
 import { InformationRepository } from '../../repositories/information-repository'
 import { Information } from '../../entities/information'
@@ -18,14 +22,15 @@ export class GetInformationById {
       )
 
       if (!information) {
-        throw new Error('Information not found')
+        throw new NotFoundException('Information not found')
       }
 
       return {
         information,
       }
     } catch (error) {
-      throw error
+      if (error) throw error
+      throw new InternalServerErrorException()
     }
   }
 }

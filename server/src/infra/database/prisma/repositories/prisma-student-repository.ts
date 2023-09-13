@@ -18,6 +18,7 @@ export class PrismaStudentsRepository implements StudentsRepository {
   async findById(studentId: string): Promise<Student> {
     const student = await this.prisma.student.findUnique({
       where: { id: studentId },
+      include: { payment: true, school: true, tests: true },
     })
 
     if (!student) {

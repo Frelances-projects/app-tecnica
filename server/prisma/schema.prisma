@@ -21,7 +21,9 @@ model Information {
 model Class {
   id             String           @id
   name           String
+  description    String?
   code           Int              @unique
+  category       ClassCategory    @default(THEORETICAL)
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   scheduledClass ScheduledClass[]
@@ -40,37 +42,72 @@ model Calendar {
 }
 
 model School {
-  id        String    @id
-  name      String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  Student   Student[]
+  id                      String                  @id
+  name                    String
+  createdAt               DateTime                @default(now())
+  updatedAt               DateTime                @updatedAt
+  students                Student[]
+  users                   User[]
+  driverLicenseCategories DriverLicenseCategory[]
 
   @@map("schools")
 }
 
+model DriverLicenseCategory {
+  id           String    @id
+  name         String
+  price        Float
+  installments Json
+  schoolId     String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  school       School    @relation(fields: [schoolId], references: [id])
+  students     Student[]
+
+  @@map("driver_license_categories")
+}
+
+model User {
+  id        String       @id
+  name      String
+  email     String       @unique
+  password  String
+  schoolId  String
+  function  UserFunction @default(ADMIN)
+  token     String?
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  school    School       @relation(fields: [schoolId], references: [id])
+
+  @@map("users")
+}
+
 model Student {
-  id                    String                @id
-  name                  String
-  email                 String                @unique
-  number                Int                   @unique
-  enrolledAt            String
-  driverLicenseCategory DriverLicenseCategory @default(A)
-  schoolId              String
-  paymentId             String
-  createdAt             DateTime              @default(now())
-  updatedAt             DateTime              @updatedAt
-  scheduledClass        ScheduledClass[]
-  payment               Payment               @relation(fields: [paymentId], references: [id])
-  school                School                @relation(fields: [schoolId], references: [id])
+  id                      String                @id
+  name                    String
+  email                   String                @unique
+  password                String?
+  number                  Int                   @unique
+  enrolledAt              String
+  driverLicenseCategoryId String
+  schoolId                String
+  paymentId               String?               @unique
+  token                   String?
+  createdAt               DateTime              @default(now())
+  updatedAt               DateTime              @updatedAt
+  scheduledClass          ScheduledClass[]
+  payment                 Payment?              @relation(fields: [paymentId], references: [id])
+  school                  School                @relation(fields: [schoolId], references: [id])
+  driverLicenseCategory   DriverLicenseCategory @relation(fields: [driverLicenseCategoryId], references: [id])
+  tests                   Test[]
 
   @@map("students")
 }
 
 model ScheduledClass {
   id             String               @id
-  schedulingDate String
-  schedulingHour String
+  schedulingDate String?
+  schedulingHour String?
   status         ScheduledClassStatus @default(PENDING)
   studentId      String
   classId        String
@@ -87,44 +124,38 @@ model Test {
   testDate  String
   testHour  String
   status    TestStatus   @default(MARKED)
+  studentId String
   category  TestCategory @default(THEORETICAL)
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
+  student   Student      @relation(fields: [studentId], references: [id])
 
   @@map("tests")
 }
 
 model Payment {
-  id           String         @id
-  method       PaymentMethod  @default(INCASH)
-  total        Int
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  installments Installments[]
-  student      Student[]
+  id                            String        @id
+  method                        PaymentMethod @default(INCASH)
+  total                         Float
+  amountOfInstallments          Int?
+  amountOfInstallmentsPaid      Int?
+  amountOfRemainingInstallments Int?
+  createdAt                     DateTime      @default(now())
+  updatedAt                     DateTime      @updatedAt
+  student                       Student?
 
   @@map("payments")
 }
 
-model Installments {
-  id                            String   @id
-  valueOfAnInstallment          Int
-  amountOfInstallments          Int
-  amountOfInstallmentsPaid      Int
-  amountOfRemainingInstallments Int
-  paymentId                     String
-  createdAt                     DateTime @default(now())
-  updatedAt                     DateTime @updatedAt
-  payment                       Payment  @relation(fields: [paymentId], references: [id])
-
-  @@map("installments")
+enum ClassCategory {
+  THEORETICAL
+  PRACTICAL
 }
 
-enum DriverLicenseCategory {
-  A
-  B
-  C
-  ALL
+enum UserFunction {
+  ADMIN
+  DIRECTOR
+  INSTRUCTOR
 }
 
 enum ScheduledClassStatus {

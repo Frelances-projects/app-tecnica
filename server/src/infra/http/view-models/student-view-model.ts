@@ -7,6 +7,10 @@ export class StudentViewModel {
       name: student.name,
       email: student.email,
       number: student.number,
+      driverLicenseCategoryId: student.driverLicenseCategoryId,
+      paymentId: student.paymentId,
+      token: student.token,
+      schoolId: student.schoolId,
       enrolledAt: student.enrolledAt,
       createdAt: student.createdAt,
     }
