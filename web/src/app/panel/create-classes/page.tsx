@@ -17,7 +17,7 @@ export default function CreateClasses() {
   }
 
   return (
-    <main className="w-full flex justify-center items-start gap-32 mt-24 mb-16">
+    <main className="w-full flex justify-center items-start gap-24 mt-24 mb-16">
       <section className="max-w-lg pt-6">
         <h1 className='mb-11 text-xl font-medium'>Inserir Aulas de Código</h1>
         <form action={handleInsetClasses} className="space-y-10">

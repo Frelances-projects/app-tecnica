@@ -21,7 +21,7 @@ export default function Home() {
         </div>
 
         {/* <button type='submit' className='text-white bg-[#E3000F] w-40 h-10 rounded-[20px] hover:bg-[#E3000F]/90 transition-colors duration-300'>Entrar</button> */}
-        <Link className='flex items-center justify-center text-white bg-[#E3000F] w-40 h-10 rounded-[20px] hover:bg-[#E3000F]/90 transition-colors duration-300' href={'/panel'}>Entrar</Link>
+        <Link className='flex items-center justify-center text-white bg-[#E3000F] w-40 h-10 rounded-[20px] hover:bg-[#E3000F]/90 transition-colors duration-300' href={'/alert/create'}>Entrar</Link>
       </div>
     </main>
   )

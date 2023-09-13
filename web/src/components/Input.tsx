@@ -1,9 +1,14 @@
-import { InputHTMLAttributes } from 'react'
+import { InputHTMLAttributes, ReactNode } from 'react'
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {}
+interface InputProps extends InputHTMLAttributes<HTMLFieldSetElement> {
+  hasIcon?: ReactNode
+}
 
-export function Input({ className, ...rest }: InputProps) {
+export function Input({ className, hasIcon, ...rest }: InputProps) {
   return (
-    <input className={`bg-white border border-[#C6C6C6] outline-none rounded-lg w-[18.188rem] px-2 py-[0.375rem] text-black ${className}`} {...rest} />
+    <fieldset className={`border w-[520px] border-[#C6C6C6] outline-none flex items-center justify-between bg-white rounded-lg px-2 py-[0.375rem] text-black ${className}`} {...rest}>
+      <input className={`outline-none`}/>
+      {hasIcon}
+    </fieldset>
   )
 }

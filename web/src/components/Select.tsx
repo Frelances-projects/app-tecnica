@@ -1,14 +1,19 @@
-export function Select() {
+import { InputHTMLAttributes } from "react"
+
+interface SelectProps extends InputHTMLAttributes<HTMLSelectElement> {
+  placeHolder?: string
+  data?: {value: string, label: string}[]
+}
+
+export function Select({data, className, placeHolder, ...rest}: SelectProps) {
+
+  const dataTeste = data
   return (
-    <fieldset>
-      <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
-      <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        <option defaultChecked>Choose a country</option>
-        <option value="US">United States</option>
-        <option value="CA">Canada</option>
-        <option value="FR">France</option>
-        <option value="DE">Germany</option>
-      </select>
-    </fieldset>
+    <select className={`bg-white border border-[#C6C6C6] outline-none rounded-lg w-[18.188rem] px-2 py-[0.375rem] text-black ${className}`}  {...rest}>
+      <option className="text-gray" value="" disabled selected>{placeHolder ?? 'Selecione...'}</option>
+      {dataTeste?.map((option) => {
+        return <option className="text-gray" key={option?.value} value={option?.value} >{option?.label}</option>
+      })}
+    </select>
   )
 }

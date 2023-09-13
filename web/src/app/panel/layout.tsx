@@ -1,5 +1,5 @@
-import { Header } from './components/Header'
-import { Navigation } from './components/Navigation'
+import { Header } from '../components/Header'
+import { SideBar } from '../components/Navigation'
 
 export const metadata = {
   title: 'App Técnica',
@@ -15,12 +15,13 @@ export default function PanelLayout({
     <>
       <Header />
 
-      <Navigation />
 
       <div className='mx-auto max-w-[1440px] w-full h-[1px] bg-black'/>
-
-      <div className="w-full max-w-7xl h-full mx-auto flex items-center justify-center">
-        {children}
+      <div className='flex gap-11'>
+        <SideBar />
+        <div className="w-full max-w-6xl flex items-center justify-center">
+          {children}
+        </div>
       </div>
     </>
   )
