@@ -6,7 +6,7 @@ import Logo from '../assets/logo.svg'
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 gap-36">
+    <main className="w-full max-w-7xl mx-auto flex min-h-screen flex-col items-center justify-center p-24 gap-36">
       <Image src={Logo} alt='Imagem do logotipo da app técnica' />
 
       <div className='flex flex-col items-center justify-between gap-9'>
@@ -21,7 +21,7 @@ export default function Home() {
         </div>
 
         {/* <button type='submit' className='text-white bg-[#E3000F] w-40 h-10 rounded-[20px] hover:bg-[#E3000F]/90 transition-colors duration-300'>Entrar</button> */}
-        <Link className='flex items-center justify-center text-white bg-[#E3000F] w-40 h-10 rounded-[20px] hover:bg-[#E3000F]/90 transition-colors duration-300' href={'/alert/create'}>Entrar</Link>
+        <Link className='flex items-center justify-center text-white bg-[#E3000F] w-40 h-10 rounded-[20px] hover:bg-[#E3000F]/90 transition-colors duration-300' href={'/panel/alert/create'}>Entrar</Link>
       </div>
     </main>
   )

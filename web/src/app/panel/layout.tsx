@@ -12,17 +12,17 @@ export default function PanelLayout({
   children: React.ReactNode
 }) {
   return (
-    <>
+    <div className='overflow-x-hidden'>
       <Header />
 
 
       <div className='mx-auto max-w-[1440px] w-full h-[1px] bg-black'/>
       <div className='flex gap-11'>
         <SideBar />
-        <div className="w-full max-w-6xl flex items-center justify-center">
+        <div className="w-full max-w-6xl flex justify-center">
           {children}
         </div>
       </div>
-    </>
+    </div>
   )
 }

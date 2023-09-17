@@ -5,7 +5,7 @@ import { Button } from "@/components/Button";
 import { Select } from "@/components/Select";
 
 import Image from "next/image";
-import PdfIcon from '../../assets/PDF-Icon.svg'
+import PdfIcon from '../../../assets/PDF-Icon.svg'
 
 export default function CreateCodeCalendar() {
   const [file, setFile] = useState<File | undefined>(undefined)

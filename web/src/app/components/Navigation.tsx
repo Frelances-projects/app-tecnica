@@ -9,7 +9,7 @@ import { BellDot, BellPlus, Book, Calendar, CarIcon, ChevronUp, ClipboardCheck, 
 
 export function SideBar() {
 
-  const [collapsed, setCollapsed] = useState(true);
+  const [collapsed, setCollapsed] = useState(false);
   const [dropDown, setDropDown] = useState<string>('close');
 
   const toggleCollapse = () => {
@@ -26,7 +26,7 @@ export function SideBar() {
 
   return (
     <div
-      className={`sidebar mt-1 h-screen ${collapsed ? 'w-20' : 'w-[460px]'} bg-[#F9F9F9] text-zinc-800 transition-all duration-300`}
+      className={`sidebar mt-1 h-screen ${collapsed ? 'w-20' : 'w-[360px]'} bg-[#F9F9F9] text-zinc-800 transition-all duration-300`}
     >
       <button
         className="flex gap-4 items-center justify-start overflow-hidden w-full py-3 px-4 bg-[#F9F9F9] text-zinc-800 text-left mt-1 outline-none"
@@ -52,10 +52,10 @@ export function SideBar() {
             <ChevronUp className={`transform rotate-90 ${dropDown === 'alert'  ? 'rotate-180' : ''} ${collapsed ? 'hidden' : ''} transition-all duration-300`} />
           </button>
           <div className={`transform flex flex-col gap-4 ml-10 mt-2 ${collapsed ? 'ml-6' : ''} ${dropDown === 'alert' ? 'h-max' : 'hidden'} transition-all ease-linear duration-300`} >
-            <Link href='/alert/create' className={`flex gap-2 hover:text-[#E86255]`} >
+            <Link href='/panel/alert/create' className={`flex gap-2 hover:text-[#E86255]`} >
               <BellPlus size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Criar Alerta</span>
             </Link>
-            <Link href='/alert/create' className={`flex gap-2 hover:text-[#E86255]`} >
+            <Link href='/panel/alert/edit' className={`flex gap-2 hover:text-[#E86255]`} >
               <BellDot size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Editar Alerta</span>
             </Link>
           </div>
@@ -65,7 +65,7 @@ export function SideBar() {
           <button
             className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between"
           >
-            <Link href='/create-code-calendar' className={`flex gap-2 hover:text-[#E86255]`} >
+            <Link href='/panel/create-code-calendar' className={`flex gap-2 hover:text-[#E86255]`} >
               <Calendar size={20} /> <span className={`${collapsed ? 'hidden' : 'flex whitespace-nowrap'}`}>Adicionar Calendário Código</span>
             </Link>
           </button>
@@ -85,10 +85,10 @@ export function SideBar() {
             <ChevronUp className={`transform rotate-90 ${dropDown === 'student' ? 'rotate-180' : ''} ${collapsed ? 'hidden' : ''} transition-all duration-300`} />
           </button>
           <div className={`transform flex flex-col gap-4 ml-10 mt-2 ${collapsed  ? 'ml-6' : ''} ${dropDown === 'student' ? 'h-max' : 'hidden'} transition-all ease-linear duration-300`}>
-            <Link href='/students/list' className='flex gap-2 hover:text-[#E86255]'>
+            <Link href='/panel/students/list' className='flex gap-2 hover:text-[#E86255]'>
               <ClipboardList size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Listagem dos Alunos</span>   
             </Link>
-            <Link href='/students/register' className='flex gap-2 hover:text-[#E86255]'>
+            <Link href='/panel/students/register' className='flex gap-2 hover:text-[#E86255]'>
               <UserPlus2 size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Adicionar Alunos</span>
             </Link>
           </div>
@@ -98,7 +98,7 @@ export function SideBar() {
           <button
             className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between"
           >
-            <Link href='/driving-lessons' className={`flex gap-2 hover:text-[#E86255]`} >
+            <Link href='/panel/driving-lessons' className={`flex gap-2 hover:text-[#E86255]`} >
               <CarIcon size={20} /> <span className={`${collapsed ? 'hidden' : 'flex whitespace-nowrap'}`} >Aulas Condução</span>
             </Link>
           </button>
@@ -118,10 +118,10 @@ export function SideBar() {
             <ChevronUp className={`transform rotate-90 ${dropDown === 'exam' ? 'rotate-180' : ''} ${collapsed ? 'hidden' : ''} transition-all duration-300`} />
           </button>
           <div className={`transform flex flex-col gap-4 ml-10 mt-2 ${collapsed ? 'ml-6' : ''} ${dropDown === 'exam' ? 'h-max' : 'hidden'} transition-all ease-linear duration-300`}>
-            <Link href='/code-exams' className='flex gap-2 hover:text-[#E86255]'>
+            <Link href='/panel/code-exams' className='flex gap-2 hover:text-[#E86255]'>
               <Book size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Código</span>
             </Link>
-            <Link href='/driving-exams' className='flex gap-2 hover:text-[#E86255]'>
+            <Link href='/panel/driving-exams' className='flex gap-2 hover:text-[#E86255]'>
               <KeySquare size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Condução</span>
             </Link>
           </div>
@@ -131,7 +131,7 @@ export function SideBar() {
           <button
             className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between"
           >
-            <Link href='/prices' className='flex gap-2 hover:text-[#E86255]'>
+            <Link href='/panel/prices' className='flex gap-2 hover:text-[#E86255]'>
               <CreditCard size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Definir Preços</span>
             </Link>
           </button>
