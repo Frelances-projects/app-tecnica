@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation'
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -8,6 +9,7 @@ import Logo from '../../assets/Tecnica_LOGO_outline_icon.svg'
 import { BellDot, BellPlus, Book, Calendar, CarIcon, ChevronUp, ClipboardCheck, ClipboardList, CreditCard, KeySquare, LogOut, UserPlus2, Users2 } from 'lucide-react';
 
 export function SideBar() {
+  const router = useRouter()
 
   const [collapsed, setCollapsed] = useState(false);
   const [dropDown, setDropDown] = useState<string>('close');
@@ -23,6 +25,13 @@ export function SideBar() {
 
     return setDropDown(type)
   };
+
+  function handleLogoutUser() {
+    const pastDate = new Date(0);
+    document.cookie = `user=; expires=${pastDate.toUTCString()}; path=/`;
+
+    router.push('/login')
+  }
 
   return (
     <div
@@ -139,6 +148,7 @@ export function SideBar() {
 
         <div className="group cursor-pointer ml-2">
           <button
+            onClick={() => handleLogoutUser()}
             className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between"
           >
             <div className='flex gap-5 items-center'>
