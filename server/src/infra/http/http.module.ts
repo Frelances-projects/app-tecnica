@@ -18,8 +18,10 @@ import { UserController } from './controllers/user.controller'
 // INFORMATION
 import { CreateInformation } from '../../application/use-cases/information/create-information'
 import { GetInformationById } from '../../application/use-cases/information/get-information-by-id'
+import { DeleteInformation } from '../../application/use-cases/information/delete-information'
 import { UpdateInformation } from '../../application/use-cases/information/update-information'
 import { GetManyInformation } from '../../application/use-cases/information/get-many-informations'
+import { GetManyInformationBySchool } from '../../application/use-cases/information/get-many-informations-by-school'
 
 // STUDENT
 import { CreateStudent } from '../../application/use-cases/student/create-student'
@@ -106,8 +108,10 @@ import { CreateToken } from 'src/helpers/create-token'
     // INFORMATION
     CreateInformation,
     GetInformationById,
+    DeleteInformation,
     UpdateInformation,
     GetManyInformation,
+    GetManyInformationBySchool,
 
     // STUDENT
     CreateStudent,

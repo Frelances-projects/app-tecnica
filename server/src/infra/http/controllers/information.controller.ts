@@ -1,9 +1,11 @@
-import { Body, Controller, Get, Param, Put, Post } from '@nestjs/common'
+import { Body, Controller, Get, Param, Put, Post, Delete } from '@nestjs/common'
 
 import { CreateInformation } from '../../../application/use-cases/information/create-information'
 import { GetInformationById } from '../../../application/use-cases/information/get-information-by-id'
+import { DeleteInformation } from '../../../application/use-cases/information/delete-information'
 import { UpdateInformation } from '../../../application/use-cases/information/update-information'
 import { GetManyInformation } from '../../../application/use-cases/information/get-many-informations'
+import { GetManyInformationBySchool } from '../../../application/use-cases/information/get-many-informations-by-school'
 
 import { InformationViewModel } from '../view-models/information-view-model'
 
@@ -15,8 +17,10 @@ export class InformationController {
   constructor(
     private createInformation: CreateInformation,
     private getInformationById: GetInformationById,
+    private deleteInformation: DeleteInformation,
     private updateInformation: UpdateInformation,
     private getManyInformation: GetManyInformation,
+    private getManyInformationBySchool: GetManyInformationBySchool,
   ) {}
 
   @Get(':informationId')
@@ -31,6 +35,21 @@ export class InformationController {
   @Get()
   async getMany() {
     const { information } = await this.getManyInformation.execute()
+
+    const informationToHTTP = information.map((info) =>
+      InformationViewModel.toHTTP(info),
+    )
+
+    return {
+      information: informationToHTTP,
+    }
+  }
+
+  @Get('/school/:schoolId')
+  async getManyBySchool(@Param('schoolId') schoolId: string) {
+    const { information } = await this.getManyInformationBySchool.execute(
+      schoolId,
+    )
 
     const informationToHTTP = information.map((info) =>
       InformationViewModel.toHTTP(info),
@@ -66,5 +85,10 @@ export class InformationController {
     return {
       information: InformationViewModel.toHTTP(information),
     }
+  }
+
+  @Delete(':informationId')
+  async delete(@Param('informationId') informationId: string) {
+    await this.deleteInformation.execute(informationId)
   }
 }

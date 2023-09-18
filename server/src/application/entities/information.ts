@@ -6,6 +6,7 @@ interface InformationProps {
   name: string
   description: string
   date: string
+  schoolId: string
   createdAt?: Date | null
 }
 
@@ -50,6 +51,14 @@ export class Information {
 
   public get date(): string {
     return this.props.date
+  }
+
+  public set schoolId(schoolId: string) {
+    this.props.schoolId = schoolId
+  }
+
+  public get schoolId(): string {
+    return this.props.schoolId
   }
 
   public get createdAt(): Date {

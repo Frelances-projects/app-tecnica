@@ -37,6 +37,18 @@ export class PrismaInformationRepository implements InformationRepository {
     return informationToDomain
   }
 
+  async findManyBySchool(schoolId: string): Promise<Information[]> {
+    const information = await this.prisma.information.findMany({
+      where: { schoolId },
+    })
+
+    const informationToDomain = information.map((info) =>
+      PrismaInformationMapper.toDomain(info),
+    )
+
+    return informationToDomain
+  }
+
   async save(information: Information): Promise<void> {
     const raw = PrismaInformationMapper.toPrisma(information)
 
@@ -45,6 +57,14 @@ export class PrismaInformationRepository implements InformationRepository {
         id: raw.id,
       },
       data: raw,
+    })
+  }
+
+  async delete(informationId: string): Promise<void> {
+    await this.prisma.information.delete({
+      where: {
+        id: informationId,
+      },
     })
   }
 }

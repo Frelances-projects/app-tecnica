@@ -9,6 +9,7 @@ export class PrismaInformationMapper {
       name: information.name,
       description: information.description,
       date: information.date,
+      schoolId: information.schoolId,
       createdAt: information.createdAt,
     }
   }
@@ -19,6 +20,7 @@ export class PrismaInformationMapper {
         name: raw.name,
         description: raw.description,
         date: raw.date,
+        schoolId: raw.schoolId,
         createdAt: raw.createdAt,
       },
       raw.id,

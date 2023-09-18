@@ -7,6 +7,7 @@ interface CreateInformationRequest {
   name: string
   description: string
   date: string
+  schoolId: string
 }
 
 interface CreateInformationResponse {
@@ -21,9 +22,9 @@ export class CreateInformation {
     request: CreateInformationRequest,
   ): Promise<CreateInformationResponse> {
     try {
-      const { name, description, date } = request
+      const { name, description, date, schoolId } = request
 
-      const information = new Information({ name, description, date })
+      const information = new Information({ name, description, date, schoolId })
 
       await this.informationRepository.create(information)
 
