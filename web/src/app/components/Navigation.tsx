@@ -13,6 +13,7 @@ export function SideBar() {
 
   const [collapsed, setCollapsed] = useState(false);
   const [dropDown, setDropDown] = useState<string>('close');
+  const [isDisabledButton, setIsDisabledButton] = useState(false)
 
   const toggleCollapse = () => {
     setCollapsed(!collapsed);
@@ -27,10 +28,14 @@ export function SideBar() {
   };
 
   function handleLogoutUser() {
+    setIsDisabledButton(true)
+
     const pastDate = new Date(0);
     document.cookie = `user=; expires=${pastDate.toUTCString()}; path=/`;
 
     router.push('/login')
+
+    setIsDisabledButton(false)
   }
 
   return (
@@ -148,8 +153,9 @@ export function SideBar() {
 
         <div className="group cursor-pointer ml-2">
           <button
+            disabled={isDisabledButton}
             onClick={() => handleLogoutUser()}
-            className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between"
+            className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 enabled:hover:text-[#E86255] text-left flex items-center justify-between disabled:cursor-not-allowed"
           >
             <div className='flex gap-5 items-center'>
               <LogOut size={20} />

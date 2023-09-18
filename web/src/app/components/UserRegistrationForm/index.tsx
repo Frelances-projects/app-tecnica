@@ -58,7 +58,7 @@ export function UserRegistrationForm({ children }: UserRegistrationFormProps) {
 
       {children}
       <SelectFunction />
-      <SubmitButton />
+      <SubmitButton text='Cadastrar' />
     </form>
   )
 }

@@ -6,4 +6,5 @@ export const errorMessages = {
   paymentNotFound: 'payment not found',
   emailHasAlreadyBeenUsed: 'This email has already been used',
   strongPassword: 'password is not strong enough',
+  emailOrPasswordIncorrect: 'Email or password incorrect',
 }
