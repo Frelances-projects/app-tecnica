@@ -7,4 +7,9 @@ export const errorMessages = {
   emailHasAlreadyBeenUsed: 'This email has already been used',
   strongPassword: 'password is not strong enough',
   emailOrPasswordIncorrect: 'Email or password incorrect',
+  nameEmpty: 'name should not be empty',
+  dateEmpty: 'date should not be empty',
+  descriptionShorter: 'description must be longer than or equal to 5 characters',
+  descriptionLonger: 'description must be shorter than or equal to 460 characters',
+  informationNotFound: 'Information not found',
 }
