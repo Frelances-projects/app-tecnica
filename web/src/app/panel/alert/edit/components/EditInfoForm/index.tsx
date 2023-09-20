@@ -3,14 +3,15 @@ import { useEffect, useState } from "react";
 import { format } from 'date-fns'
 
 import { Button } from "@/components/Button";
-import { Input } from "@/components/Input";
-import { Select } from "@/components/Select";
-import { WrapperItem } from "../../../components/WrapperItem";
+import { WrapperItem } from "@/components/WrapperItem";
+
 import { useToast } from "@/components/ui/use-toast";
 
 import { deleteInfo, updateInfo } from "./action";
 
 import { Information } from "../../page";
+import { ItemSelectForm } from "@/components/ItemSelectForm";
+import { ItemInputForm } from "@/components/ItemInputForm";
 
 interface EditInfoFormProps {
   information: Information[]
@@ -90,37 +91,32 @@ export function EditInfoForm({ information }: EditInfoFormProps) {
   
   return (
     <form action={handleUpdateInfo} className='flex flex-col gap-6 min-w-[710px] mt-6 pl-10'>
-      <WrapperItem label="Encontrar Alerta" htmlFor="name">
-        <Select
-          data={formattedInformation}
-          name="information"
-          className='w-[520px]'
-          onChange={(event) => setSelectInformation(event.target.value)}
-        />
-      </WrapperItem>
+      <ItemSelectForm
+        label="Encontrar Alerta"
+        data={formattedInformation}
+        id="information"
+        onChange={(event) => setSelectInformation(event.target.value)}
+      />
 
-      <WrapperItem htmlFor="name" label="Alterar titulo do Alerta">
-        <Input
-          name="title"
-          id='name'
-          type='text'
-          placeholder='Digite o novo título'
-          inputValue={name}
-          onChangeInput={(event) => setName(event.target.value)}
-        />
-      </WrapperItem>
+      <ItemInputForm
+        required
+        id='title'
+        type='text'
+        placeholder='Digite o novo título'
+        label="Alterar titulo do Alerta"
+        inputValue={name}
+        onChangeInput={(event) => setName(event.target.value)}
+      />
 
-      <WrapperItem htmlFor="date" label="Alterar data do Alerta">
-        <Input 
-          id='date'
-          required
-          name="date"
-          type='date'
-          placeholder="Selecione a nova data"
-          inputValue={date}
-          onChangeInput={(event) => setDate(event.target.value)}
-        />
-      </WrapperItem>
+      <ItemInputForm
+        required
+        id='date'
+        type='date'
+        placeholder="Selecione a nova data"
+        label="Alterar data do Alerta"
+        inputValue={date}
+        onChangeInput={(event) => setDate(event.target.value)}
+      />
 
       <WrapperItem htmlFor="description" label="Alterar descrição do Alerta">
         <textarea

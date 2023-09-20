@@ -1,6 +1,6 @@
 import { ChangeEventHandler, InputHTMLAttributes, ReactNode } from 'react'
 
-interface InputProps extends InputHTMLAttributes<HTMLLabelElement> {
+interface InputProps extends InputHTMLAttributes<HTMLDivElement> {
   hasIcon?: ReactNode
   id: string
   type: string
@@ -13,9 +13,9 @@ interface InputProps extends InputHTMLAttributes<HTMLLabelElement> {
 
 export function Input({ className, hasIcon, id, type, placeholder, name, onChangeInput, inputValue, required, ...rest }: InputProps) {
   return (
-    <label htmlFor={id} className={`border w-[520px] border-[#C6C6C6] outline-none flex items-center justify-between bg-white rounded-lg px-2 py-[0.375rem] text-black ${className}`} {...rest}>
-      <input 
-        className={`outline-none`} 
+    <div className={`border w-[520px] border-[#C6C6C6] outline-none flex items-center justify-between bg-white rounded-lg px-2 py-[0.375rem] text-black ${className}`} {...rest}>
+      <input
+        className={`outline-none flex-1`} 
         id={id} 
         type={type} 
         placeholder={placeholder} 
@@ -25,6 +25,6 @@ export function Input({ className, hasIcon, id, type, placeholder, name, onChang
         required={required}
       />
       {hasIcon}
-    </label>
+    </div>
   )
 }

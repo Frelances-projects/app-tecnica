@@ -2,11 +2,11 @@
 import { useRef } from "react";
 
 import { Button } from "@/components/Button";
-import { Input } from "@/components/Input";
-import { WrapperItem } from "../../../components/WrapperItem";
+import { WrapperItem } from "@/components/WrapperItem";
 import { useToast } from "@/components/ui/use-toast";
 
 import { registerInfo } from "./action";
+import { ItemInputForm } from "@/components/ItemInputForm";
 
 export function CreateInfoForm() {
   const { toast } = useToast()
@@ -33,25 +33,21 @@ export function CreateInfoForm() {
 
   return (
     <form ref={formRef} action={handleCreateInfo} className='flex flex-col gap-6 min-w-[710px] mt-6 pl-10'>
-      <WrapperItem htmlFor="title" label="Título do Alerta">
-        <Input 
-          id='title'
-          required
-          name="title"
-          type='text'
-          placeholder='Digite o Título'
-        />
-      </WrapperItem>
+      <ItemInputForm
+        required
+        id='title'
+        label="Título do Alerta"
+        placeholder='Digite o Título'
+        type='text'
+      />
 
-      <WrapperItem htmlFor="date" label="Data do alerta">
-        <Input 
-          id='date'
-          required
-          name="date"
-          type='date'
-          placeholder="Selecione a data"
-        />
-      </WrapperItem>
+      <ItemInputForm
+        required
+        id='date'
+        label="Data do alerta"
+        placeholder="Selecione a data"
+        type='date'
+      />
 
       <WrapperItem htmlFor="description" label="Descrição do Alerta">
         <textarea
