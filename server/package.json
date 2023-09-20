@@ -9,7 +9,7 @@
   },
   "license": "UNLICENSED",
   "engines": {
-    "node": "18.12.0"
+    "node": "18.17.1"
   },
   "scripts": {
     "prebuild": "rimraf dist",
