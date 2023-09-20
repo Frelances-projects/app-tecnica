@@ -5,6 +5,8 @@ export const errorMessages = {
   incorrectPassword: 'Incorrect password',
   paymentNotFound: 'payment not found',
   emailHasAlreadyBeenUsed: 'This email has already been used',
+  emailAndNumberHasAlreadyBeenUsed: 'This email and number has already been used',
+  numberHasAlreadyBeenUsed: 'This number has already been used',
   strongPassword: 'password is not strong enough',
   emailOrPasswordIncorrect: 'Email or password incorrect',
   nameEmpty: 'name should not be empty',
