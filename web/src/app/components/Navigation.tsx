@@ -33,7 +33,7 @@ export function SideBar() {
     const pastDate = new Date(0);
     document.cookie = `user=; expires=${pastDate.toUTCString()}; path=/`;
 
-    router.push('/login')
+    router.push('/')
 
     setIsDisabledButton(false)
   }

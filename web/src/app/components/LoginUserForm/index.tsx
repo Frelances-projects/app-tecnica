@@ -1,9 +1,10 @@
 'use client'
+import Link from 'next/link';
 import { useRouter } from 'next/navigation'
 import { Mail, Lock } from 'lucide-react';
 
-import { Input } from '@/app/components/UserRegistrationForm/Input';
-import { SubmitButton } from '@/app/components/UserRegistrationForm/SubmitButton';
+import { Input } from '@/app/register/components/UserRegistrationForm/Input';
+import { SubmitButton } from '@/app/register/components/UserRegistrationForm/SubmitButton';
 import { useToast } from "@/components/ui/use-toast"
 import { loginUser } from './action';
 
@@ -41,6 +42,22 @@ export function LoginUserForm() {
         type="password"
         minLength={6}
       />
+
+      <div className='flex items-center justify-between gap-x-16'>
+        <Link
+          href={'/register'}
+          className='text-gray-400 text-sm font-semibold'
+        >
+          Criar conta
+        </Link>
+
+        <Link
+          href={'/'}
+          className='text-gray-400 text-sm font-semibold'
+        >
+          Esqueci minha senha
+        </Link>
+      </div>
 
       <SubmitButton text='Entrar' />
     </form>
