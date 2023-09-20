@@ -16,6 +16,7 @@ export class PrismaSchoolMapper {
       {
         name: raw.name,
         createdAt: raw.createdAt,
+        ...raw,
       },
       raw.id,
     )

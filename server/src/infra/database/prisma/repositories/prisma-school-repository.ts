@@ -18,6 +18,7 @@ export class PrismaSchoolRepository implements SchoolRepository {
   async findById(schoolId: string): Promise<School> {
     const school = await this.prisma.school.findUnique({
       where: { id: schoolId },
+      include: { driverLicenseCategories: true },
     })
 
     if (!school) {

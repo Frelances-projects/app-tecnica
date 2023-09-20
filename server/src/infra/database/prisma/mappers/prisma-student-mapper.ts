@@ -32,6 +32,7 @@ export class PrismaStudentMapper {
         token: raw.token,
         enrolledAt: raw.enrolledAt,
         createdAt: raw.createdAt,
+        ...raw,
       },
       raw.id,
     )

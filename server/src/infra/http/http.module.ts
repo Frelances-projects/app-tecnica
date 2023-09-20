@@ -26,6 +26,7 @@ import { GetManyInformationBySchool } from '../../application/use-cases/informat
 // STUDENT
 import { CreateStudent } from '../../application/use-cases/student/create-student'
 import { GetManyStudents } from '../../application/use-cases/student/get-many-students'
+import { GetManyStudentsBySchool } from '../../application/use-cases/student/get-many-students-by-school'
 import { GetStudentByEmail } from '../../application/use-cases/student/get-student-by-email'
 import { GetStudentById } from '../../application/use-cases/student/get-student-by-id'
 import { GetStudentByNumber } from '../../application/use-cases/student/get-student-by-number'
@@ -117,6 +118,7 @@ import { CreateToken } from 'src/helpers/create-token'
     CreateStudent,
     CreateStudentSession,
     GetManyStudents,
+    GetManyStudentsBySchool,
     GetStudentByEmail,
     GetStudentById,
     GetStudentByNumber,

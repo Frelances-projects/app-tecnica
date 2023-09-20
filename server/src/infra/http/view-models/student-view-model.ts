@@ -1,7 +1,7 @@
 import { Student } from '../../../application/entities/student'
 
 export class StudentViewModel {
-  static toHTTP(student: Student) {
+  static toHTTP(student: any) {
     return {
       id: student.id,
       name: student.name,
@@ -13,6 +13,7 @@ export class StudentViewModel {
       schoolId: student.schoolId,
       enrolledAt: student.enrolledAt,
       createdAt: student.createdAt,
+      school: student.props.school,
     }
   }
 }

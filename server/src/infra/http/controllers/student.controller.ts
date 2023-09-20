@@ -5,6 +5,7 @@ import { CreateStudentSession } from '../../../application/use-cases/student/cre
 import { UpdateStudent } from '../../../application/use-cases/student/update-student'
 import { GetStudentById } from '../../../application/use-cases/student/get-student-by-id'
 import { GetManyStudents } from '../../../application/use-cases/student/get-many-students'
+import { GetManyStudentsBySchool } from 'src/application/use-cases/student/get-many-students-by-school'
 
 import { StudentViewModel } from '../view-models/student-view-model'
 
@@ -20,6 +21,7 @@ export class StudentController {
     private updateStudent: UpdateStudent,
     private getStudentById: GetStudentById,
     private getManyStudents: GetManyStudents,
+    private getManyStudentsBySchool: GetManyStudentsBySchool,
   ) {}
 
   @Get(':studentId')
@@ -34,6 +36,19 @@ export class StudentController {
   @Get()
   async getMany() {
     const { students } = await this.getManyStudents.execute()
+
+    const studentsToHTTP = students.map((student) =>
+      StudentViewModel.toHTTP(student),
+    )
+
+    return {
+      students: studentsToHTTP,
+    }
+  }
+
+  @Get('/school/:schoolId')
+  async getManyBySchool(@Param('schoolId') schoolId: string) {
+    const { students } = await this.getManyStudentsBySchool.execute(schoolId)
 
     const studentsToHTTP = students.map((student) =>
       StudentViewModel.toHTTP(student),
