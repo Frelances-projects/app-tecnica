@@ -16,14 +16,14 @@ export function CreateCodeCalendarForm() {
 
   function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files!![0]
-    const maxSize = 10 * 1024 * 1024 // 10MB
+    const maxSize = 4 * 1024 * 1024 // 4MB
     
     if (file && file.size <= maxSize) {
       setFile(event.target.files!![0] as File)
     } else {
       return toast({
         title: 'Arquivo muito grande!',
-        description: 'Por favor selecione um arquivo de até 10mb',
+        description: 'Por favor selecione um arquivo de até 4MB',
         variant: 'destructive'
       })
     }
@@ -33,7 +33,7 @@ export function CreateCodeCalendarForm() {
     if (!file) {
       return toast({
         title: 'Arquivo não selecionado!',
-        description: 'Por favor selecione um arquivo de até 10mb',
+        description: 'Por favor selecione um arquivo de até 4MB',
         variant: 'destructive'
       })
     }
