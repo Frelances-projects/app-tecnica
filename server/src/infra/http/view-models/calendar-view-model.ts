@@ -4,7 +4,7 @@ export class CalendarViewModel {
   static toHTTP(calendar: Calendar) {
     return {
       id: calendar.id,
-      date: calendar.date,
+      schoolId: calendar.schoolId,
       fileUrl: calendar.fileUrl,
       createdAt: calendar.createdAt,
     }

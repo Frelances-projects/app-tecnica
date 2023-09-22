@@ -5,7 +5,7 @@ import { Calendar } from '../../entities/calendar'
 
 interface CreateCalendarRequest {
   fileUrl: string
-  date: string
+  schoolId: string
 }
 
 interface CreateCalendarResponse {
@@ -20,9 +20,9 @@ export class CreateCalendar {
     request: CreateCalendarRequest,
   ): Promise<CreateCalendarResponse> {
     try {
-      const { date, fileUrl } = request
+      const { schoolId, fileUrl } = request
 
-      const calendar = new Calendar({ date, fileUrl })
+      const calendar = new Calendar({ schoolId, fileUrl })
 
       await this.calendarRepository.create(calendar)
 

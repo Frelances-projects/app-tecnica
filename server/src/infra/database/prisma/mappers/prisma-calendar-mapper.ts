@@ -6,7 +6,7 @@ export class PrismaCalendarMapper {
   static toPrisma(calendar: Calendar) {
     return {
       id: calendar.id,
-      date: calendar.date,
+      schoolId: calendar.schoolId,
       fileUrl: calendar.fileUrl,
       createdAt: calendar.createdAt,
     }
@@ -15,7 +15,7 @@ export class PrismaCalendarMapper {
   static toDomain(raw: RawCalendar): Calendar {
     return new Calendar(
       {
-        date: raw.date,
+        schoolId: raw.schoolId,
         fileUrl: raw.fileUrl,
         createdAt: raw.createdAt,
       },

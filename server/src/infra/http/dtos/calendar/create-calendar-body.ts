@@ -1,8 +1,9 @@
-import { IsNotEmpty, IsUrl } from 'class-validator'
+import { IsNotEmpty, IsUrl, IsUUID } from 'class-validator'
 
 export class CreateCalendarBody {
   @IsNotEmpty()
-  date: string
+  @IsUUID()
+  schoolId: string
 
   @IsNotEmpty()
   @IsUrl()

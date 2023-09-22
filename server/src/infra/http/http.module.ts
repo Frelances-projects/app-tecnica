@@ -36,6 +36,7 @@ import { CreateStudentSession } from 'src/application/use-cases/student/create-s
 // CALENDAR
 import { CreateCalendar } from '../../application/use-cases/calendar/create-calendar'
 import { GetCalendarById } from '../../application/use-cases/calendar/get-calendar-by-id'
+import { GetCalendarBySchool } from '../../application/use-cases/calendar/get-calendar-by-school'
 import { GetManyCalendar } from '../../application/use-cases/calendar/get-many-calendars'
 
 // SCHOOL
@@ -127,6 +128,7 @@ import { CreateToken } from 'src/helpers/create-token'
     // CALENDAR
     CreateCalendar,
     GetCalendarById,
+    GetCalendarBySchool,
     GetManyCalendar,
 
     // SCHOOL

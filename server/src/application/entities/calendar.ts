@@ -4,7 +4,7 @@ import { Replace } from '../../helpers/Replace'
 
 interface CalendarProps {
   fileUrl: string
-  date: string
+  schoolId: string
   createdAt?: Date | null
 }
 
@@ -35,12 +35,12 @@ export class Calendar {
     return this.props.fileUrl
   }
 
-  public set date(date: string) {
-    this.props.date = date
+  public set schoolId(schoolId: string) {
+    this.props.schoolId = schoolId
   }
 
-  public get date(): string {
-    return this.props.date
+  public get schoolId(): string {
+    return this.props.schoolId
   }
 
   public get createdAt(): Date {
