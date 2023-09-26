@@ -35,12 +35,14 @@ export async function registerUser(data: FormData) {
     return { message: 'Success!' }
   } catch (error) {
     if (error instanceof AxiosError) {
-      if (error.response?.data.message[0] === errorMessages.passwordEmpty) {
-        return  { message: 'A senha é um campo obrigatório' }
-      } else if (error.response?.data.message === errorMessages.emailHasAlreadyBeenUsed) {
-        return { message: 'Esse E-mail já está sendo utilizando, por favor coloque outro E-mail' }
-      } else if (error.response?.data.message[0] === errorMessages.strongPassword) {
-        return { message: 'A senha não é forte o suficiente! Por favor digite uma senha mais forte(Coloque pelo menos uma letra maiúscula 1, 1 caracter especial e 1 número)' }
+      if (error.response?.data?.message) {
+        if (error.response?.data.message[0] === errorMessages.passwordEmpty) {
+          return  { message: 'A senha é um campo obrigatório' }
+        } else if (error.response?.data.message === errorMessages.emailHasAlreadyBeenUsed) {
+          return { message: 'Esse E-mail já está sendo utilizando, por favor coloque outro E-mail' }
+        } else if (error.response?.data.message[0] === errorMessages.strongPassword) {
+          return { message: 'A senha não é forte o suficiente! Por favor digite uma senha mais forte(Coloque pelo menos uma letra maiúscula 1, 1 caracter especial e 1 número)' }
+        }
       }
     }
     return { message: 'Ocorreu um erro no servidor! Por favor tente novamente mais tarde' }

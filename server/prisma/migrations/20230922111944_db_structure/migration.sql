@@ -46,7 +46,7 @@ CREATE TABLE "classes" (
 CREATE TABLE "calendars" (
     "id" TEXT NOT NULL,
     "fileUrl" TEXT NOT NULL,
-    "date" TEXT NOT NULL,
+    "schoolId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -155,6 +155,9 @@ CREATE TABLE "payments" (
 CREATE UNIQUE INDEX "classes_code_key" ON "classes"("code");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "calendars_schoolId_key" ON "calendars"("schoolId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
@@ -168,6 +171,9 @@ CREATE UNIQUE INDEX "students_paymentId_key" ON "students"("paymentId");
 
 -- AddForeignKey
 ALTER TABLE "information" ADD CONSTRAINT "information_schoolId_fkey" FOREIGN KEY ("schoolId") REFERENCES "schools"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "calendars" ADD CONSTRAINT "calendars_schoolId_fkey" FOREIGN KEY ("schoolId") REFERENCES "schools"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "driver_license_categories" ADD CONSTRAINT "driver_license_categories_schoolId_fkey" FOREIGN KEY ("schoolId") REFERENCES "schools"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

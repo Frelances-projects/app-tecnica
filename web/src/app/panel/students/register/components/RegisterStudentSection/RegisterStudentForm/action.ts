@@ -32,12 +32,14 @@ export async function createStudent(data: FormData) {
     return { message: 'Success!' }
   } catch (error) {
     if (error instanceof AxiosError) {
-      if (error.response?.data.message === errorMessages.emailHasAlreadyBeenUsed) {
-        return { message: 'Esse E-mail já está sendo utilizando, por favor coloque outro E-mail' }
-      } else if (error.response?.data.message === errorMessages.emailAndNumberHasAlreadyBeenUsed) {
-        return { message: 'Esse E-mail e esse número já estão sendo utilizados, por favor coloque outros' }
-      } else if (error.response?.data.message === errorMessages.numberHasAlreadyBeenUsed) {
-        return { message: 'Esse número já está sendo utilizado, por favor coloque outro' }
+      if (error.response?.data?.message) {
+        if (error.response?.data.message === errorMessages.emailHasAlreadyBeenUsed) {
+          return { message: 'Esse E-mail já está sendo utilizando, por favor coloque outro E-mail' }
+        } else if (error.response?.data.message === errorMessages.emailAndNumberHasAlreadyBeenUsed) {
+          return { message: 'Esse E-mail e esse número já estão sendo utilizados, por favor coloque outros' }
+        } else if (error.response?.data.message === errorMessages.numberHasAlreadyBeenUsed) {
+          return { message: 'Esse número já está sendo utilizado, por favor coloque outro' }
+        }
       }
     }
     return { message: 'Ocorreu um erro no servidor! Por favor tente novamente mais tarde' }

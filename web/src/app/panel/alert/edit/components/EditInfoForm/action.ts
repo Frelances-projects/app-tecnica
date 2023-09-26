@@ -25,12 +25,14 @@ export async function updateInfo(data: FormData) {
     return { message: 'Success!' }
   } catch (error) {
     if (error instanceof AxiosError) {
-      if (error.response?.data.message === errorMessages.informationNotFound) {
-        return { message: 'Alerta não encontrado! Parece que esse alerta já foi deletado!' }
-      } else if (error.response?.data.message[0] === errorMessages.descriptionShorter) {
-        return { message: 'A descrição do alerta deve conter pelo menos 5 caracteres' }
-      } else if (error.response?.data.message[0] === errorMessages.descriptionLonger) {
-        return { message: 'A descrição do alerta deve conter no máximo 460 caracteres' }
+      if (error.response?.data?.message) {
+        if (error.response?.data.message === errorMessages.informationNotFound) {
+          return { message: 'Alerta não encontrado! Parece que esse alerta já foi deletado!' }
+        } else if (error.response?.data.message[0] === errorMessages.descriptionShorter) {
+          return { message: 'A descrição do alerta deve conter pelo menos 5 caracteres' }
+        } else if (error.response?.data.message[0] === errorMessages.descriptionLonger) {
+          return { message: 'A descrição do alerta deve conter no máximo 460 caracteres' }
+        }
       }
     }
     return { message: 'Ocorreu um erro no servidor! Por favor tente novamente mais tarde' }
@@ -46,8 +48,10 @@ export async function deleteInfo(selectInformation: string) {
     return { message: 'Success!' }
   } catch (error) {
     if (error instanceof AxiosError) {
-      if (error.response?.data.message === errorMessages.informationNotFound) {
-        return { message: 'Alerta não encontrado! Parece que esse alerta já foi deletado!' }
+      if (error.response?.data?.message) {
+        if (error.response?.data.message === errorMessages.informationNotFound) {
+          return { message: 'Alerta não encontrado! Parece que esse alerta já foi deletado!' }
+        }
       }
     }
     return { message: 'Ocorreu um erro no servidor! Por favor tente novamente mais tarde' }

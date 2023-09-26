@@ -12,12 +12,28 @@ export class PrismaCalendarRepository implements CalendarRepository {
   async create(calendar: Calendar): Promise<void> {
     const raw = PrismaCalendarMapper.toPrisma(calendar)
 
-    await this.prisma.calendar.create({ data: raw })
+    await this.prisma.calendar.upsert({
+      where: { schoolId: raw.schoolId },
+      update: { schoolId: raw.schoolId, fileUrl: raw.fileUrl },
+      create: raw,
+    })
   }
 
   async findById(calendarId: string): Promise<Calendar> {
     const calendar = await this.prisma.calendar.findUnique({
       where: { id: calendarId },
+    })
+
+    if (!calendar) {
+      return null
+    }
+
+    return PrismaCalendarMapper.toDomain(calendar)
+  }
+
+  async findBySchool(schoolId: string): Promise<Calendar> {
+    const calendar = await this.prisma.calendar.findUnique({
+      where: { schoolId },
     })
 
     if (!calendar) {
