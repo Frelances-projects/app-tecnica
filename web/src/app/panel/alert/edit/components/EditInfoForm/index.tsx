@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
-import { format } from 'date-fns'
+import { format } from 'date-fns-tz'
 
 import { Button } from "@/components/Button";
 import { WrapperItem } from "@/components/WrapperItem";

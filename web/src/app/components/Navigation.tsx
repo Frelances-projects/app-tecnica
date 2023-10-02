@@ -63,7 +63,7 @@ export function SideBar() {
                 Gerir Alertas
               </span>
             </div>
-            <ChevronUp className={`transform rotate-90 ${dropDown === 'alert'  ? 'rotate-180' : ''} ${collapsed ? 'hidden' : ''} transition-all duration-300`} />
+            <ChevronUp className={`transform transition-all duration-300 ${dropDown === 'alert'  ? 'rotate-180' : 'rotate-90'} transition-all duration-300`} />
           </button>
           <div className={`transform flex flex-col gap-4 ml-10 mt-2 ${collapsed ? 'ml-6' : ''} ${dropDown === 'alert' ? 'h-max' : 'hidden'} transition-all ease-linear duration-300`} >
             <Link href='/panel/alert/create' className={`flex gap-2 hover:text-[#E86255]`} >
@@ -96,7 +96,7 @@ export function SideBar() {
                 Gerir Alunos
               </span>
             </div>
-            <ChevronUp className={`transform rotate-90 ${dropDown === 'student' ? 'rotate-180' : ''} ${collapsed ? 'hidden' : ''} transition-all duration-300`} />
+            <ChevronUp className={`transform ${dropDown === 'student' ? 'rotate-180' : 'rotate-90'} ${collapsed ? 'hidden' : ''} transition-all duration-300`} />
           </button>
           <div className={`transform flex flex-col gap-4 ml-10 mt-2 ${collapsed  ? 'ml-6' : ''} ${dropDown === 'student' ? 'h-max' : 'hidden'} transition-all ease-linear duration-300`}>
             <Link href='/panel/students/list' className='flex gap-2 hover:text-[#E86255]'>
@@ -129,7 +129,7 @@ export function SideBar() {
                 Exames
               </span>
             </div>
-            <ChevronUp className={`transform rotate-90 ${dropDown === 'exam' ? 'rotate-180' : ''} ${collapsed ? 'hidden' : ''} transition-all duration-300`} />
+            <ChevronUp className={`transform ${dropDown === 'exam' ? 'rotate-180' : 'rotate-90'} ${collapsed ? 'hidden' : ''} transition-all duration-300`} />
           </button>
           <div className={`transform flex flex-col gap-4 ml-10 mt-2 ${collapsed ? 'ml-6' : ''} ${dropDown === 'exam' ? 'h-max' : 'hidden'} transition-all ease-linear duration-300`}>
             <Link href='/panel/code-exams' className='flex gap-2 hover:text-[#E86255]'>
