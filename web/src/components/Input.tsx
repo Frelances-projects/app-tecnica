@@ -1,6 +1,6 @@
 import { ChangeEventHandler, InputHTMLAttributes, ReactNode } from 'react'
 
-interface InputProps extends InputHTMLAttributes<HTMLDivElement> {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   hasIcon?: ReactNode
   id: string
   type: string
@@ -13,9 +13,9 @@ interface InputProps extends InputHTMLAttributes<HTMLDivElement> {
 
 export function Input({ className, hasIcon, id, type, placeholder, name, onChangeInput, inputValue, required, ...rest }: InputProps) {
   return (
-    <div className={`border w-[520px] border-[#C6C6C6] outline-none flex items-center justify-between bg-white rounded-lg px-2 py-[0.375rem] text-black ${className}`} {...rest}>
+    <div className={`border w-[520px] border-[#C6C6C6] outline-none flex items-center justify-between bg-white rounded-lg px-2 py-[0.375rem] text-black ${className}`}>
       <input
-        className={`outline-none flex-1`} 
+        className={`outline-none flex-1`}
         id={id} 
         type={type} 
         placeholder={placeholder} 
@@ -23,6 +23,7 @@ export function Input({ className, hasIcon, id, type, placeholder, name, onChang
         onChange={onChangeInput}
         value={inputValue}
         required={required}
+        {...rest}
       />
       {hasIcon}
     </div>
