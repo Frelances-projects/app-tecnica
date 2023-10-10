@@ -23,7 +23,7 @@ export default function RootLayout({
 
   const user = cookies().get('user')?.value
 
-  if (user && (activePath === '/' || activePath === '/login')) {
+  if (user && (activePath === '/' || activePath === '/register')) {
     redirect('/panel/alert/create')
   }
 

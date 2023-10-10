@@ -17,7 +17,7 @@ export default function PanelLayout({
   const user = cookies().get('user')?.value
 
   if (!user) {
-    redirect('/login')
+    redirect('/')
   }
 
   const formattedUserData = JSON.parse(user)
