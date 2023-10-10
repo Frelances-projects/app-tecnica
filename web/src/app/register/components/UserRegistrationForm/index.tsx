@@ -19,10 +19,14 @@ export function UserRegistrationForm({ children }: UserRegistrationFormProps) {
   const { toast } = useToast()
 
   async function handleRegisterUser(data: FormData) {
-    const { message } = await registerUser(data)
+    const { message, userFunction } = await registerUser(data)
 
     if (message === 'Success!') {
-      router.push('/panel/alert/create')
+      if (userFunction === 'INSTRUCTOR') {
+        router.push('/panel/driving-lessons')
+      } else {
+        router.push('/panel/alert/create')
+      }
     } else {
       toast({
         variant: "destructive",

@@ -3,16 +3,9 @@ import { cookies } from 'next/headers'
 import { AxiosError } from "axios"
 
 import { api } from "@/lib/api"
-import { errorMessages } from "@/utils/errors/errorMessages"
 
-type User = {
-  id: string,
-  name: string,
-  email: string,
-  function: 'ADMIN' | 'DIRECTOR' | 'INSTRUCTOR',
-  schoolId: string,
-  createdAt: Date
-}
+import { errorMessages } from "@/utils/errors/errorMessages"
+import { User } from '@/utils/interfaces/user'
 
 type AxiosData = {
   user: User
@@ -29,7 +22,7 @@ export async function loginUser(data: FormData) {
 
     cookies().set('user', JSON.stringify(loginUserResponseData.user))
 
-    return { message: 'Success!' }
+    return { message: 'Success!', userFunction: loginUserResponseData.user.function }
   } catch (error) {
     if (error instanceof AxiosError) {
       if (error.response?.data?.message) {
@@ -42,6 +35,6 @@ export async function loginUser(data: FormData) {
         }
       }
     }
-    return { message: 'Ocorreu um erro no servidor! Por favor tente novamente mais tarde' }
+    return { message: 'Ocorreu um erro no servidor! Por favor tente novamente mais tarde', userFunction: undefined }
   }
 }

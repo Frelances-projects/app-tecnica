@@ -1,5 +1,5 @@
 'use client'
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/Button";
 import { ItemInputForm } from "@/components/ItemInputForm";
@@ -12,6 +12,7 @@ interface RegisterStudentFormProps {
   categoryCard: {
     value: string;
     label: string;
+    schoolId: string
   }[]
   schools: {
     value: string;
@@ -22,6 +23,10 @@ interface RegisterStudentFormProps {
 export function RegisterStudentForm({ categoryCard, schools }: RegisterStudentFormProps) {
   const { toast } = useToast()
   const formRef = useRef<HTMLFormElement>(null);
+
+  const [categoryCardState, setCategoryCardState] = useState(categoryCard)
+  const [selectedSchool, setSelectedSchool] = useState<undefined | string>(undefined)
+  const [selectedCategoryCard, setSelectedCategoryCard] = useState<undefined | string>(undefined)
   
   const paymentMethod = [
     {value:"INCASH", label:"Pronto Pagamento"},
@@ -33,6 +38,8 @@ export function RegisterStudentForm({ categoryCard, schools }: RegisterStudentFo
 
     if (message === 'Success!') {
       formRef?.current?.reset();
+      setSelectedSchool(undefined);
+      setSelectedCategoryCard(undefined);
 
       toast({
         title: 'Estudante cadastrado!',
@@ -47,9 +54,16 @@ export function RegisterStudentForm({ categoryCard, schools }: RegisterStudentFo
     }
   }
   
+  useEffect(() => {
+    if (selectedSchool) {
+      setCategoryCardState(categoryCard.filter(category => category.schoolId === selectedSchool))
+      setSelectedCategoryCard(undefined)
+    }
+  }, [selectedSchool, categoryCard])
+
   return (
     <form
-      ref={formRef} 
+      ref={formRef}
       action={handleCreateStudent}
       className="flex flex-col gap-[2.08rem] mt-5 mb-4"
     >
@@ -90,13 +104,17 @@ export function RegisterStudentForm({ categoryCard, schools }: RegisterStudentFo
         id="student_register"
         label="Escola de Registo do Aluno"
         data={schools}
+        value={selectedSchool}
+        onChange={(event) => setSelectedSchool(event.target.value)}
       />
 
       <ItemSelectForm
         required
         id="category"
         label="Categoria de Carta"
-        data={categoryCard}
+        data={categoryCardState}
+        value={selectedCategoryCard}
+        onChange={(event) => setSelectedCategoryCard(event.target.value)}
       />
 
       <ItemSelectForm

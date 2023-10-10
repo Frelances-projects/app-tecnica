@@ -13,10 +13,14 @@ export function LoginUserForm() {
   const { toast } = useToast()
 
   async function handleLoginUser(data: FormData) {
-    const { message } = await loginUser(data)
+    const { message, userFunction } = await loginUser(data)
 
     if (message === 'Success!') {
-      router.push('/panel/alert/create')
+      if (userFunction === 'INSTRUCTOR') {
+        router.push('/panel/driving-lessons')
+      } else {
+        router.push('/panel/alert/create')
+      }
     } else {
       toast({
         variant: "destructive",

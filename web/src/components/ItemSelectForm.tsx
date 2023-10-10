@@ -12,12 +12,13 @@ interface ItemSelectFormProps extends InputHTMLAttributes<HTMLSelectElement> {
   }[] | undefined
 }
 
-export function ItemSelectForm({ label, id, className, data, ...rest }: ItemSelectFormProps) {
+export function ItemSelectForm({ label, id, className, data, placeholder, ...rest }: ItemSelectFormProps) {
   return (
   <WrapperItem htmlFor={id} label={label}>
     <Select
       data={data}
       className={`w-[520px] ${className}`}
+      placeholder={placeholder}
       name={id}
       id={id}
       {...rest}

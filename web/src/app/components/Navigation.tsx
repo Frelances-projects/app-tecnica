@@ -1,14 +1,31 @@
 'use client'
-
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'
 import Link from 'next/link';
 import Image from 'next/image';
+import {
+  BellDot,
+  BellPlus,
+  Book,
+  Calendar,
+  CarIcon,
+  ChevronUp,
+  ClipboardCheck,
+  ClipboardList,
+  CreditCard,
+  KeySquare,
+  LogOut,
+  UserPlus2,
+  Users2
+} from 'lucide-react';
 
 import Logo from '../../assets/Tecnica_LOGO_outline_icon.svg'
-import { BellDot, BellPlus, Book, Calendar, CarIcon, ChevronUp, ClipboardCheck, ClipboardList, CreditCard, KeySquare, LogOut, UserPlus2, Users2 } from 'lucide-react';
 
-export function SideBar() {
+interface SideBarProps {
+  userFunction: 'ADMIN' | 'DIRECTOR' | 'INSTRUCTOR'
+}
+
+export function SideBar({ userFunction }: SideBarProps) {
   const router = useRouter()
 
   const [collapsed, setCollapsed] = useState(false);
@@ -52,61 +69,67 @@ export function SideBar() {
         </span>
       </button>
       <div className="mt-4 flex flex-col gap-2">
-        <div className="group cursor-pointer ml-2">
-          <button
-            className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between"
-            onClick={() => handleDropdownClick('alert')}
-          >
-            <div className='flex gap-5 items-center'>
-              <BellDot size={20} />
-              <span className={`${collapsed ? 'hidden' : 'flex whitespace-nowrap'}`}>
-                Gerir Alertas
-              </span>
+        {userFunction === 'DIRECTOR' || userFunction === 'ADMIN' && (
+          <div className="group cursor-pointer ml-2">
+            <button
+              className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between"
+              onClick={() => handleDropdownClick('alert')}
+            >
+              <div className='flex gap-5 items-center'>
+                <BellDot size={20} />
+                <span className={`${collapsed ? 'hidden' : 'flex whitespace-nowrap'}`}>
+                  Gerir Alertas
+                </span>
+              </div>
+              <ChevronUp className={`transform transition-all duration-300 ${dropDown === 'alert'  ? 'rotate-180' : 'rotate-90'} transition-all duration-300`} />
+            </button>
+            <div className={`transform flex flex-col gap-4 ml-10 mt-2 ${collapsed ? 'ml-6' : ''} ${dropDown === 'alert' ? 'h-max' : 'hidden'} transition-all ease-linear duration-300`} >
+              <Link href='/panel/alert/create' className={`flex gap-2 hover:text-[#E86255]`} >
+                <BellPlus size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Criar Alerta</span>
+              </Link>
+              <Link href='/panel/alert/edit' className={`flex gap-2 hover:text-[#E86255]`} >
+                <BellDot size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Editar Alerta</span>
+              </Link>
             </div>
-            <ChevronUp className={`transform transition-all duration-300 ${dropDown === 'alert'  ? 'rotate-180' : 'rotate-90'} transition-all duration-300`} />
-          </button>
-          <div className={`transform flex flex-col gap-4 ml-10 mt-2 ${collapsed ? 'ml-6' : ''} ${dropDown === 'alert' ? 'h-max' : 'hidden'} transition-all ease-linear duration-300`} >
-            <Link href='/panel/alert/create' className={`flex gap-2 hover:text-[#E86255]`} >
-              <BellPlus size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Criar Alerta</span>
-            </Link>
-            <Link href='/panel/alert/edit' className={`flex gap-2 hover:text-[#E86255]`} >
-              <BellDot size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Editar Alerta</span>
-            </Link>
           </div>
-        </div>
+        )}
 
-        <div className="group cursor-pointer ml-2">
-          <button
-            className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between"
-          >
-            <Link href='/panel/create-code-calendar' className={`flex gap-2 hover:text-[#E86255]`} >
-              <Calendar size={20} /> <span className={`${collapsed ? 'hidden' : 'flex whitespace-nowrap'}`}>Adicionar Calendário Código</span>
-            </Link>
-          </button>
-        </div>
+        {userFunction === 'DIRECTOR' || userFunction === 'ADMIN' && (
+          <div className="group cursor-pointer ml-2">
+            <button
+              className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between"
+            >
+              <Link href='/panel/create-code-calendar' className={`flex gap-2 hover:text-[#E86255]`} >
+                <Calendar size={20} /> <span className={`${collapsed ? 'hidden' : 'flex whitespace-nowrap'}`}>Adicionar Calendário Código</span>
+              </Link>
+            </button>
+          </div>
+        )}
 
-        <div className="group cursor-pointer ml-2">
-          <button
-            className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between"
-            onClick={() => handleDropdownClick('student')}
-          >
-            <div className='flex gap-5 items-center'>
-              <Users2 size={20} />
-              <span className={`${collapsed ? 'hidden' : 'flex whitespace-nowrap'}`}>
-                Gerir Alunos
-              </span>
+        {userFunction === 'DIRECTOR' || userFunction === 'ADMIN' && (
+          <div className="group cursor-pointer ml-2">
+            <button
+              className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between"
+              onClick={() => handleDropdownClick('student')}
+            >
+              <div className='flex gap-5 items-center'>
+                <Users2 size={20} />
+                <span className={`${collapsed ? 'hidden' : 'flex whitespace-nowrap'}`}>
+                  Gerir Alunos
+                </span>
+              </div>
+              <ChevronUp className={`transform ${dropDown === 'student' ? 'rotate-180' : 'rotate-90'} ${collapsed ? 'hidden' : ''} transition-all duration-300`} />
+            </button>
+            <div className={`transform flex flex-col gap-4 ml-10 mt-2 ${collapsed  ? 'ml-6' : ''} ${dropDown === 'student' ? 'h-max' : 'hidden'} transition-all ease-linear duration-300`}>
+              <Link href='/panel/students/list' className='flex gap-2 hover:text-[#E86255]'>
+                <ClipboardList size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Listagem dos Alunos</span>   
+              </Link>
+              <Link href='/panel/students/register' className='flex gap-2 hover:text-[#E86255]'>
+                <UserPlus2 size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Adicionar Alunos</span>
+              </Link>
             </div>
-            <ChevronUp className={`transform ${dropDown === 'student' ? 'rotate-180' : 'rotate-90'} ${collapsed ? 'hidden' : ''} transition-all duration-300`} />
-          </button>
-          <div className={`transform flex flex-col gap-4 ml-10 mt-2 ${collapsed  ? 'ml-6' : ''} ${dropDown === 'student' ? 'h-max' : 'hidden'} transition-all ease-linear duration-300`}>
-            <Link href='/panel/students/list' className='flex gap-2 hover:text-[#E86255]'>
-              <ClipboardList size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Listagem dos Alunos</span>   
-            </Link>
-            <Link href='/panel/students/register' className='flex gap-2 hover:text-[#E86255]'>
-              <UserPlus2 size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Adicionar Alunos</span>
-            </Link>
           </div>
-        </div>
+        )}
 
         <div className="group cursor-pointer ml-2">
           <button
@@ -141,15 +164,17 @@ export function SideBar() {
           </div>
         </div>
 
-        <div className="group cursor-pointer ml-2">
-          <button
-            className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between"
-          >
-            <Link href='/panel/prices' className='flex gap-2 hover:text-[#E86255]'>
-              <CreditCard size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Definir Preços</span>
-            </Link>
-          </button>
-        </div>
+        {userFunction === 'DIRECTOR' || userFunction === 'ADMIN' && (
+          <div className="group cursor-pointer ml-2">
+            <button
+              className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between"
+            >
+              <Link href='/panel/prices' className='flex gap-2 hover:text-[#E86255]'>
+                <CreditCard size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Definir Preços</span>
+              </Link>
+            </button>
+          </div>
+        )}
 
         <div className="group cursor-pointer ml-2">
           <button

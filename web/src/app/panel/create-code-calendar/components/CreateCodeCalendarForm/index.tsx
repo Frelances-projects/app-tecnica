@@ -3,13 +3,22 @@ import { ChangeEvent, useState } from "react";
 import Image from "next/image";
 
 import { Button } from "@/components/Button";
+import { Select } from "@/components/Select";
 import { useToast } from "@/components/ui/use-toast";
 
 import { createCodeCalendar } from "./action";
 
 import PdfIcon from '../../../../../assets/PDF-Icon.svg'
 
-export function CreateCodeCalendarForm() {
+interface CreateCodeCalendarFormProps {
+  userFunction: 'ADMIN' | 'DIRECTOR' | 'INSTRUCTOR'
+  schools: {
+    label: string
+    value: string
+  }[]
+}
+
+export function CreateCodeCalendarForm({ schools, userFunction }: CreateCodeCalendarFormProps) {
   const { toast } = useToast()
 
   const [file, setFile] = useState<File | undefined>(undefined)
@@ -61,6 +70,14 @@ export function CreateCodeCalendarForm() {
       action={handleCreateCodeCalendar}
       className="flex flex-col gap-[2.08rem] mr-auto mt-16 pl-10"
     >
+      {userFunction === 'DIRECTOR' && (
+        <Select
+          data={schools}
+          placeHolder="Selecione uma escola"
+          name="select_school"
+        />
+      )}
+
       <div className="flex gap-9 items-end">
         <fieldset
           className="bg-[#F0F0F0] border border-dashed border-[#CDCDCD] px-3 py-3 w-32 rounded"

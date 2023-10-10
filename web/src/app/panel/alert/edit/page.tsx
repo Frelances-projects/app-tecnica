@@ -1,8 +1,11 @@
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 import { EditInfoForm } from "./components/EditInfoForm";
 
 import { api } from "@/lib/api";
+
+import { User } from '@/utils/interfaces/user';
 
 export type Information = {
   id: string
@@ -18,7 +21,11 @@ type AxiosData = {
 
 export default async function EditInfo() {
   const user = cookies().get('user')?.value
-  const formattedUser = JSON.parse(user!!)
+  const formattedUser = JSON.parse(user!!) as User
+
+  if (formattedUser.function === 'INSTRUCTOR') {
+    redirect('/panel/driving-lessons')
+  }
 
   const { data } = await api.get<AxiosData>(`/information/school/${formattedUser.schoolId}`)
   

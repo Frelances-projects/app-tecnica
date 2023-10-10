@@ -32,7 +32,7 @@ export async function registerUser(data: FormData) {
 
     cookies().set('user', JSON.stringify(createUserResponseData.user))
 
-    return { message: 'Success!' }
+    return { message: 'Success!', userFunction: createUserResponseData.user.function }
   } catch (error) {
     if (error instanceof AxiosError) {
       if (error.response?.data?.message) {
@@ -45,6 +45,6 @@ export async function registerUser(data: FormData) {
         }
       }
     }
-    return { message: 'Ocorreu um erro no servidor! Por favor tente novamente mais tarde' }
+    return { message: 'Ocorreu um erro no servidor! Por favor tente novamente mais tarde', userFunction: undefined }
   }
 }

@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 import { format } from 'date-fns';
 
 import { api } from '@/lib/api';
@@ -29,9 +30,23 @@ export default async function ManageStudents() {
   const user = cookies().get('user')?.value
   const formattedUser = JSON.parse(user!!)
   
-  const { data } = await api.get<AxiosData>(`/student/school/${formattedUser.schoolId}`)
+  if (formattedUser.function === 'INSTRUCTOR') {
+    redirect('/panel/driving-lessons')
+  }
 
-  const formattedData = data.students.map(student => {
+  let returnedData
+
+  if (formattedUser.function === 'DIRECTOR') {
+    const { data } = await api.get<AxiosData>(`/student`)
+
+    returnedData = data.students
+  } else {
+    const { data } = await api.get<AxiosData>(`/student/school/${formattedUser.schoolId}`)
+
+    returnedData = data.students
+  }
+
+  const formattedData = returnedData?.map(student => {
     const formattedEnrolledAt = format(new Date(student.enrolledAt), 'dd/MM/yyyy')
 
     return {

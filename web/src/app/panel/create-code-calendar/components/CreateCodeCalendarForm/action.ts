@@ -6,17 +6,23 @@ import { api } from "@/lib/api"
 import { supabase } from "@/lib/supabase"
 
 import { errorMessages } from "@/utils/errors/errorMessages"
+import { User } from '@/utils/interfaces/user'
 
 export async function createCodeCalendar(data: FormData) {
   try {
     const user = cookies().get('user')?.value
-    const formattedUser = JSON.parse(user!)
+    const formattedUser = JSON.parse(user!) as User
 
     const pdfFile = data.get('file_input') as File
+    const selectedSchoolId = data.get('select_school')?.toString()
+
+    if (formattedUser.function === 'DIRECTOR' && !selectedSchoolId) {
+      return { message: 'Por favor, selecione uma escola para enviar o PDF' }
+    }
 
     const supabaseResponse = await supabase.storage
       .from('pdfs-calendar')
-      .upload(formattedUser.schoolId, pdfFile, { upsert: true })
+      .upload(formattedUser.function === 'DIRECTOR' ? selectedSchoolId! : formattedUser.schoolId, pdfFile, { upsert: true })
 
     if (supabaseResponse.error) {
       return { message: 'Ocorreu um erro ao salvar o arquivo, por favor tente novamente mais tarde' }
@@ -26,7 +32,12 @@ export async function createCodeCalendar(data: FormData) {
       .from('pdfs-calendar')
       .getPublicUrl(supabaseResponse.data.path)
 
-    await api.post('/calendar', { schoolId: formattedUser.schoolId, fileUrl: publicUrl })
+    await api.post('/calendar', 
+      {
+        schoolId: formattedUser.function === 'DIRECTOR' ? selectedSchoolId! : formattedUser.schoolId,
+        fileUrl: publicUrl 
+      }
+    )
     
     return { message: 'Success!' }
   } catch (error) {

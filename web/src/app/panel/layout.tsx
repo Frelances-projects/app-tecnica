@@ -4,6 +4,8 @@ import { redirect } from 'next/navigation'
 import { Header } from '../components/Header'
 import { SideBar } from '../components/Navigation'
 
+import { User } from '@/utils/interfaces/user'
+
 export const metadata = {
   title: 'App Técnica',
   description: 'Painel administrativo',
@@ -20,7 +22,7 @@ export default function PanelLayout({
     redirect('/')
   }
 
-  const formattedUserData = JSON.parse(user)
+  const formattedUserData = JSON.parse(user) as User
 
   return (
     <div className='overflow-x-hidden'>
@@ -28,7 +30,7 @@ export default function PanelLayout({
 
       <div className='mx-auto max-w-[1440px] w-full h-[1px] bg-black'/>
       <div className='flex gap-11'>
-        <SideBar />
+        <SideBar userFunction={formattedUserData.function} />
         <div className="w-full max-w-6xl flex justify-center">
           {children}
         </div>
