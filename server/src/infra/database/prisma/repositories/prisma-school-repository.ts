@@ -29,7 +29,9 @@ export class PrismaSchoolRepository implements SchoolRepository {
   }
 
   async findMany(): Promise<School[]> {
-    const school = await this.prisma.school.findMany()
+    const school = await this.prisma.school.findMany({
+      include: { driverLicenseCategories: true },
+    })
 
     const schoolToDomain = school.map((school) =>
       PrismaSchoolMapper.toDomain(school),
