@@ -18,7 +18,7 @@ export function Input({ Icon, id, type, placeholder, minLength }: InputProps) {
         minLength={minLength} 
         required 
         id={id} 
-        name={id} 
+        name={id}
         type={type} 
         placeholder={placeholder} 
         className='outline-none'

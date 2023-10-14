@@ -12,12 +12,12 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 
-interface DeleteModalProps {
+interface DeleteStudentModalProps {
   id: string
   title?: string
 }
 
-export function DeleteModal({id, title}: DeleteModalProps) {
+export function DeleteStudentModal({id, title}: DeleteStudentModalProps) {
 
   const handleDeleteStudent = () => {
     console.log(id)

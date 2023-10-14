@@ -4,27 +4,34 @@ import { cookies } from 'next/headers'
 import { AxiosError } from "axios"
 
 import { api } from "@/lib/api"
+
 import { errorMessages } from "@/utils/errors/errorMessages"
+import { User } from '@/utils/interfaces/user'
 
 export async function registerInfo(data: FormData) {
   try {
     const user = cookies().get('user')?.value
-    const formattedUser = JSON.parse(user!!)
+    const formattedUser = JSON.parse(user!!) as User
 
     const title = data.get('title')?.toString()
     const date = data.get('date')?.toString()
     const description = data.get('description')?.toString()
+    const selectedSchoolId = data.get('select_school')?.toString()
+
+    if (formattedUser.function === 'DIRECTOR' && !selectedSchoolId) {
+      return { message: 'Por favor, selecione uma escola para criar um alerta' }
+    }
 
     await api.post('/information',
       { 
         name: title,
         date: String(new Date(date!!).toISOString()),
         description,
-        schoolId: formattedUser.schoolId
+        schoolId: formattedUser.function === 'DIRECTOR' ? selectedSchoolId! : formattedUser.schoolId
       }
     )
 
-    revalidatePath('/panel/alert/edit')
+    revalidatePath('/panel/alert/list')
 
     return { message: 'Success!' }
   } catch (error) {

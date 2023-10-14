@@ -7,8 +7,17 @@ import { useToast } from "@/components/ui/use-toast";
 
 import { registerInfo } from "./action";
 import { ItemInputForm } from "@/components/ItemInputForm";
+import { ItemSelectForm } from "@/components/ItemSelectForm";
 
-export function CreateInfoForm() {
+interface CreateInfoFormProps {
+  userFunction: 'ADMIN' | 'DIRECTOR' | 'INSTRUCTOR'
+  schools: {
+    label: string
+    value: string
+  }[]
+}
+
+export function CreateInfoForm({ userFunction, schools }: CreateInfoFormProps) {
   const { toast } = useToast()
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -33,6 +42,15 @@ export function CreateInfoForm() {
 
   return (
     <form ref={formRef} action={handleCreateInfo} className='flex flex-col gap-6 min-w-[710px] mt-6 pl-10'>
+      {userFunction === 'DIRECTOR' && (
+        <ItemSelectForm
+          required
+          id="select_school"
+          label="Escola do alerta"
+          data={schools}
+        />
+      )}
+      
       <ItemInputForm
         required
         id='title'

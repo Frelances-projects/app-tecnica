@@ -1,8 +1,9 @@
 'use client'
 
-import { CalendarDays } from 'lucide-react'
-import { usePathname } from 'next/navigation'
 import { useState } from 'react'
+import { usePathname } from 'next/navigation'
+import { CalendarDays } from 'lucide-react'
+import { ptBR } from 'date-fns/locale';
 
 import {
   Table as TableComponent,
@@ -12,14 +13,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from '@/components/ui/tabs'
-
 import {
   AlertDialog,
   AlertDialogAction,
@@ -29,11 +28,10 @@ import {
 } from "@/components/ui/alert-dialog"
 
 import { Calendar } from "@/components/ui/calendar"
+import { DeleteStudentModal } from './DeleteStudentModal'
+import { EditStudentModal } from './EditStudentModal'
 
-import { Student } from '@/app/panel/students/list/page'
-import { ptBR } from 'date-fns/locale';
-import { DeleteModal } from './deleteModal'
-import { EditModal } from './editModal'
+import { Student } from '@/utils/interfaces/student'
 
 interface StudentsTableProps {
   students: Student[]
@@ -73,10 +71,10 @@ export function StudentsTable({ students }: StudentsTableProps) {
               <TableCell>{student.enrolledAt}</TableCell>
               <TableCell>{student.school.name}</TableCell>
               <TableCell>
-                <EditModal id={student?.id} name={student?.name} />
+                <EditStudentModal id={student?.id} name={student?.name} />
               </TableCell>
               <TableCell>
-                <DeleteModal id={student?.id} title={student?.name} />
+                <DeleteStudentModal id={student?.id} title={student?.name} />
               </TableCell>
               {haveCalendar && (
                 <TableCell>

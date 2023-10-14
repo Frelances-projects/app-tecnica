@@ -69,7 +69,7 @@ export function SideBar({ userFunction }: SideBarProps) {
         </span>
       </button>
       <div className="mt-4 flex flex-col gap-2">
-        {userFunction === 'DIRECTOR' || userFunction === 'ADMIN' && (
+        {(userFunction === 'DIRECTOR' || userFunction === 'ADMIN') && (
           <div className="group cursor-pointer ml-2">
             <button
               className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between"
@@ -87,14 +87,14 @@ export function SideBar({ userFunction }: SideBarProps) {
               <Link href='/panel/alert/create' className={`flex gap-2 hover:text-[#E86255]`} >
                 <BellPlus size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Criar Alerta</span>
               </Link>
-              <Link href='/panel/alert/edit' className={`flex gap-2 hover:text-[#E86255]`} >
-                <BellDot size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Editar Alerta</span>
+              <Link href='/panel/alert/list' className={`flex gap-2 hover:text-[#E86255]`}>
+                <BellDot size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Informações</span>
               </Link>
             </div>
           </div>
         )}
 
-        {userFunction === 'DIRECTOR' || userFunction === 'ADMIN' && (
+        {(userFunction === 'DIRECTOR' || userFunction === 'ADMIN') && (
           <div className="group cursor-pointer ml-2">
             <button
               className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between"
@@ -106,7 +106,7 @@ export function SideBar({ userFunction }: SideBarProps) {
           </div>
         )}
 
-        {userFunction === 'DIRECTOR' || userFunction === 'ADMIN' && (
+        {(userFunction === 'DIRECTOR' || userFunction === 'ADMIN') && (
           <div className="group cursor-pointer ml-2">
             <button
               className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between"
@@ -164,7 +164,7 @@ export function SideBar({ userFunction }: SideBarProps) {
           </div>
         </div>
 
-        {userFunction === 'DIRECTOR' || userFunction === 'ADMIN' && (
+        {(userFunction === 'DIRECTOR' || userFunction === 'ADMIN') && (
           <div className="group cursor-pointer ml-2">
             <button
               className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between"
