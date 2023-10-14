@@ -1,7 +1,7 @@
 import { Information } from '../../../application/entities/information'
 
 export class InformationViewModel {
-  static toHTTP(information: Information) {
+  static toHTTP(information: any) {
     return {
       id: information.id,
       name: information.name,
@@ -9,6 +9,7 @@ export class InformationViewModel {
       date: information.date,
       schoolId: information.schoolId,
       createdAt: information.createdAt,
+      school: information.props.school,
     }
   }
 }

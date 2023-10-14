@@ -74,12 +74,13 @@ export class InformationController {
     @Param('informationId') informationId: string,
     @Body() body: UpdateInformationBody,
   ) {
-    const { name, description } = body
+    const { name, description, date } = body
 
     const { information } = await this.updateInformation.execute({
       informationId,
       name,
       description,
+      date,
     })
 
     return {

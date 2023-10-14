@@ -28,7 +28,9 @@ export class PrismaInformationRepository implements InformationRepository {
   }
 
   async findMany(): Promise<Information[]> {
-    const information = await this.prisma.information.findMany()
+    const information = await this.prisma.information.findMany({
+      include: { school: true },
+    })
 
     const informationToDomain = information.map((info) =>
       PrismaInformationMapper.toDomain(info),
@@ -40,6 +42,7 @@ export class PrismaInformationRepository implements InformationRepository {
   async findManyBySchool(schoolId: string): Promise<Information[]> {
     const information = await this.prisma.information.findMany({
       where: { schoolId },
+      include: { school: true },
     })
 
     const informationToDomain = information.map((info) =>

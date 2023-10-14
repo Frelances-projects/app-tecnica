@@ -22,6 +22,7 @@ export class PrismaInformationMapper {
         date: raw.date,
         schoolId: raw.schoolId,
         createdAt: raw.createdAt,
+        ...raw,
       },
       raw.id,
     )
