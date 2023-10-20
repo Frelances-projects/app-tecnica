@@ -13,6 +13,7 @@ import {
   ClipboardCheck,
   ClipboardList,
   CreditCard,
+  LucideClipboardEdit,
   KeySquare,
   LogOut,
   UserPlus2,
@@ -168,11 +169,26 @@ export function SideBar({ userFunction }: SideBarProps) {
           <div className="group cursor-pointer ml-2">
             <button
               className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between"
+              onClick={() => handleDropdownClick('prices')}
             >
-              <Link href='/panel/prices' className='flex gap-2 hover:text-[#E86255]'>
+              <div className='flex gap-5 items-center'>
+                <ClipboardCheck size={20} />
+                <span className={`${collapsed ? 'hidden' : 'flex whitespace-nowrap'}`}>
+                Preços
+                </span>
+              </div>
+              <ChevronUp className={`transform ${dropDown === 'prices' ? 'rotate-180' : 'rotate-90'} ${collapsed ? 'hidden' : ''} transition-all duration-300`} />
+            </button>
+
+            <div className={`transform flex flex-col gap-4 ml-10 mt-2 ${collapsed ? 'ml-6' : ''} ${dropDown === 'prices' ? 'h-max' : 'hidden'} transition-all ease-linear duration-300`}>
+              <Link href='/panel/prices/register' className='flex gap-2 hover:text-[#E86255]'>
                 <CreditCard size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Definir Preços</span>
               </Link>
-            </button>
+              
+              <Link href='/panel/prices/list' className='flex gap-2 hover:text-[#E86255]'>
+                <LucideClipboardEdit size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Listagem dos preços</span>
+              </Link>
+            </div>
           </div>
         )}
 

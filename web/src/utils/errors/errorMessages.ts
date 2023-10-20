@@ -14,6 +14,7 @@ export const errorMessages = {
   descriptionShorter: 'description must be longer than or equal to 5 characters',
   descriptionLonger: 'description must be shorter than or equal to 460 characters',
   informationNotFound: 'Information not found',
+  driverLicenseCategoryNotFound: 'Driver License Category not found',
   schoolIdMustBeUUID: 'schoolId must be a UUID',
   schoolIdShouldNotBeEmpty: 'schoolId should not be empty'
 }
