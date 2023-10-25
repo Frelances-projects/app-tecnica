@@ -1,12 +1,18 @@
 import { Dispatch, SetStateAction, useState } from 'react'
-import { View, Text, TouchableOpacity, Alert, ScrollView, KeyboardAvoidingView } from 'react-native'
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Alert,
+  ScrollView,
+  KeyboardAvoidingView,
+} from 'react-native'
 import { Barcode, CaretDown, CaretUp } from 'phosphor-react-native'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 
 import { api } from '@/lib/axios'
 import { useAuth } from '@/hooks/useAuth'
-
 import { Input } from '@/components/Input'
 import { Checkbox } from '@/components/checkbox'
 import { Skeleton } from '@/components/Skeleton'
@@ -38,7 +44,7 @@ interface TheoreticalClassesData {
   name: string
   code: number
   description: string
-  category: "THEORETICAL" | "PRACTICAL"
+  category: 'THEORETICAL' | 'PRACTICAL'
   createdAt: string
   scheduledClass?: ScheduledClass
 }
@@ -54,30 +60,46 @@ export default function TheoreticalClasses() {
 
   const [classCode, setclassCode] = useState('')
 
-  const { data: theoreticalClassesData, isLoading } = useQuery<TheoreticalClassesData[]>(['theoretical-classes'], async () => {
+  const { data: theoreticalClassesData, isLoading } = useQuery<
+    TheoreticalClassesData[]
+  >(['theoretical-classes'], async () => {
     try {
-      const { data } = await api.get(`/class/category/${student?.id}`, { params: { category: "THEORETICAL" } })
+      const { data } = await api.get(`/class/category/${student?.id}`, {
+        params: { category: 'THEORETICAL' },
+      })
 
       return data.classes
     } catch (error) {
       if (error instanceof AxiosError) {
-        console.log("🚀 ~ file: AuthContext.tsx:52 ~ const{mutateAsync:createSession}=useMutation ~ error:", error.response?.data.message[0])
+        console.log(
+          '🚀 ~ file: AuthContext.tsx:52 ~ const{mutateAsync:createSession}=useMutation ~ error:',
+          error.response?.data.message[0],
+        )
         Alert.alert('Eita', error.response?.data.message[0])
       }
     }
   })
 
-  const { mutateAsync: markClassAsCompleted } = useMutation(async ({ classId, studentId }: MarkClassAsCompleted) => {
-    try {
-      await api.post('/scheduled-class', { studentId, classId, status: 'COMPLETED' })
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        Alert.alert('Eita', error.response?.data.message[0])
+  const { mutateAsync: markClassAsCompleted } = useMutation(
+    async ({ classId, studentId }: MarkClassAsCompleted) => {
+      try {
+        await api.post('/scheduled-class', {
+          studentId,
+          classId,
+          status: 'COMPLETED',
+        })
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          Alert.alert('Eita', error.response?.data.message[0])
+        }
       }
-    }
-  }, { onSuccess() {
-    queryClient.invalidateQueries({ queryKey: ['theoretical-classes'] })
-  } })
+    },
+    {
+      onSuccess() {
+        queryClient.invalidateQueries({ queryKey: ['theoretical-classes'] })
+      },
+    },
+  )
 
   async function handleMarkLessonAsCompleted(lesson: TheoreticalClassesData) {
     if (lesson.scheduledClass?.status === 'COMPLETED') {
@@ -86,7 +108,7 @@ export default function TheoreticalClasses() {
 
     await markClassAsCompleted({ classId: lesson.id, studentId: student?.id!! })
   }
-  
+
   const dataTeste = [
     {
       id: '1',
@@ -162,13 +184,24 @@ export default function TheoreticalClasses() {
   // }
 
   return (
-    <KeyboardAvoidingView behavior='padding' style={{ flex: 1, alignItems: 'center', paddingHorizontal: 32 }}>
-      <Text className="mb-2 text-xl font-semibold">Bem-vindo(a), {student?.name}</Text>
-      <Text className="mb-12 font-regular text-sm">Aluno(a) N° {student?.number}</Text>
+    <KeyboardAvoidingView
+      behavior="padding"
+      style={{ flex: 1, alignItems: 'center', paddingHorizontal: 32 }}
+    >
+      <Text className="mb-2 text-xl font-semibold">
+        Bem-vindo(a), {student?.name}
+      </Text>
+      <Text className="mb-12 font-regular text-sm">
+        Aluno(a) N° {student?.number}
+      </Text>
       <View className="-ml-[1px] -mt-10 flex-row items-start">
         <Text className="font-regular text-sm">Já completou </Text>
         <Text className="font-regular text-sm font-bold">
-          {theoreticalClassesData?.filter(lesson => lesson?.scheduledClass?.status === 'COMPLETED').length}
+          {
+            theoreticalClassesData?.filter(
+              (lesson) => lesson?.scheduledClass?.status === 'COMPLETED',
+            ).length
+          }
         </Text>
         <Text className="font-regular text-sm"> de </Text>
         <Text className="font-regular text-sm font-bold">28 </Text>
@@ -187,7 +220,7 @@ export default function TheoreticalClasses() {
           onChangeText={(text) => setclassCode(text)}
         />
       </View>
-      <ScrollView className="w-full mt-6">
+      <ScrollView className="mt-6 w-full">
         {/* {theoreticalClassesData?.map((item, index) => {
           return (
             <AccordionSection
@@ -199,7 +232,7 @@ export default function TheoreticalClasses() {
             />
           )
         })} */}
-        {isLoading ?  (
+        {isLoading ? (
           <>
             <Skeleton />
             <Skeleton />
@@ -210,31 +243,29 @@ export default function TheoreticalClasses() {
           </>
         ) : (
           theoreticalClassesData
-          ?.filter((lesson) => {
-            if (classCode.trim() === '') {
-              // Se o input estiver vazio, exiba todas as aulas
-              return true;
-            } else {
-              // Se houver algo no input, filtre com base no código da aula
-              return lesson.code.toString().includes(classCode);
-            }
-          })
-          .map((lesson) => (
-            <Checkbox
-              key={lesson?.id}
-              id={lesson?.id}
-              onPress={() => handleMarkLessonAsCompleted(lesson)}
-              placeholder={lesson?.name}
-              isChecked={
-                lesson?.scheduledClass
-                  ? lesson?.scheduledClass?.status === 'COMPLETED'
-                    ? true
-                    : false
-                  : false
+            ?.filter((lesson) => {
+              if (classCode.trim() === '') {
+                // Se o input estiver vazio, exiba todas as aulas
+                return true
+              } else {
+                // Se houver algo no input, filtre com base no código da aula
+                return lesson.code.toString().includes(classCode)
               }
-              setData={setData}
-            />
-        ))
+            })
+            .map((lesson) => (
+              <Checkbox
+                key={lesson?.id}
+                id={lesson?.id}
+                onPress={() => handleMarkLessonAsCompleted(lesson)}
+                placeholder={lesson?.name}
+                isChecked={
+                  lesson?.scheduledClass
+                    ? lesson?.scheduledClass?.status === 'COMPLETED'
+                    : false
+                }
+                setData={setData}
+              />
+            ))
         )}
       </ScrollView>
     </KeyboardAvoidingView>

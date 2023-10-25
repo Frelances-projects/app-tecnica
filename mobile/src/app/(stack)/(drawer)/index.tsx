@@ -3,7 +3,6 @@ import { View, Text } from 'react-native'
 import { useRouter } from 'expo-router'
 
 import { DefaultButton } from '@/components/buttons/DefaultButton'
-
 import { useAuth } from '@/hooks/useAuth'
 
 export default function Home() {
@@ -18,8 +17,12 @@ export default function Home() {
 
   return (
     <View className="flex-1 items-center">
-      <Text className="mb-2 text-xl font-semibold">Bem-vindo(a), {student?.name}</Text>
-      <Text className="mb-12 font-regular text-sm">Aluno(a) N° {student?.number}</Text>
+      <Text className="mb-2 text-xl font-semibold">
+        Bem-vindo(a), {student?.name}
+      </Text>
+      <Text className="mb-12 font-regular text-sm">
+        Aluno(a) N° {student?.number}
+      </Text>
 
       <View className="gap-7">
         <DefaultButton

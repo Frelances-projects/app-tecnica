@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 
+import { AuthProvider } from './AuthContext'
 import { ReactQueryProvider } from './ReactQueryProvider'
 
 type AppProviderProps = {
@@ -9,7 +10,9 @@ type AppProviderProps = {
 export function AppProvider({ children }: AppProviderProps) {
   return (
     <ReactQueryProvider>
-      {children}
+      <AuthProvider>
+        {children}
+      </AuthProvider>
     </ReactQueryProvider>
   )
 }
