@@ -77,7 +77,6 @@ export default function Info() {
       return studentInfo
     } catch (error) {
       if (error instanceof AxiosError) {
-        console.log("🚀 ~ file: AuthContext.tsx:52 ~ const{mutateAsync:createSession}=useMutation ~ error:", error.response?.data.message[0])
         window.alert(`Eita ${error.response?.data.message[0]}`)
         if (error.response?.data.message === errorMessages.schoolNotFound) {
           toast({

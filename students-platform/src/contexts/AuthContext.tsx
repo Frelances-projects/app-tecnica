@@ -4,11 +4,10 @@ import nookies from 'nookies'
 import { useMutation } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 
-import { ToastContainer, toast } from 'react-toastify';
-
 import { api } from '@/lib/axios'
 import { errorMessages } from '@/utils/errors/errorMessages'
 import { useRouter } from 'next/router'
+import { useToast } from '@/components/ui/use-toast'
 
 type Student = {
   id: string
@@ -44,6 +43,7 @@ export const AuthContext = createContext<AuthContextDataProps>(
 export function AuthProvider({ children }: AuthContextProviderProps) {
   const [student, setStudent] = useState<Student | null>(null)
   const router = useRouter()
+  const { toast } = useToast()
 
   const { mutateAsync: createSession } = useMutation(async ({ number, password }: LoginData) => {
     try {
@@ -54,33 +54,29 @@ export function AuthProvider({ children }: AuthContextProviderProps) {
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response?.data.message[0] === errorMessages.passwordEmpty) {
-          // toast({
-          //   text1: 'A senha é obrigatória',
-          //   text2: 'Por favor digite a senha',
-          //   type: 'error',
-          //   visibilityTime: 8000
-          // });
+          toast({
+            title: "A senha é obrigatória",
+            description: "Por favor digite a senha",
+            variant: 'destructive'
+          })
         } else if (error.response?.data.message === errorMessages.studentNotFound) {
-          // toast({
-          //   text1: 'Estudante não cadastrado',
-          //   text2: 'Não existe nenhum estudante cadastrado com esse número',
-          //   type: 'error',
-          //   visibilityTime: 8000
-          // });
+          toast({
+            title: "Estudante não cadastrado",
+            description: "Não existe nenhum estudante cadastrado com esse número",
+            variant: 'destructive'
+          })
         } else if (error.response?.data.message === errorMessages.incorrectPassword) {
-          // toast({
-          //   text1: 'Senha incorreta',
-          //   text2: 'Por favor digite a senha novamente',
-          //   type: 'error',
-          //   visibilityTime: 8000
-          // });
+          toast({
+            title: "Senha incorreta",
+            description: "Por favor digite a senha novamente",
+            variant: 'destructive'
+          })
         } else {
-          // toast({
-          //   text1: 'Ops! Erro no servidor',
-          //   text2: 'Tente novamente mais tarde',
-          //   type: 'error',
-          //   visibilityTime: 8000
-          // });
+          toast({
+            title: "Ops! Erro no servidor",
+            description: "Tente novamente mais tarde",
+            variant: 'destructive'
+          })
         }
       }
     }
