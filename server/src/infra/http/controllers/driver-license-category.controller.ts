@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Param, Put, Post } from '@nestjs/common'
+import { Body, Controller, Get, Param, Put, Post, Delete } from '@nestjs/common'
 
 import { CreateDriverLicenseCategory } from '../../../application/use-cases/driver-license-category/create-driver-license-category'
 import { GetDriverLicenseCategoryById } from '../../../application/use-cases/driver-license-category/get-driver-license-category-by-id'
 import { GetManyDriverLicenseCategory } from '../../../application/use-cases/driver-license-category/get-many-driver-license-categories'
 import { GetManyDriverLicenseCategoryBySchool } from '../../../application/use-cases/driver-license-category/get-many-driver-license-categories-by-school'
 import { UpdateDriverLicenseCategory } from '../../../application/use-cases/driver-license-category/update-driver-license-category'
+import { DeleteDriverLicenseCategory } from '../../../application/use-cases/driver-license-category/delete-driver-license-category'
 
 import { DriverLicenseCategoryViewModel } from '../view-models/driver-license-category-view-model'
 
@@ -19,6 +20,7 @@ export class DriverLicenseCategoryController {
     private createDriverLicenseCategory: CreateDriverLicenseCategory,
     private getManyDriverLicenseCategoryBySchool: GetManyDriverLicenseCategoryBySchool,
     private updateDriverLicenseCategory: UpdateDriverLicenseCategory,
+    private deleteDriverLicenseCategory: DeleteDriverLicenseCategory,
   ) {}
 
   @Get(':driverLicenseCategoryId')
@@ -107,5 +109,12 @@ export class DriverLicenseCategoryController {
         driverLicenseCategory,
       ),
     }
+  }
+
+  @Delete(':driverLicenseCategoryId')
+  async delete(
+    @Param('driverLicenseCategoryId') driverLicenseCategoryId: string,
+  ) {
+    await this.deleteDriverLicenseCategory.execute(driverLicenseCategoryId)
   }
 }

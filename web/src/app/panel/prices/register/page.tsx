@@ -5,7 +5,7 @@ import { CreatePricesSection } from "./components/CreatePricesSection";
 
 import { User } from '@/utils/interfaces/user';
 
-export default function DrivingLessons() {
+export default function RegisterDrivingLessons() {
   const user = cookies().get('user')?.value
   const formattedUser = JSON.parse(user!!) as User
 

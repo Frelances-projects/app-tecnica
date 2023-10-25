@@ -36,7 +36,9 @@ export class PrismaDriverLicenseCategoryRepository
   }
 
   async findMany(): Promise<DriverLicenseCategory[]> {
-    const lessons = await this.prisma.driverLicenseCategory.findMany()
+    const lessons = await this.prisma.driverLicenseCategory.findMany({
+      include: { school: true },
+    })
 
     const driverLicenseCategoriesToDomain = lessons.map((lesson) =>
       PrismaDriverLicenseCategoryMapper.toDomain(lesson),
@@ -49,6 +51,7 @@ export class PrismaDriverLicenseCategoryRepository
     const driverLicenseCategories =
       await this.prisma.driverLicenseCategory.findMany({
         where: { schoolId },
+        include: { school: true },
       })
 
     const driverLicenseCategoriesToDomain = driverLicenseCategories.map(
@@ -69,6 +72,12 @@ export class PrismaDriverLicenseCategoryRepository
         id: raw.id,
       },
       data: raw as any,
+    })
+  }
+
+  async delete(driverLicenseCategoryId: string): Promise<void> {
+    await this.prisma.driverLicenseCategory.delete({
+      where: { id: driverLicenseCategoryId },
     })
   }
 }

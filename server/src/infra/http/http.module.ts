@@ -50,6 +50,7 @@ import { GetDriverLicenseCategoryById } from '../../application/use-cases/driver
 import { GetManyDriverLicenseCategory } from '../../application/use-cases/driver-license-category/get-many-driver-license-categories'
 import { GetManyDriverLicenseCategoryBySchool } from '../../application/use-cases/driver-license-category/get-many-driver-license-categories-by-school'
 import { UpdateDriverLicenseCategory } from '../../application/use-cases/driver-license-category/update-driver-license-category'
+import { DeleteDriverLicenseCategory } from '../../application/use-cases/driver-license-category/delete-driver-license-category'
 
 // TEST
 import { CreateTest } from 'src/application/use-cases/test/create-test'
@@ -142,6 +143,7 @@ import { CreateToken } from 'src/helpers/create-token'
     GetManyDriverLicenseCategory,
     GetManyDriverLicenseCategoryBySchool,
     UpdateDriverLicenseCategory,
+    DeleteDriverLicenseCategory,
 
     // TEST
     CreateTest,

@@ -9,4 +9,5 @@ export abstract class DriverLicenseCategoryRepository {
   abstract findMany(): Promise<DriverLicenseCategory[]>
   abstract findManyBySchool(schoolId: string): Promise<DriverLicenseCategory[]>
   abstract save(driverLicenseCategory: DriverLicenseCategory): Promise<void>
+  abstract delete(driverLicenseCategoryId: string): Promise<void>
 }

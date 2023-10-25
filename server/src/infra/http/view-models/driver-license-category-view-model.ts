@@ -1,7 +1,7 @@
 import { DriverLicenseCategory } from '../../../application/entities/driver-license-category'
 
 export class DriverLicenseCategoryViewModel {
-  static toHTTP(driverLicenseCategory: DriverLicenseCategory) {
+  static toHTTP(driverLicenseCategory: any) {
     return {
       id: driverLicenseCategory.id,
       name: driverLicenseCategory.name,
@@ -9,6 +9,7 @@ export class DriverLicenseCategoryViewModel {
       schoolId: driverLicenseCategory.schoolId,
       installments: driverLicenseCategory.installments,
       createdAt: driverLicenseCategory.createdAt,
+      school: driverLicenseCategory.props.school,
     }
   }
 }
