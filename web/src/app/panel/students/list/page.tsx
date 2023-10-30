@@ -1,4 +1,4 @@
-import { cookies } from 'next/headers'
+import { cookies, headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { addDays } from 'date-fns';
 import { format } from 'date-fns-tz'
@@ -14,6 +14,9 @@ type AxiosData = {
 }
 
 export default async function ManageStudents() {
+  const headersList = headers();
+  const activePath = headersList.get("x-invoke-path");
+  
   const user = cookies().get('user')?.value
   const formattedUser = JSON.parse(user!!)
   
@@ -22,15 +25,52 @@ export default async function ManageStudents() {
   }
 
   let returnedData
+  let schools
+  let categoryCard
 
   if (formattedUser.function === 'DIRECTOR') {
-    const { data } = await api.get<AxiosData>(`/student`)
+    const [studentData, schoolData] = await Promise.all([
+      api.get<AxiosData>(`/student`).then(result => result.data),
+      api.get(`/school`).then(result => result.data)
+    ])
 
-    returnedData = data.students
+    schools = schoolData.school?.map((school: any) => {
+      categoryCard = school.driverLicenseCategories.map((category: any) => {
+        return {
+          value: category.id,
+          label: category.name,
+          schoolId: category.schoolId
+        }
+      })
+
+      return {
+        value: school.id,
+        label: school.name
+      }
+    })
+
+    returnedData = studentData.students
   } else {
-    const { data } = await api.get<AxiosData>(`/student/school/${formattedUser.schoolId}`)
+    const [studentData, schoolData] = await Promise.all([
+      api.get<AxiosData>(`/student/school/${formattedUser.schoolId}`).then(result => result.data),
+      api.get(`/school/${formattedUser.schoolId}`).then(result => result.data)
+    ])
 
-    returnedData = data.students
+    schools = [
+      {
+        value: schoolData.school.id,
+        label: schoolData.school.name
+      }
+    ]
+    categoryCard = schoolData.school.driverLicenseCategories.map((category: any) => {
+      return {
+        value: category.id,
+        label: category.name,
+        schoolId: category.schoolId
+      }
+    })
+
+    returnedData = studentData.students
   }
 
   const formattedData = returnedData?.map(student => {
@@ -47,7 +87,12 @@ export default async function ManageStudents() {
       <h1 className='text-xl'>Gerir Alunos</h1>
       <div className='mx-auto -mt-9 max-w-[1440px] w-full h-[1px] bg-[#BFBFBF]'/>
 
-      <ListOfStudents students={formattedData} />
+      <ListOfStudents
+        students={formattedData}
+        activePathname={activePath!}
+        categoryCard={categoryCard}
+        schools={schools}
+      />
     </main>
   )
 }

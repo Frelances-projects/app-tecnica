@@ -47,7 +47,7 @@ export function RegisterStudentForm({ categoryCard, schools }: RegisterStudentFo
       })
     } else {
       toast({
-        title: 'Error!',
+        title: 'Erro!',
         description: message,
         variant: 'destructive'
       })

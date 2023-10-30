@@ -1,4 +1,4 @@
-import { cookies } from 'next/headers'
+import { cookies, headers } from 'next/headers'
 import { addDays } from 'date-fns'
 import { format } from 'date-fns-tz'
 
@@ -14,6 +14,9 @@ type AxiosData = {
 }
 
 export default async function CodeExams() {
+  const headersList = headers();
+  const activePath = headersList.get("x-invoke-path");
+
   const user = cookies().get('user')?.value
   const formattedUser = JSON.parse(user!!) as User
   
@@ -43,7 +46,7 @@ export default async function CodeExams() {
       <h1 className='text-xl'>Exames Código</h1>
       <div className='mx-auto -mt-5 max-w-[1440px] w-full h-[1px] bg-[#BFBFBF]'/>
 
-      <ListOfStudents students={formattedData} />
+      <ListOfStudents students={formattedData} activePathname={activePath!} />
     </main>
   )
 }
