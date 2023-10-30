@@ -31,6 +31,7 @@ import { GetStudentByEmail } from '../../application/use-cases/student/get-stude
 import { GetStudentById } from '../../application/use-cases/student/get-student-by-id'
 import { GetStudentByNumber } from '../../application/use-cases/student/get-student-by-number'
 import { UpdateStudent } from '../../application/use-cases/student/update-student'
+import { DeleteStudent } from '../../application/use-cases/student/delete-student'
 import { CreateStudentSession } from 'src/application/use-cases/student/create-student-session'
 
 // CALENDAR
@@ -125,6 +126,7 @@ import { CreateToken } from 'src/helpers/create-token'
     GetStudentById,
     GetStudentByNumber,
     UpdateStudent,
+    DeleteStudent,
 
     // CALENDAR
     CreateCalendar,

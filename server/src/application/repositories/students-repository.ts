@@ -8,4 +8,5 @@ export abstract class StudentsRepository {
   abstract findMany(): Promise<Student[]>
   abstract findManyBySchool(schoolId: string): Promise<Student[]>
   abstract save(student: Student): Promise<void>
+  abstract delete(studentId: string): Promise<void>
 }

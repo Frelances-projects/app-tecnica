@@ -82,4 +82,8 @@ export class PrismaStudentsRepository implements StudentsRepository {
 
     await this.prisma.student.update({ where: { id: raw.id }, data: raw })
   }
+
+  async delete(studentId: string): Promise<void> {
+    await this.prisma.student.delete({ where: { id: studentId } })
+  }
 }

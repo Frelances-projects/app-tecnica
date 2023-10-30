@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Param, Put, Post } from '@nestjs/common'
+import { Body, Controller, Get, Param, Put, Post, Delete } from '@nestjs/common'
 
 import { CreateStudent } from '../../../application/use-cases/student/create-student'
 import { CreateStudentSession } from '../../../application/use-cases/student/create-student-session'
 import { UpdateStudent } from '../../../application/use-cases/student/update-student'
 import { GetStudentById } from '../../../application/use-cases/student/get-student-by-id'
 import { GetManyStudents } from '../../../application/use-cases/student/get-many-students'
+import { DeleteStudent } from '../../../application/use-cases/student/delete-student'
 import { GetManyStudentsBySchool } from 'src/application/use-cases/student/get-many-students-by-school'
 
 import { StudentViewModel } from '../view-models/student-view-model'
@@ -19,6 +20,7 @@ export class StudentController {
     private createStudent: CreateStudent,
     private createStudentSession: CreateStudentSession,
     private updateStudent: UpdateStudent,
+    private deleteStudent: DeleteStudent,
     private getStudentById: GetStudentById,
     private getManyStudents: GetManyStudents,
     private getManyStudentsBySchool: GetManyStudentsBySchool,
@@ -104,5 +106,10 @@ export class StudentController {
     return {
       student: StudentViewModel.toHTTP(student),
     }
+  }
+
+  @Delete(':studentId')
+  async delete(@Param('studentId') studentId: string) {
+    await this.deleteStudent.execute(studentId)
   }
 }
