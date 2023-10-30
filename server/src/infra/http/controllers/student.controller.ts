@@ -82,13 +82,23 @@ export class StudentController {
     @Param('studentId') studentId: string,
     @Body() body: UpdateStudentBody,
   ) {
-    const { name, email, number } = body
+    const {
+      name,
+      email,
+      number,
+      driverLicenseCategoryId,
+      enrolledAt,
+      schoolId,
+    } = body
 
     const { student } = await this.updateStudent.execute({
       id: studentId,
       name,
       email,
       number,
+      driverLicenseCategoryId,
+      enrolledAt,
+      schoolId,
     })
 
     return {
