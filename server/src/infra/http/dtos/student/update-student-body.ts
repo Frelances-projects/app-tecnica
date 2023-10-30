@@ -16,8 +16,8 @@ export class UpdateStudentBody {
   @IsUUID()
   driverLicenseCategoryId: string
 
-  @IsString()
-  enrolledAt: string
+  // @IsString()
+  // enrolledAt: string
 
   @IsNumber()
   number: number

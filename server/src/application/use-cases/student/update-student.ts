@@ -16,7 +16,7 @@ interface UpdateStudentRequest {
   email?: string
   schoolId?: string
   driverLicenseCategoryId?: string
-  enrolledAt?: string
+  // enrolledAt?: string
   number?: number
 }
 
@@ -42,29 +42,41 @@ export class UpdateStudent {
         number,
         schoolId,
         driverLicenseCategoryId,
-        enrolledAt,
+        // enrolledAt,
       } = request
 
       const { student } = await this.getStudentById.execute(id)
 
-      const { student: foundStudentByEmail } =
-        await this.getStudentByEmail.execute(email)
+      if (email) {
+        const { student: foundStudentByEmail } =
+          await this.getStudentByEmail.execute(email)
 
-      if (foundStudentByEmail.email === email) {
-        throw new ConflictException('This email has already been used')
+        if (
+          foundStudentByEmail &&
+          foundStudentByEmail.id !== id &&
+          foundStudentByEmail.email === email
+        ) {
+          throw new ConflictException('This email has already been used')
+        }
       }
 
-      const { student: foundStudentByNumber } =
-        await this.getStudentByNumber.execute(number)
+      if (number) {
+        const { student: foundStudentByNumber } =
+          await this.getStudentByNumber.execute(number)
 
-      if (foundStudentByNumber.number === number) {
-        throw new ConflictException('This number has already been used')
+        if (
+          foundStudentByNumber &&
+          foundStudentByNumber.id !== id &&
+          foundStudentByNumber.number === number
+        ) {
+          throw new ConflictException('This number has already been used')
+        }
       }
 
       student.name = name ?? student.name
       student.email = email ?? student.email
       student.schoolId = schoolId ?? student.schoolId
-      student.enrolledAt = enrolledAt ?? student.enrolledAt
+      // student.enrolledAt = enrolledAt ?? student.enrolledAt
       student.driverLicenseCategoryId =
         driverLicenseCategoryId ?? student.driverLicenseCategoryId
       student.number = number ?? student.number

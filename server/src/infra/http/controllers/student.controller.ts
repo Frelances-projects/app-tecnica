@@ -87,7 +87,7 @@ export class StudentController {
       email,
       number,
       driverLicenseCategoryId,
-      enrolledAt,
+      // enrolledAt,
       schoolId,
     } = body
 
@@ -97,7 +97,7 @@ export class StudentController {
       email,
       number,
       driverLicenseCategoryId,
-      enrolledAt,
+      // enrolledAt,
       schoolId,
     })
 
