@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common'
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common'
 
 import { CreateScheduledClass } from '../../../application/use-cases/scheduled-class/create-scheduled-class'
 import { UpdateScheduledClass } from '../../../application/use-cases/scheduled-class/update-scheduled-class'
@@ -6,6 +6,9 @@ import { UpdateScheduledClassStatus } from '../../../application/use-cases/sched
 import { GetScheduledClassById } from '../../../application/use-cases/scheduled-class/get-scheduled-class-by-id'
 import { GetManyScheduledClasses } from '../../../application/use-cases/scheduled-class/get-many-scheduled-classes'
 import { GetManyScheduledClassesByClass } from '../../../application/use-cases/scheduled-class/get-many-scheduled-classes-by-class'
+import { GetManyScheduledClassesBySchool } from '../../../application/use-cases/scheduled-class/get-many-scheduled-classes-by-school'
+import { GetManyScheduledClassesByCategoryClass } from '../../../application/use-cases/scheduled-class/get-many-scheduled-classes-by-category-class'
+import { GetManyScheduledClassesBySchoolAndCategoryClass } from '../../../application/use-cases/scheduled-class/get-many-scheduled-classes-by-school-category-class'
 import { GetManyScheduledClassesByStudent } from '../../../application/use-cases/scheduled-class/get-many-scheduled-classes-by-student'
 
 import { ScheduledClassViewModel } from '../view-models/scheduled-class-view-model'
@@ -23,6 +26,9 @@ export class ScheduledClassController {
     private getScheduledClassById: GetScheduledClassById,
     private getManyScheduledClasses: GetManyScheduledClasses,
     private getManyScheduledClassesByClass: GetManyScheduledClassesByClass,
+    private getManyScheduledClassesBySchool: GetManyScheduledClassesBySchool,
+    private getManyScheduledClassesByCategoryClass: GetManyScheduledClassesByCategoryClass,
+    private getManyScheduledClassesBySchoolAndCategoryClass: GetManyScheduledClassesBySchoolAndCategoryClass,
     private getManyScheduledClassesByStudent: GetManyScheduledClassesByStudent,
   ) {}
 
@@ -68,6 +74,56 @@ export class ScheduledClassController {
   async getManyByClass(@Param('classId') classId: string) {
     const { scheduledClasses } =
       await this.getManyScheduledClassesByClass.execute(classId)
+
+    const scheduledClassesToHTTP = scheduledClasses.map((scheduledClass) =>
+      ScheduledClassViewModel.toHTTP(scheduledClass),
+    )
+
+    return {
+      scheduledClasses: scheduledClassesToHTTP,
+    }
+  }
+
+  @Get('school/:schoolId')
+  async getManyBySchool(@Param('schoolId') schoolId: string) {
+    const { scheduledClasses } =
+      await this.getManyScheduledClassesBySchool.execute(schoolId)
+
+    const scheduledClassesToHTTP = scheduledClasses.map((scheduledClass) =>
+      ScheduledClassViewModel.toHTTP(scheduledClass),
+    )
+
+    return {
+      scheduledClasses: scheduledClassesToHTTP,
+    }
+  }
+
+  @Get('class/category')
+  async getManyByCategoryClass(
+    @Query('category') category: 'THEORETICAL' | 'PRACTICAL',
+  ) {
+    const { scheduledClasses } =
+      await this.getManyScheduledClassesByCategoryClass.execute(category)
+
+    const scheduledClassesToHTTP = scheduledClasses.map((scheduledClass) =>
+      ScheduledClassViewModel.toHTTP(scheduledClass),
+    )
+
+    return {
+      scheduledClasses: scheduledClassesToHTTP,
+    }
+  }
+
+  @Get('category/:schoolId')
+  async getManyBySchoolAndCategory(
+    @Param('schoolId') schoolId: string,
+    @Query('category') category: 'THEORETICAL' | 'PRACTICAL',
+  ) {
+    const { scheduledClasses } =
+      await this.getManyScheduledClassesBySchoolAndCategoryClass.execute(
+        schoolId,
+        category,
+      )
 
     const scheduledClassesToHTTP = scheduledClasses.map((scheduledClass) =>
       ScheduledClassViewModel.toHTTP(scheduledClass),

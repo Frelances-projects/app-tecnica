@@ -9,6 +9,7 @@ interface CreateClassRequest {
   name: string
   category: 'THEORETICAL' | 'PRACTICAL'
   description?: string
+  code?: number
 }
 
 interface CreateClassResponse {
@@ -24,26 +25,41 @@ export class CreateClass {
 
   async execute(request: CreateClassRequest): Promise<CreateClassResponse> {
     try {
-      const { name, category, description } = request
+      const { name, category, description, code } = request
 
-      const { classes } = await this.getManyClasses.execute()
+      if (code) {
+        const lesson = new Class({
+          name,
+          category,
+          description,
+          code,
+        })
 
-      let uniqueCode: number
-      do {
-        uniqueCode = generateRandomCode(4)
-      } while (classes.some((lesson) => lesson.code === uniqueCode))
+        await this.classRepository.create(lesson)
 
-      const lesson = new Class({
-        name,
-        category,
-        description,
-        code: uniqueCode,
-      })
+        return {
+          class: lesson,
+        }
+      } else {
+        const { classes } = await this.getManyClasses.execute()
 
-      await this.classRepository.create(lesson)
+        let uniqueCode: number
+        do {
+          uniqueCode = generateRandomCode(4)
+        } while (classes.some((lesson) => lesson.code === uniqueCode))
 
-      return {
-        class: lesson,
+        const lesson = new Class({
+          name,
+          category,
+          description,
+          code: uniqueCode,
+        })
+
+        await this.classRepository.create(lesson)
+
+        return {
+          class: lesson,
+        }
       }
     } catch (error) {
       if (error) throw error

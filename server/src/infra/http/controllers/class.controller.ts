@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common'
 
 import { CreateClass } from 'src/application/use-cases/class/create-class'
 import { GetClassById } from '../../../application/use-cases/class/get-class-by-id'
+import { GetClassByCode } from '../../../application/use-cases/class/get-class-by-code'
 import { GetManyClasses } from '../../../application/use-cases/class/get-many-classes'
 import { GetManyClassesByCategory } from '../../../application/use-cases/class/get-many-classes-by-category'
 import { GetManyClassesByCategoryAndStudent } from '../../../application/use-cases/class/get-many-classes-by-category-and-student'
@@ -14,6 +15,7 @@ export class ClassController {
   constructor(
     private createClass: CreateClass,
     private getClassById: GetClassById,
+    private getClassByCode: GetClassByCode,
     private getManyClasses: GetManyClasses,
     private getManyClassesByCategory: GetManyClassesByCategory,
     private getManyClassesByCategoryAndStudent: GetManyClassesByCategoryAndStudent,
@@ -22,6 +24,15 @@ export class ClassController {
   @Get(':classId')
   async getById(@Param('classId') classId: string) {
     const { class: lesson } = await this.getClassById.execute(classId)
+
+    return {
+      class: ClassViewModel.toHTTP(lesson),
+    }
+  }
+
+  @Get('code/:code')
+  async getByCode(@Param('code') code: number) {
+    const { class: lesson } = await this.getClassByCode.execute(Number(code))
 
     return {
       class: ClassViewModel.toHTTP(lesson),

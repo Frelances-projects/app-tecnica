@@ -4,8 +4,17 @@ export abstract class ScheduledClassRepository {
   abstract create(scheduledClass: ScheduledClass): Promise<void>
   abstract findById(scheduledClassId: string): Promise<ScheduledClass | null>
   abstract findMany(): Promise<ScheduledClass[]>
-  abstract findMany(): Promise<ScheduledClass[]>
+  abstract findManyBySchoolId(schoolId: string): Promise<ScheduledClass[]>
   abstract findManyByStudentId(studentId: string): Promise<ScheduledClass[]>
   abstract findManyByClassId(classId: string): Promise<ScheduledClass[]>
+  abstract findManyByCategoryClass(
+    categoryClass: 'THEORETICAL' | 'PRACTICAL',
+  ): Promise<ScheduledClass[]>
+
+  abstract findManyBySchoolAndCategoryClass(
+    schoolId: string,
+    categoryClass: 'THEORETICAL' | 'PRACTICAL',
+  ): Promise<ScheduledClass[]>
+
   abstract save(scheduledClass: ScheduledClass): Promise<void>
 }

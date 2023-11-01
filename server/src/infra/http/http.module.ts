@@ -68,6 +68,7 @@ import { UpdatePayment } from 'src/application/use-cases/payment/update-payment'
 // CLASS
 import { CreateClass } from 'src/application/use-cases/class/create-class'
 import { GetClassById } from 'src/application/use-cases/class/get-class-by-id'
+import { GetClassByCode } from 'src/application/use-cases/class/get-class-by-code'
 import { GetManyClasses } from 'src/application/use-cases/class/get-many-classes'
 import { GetManyClassesByCategory } from 'src/application/use-cases/class/get-many-classes-by-category'
 import { GetManyClassesByCategoryAndStudent } from 'src/application/use-cases/class/get-many-classes-by-category-and-student'
@@ -77,6 +78,9 @@ import { CreateScheduledClass } from 'src/application/use-cases/scheduled-class/
 import { GetManyScheduledClasses } from 'src/application/use-cases/scheduled-class/get-many-scheduled-classes'
 import { GetManyScheduledClassesByClass } from 'src/application/use-cases/scheduled-class/get-many-scheduled-classes-by-class'
 import { GetManyScheduledClassesByStudent } from 'src/application/use-cases/scheduled-class/get-many-scheduled-classes-by-student'
+import { GetManyScheduledClassesBySchool } from 'src/application/use-cases/scheduled-class/get-many-scheduled-classes-by-school'
+import { GetManyScheduledClassesByCategoryClass } from 'src/application/use-cases/scheduled-class/get-many-scheduled-classes-by-category-class'
+import { GetManyScheduledClassesBySchoolAndCategoryClass } from 'src/application/use-cases/scheduled-class/get-many-scheduled-classes-by-school-category-class'
 import { GetScheduledClassById } from 'src/application/use-cases/scheduled-class/get-scheduled-class-by-id'
 import { UpdateScheduledClass } from 'src/application/use-cases/scheduled-class/update-scheduled-class'
 import { UpdateScheduledClassStatus } from 'src/application/use-cases/scheduled-class/update-scheduled-class-status'
@@ -162,6 +166,7 @@ import { CreateToken } from 'src/helpers/create-token'
     // CLASS
     CreateClass,
     GetClassById,
+    GetClassByCode,
     GetManyClasses,
     GetManyClassesByCategory,
     GetManyClassesByCategoryAndStudent,
@@ -171,9 +176,12 @@ import { CreateToken } from 'src/helpers/create-token'
     GetManyScheduledClasses,
     GetManyScheduledClassesByClass,
     GetManyScheduledClassesByStudent,
+    GetManyScheduledClassesBySchool,
     GetScheduledClassById,
     UpdateScheduledClass,
     UpdateScheduledClassStatus,
+    GetManyScheduledClassesByCategoryClass,
+    GetManyScheduledClassesBySchoolAndCategoryClass,
 
     // USER
     CreateUser,

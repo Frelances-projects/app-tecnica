@@ -9,4 +9,6 @@ export class CreateClassBody {
 
   @IsNotEmpty()
   category: 'THEORETICAL' | 'PRACTICAL'
+
+  code?: number
 }

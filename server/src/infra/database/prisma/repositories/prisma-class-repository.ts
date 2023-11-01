@@ -28,6 +28,18 @@ export class PrismaClassRepository implements ClassRepository {
     return PrismaClassMapper.toDomain(lesson)
   }
 
+  async findByCode(code: number): Promise<Class> {
+    const lesson = await this.prisma.class.findUnique({
+      where: { code },
+    })
+
+    if (!lesson) {
+      return null
+    }
+
+    return PrismaClassMapper.toDomain(lesson)
+  }
+
   async findMany(): Promise<Class[]> {
     const lessons = await this.prisma.class.findMany()
 

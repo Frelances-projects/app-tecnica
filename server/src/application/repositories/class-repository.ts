@@ -4,6 +4,7 @@ export abstract class ClassRepository {
   abstract create(lesson: Class): Promise<void>
   abstract save(lesson: Class): Promise<void>
   abstract findById(classId: string): Promise<Class | null>
+  abstract findByCode(code: number): Promise<Class | null>
   abstract findManyByCategory(
     category: 'THEORETICAL' | 'PRACTICAL',
   ): Promise<Class[]>

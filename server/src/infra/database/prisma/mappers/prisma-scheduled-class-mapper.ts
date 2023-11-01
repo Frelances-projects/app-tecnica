@@ -24,6 +24,7 @@ export class PrismaScheduledClassMapper {
         studentId: raw.studentId,
         classId: raw.classId,
         createdAt: raw.createdAt,
+        ...raw,
       },
       raw.id,
     )

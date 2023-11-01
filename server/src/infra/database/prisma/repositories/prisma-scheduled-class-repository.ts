@@ -31,7 +31,57 @@ export class PrismaScheduledClassRepository
   }
 
   async findMany(): Promise<ScheduledClass[]> {
-    const scheduledClass = await this.prisma.scheduledClass.findMany()
+    const scheduledClass = await this.prisma.scheduledClass.findMany({
+      include: { class: true, student: { include: { school: true } } },
+    })
+
+    const scheduledClassesToDomain = scheduledClass.map((scheduledClass) =>
+      PrismaScheduledClassMapper.toDomain(scheduledClass),
+    )
+
+    return scheduledClassesToDomain
+  }
+
+  async findManyBySchoolId(schoolId: string): Promise<ScheduledClass[]> {
+    const scheduledClass = await this.prisma.scheduledClass.findMany({
+      where: { student: { schoolId } },
+      include: { class: true, student: { include: { school: true } } },
+    })
+
+    const scheduledClassesToDomain = scheduledClass.map((scheduledClass) =>
+      PrismaScheduledClassMapper.toDomain(scheduledClass),
+    )
+
+    return scheduledClassesToDomain
+  }
+
+  async findManyByCategoryClass(
+    categoryClass: 'THEORETICAL' | 'PRACTICAL',
+  ): Promise<ScheduledClass[]> {
+    const scheduledClass = await this.prisma.scheduledClass.findMany({
+      where: { class: { category: categoryClass } },
+      include: { class: true, student: { include: { school: true } } },
+    })
+    console.log(
+      '🚀 ~ file: prisma-scheduled-class-repository.ts:65 ~ scheduledClass:',
+      scheduledClass,
+    )
+
+    const scheduledClassesToDomain = scheduledClass.map((scheduledClass) =>
+      PrismaScheduledClassMapper.toDomain(scheduledClass),
+    )
+
+    return scheduledClassesToDomain
+  }
+
+  async findManyBySchoolAndCategoryClass(
+    schoolId: string,
+    categoryClass: 'THEORETICAL' | 'PRACTICAL',
+  ): Promise<ScheduledClass[]> {
+    const scheduledClass = await this.prisma.scheduledClass.findMany({
+      where: { student: { schoolId }, class: { category: categoryClass } },
+      include: { class: true, student: { include: { school: true } } },
+    })
 
     const scheduledClassesToDomain = scheduledClass.map((scheduledClass) =>
       PrismaScheduledClassMapper.toDomain(scheduledClass),
