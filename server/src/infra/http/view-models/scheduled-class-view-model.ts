@@ -10,8 +10,8 @@ export class ScheduledClassViewModel {
       studentId: scheduledClass.studentId,
       classId: scheduledClass.classId,
       createdAt: scheduledClass.createdAt,
-      class: scheduledClass.props.class,
-      student: scheduledClass.props.student,
+      class: scheduledClass.props.class ?? undefined,
+      student: scheduledClass.props.student ?? undefined,
     }
   }
 }

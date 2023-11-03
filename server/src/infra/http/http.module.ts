@@ -84,6 +84,7 @@ import { GetManyScheduledClassesBySchoolAndCategoryClass } from 'src/application
 import { GetScheduledClassById } from 'src/application/use-cases/scheduled-class/get-scheduled-class-by-id'
 import { UpdateScheduledClass } from 'src/application/use-cases/scheduled-class/update-scheduled-class'
 import { UpdateScheduledClassStatus } from 'src/application/use-cases/scheduled-class/update-scheduled-class-status'
+import { DeleteScheduledClass } from 'src/application/use-cases/scheduled-class/delete-scheduled-class'
 
 // USER
 import { CreateUser } from 'src/application/use-cases/user/create-user'
@@ -180,6 +181,7 @@ import { CreateToken } from 'src/helpers/create-token'
     GetScheduledClassById,
     UpdateScheduledClass,
     UpdateScheduledClassStatus,
+    DeleteScheduledClass,
     GetManyScheduledClassesByCategoryClass,
     GetManyScheduledClassesBySchoolAndCategoryClass,
 

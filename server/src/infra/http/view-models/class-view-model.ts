@@ -9,7 +9,9 @@ export class ClassViewModel {
       description: lesson.description,
       category: lesson.category,
       createdAt: lesson.createdAt,
-      scheduledClass: lesson.props.scheduledClass[0],
+      scheduledClass: lesson?.props?.scheduledClass
+        ? lesson.props.scheduledClass[0]
+        : undefined,
     }
   }
 }

@@ -1,8 +1,18 @@
-import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common'
 
 import { CreateScheduledClass } from '../../../application/use-cases/scheduled-class/create-scheduled-class'
 import { UpdateScheduledClass } from '../../../application/use-cases/scheduled-class/update-scheduled-class'
 import { UpdateScheduledClassStatus } from '../../../application/use-cases/scheduled-class/update-scheduled-class-status'
+import { DeleteScheduledClass } from 'src/application/use-cases/scheduled-class/delete-scheduled-class'
 import { GetScheduledClassById } from '../../../application/use-cases/scheduled-class/get-scheduled-class-by-id'
 import { GetManyScheduledClasses } from '../../../application/use-cases/scheduled-class/get-many-scheduled-classes'
 import { GetManyScheduledClassesByClass } from '../../../application/use-cases/scheduled-class/get-many-scheduled-classes-by-class'
@@ -23,6 +33,7 @@ export class ScheduledClassController {
     private createScheduledClass: CreateScheduledClass,
     private updateScheduledClass: UpdateScheduledClass,
     private updateScheduledClassStatus: UpdateScheduledClassStatus,
+    private deleteScheduledClass: DeleteScheduledClass,
     private getScheduledClassById: GetScheduledClassById,
     private getManyScheduledClasses: GetManyScheduledClasses,
     private getManyScheduledClassesByClass: GetManyScheduledClassesByClass,
@@ -98,7 +109,7 @@ export class ScheduledClassController {
     }
   }
 
-  @Get('class/category')
+  @Get('classes/category')
   async getManyByCategoryClass(
     @Query('category') category: 'THEORETICAL' | 'PRACTICAL',
   ) {
@@ -178,5 +189,10 @@ export class ScheduledClassController {
     return {
       scheduledClass: ScheduledClassViewModel.toHTTP(scheduledClass),
     }
+  }
+
+  @Delete(':scheduledClassId')
+  async delete(@Param('scheduledClassId') scheduledClassId: string) {
+    await this.deleteScheduledClass.execute(scheduledClassId)
   }
 }

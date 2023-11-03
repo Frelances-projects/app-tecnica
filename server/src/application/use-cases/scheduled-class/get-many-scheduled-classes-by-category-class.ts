@@ -15,6 +15,10 @@ export class GetManyScheduledClassesByCategoryClass {
     categoryClass: 'THEORETICAL' | 'PRACTICAL',
   ): Promise<GetManyScheduledClassesByClassResponse> {
     try {
+      console.log(
+        '🚀 ~ file: get-many-scheduled-classes-by-category-class.ts:19 ~ GetManyScheduledClassesByCategoryClass ~ scheduledClasses:',
+        categoryClass,
+      )
       const scheduledClasses =
         await this.scheduledClassRepository.findManyByCategoryClass(
           categoryClass,

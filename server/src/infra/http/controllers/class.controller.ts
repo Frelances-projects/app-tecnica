@@ -50,7 +50,7 @@ export class ClassController {
     }
   }
 
-  @Get('category')
+  @Get('category/class-category')
   async getManyByCategory(
     @Query('category') category: 'THEORETICAL' | 'PRACTICAL',
   ) {
@@ -82,6 +82,10 @@ export class ClassController {
 
   @Post()
   async create(@Body() body: CreateClassBody) {
+    console.log(
+      '🚀 ~ file: class.controller.ts:85 ~ ClassController ~ create ~ CreateClassBody:',
+      CreateClassBody,
+    )
     const { class: lesson } = await this.createClass.execute(body)
 
     return {

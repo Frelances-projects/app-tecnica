@@ -62,10 +62,6 @@ export class PrismaScheduledClassRepository
       where: { class: { category: categoryClass } },
       include: { class: true, student: { include: { school: true } } },
     })
-    console.log(
-      '🚀 ~ file: prisma-scheduled-class-repository.ts:65 ~ scheduledClass:',
-      scheduledClass,
-    )
 
     const scheduledClassesToDomain = scheduledClass.map((scheduledClass) =>
       PrismaScheduledClassMapper.toDomain(scheduledClass),
@@ -121,5 +117,9 @@ export class PrismaScheduledClassRepository
       where: { id: raw.id },
       data: raw,
     })
+  }
+
+  async delete(scheduledClassId: string): Promise<void> {
+    await this.prisma.scheduledClass.delete({ where: { id: scheduledClassId } })
   }
 }

@@ -45,7 +45,7 @@ export class CreateClass {
 
         let uniqueCode: number
         do {
-          uniqueCode = generateRandomCode(4)
+          uniqueCode = generateRandomCode(6)
         } while (classes.some((lesson) => lesson.code === uniqueCode))
 
         const lesson = new Class({

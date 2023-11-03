@@ -17,4 +17,5 @@ export abstract class ScheduledClassRepository {
   ): Promise<ScheduledClass[]>
 
   abstract save(scheduledClass: ScheduledClass): Promise<void>
+  abstract delete(scheduledClassId: string): Promise<void>
 }
