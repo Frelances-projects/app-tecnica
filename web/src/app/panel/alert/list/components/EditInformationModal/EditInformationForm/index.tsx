@@ -1,7 +1,7 @@
 'use client'
 import { ReactNode, useState } from "react"
 
-import { InputEditModal } from "@/components/InputEditModal";
+import { InputModal } from "@/components/InputModal";
 import { useToast } from "@/components/ui/use-toast";
 
 import { updateInfo } from "./action";
@@ -63,7 +63,7 @@ export function EditInformationForm({ information, children }: EditInformationFo
       action={handleUpdateInfo}
       className="flex flex-col gap-[2.08rem] mt-5 mb-4"
     >
-      <InputEditModal
+      <InputModal
         id='title'
         name='title'
         type="text"
@@ -72,7 +72,7 @@ export function EditInformationForm({ information, children }: EditInformationFo
         onChange={(event) => setName(event.target.value)}
       />
 
-      <InputEditModal
+      <InputModal
         id='alert_date'
         name='alert_date'
         type="date"

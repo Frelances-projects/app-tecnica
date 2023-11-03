@@ -1,8 +1,8 @@
 import { InputHTMLAttributes, forwardRef } from "react";
 
-interface InputEditInformationProps extends InputHTMLAttributes<HTMLInputElement> {}
+interface InputInformationProps extends InputHTMLAttributes<HTMLInputElement> {}
 
-export const InputEditModal = forwardRef(({ ...rest }: InputEditInformationProps, ref) => {
+export const InputModal = forwardRef(({ ...rest }: InputInformationProps, ref) => {
   return (
     <input
       className="border w-full border-[#C6C6C6] outline-none flex items-center justify-between bg-white rounded-lg px-2 py-[0.375rem] text-black"
@@ -12,4 +12,4 @@ export const InputEditModal = forwardRef(({ ...rest }: InputEditInformationProps
   )
 })
 
-InputEditModal.displayName = 'InputEditModal'
+InputModal.displayName = 'InputModal'

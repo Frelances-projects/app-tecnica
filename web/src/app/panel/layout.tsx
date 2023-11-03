@@ -4,6 +4,8 @@ import { redirect } from 'next/navigation'
 import { Header } from '../components/Header'
 import { SideBar } from '../components/Navigation'
 
+import { ReactQueryProvider } from '@/contexts/ReactQueryProvider'
+
 import { User } from '@/utils/interfaces/user'
 
 export const metadata = {
@@ -28,13 +30,15 @@ export default function PanelLayout({
     <div className='overflow-x-hidden'>
       <Header username={formattedUserData.name} />
 
-      <div className='mx-auto max-w-[1440px] w-full h-[1px] bg-black'/>
-      <div className='flex gap-11'>
-        <SideBar userFunction={formattedUserData.function} />
-        <div className="w-full max-w-6xl flex justify-center">
-          {children}
+      <ReactQueryProvider>
+        <div className='mx-auto max-w-[1440px] w-full h-[1px] bg-black'/>
+        <div className='flex gap-11'>
+          <SideBar userFunction={formattedUserData.function} />
+          <div className="w-full max-w-6xl flex justify-center">
+            {children}
+          </div>
         </div>
-      </div>
+      </ReactQueryProvider>
     </div>
   )
 }

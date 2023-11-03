@@ -1,42 +1,62 @@
-import { cookies, headers } from 'next/headers'
-import { addDays } from 'date-fns';
+import { cookies } from 'next/headers'
 import { format } from 'date-fns-tz'
 
 import { api } from '@/lib/api';
 
-import { ListOfStudents } from "@/components/ListOfStudents";
+import { ScheduledDrivingLessonsList } from './components/ScheduledDrivingLessonsList';
 
+import { ScheduleClass } from '@/utils/interfaces/schedule-class';
 import { Student } from '@/utils/interfaces/student';
 
 type AxiosData = {
+  scheduledClasses: ScheduleClass[]
+}
+
+type StudentsAxiosData = {
   students: Student[]
 }
 
 export default async function DrivingLessons() {
-  const headersList = headers();
-  const activePath = headersList.get("x-invoke-path");
-  
   const user = cookies().get('user')?.value
   const formattedUser = JSON.parse(user!!)
   
   let returnedData
+  let returnedStudentData
 
   if (formattedUser.function === 'DIRECTOR') {
-    const { data } = await api.get<AxiosData>(`/student`)
+    const [scheduleClassesData, studentData] = await Promise.all([
+      api.get<AxiosData>(`/scheduled-class/classes/category`, 
+        { params: { category: 'PRACTICAL' } }
+      ).then(result => result.data),
+      api.get<StudentsAxiosData>(`/student`).then(result => result.data)
+    ])
 
-    returnedData = data.students
+    returnedData = scheduleClassesData.scheduledClasses
+    returnedStudentData = studentData.students
   } else {
-    const { data } = await api.get<AxiosData>(`/student/school/${formattedUser.schoolId}`)
+    const [scheduleClassesData, studentData] = await Promise.all([
+      api.get<AxiosData>(`/scheduled-class/category/${formattedUser.schoolId}`, 
+        { params: { category: 'PRACTICAL' } }
+      ).then(result => result.data),
+      api.get<StudentsAxiosData>(`/student/school/${formattedUser.schoolId}`).then(result => result.data)
+    ])
 
-    returnedData = data.students
+    returnedData = scheduleClassesData.scheduledClasses
+    returnedStudentData = studentData.students
   }
+  
+  const formattedData = returnedData?.map(scheduledClass => {
+    if (scheduledClass.schedulingDate) {
+      const formattedSchedulingDate = format(new Date(scheduledClass.schedulingDate), 'dd/MM/yyyy')
 
-  const formattedData = returnedData?.map(student => {
-    const formattedEnrolledAt = format(addDays(new Date(student.enrolledAt), 1), 'dd/MM/yyyy')
-
-    return {
-      ...student,
-      enrolledAt: formattedEnrolledAt
+      return {
+        ...scheduledClass,
+        schedulingDate: formattedSchedulingDate
+      }
+    } else {
+      return {
+        ...scheduledClass,
+      }
     }
   })
   
@@ -45,7 +65,10 @@ export default async function DrivingLessons() {
       <h1 className='text-xl'>Aulas Condução</h1>
       <div className='mx-auto -mt-5 max-w-[1440px] w-full h-[1px] bg-[#BFBFBF]'/>
       
-      <ListOfStudents students={formattedData} activePathname={activePath!} />
+      <ScheduledDrivingLessonsList
+        scheduledClasses={formattedData}
+        students={returnedStudentData}
+      />
     </main>
   )
 }

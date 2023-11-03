@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/table"
 import { EditStudentModal } from '../EditStudentModal';
 import { DeleteStudentModal } from '../DeleteStudentModal';
-import { CreateMarkupDialog } from './CreateMarkupDialog';
 
 import { Student } from '@/utils/interfaces/student'
 
@@ -27,7 +26,6 @@ interface StudentsTableProps {
 }
 
 export function StudentsTable({ students, activePathname, schools, categoryCard }: StudentsTableProps) {
-  const haveCalendar = activePathname !== '/panel/students/list'
   const hasEditStudentModal = activePathname === '/panel/students/list'
   
   return (
@@ -44,9 +42,6 @@ export function StudentsTable({ students, activePathname, schools, categoryCard 
               <TableHead>Editar</TableHead>
             )}
             <TableHead>Deletar</TableHead>
-            {haveCalendar && (
-              <TableHead>Agendar</TableHead>
-            )}
           </TableRow>
         </TableHeader>
 
@@ -70,11 +65,6 @@ export function StudentsTable({ students, activePathname, schools, categoryCard 
               <TableCell>
                 <DeleteStudentModal id={student?.id} title={student?.name} />
               </TableCell>
-              {haveCalendar && (
-                <TableCell>
-                  <CreateMarkupDialog />
-                </TableCell>
-              )}
             </TableRow>
           ))}
         </TableBody>

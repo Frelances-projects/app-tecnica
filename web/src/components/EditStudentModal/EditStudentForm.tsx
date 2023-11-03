@@ -3,7 +3,7 @@ import { ReactNode } from "react"
 import { useForm } from "react-hook-form"
 
 import { EditStudentFormInput } from "../EditStudentModal"
-import { InputEditModal } from "../InputEditModal"
+import { InputModal } from "../InputModal"
 import { Select } from "../Select"
 
 interface EditStudentFormProps {
@@ -52,25 +52,25 @@ export function EditStudentForm({
     <form onSubmit={handleSubmit(handleEditStudent)}
       className="flex flex-col gap-[2.08rem] mt-5 mb-4"
     >
-      <InputEditModal
+      <InputModal
         type="text"
         placeholder="Nome do Aluno"
         {...register('student_name')}
       />
 
-      <InputEditModal
+      <InputModal
         type="number"
         placeholder="Número do Aluno"
         {...register('student_number')}
       />
 
-      <InputEditModal
+      <InputModal
         type="email"
         placeholder="E-mail do Aluno"
         {...register('student_email')}
       />
 
-      {/* <InputEditModal
+      {/* <InputModal
         {...register('student_enrolled_at')}
         id="student_date"
         type='date'

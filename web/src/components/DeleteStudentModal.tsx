@@ -47,14 +47,14 @@ export function DeleteStudentModal({ id, title }: DeleteStudentModalProps) {
           }
         } else {
           return toast({
-            title: 'Error!',
+            title: 'Erro!',
             description: 'Ocorreu um erro no servidor! Por favor tente novamente mais tarde',
             variant: 'destructive'
           })
         }
       } else {
         toast({
-          title: 'Error!',
+          title: 'Erro!',
           description: 'Ocorreu um erro no servidor! Por favor tente novamente mais tarde',
           variant: 'destructive'
         })
