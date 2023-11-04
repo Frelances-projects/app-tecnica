@@ -11,6 +11,7 @@ import { Select } from "@/components/Select"
 import { api } from "@/lib/api"
 import { errorMessages } from "@/utils/errors/errorMessages"
 import { ScheduleClass } from "@/utils/interfaces/schedule-class"
+import { format } from "date-fns"
 
 interface EditScheduledClassFormProps {
   scheduledClass: ScheduleClass
@@ -47,11 +48,11 @@ export function EditScheduledClassForm({ scheduledClass, children }: EditSchedul
   
   async function handleEditScheduledClass(data: EditScheduledClassInputs) {
     try {
-      await api.put(`/scheduled-class/${scheduledClass.id}`, 
+      await api.put(`/scheduled-class/${scheduledClass.id}`,
         {
           schedulingDate: data.schedulingDate 
             ? new Date(data.schedulingDate).toISOString()
-            : new Date(scheduledClass.schedulingDate!).toISOString,
+            : new Date(scheduledClass.schedulingDateNotFormatted!).toISOString(),
           schedulingHour: data.schedulingHour,
           status: data.status,
           classId: scheduledClass.classId

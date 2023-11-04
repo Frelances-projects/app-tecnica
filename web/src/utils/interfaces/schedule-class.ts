@@ -4,6 +4,7 @@ import { Student } from "./student";
 export interface ScheduleClass {
   id: string;
   schedulingDate?: string;
+  schedulingDateNotFormatted?: string
   schedulingHour?: string;
   status: 'PENDING' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED';
   studentId: string;

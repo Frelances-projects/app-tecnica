@@ -181,7 +181,11 @@ export function CreateScheduledDrivingLessonForm(
       />
 
       <div className="flex gap-4 w-full">
-        <FormField control={control} name="schedulingDate" render={({ field }) => 
+        <FormField
+          control={control}
+          rules={{ required: true }}
+          name="schedulingDate"
+          render={({ field }) => 
           (
             <DatePicker
               placeholder="Selecione a data para marcar a aula"

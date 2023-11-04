@@ -4,11 +4,16 @@ import { format } from 'date-fns-tz'
 
 import { api } from '@/lib/api';
 
-import { ListOfStudents } from "@/components/ListOfStudents";
+import { DrivingExamsList } from './components/DrivingExamsList';
 
+import { Test } from '@/utils/interfaces/tests';
 import { Student } from '@/utils/interfaces/student';
 
 type AxiosData = {
+  test: Test[]
+}
+
+type StudentsAxiosData = {
   students: Student[]
 }
 
@@ -20,23 +25,35 @@ export default async function DrivingExams() {
   const formattedUser = JSON.parse(user!!)
   
   let returnedData
+  let returnedStudentData
 
   if (formattedUser.function === 'DIRECTOR') {
-    const { data } = await api.get<AxiosData>(`/student`)
+    const [testsData, studentsData] = await Promise.all([
+      api.get<AxiosData>(`/test/categories/category`, { params: { category: 'PRACTICAL' } }).then(result => result.data),
+      api.get<StudentsAxiosData>(`/student`).then(result => result.data)
+    ])
 
-    returnedData = data.students
+    returnedData = testsData.test
+    returnedStudentData = studentsData.students
   } else {
-    const { data } = await api.get<AxiosData>(`/student/school/${formattedUser.schoolId}`)
+    const [testsData, studentsData] = await Promise.all([
+      api.get<AxiosData>(`/test/school/${formattedUser.schoolId}/category`, 
+        { params: { category: 'PRACTICAL' } }
+      ).then(result => result.data),
+      api.get<StudentsAxiosData>(`/student/school/${formattedUser.schoolId}`).then(result => result.data)
+    ])
 
-    returnedData = data.students
+    returnedData = testsData.test
+    returnedStudentData = studentsData.students
   }
 
-  const formattedData = returnedData?.map(student => {
-    const formattedEnrolledAt = format(addDays(new Date(student.enrolledAt), 1), 'dd/MM/yyyy')
+  const formattedData = returnedData?.map(test => {
+    const formattedTestDate = format(new Date(test.testDate), 'dd/MM/yyyy')
 
     return {
-      ...student,
-      enrolledAt: formattedEnrolledAt
+      ...test,
+      testDate: formattedTestDate,
+      testDateNotFormatted: test.testDate
     }
   })
   
@@ -45,7 +62,7 @@ export default async function DrivingExams() {
       <h1 className='text-xl'>Exames Condução</h1>
       <div className='mx-auto -mt-5 max-w-[1440px] w-full h-[1px] bg-[#BFBFBF]'/>
 
-      <ListOfStudents students={formattedData} activePathname={activePath!} />
+      <DrivingExamsList tests={formattedData} students={returnedStudentData} />
     </main>
   )
 }

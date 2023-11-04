@@ -51,7 +51,8 @@ export default async function DrivingLessons() {
 
       return {
         ...scheduledClass,
-        schedulingDate: formattedSchedulingDate
+        schedulingDate: formattedSchedulingDate,
+        schedulingDateNotFormatted: scheduledClass.schedulingDate
       }
     } else {
       return {

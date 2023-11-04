@@ -17,7 +17,10 @@ import {
   KeySquare,
   LogOut,
   UserPlus2,
-  Users2
+  Users2,
+  Euro,
+  BookOpenCheck,
+  ScrollText,
 } from 'lucide-react';
 
 import Logo from '../../assets/Tecnica_LOGO_outline_icon.svg'
@@ -36,9 +39,9 @@ export function SideBar({ userFunction }: SideBarProps) {
   const toggleCollapse = () => {
     setCollapsed(!collapsed);
   };
-  
-  const handleDropdownClick = (type: string ) => {
-    if(type === dropDown) {
+
+  const handleDropdownClick = (type: string) => {
+    if (type === dropDown) {
       return setDropDown('close')
     }
 
@@ -64,7 +67,7 @@ export function SideBar({ userFunction }: SideBarProps) {
         className="flex gap-4 items-center justify-start overflow-hidden w-full py-3 px-4 bg-[#F9F9F9] text-zinc-800 text-left mt-1 outline-none"
         onClick={toggleCollapse}
       >
-        <Image src={Logo} alt='Logo' width={40} height={100}/>
+        <Image src={Logo} alt='Logo' width={40} height={100} />
         <span className={`${collapsed ? 'hidden' : 'flex whitespace-nowrap'} transition-all duration-1000`}>
           Grupo Técnica
         </span>
@@ -82,7 +85,7 @@ export function SideBar({ userFunction }: SideBarProps) {
                   Gerir Alertas
                 </span>
               </div>
-              <ChevronUp className={`transform transition-all duration-300 ${dropDown === 'alert'  ? 'rotate-180' : 'rotate-90'} transition-all duration-300`} />
+              <ChevronUp className={`transform transition-all duration-300 ${dropDown === 'alert' ? 'rotate-180' : 'rotate-90'} transition-all duration-300`} />
             </button>
             <div className={`transform flex flex-col gap-4 ml-10 mt-2 ${collapsed ? 'ml-6' : ''} ${dropDown === 'alert' ? 'h-max' : 'hidden'} transition-all ease-linear duration-300`} >
               <Link href='/panel/alert/create' className={`flex gap-2 hover:text-[#E86255]`} >
@@ -121,9 +124,9 @@ export function SideBar({ userFunction }: SideBarProps) {
               </div>
               <ChevronUp className={`transform ${dropDown === 'student' ? 'rotate-180' : 'rotate-90'} ${collapsed ? 'hidden' : ''} transition-all duration-300`} />
             </button>
-            <div className={`transform flex flex-col gap-4 ml-10 mt-2 ${collapsed  ? 'ml-6' : ''} ${dropDown === 'student' ? 'h-max' : 'hidden'} transition-all ease-linear duration-300`}>
+            <div className={`transform flex flex-col gap-4 ml-10 mt-2 ${collapsed ? 'ml-6' : ''} ${dropDown === 'student' ? 'h-max' : 'hidden'} transition-all ease-linear duration-300`}>
               <Link href='/panel/students/list' className='flex gap-2 hover:text-[#E86255]'>
-                <ClipboardList size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Listagem dos Alunos</span>   
+                <ClipboardList size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Listagem dos Alunos</span>
               </Link>
               <Link href='/panel/students/register' className='flex gap-2 hover:text-[#E86255]'>
                 <UserPlus2 size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Adicionar Alunos</span>
@@ -135,11 +138,26 @@ export function SideBar({ userFunction }: SideBarProps) {
         <div className="group cursor-pointer ml-2">
           <button
             className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between"
+            onClick={() => handleDropdownClick('classes')}
           >
+            <div className='flex gap-5 items-center'>
+              <BookOpenCheck size={20} />
+              <span className={`${collapsed ? 'hidden' : 'flex whitespace-nowrap'}`}>
+                Gerir Aulas 
+              </span>
+            </div>
+            <ChevronUp className={`transform ${dropDown === 'classes' ? 'rotate-180' : 'rotate-90'} ${collapsed ? 'hidden' : ''} transition-all duration-300`} />
+          </button>
+
+          <div className={`transform flex flex-col gap-4 ml-10 mt-2 ${collapsed ? 'ml-6' : ''} ${dropDown === 'classes' ? 'h-max' : 'hidden'} transition-all ease-linear duration-300`}>
             <Link href='/panel/driving-lessons' className={`flex gap-2 hover:text-[#E86255]`} >
               <CarIcon size={20} /> <span className={`${collapsed ? 'hidden' : 'flex whitespace-nowrap'}`} >Aulas Condução</span>
             </Link>
-          </button>
+
+            <Link href='/panel/code-lessons' className='flex gap-2 hover:text-[#E86255]'>
+              <ScrollText size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Aulas de Código</span>
+            </Link>
+          </div>
         </div>
 
         <div className="group cursor-pointer ml-2">
@@ -172,9 +190,9 @@ export function SideBar({ userFunction }: SideBarProps) {
               onClick={() => handleDropdownClick('prices')}
             >
               <div className='flex gap-5 items-center'>
-                <ClipboardCheck size={20} />
+                <Euro size={20} />
                 <span className={`${collapsed ? 'hidden' : 'flex whitespace-nowrap'}`}>
-                Preços
+                  Preços
                 </span>
               </div>
               <ChevronUp className={`transform ${dropDown === 'prices' ? 'rotate-180' : 'rotate-90'} ${collapsed ? 'hidden' : ''} transition-all duration-300`} />
@@ -184,7 +202,7 @@ export function SideBar({ userFunction }: SideBarProps) {
               <Link href='/panel/prices/register' className='flex gap-2 hover:text-[#E86255]'>
                 <CreditCard size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Definir Preços</span>
               </Link>
-              
+
               <Link href='/panel/prices/list' className='flex gap-2 hover:text-[#E86255]'>
                 <LucideClipboardEdit size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Listagem dos preços</span>
               </Link>
