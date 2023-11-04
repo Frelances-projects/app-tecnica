@@ -71,6 +71,7 @@ import { UpdatePayment } from 'src/application/use-cases/payment/update-payment'
 
 // CLASS
 import { CreateClass } from 'src/application/use-cases/class/create-class'
+import { DeleteClass } from 'src/application/use-cases/class/delete-class'
 import { GetClassById } from 'src/application/use-cases/class/get-class-by-id'
 import { GetClassByCode } from 'src/application/use-cases/class/get-class-by-code'
 import { GetManyClasses } from 'src/application/use-cases/class/get-many-classes'
@@ -174,6 +175,7 @@ import { CreateToken } from 'src/helpers/create-token'
 
     // CLASS
     CreateClass,
+    DeleteClass,
     GetClassById,
     GetClassByCode,
     GetManyClasses,

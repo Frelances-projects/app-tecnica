@@ -1,6 +1,15 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common'
 
 import { CreateClass } from 'src/application/use-cases/class/create-class'
+import { DeleteClass } from 'src/application/use-cases/class/delete-class'
 import { GetClassById } from '../../../application/use-cases/class/get-class-by-id'
 import { GetClassByCode } from '../../../application/use-cases/class/get-class-by-code'
 import { GetManyClasses } from '../../../application/use-cases/class/get-many-classes'
@@ -14,6 +23,7 @@ import { CreateClassBody } from '../dtos/class/create-class-body'
 export class ClassController {
   constructor(
     private createClass: CreateClass,
+    private deleteClass: DeleteClass,
     private getClassById: GetClassById,
     private getClassByCode: GetClassByCode,
     private getManyClasses: GetManyClasses,
@@ -82,14 +92,15 @@ export class ClassController {
 
   @Post()
   async create(@Body() body: CreateClassBody) {
-    console.log(
-      '🚀 ~ file: class.controller.ts:85 ~ ClassController ~ create ~ CreateClassBody:',
-      CreateClassBody,
-    )
     const { class: lesson } = await this.createClass.execute(body)
 
     return {
       class: ClassViewModel.toHTTP(lesson),
     }
+  }
+
+  @Delete(':classId')
+  async delete(@Param('classId') classId: string) {
+    await this.deleteClass.execute(classId)
   }
 }

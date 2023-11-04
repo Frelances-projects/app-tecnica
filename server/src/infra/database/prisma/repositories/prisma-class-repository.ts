@@ -88,4 +88,8 @@ export class PrismaClassRepository implements ClassRepository {
       data: raw,
     })
   }
+
+  async delete(classId: string): Promise<void> {
+    await this.prisma.class.delete({ where: { id: classId } })
+  }
 }
