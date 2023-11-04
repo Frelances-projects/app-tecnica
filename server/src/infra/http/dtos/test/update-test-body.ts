@@ -1,9 +1,12 @@
-import { IsString } from "class-validator";
+import { IsString } from 'class-validator'
 
 export class UpdateTestBody {
   @IsString()
-  testDate: string;
+  testDate: string
 
   @IsString()
-  testHour: string;
+  testHour: string
+
+  @IsString()
+  status: 'APPROVED' | 'DISAPPROVED' | 'MARKED'
 }

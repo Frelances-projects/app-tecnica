@@ -1,7 +1,7 @@
 import { Test } from '../../../application/entities/tests'
 
 export class TestViewModel {
-  static toHTTP(test: Test) {
+  static toHTTP(test: any) {
     return {
       id: test.id,
       category: test.category,
@@ -10,6 +10,7 @@ export class TestViewModel {
       testDate: test.testDate,
       testHour: test.testHour,
       createdAt: test.createdAt,
+      student: test.props.student ?? undefined,
     }
   }
 }

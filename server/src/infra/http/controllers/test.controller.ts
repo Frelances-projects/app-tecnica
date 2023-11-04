@@ -1,10 +1,23 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common'
 
 import { CreateTest } from 'src/application/use-cases/test/create-test'
 import { GetManyTests } from 'src/application/use-cases/test/get-many-tests'
 import { GetManyTestsByStudent } from 'src/application/use-cases/test/get-many-tests-by-student'
+import { GetManyTestsBySchool } from 'src/application/use-cases/test/get-many-tests-by-school'
+import { GetManyTestsByCategory } from 'src/application/use-cases/test/get-many-tests-by-category'
+import { GetManyTestsBySchoolAndCategory } from 'src/application/use-cases/test/get-many-tests-by-school-and-category'
 import { GetTestById } from 'src/application/use-cases/test/get-test-by-id'
 import { UpdateTest } from 'src/application/use-cases/test/update-test'
+import { DeleteTest } from 'src/application/use-cases/test/delete-test'
 
 import { TestViewModel } from '../view-models/test-view-model'
 
@@ -16,9 +29,13 @@ export class TestController {
   constructor(
     private createTest: CreateTest,
     private updateTest: UpdateTest,
+    private deleteTest: DeleteTest,
     private getTestById: GetTestById,
     private getManyTests: GetManyTests,
     private getManyTestsByStudent: GetManyTestsByStudent,
+    private getManyTestsBySchool: GetManyTestsBySchool,
+    private getManyTestsByCategory: GetManyTestsByCategory,
+    private getManyTestsBySchoolAndCategory: GetManyTestsBySchoolAndCategory,
   ) {}
 
   @Get(':testId')
@@ -52,6 +69,47 @@ export class TestController {
     }
   }
 
+  @Get('/school/:schoolId')
+  async getManyBySchool(@Param('schoolId') schoolId: string) {
+    const { test } = await this.getManyTestsBySchool.execute(schoolId)
+
+    const testToHTTP = test.map((test) => TestViewModel.toHTTP(test))
+
+    return {
+      test: testToHTTP,
+    }
+  }
+
+  @Get('/categories/category')
+  async getManyByCategory(
+    @Query('category') category: 'THEORETICAL' | 'PRACTICAL',
+  ) {
+    const { test } = await this.getManyTestsByCategory.execute(category)
+
+    const testToHTTP = test.map((test) => TestViewModel.toHTTP(test))
+
+    return {
+      test: testToHTTP,
+    }
+  }
+
+  @Get('/school/:schoolId/category')
+  async getManyBySchoolAndCategory(
+    @Param('schoolId') schoolId: string,
+    @Query('category') category: 'THEORETICAL' | 'PRACTICAL',
+  ) {
+    const { test } = await this.getManyTestsBySchoolAndCategory.execute(
+      schoolId,
+      category,
+    )
+
+    const testToHTTP = test.map((test) => TestViewModel.toHTTP(test))
+
+    return {
+      test: testToHTTP,
+    }
+  }
+
   @Post(':studentId')
   async create(
     @Param('studentId') studentId: string,
@@ -66,16 +124,22 @@ export class TestController {
 
   @Put(':testId')
   async update(@Param('testId') testId: string, @Body() body: UpdateTestBody) {
-    const { testDate, testHour } = body
+    const { testDate, testHour, status } = body
 
     const { test } = await this.updateTest.execute({
       id: testId,
       testDate,
       testHour,
+      status,
     })
 
     return {
       test: TestViewModel.toHTTP(test),
     }
+  }
+
+  @Delete(':testId')
+  async delete(@Param('testId') testId: string) {
+    await this.deleteTest.execute(testId)
   }
 }

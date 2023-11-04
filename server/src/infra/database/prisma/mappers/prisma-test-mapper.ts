@@ -24,6 +24,7 @@ export class PrismaTestMapper {
         testHour: raw.testHour,
         studentId: raw.studentId,
         createdAt: raw.createdAt,
+        ...raw,
       },
       raw.id,
     )

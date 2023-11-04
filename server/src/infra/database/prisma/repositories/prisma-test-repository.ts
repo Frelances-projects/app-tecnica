@@ -26,7 +26,9 @@ export class PrismaTestRepository implements TestRepository {
   }
 
   async findMany(): Promise<Test[]> {
-    const test = await this.prisma.test.findMany()
+    const test = await this.prisma.test.findMany({
+      include: { student: { include: { school: true } } },
+    })
 
     const testToDomain = test.map((test) => PrismaTestMapper.toDomain(test))
 
@@ -41,6 +43,44 @@ export class PrismaTestRepository implements TestRepository {
     return testToDomain
   }
 
+  async findManyBySchool(schoolId: string): Promise<Test[]> {
+    const test = await this.prisma.test.findMany({
+      where: { student: { schoolId } },
+      include: { student: { include: { school: true } } },
+    })
+
+    const testToDomain = test.map((test) => PrismaTestMapper.toDomain(test))
+
+    return testToDomain
+  }
+
+  async findManyByCategory(
+    category: 'THEORETICAL' | 'PRACTICAL',
+  ): Promise<Test[]> {
+    const test = await this.prisma.test.findMany({
+      where: { category },
+      include: { student: { include: { school: true } } },
+    })
+
+    const testToDomain = test.map((test) => PrismaTestMapper.toDomain(test))
+
+    return testToDomain
+  }
+
+  async findManyBySchoolAndCategory(
+    schoolId: string,
+    category: 'THEORETICAL' | 'PRACTICAL',
+  ): Promise<Test[]> {
+    const test = await this.prisma.test.findMany({
+      where: { category, student: { schoolId } },
+      include: { student: { include: { school: true } } },
+    })
+
+    const testToDomain = test.map((test) => PrismaTestMapper.toDomain(test))
+
+    return testToDomain
+  }
+
   async save(test: Test): Promise<void> {
     const raw = PrismaTestMapper.toPrisma(test)
 
@@ -48,5 +88,9 @@ export class PrismaTestRepository implements TestRepository {
       where: { id: raw.id },
       data: raw,
     })
+  }
+
+  async delete(testId: string): Promise<void> {
+    await this.prisma.test.delete({ where: { id: testId } })
   }
 }

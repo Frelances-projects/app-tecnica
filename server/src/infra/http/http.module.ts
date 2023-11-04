@@ -58,7 +58,11 @@ import { CreateTest } from 'src/application/use-cases/test/create-test'
 import { GetTestById } from 'src/application/use-cases/test/get-test-by-id'
 import { GetManyTests } from '../../application/use-cases/test/get-many-tests'
 import { GetManyTestsByStudent } from '../../application/use-cases/test/get-many-tests-by-student'
+import { GetManyTestsBySchool } from '../../application/use-cases/test/get-many-tests-by-school'
+import { GetManyTestsByCategory } from '../../application/use-cases/test/get-many-tests-by-category'
+import { GetManyTestsBySchoolAndCategory } from '../../application/use-cases/test/get-many-tests-by-school-and-category'
 import { UpdateTest } from 'src/application/use-cases/test/update-test'
+import { DeleteTest } from 'src/application/use-cases/test/delete-test'
 
 // PAYMENT
 import { CreatePayment } from 'src/application/use-cases/payment/create-payment'
@@ -157,7 +161,11 @@ import { CreateToken } from 'src/helpers/create-token'
     GetTestById,
     GetManyTests,
     GetManyTestsByStudent,
+    GetManyTestsBySchool,
+    GetManyTestsByCategory,
+    GetManyTestsBySchoolAndCategory,
     UpdateTest,
+    DeleteTest,
 
     // PAYMENT
     CreatePayment,
