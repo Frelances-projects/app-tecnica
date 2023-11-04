@@ -26,7 +26,7 @@ export function ScheduledDrivingLessonsList({ scheduledClasses, students }: Sche
 
   return (
     <section className="w-full max-w-7xl -mt-4 pl-10">
-      <h1 className='text-lg mt-6 font-medium mb-9'>Listagem das aulas marcadas</h1>
+      <h1 className='text-lg mt-6 font-medium mb-9'>Listagem das aulas de condução marcadas</h1>
       
       <div className="flex items-center max-w-3xl">
         <SearchInput

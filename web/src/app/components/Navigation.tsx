@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react';
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -31,6 +31,7 @@ interface SideBarProps {
 
 export function SideBar({ userFunction }: SideBarProps) {
   const router = useRouter()
+  const pathname = usePathname()
 
   const [collapsed, setCollapsed] = useState(false);
   const [dropDown, setDropDown] = useState<string>('close');
@@ -61,7 +62,7 @@ export function SideBar({ userFunction }: SideBarProps) {
 
   return (
     <div
-      className={`sidebar mt-1 h-screen ${collapsed ? 'w-20' : 'w-[360px]'} bg-[#F9F9F9] text-zinc-800 transition-all duration-300`}
+      className={`sidebar mt-1 ${collapsed ? 'w-20' : 'w-[360px]'} bg-[#F9F9F9] text-zinc-800 transition-all duration-300 ${pathname !== '/panel/code-lessons' && 'h-screen'}`}
     >
       <button
         className="flex gap-4 items-center justify-start overflow-hidden w-full py-3 px-4 bg-[#F9F9F9] text-zinc-800 text-left mt-1 outline-none"
