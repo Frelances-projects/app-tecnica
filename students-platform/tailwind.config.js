@@ -16,13 +16,6 @@ module.exports = {
       },
     },
     extend: {
-      fontFamily: {
-        light: 'Inter_300Light',
-        regular: 'Inter_400Regular',
-        medium: 'Inter_500Medium',
-        semibold: 'Inter_600SemiBold',
-        bold: 'Inter_700Bold',
-      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
@@ -40,10 +33,6 @@ module.exports = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",

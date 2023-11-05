@@ -3,30 +3,21 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation'
 import Link from 'next/link';
 import Image from 'next/image';
-
-import logo from '../assets/tecnica_LOGO.jpg'
 import { List, X } from '@phosphor-icons/react';
 
-export function SideBar() {
-  const router = useRouter()
-  const [isDisabledButton, setIsDisabledButton] = useState(false)
+import { useAuth } from '@/hooks/useAuth';
 
+import logo from '../assets/tecnica_LOGO.jpg'
+
+export function SideBar() {
+  const [isDisabledButton, setIsDisabledButton] = useState(false)
   const [toggleButton, setToggleButton] = useState(false);
+
+  const { logout } = useAuth()
 
   const toggleMenu = () => {
     setToggleButton(!toggleButton);
   };
-
-  function handleLogoutUser() {
-    setIsDisabledButton(true)
-
-    const pastDate = new Date(0);
-    document.cookie = `user=; expires=${pastDate.toUTCString()}; path=/`;
-
-    router.push('/')
-
-    setIsDisabledButton(false)
-  }
 
 
   return (
@@ -44,7 +35,8 @@ export function SideBar() {
             <X size={24} weight='bold'/>
           </button>
           <div className="group cursor-pointer w-full bg-white rounded-full">
-          <button
+            <button
+              onClick={toggleMenu}
               className="w-full py-2 px-4 text-zinc-800 hover:text-[#E86255] text-center flex transition-colors items-center duration-200 ease-out"
             >
               <Link href='/practical-classes' className="w-full hover:text-[#E86255] text-center" >
@@ -54,6 +46,7 @@ export function SideBar() {
           </div>
           <div className="group cursor-pointer w-full bg-white rounded-full">
             <button
+              onClick={toggleMenu}
               className="w-full py-2 px-4 text-zinc-800 hover:text-[#E86255] text-center flex transition-colors duration-200 ease-out"
             >
               <Link href='/theoretical-classes' className="w-full hover:text-[#E86255] text-center" >
@@ -63,6 +56,7 @@ export function SideBar() {
           </div>
           <div className="group cursor-pointer w-full bg-white rounded-full">
             <button
+              onClick={toggleMenu}
               className="w-full py-2 px-4 text-zinc-800 hover:text-[#E86255] text-center flex transition-colors duration-200 ease-out"
             >
               <Link href='/info' className="w-full hover:text-[#E86255] text-center" >
@@ -74,7 +68,7 @@ export function SideBar() {
             <button
               className="w-full py-2 px-4 text-zinc-800 hover:text-[#E86255] text-center transition-colors duration-200 ease-out"
               disabled={isDisabledButton}
-              onClick={() => handleLogoutUser()}
+              onClick={() => logout()}
             >
                 Sair
             </button>
@@ -116,7 +110,7 @@ export function SideBar() {
               className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between transition-colors duration-200 ease-out"
             >
               <Link href='/info' className={`flex gap-2 hover:text-[#E86255]`} >
-              <span className="flex whitespace-nowrap">Informações</span>
+                <span className="flex whitespace-nowrap">Informações</span>
               </Link>
             </button>
           </div>
@@ -124,11 +118,10 @@ export function SideBar() {
             <button
               className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between transition-colors duration-200 ease-out"
               disabled={isDisabledButton}
-              onClick={() => handleLogoutUser()}
+              onClick={() => logout()}
             >
-              <Link href='/panel/driving-lessons' className={`flex gap-2 hover:text-[#E86255]`} >
+              
               <span className="flex whitespace-nowrap">Sair</span>
-              </Link>
             </button>
           </div>
         </div>

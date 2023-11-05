@@ -1,7 +1,8 @@
+import { Spinner } from "@phosphor-icons/react";
+
 import { PracticalClassItem } from "./PracticalClassItem"
 
-import { PracticalClassesData } from "../../pages/pratical-classes/index.page";
-import { Spinner } from "@phosphor-icons/react";
+import type { PracticalClassesData } from "../../pages/practical-classes/index.page";
 
 interface PracticalClassesListProps {
   practicalClassesData?: PracticalClassesData[]

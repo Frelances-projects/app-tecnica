@@ -1,11 +1,12 @@
+import { GetServerSideProps } from 'next'
+import { parseCookies } from 'nookies'
 import { useQuery } from '@tanstack/react-query'
+import { Spinner } from '@phosphor-icons/react'
 import { AxiosError } from 'axios'
 
-import { useAuth } from '@/hooks/useAuth'
-import { api } from '@/lib/axios'
+import { server } from '@/lib/server'
 import { errorMessages } from '@/utils/errors/errorMessages'
-
-import { Spinner } from '@phosphor-icons/react'
+import type { Student } from '@/contexts/AuthContext'
 
 import { useToast } from "@/components/ui/use-toast"
 
@@ -48,16 +49,19 @@ interface StudentInfo {
   payment: Payment
 }
 
-export default function Info() {
-  const { student } = useAuth()
+interface InfoProps {
+  student: Student
+}
+
+export default function Info({ student }: InfoProps) {
   const { toast } = useToast()
 
   const { data: studentInfo, isLoading } = useQuery<StudentInfo>(['information'], async () => {
     try {
       const [{ data: testData }, { data: schoolData }, { data: paymentData }] = await Promise.all([
-        api.get(`/test/student/${student?.id}`),
-        api.get(`/school/${student?.schoolId}`),
-        api.get(`/payment/${student?.paymentId}`)
+        server.get(`/test/student/${student?.id}`),
+        server.get(`/school/${student?.schoolId}`),
+        server.get(`/payment/${student?.paymentId}`)
       ])
 
       const paymentInfo = {
@@ -187,4 +191,23 @@ export default function Info() {
       </div>
     </div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  const { '@studentsPlatform:student': student } = parseCookies({ req: ctx.req })
+
+  if (!student) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {
+      student: JSON.parse(student)
+    },
+  }
 }

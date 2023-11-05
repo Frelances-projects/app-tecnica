@@ -1,10 +1,12 @@
+import { GetServerSideProps } from 'next';
+import { parseCookies } from 'nookies';
 import { useQuery } from '@tanstack/react-query'
 import { AxiosError } from "axios";
 
 import { PracticalClassesList } from "@/components/PracticalClassesList";
 
-import { api } from '@/lib/axios'
-import { useAuth } from "@/hooks/useAuth";
+import { server } from '@/lib/server'
+import type { Student } from '@/contexts/AuthContext';
 
 interface ScheduledClass {
   id: string
@@ -25,12 +27,14 @@ export interface PracticalClassesData {
   scheduledClass?: ScheduledClass
 }
 
-export default function PracticalClasses() {
-  const { student } = useAuth()
+interface PracticalClassesProps {
+  student: Student
+}
 
+export default function PracticalClasses({ student }: PracticalClassesProps) {
   const { data: practicalClassesData, isLoading } = useQuery<PracticalClassesData[]>(['practical-classes'], async () => {
     try {
-      const { data } = await api.get(`/class/category/${student?.id}`, { params: { category: "PRACTICAL" } })
+      const { data } = await server.get(`/class/category/${student?.id}`, { params: { category: "PRACTICAL" } })
 
       return data.classes
     } catch (error) {
@@ -58,4 +62,23 @@ export default function PracticalClasses() {
       <PracticalClassesList practicalClassesData={practicalClassesData} isLoading={isLoading} />
     </div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  const { '@studentsPlatform:student': student } = parseCookies({ req: ctx.req })
+
+  if (!student) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {
+      student: JSON.parse(student)
+    },
+  }
 }

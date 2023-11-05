@@ -1,11 +1,14 @@
 import { Dispatch, SetStateAction, useState } from 'react'
+import { GetServerSideProps } from 'next'
+import { parseCookies } from 'nookies'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
-
-import { api } from '@/lib/axios'
-import { useAuth } from '@/hooks/useAuth'
-import { Input } from '@/components/Input'
 import { Barcode } from '@phosphor-icons/react'
+
+import { Input } from '@/components/Input'
+import { server } from '@/lib/server'
+
+import type { Student } from '@/contexts/AuthContext'
 
 interface sectionAccordionProps {
   id: string
@@ -44,17 +47,20 @@ interface MarkClassAsCompleted {
   studentId: string
 }
 
-export default function TheoreticalClasses() {
-  const { student } = useAuth()
+interface TheoreticalClassesProps {
+  student: Student
+}
+
+export default function TheoreticalClasses({ student }: TheoreticalClassesProps) {
   const queryClient = useQueryClient()
 
-  const [classCode, setclassCode] = useState('')
+  const [classCode, setClassCode] = useState('')
 
   const { data: theoreticalClassesData, isLoading } = useQuery<
     TheoreticalClassesData[]
   >(['theoretical-classes'], async () => {
     try {
-      const { data } = await api.get(`/class/category/${student?.id}`, {
+      const { data } = await server.get(`/class/category/${student?.id}`, {
         params: { category: 'THEORETICAL' },
       })
 
@@ -73,7 +79,7 @@ export default function TheoreticalClasses() {
   const { mutateAsync: markClassAsCompleted } = useMutation(
     async ({ classId, studentId }: MarkClassAsCompleted) => {
       try {
-        await api.post('/scheduled-class', {
+        await server.post('/scheduled-class', {
           studentId,
           classId,
           status: 'COMPLETED',
@@ -155,4 +161,23 @@ export default function TheoreticalClasses() {
       </div>
     </div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  const { '@studentsPlatform:student': student } = parseCookies({ req: ctx.req })
+
+  if (!student) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {
+      student: JSON.parse(student)
+    },
+  }
 }

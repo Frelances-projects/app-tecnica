@@ -1,15 +1,15 @@
-import { ReactNode, createContext, useCallback, useEffect, useState } from 'react'
-import nookies from 'nookies'
-
+import { ReactNode, createContext, useCallback, useState } from 'react'
+import { parseCookies, setCookie, destroyCookie } from 'nookies'
+import { useRouter } from 'next/router'
 import { useMutation } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 
-import { api } from '@/lib/axios'
-import { errorMessages } from '@/utils/errors/errorMessages'
-import { useRouter } from 'next/router'
 import { useToast } from '@/components/ui/use-toast'
 
-type Student = {
+import { server } from '@/lib/server'
+import { errorMessages } from '@/utils/errors/errorMessages'
+
+export type Student = {
   id: string
   name: string
   email: string
@@ -29,7 +29,7 @@ type LoginData = {
 export type AuthContextDataProps = {
   student: Student | null
   login: ({ number, password }: LoginData) => Promise<void>
-  logout: () => Promise<void>
+  logout: () => void
 }
 
 type AuthContextProviderProps = {
@@ -41,16 +41,25 @@ export const AuthContext = createContext<AuthContextDataProps>(
 )
 
 export function AuthProvider({ children }: AuthContextProviderProps) {
-  const [student, setStudent] = useState<Student | null>(null)
   const router = useRouter()
   const { toast } = useToast()
 
+  const { '@studentsPlatform:student': studentInCookies } = parseCookies()
+
+  const [student, setStudent] = useState<Student | null>(
+    studentInCookies 
+    ? JSON.parse(studentInCookies) : null
+  )
+
   const { mutateAsync: createSession } = useMutation(async ({ number, password }: LoginData) => {
     try {
-      const { data } = await api.post('/student/session', { number, password })
+      const { data } = await server.post('/student/session', { number, password })
 
       setStudent(data.student)
-      // await SecureStore.setItemAsync('student', JSON.stringify(data.student))
+      setCookie(null, '@studentsPlatform:student', JSON.stringify(data.student), {
+        maxAge: 60 * 60 * 24 * 360, // 360 days
+        path: '/',
+      })
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response?.data.message[0] === errorMessages.passwordEmpty) {
@@ -84,25 +93,13 @@ export function AuthProvider({ children }: AuthContextProviderProps) {
 
   const login = useCallback(async ({ number, password }: LoginData) => {
     await createSession({ number, password })
-  }, [])
+  }, [createSession])
 
-  const logout = useCallback(async () => {
-    // await SecureStore.deleteItemAsync('student')
+  const logout = useCallback(() => {
     setStudent(null)
+    destroyCookie(null, '@studentsPlatform:student')
     
-    router.back()
-  }, [])
-
-  async function loadStorageData() {
-    // const studentStorage = await SecureStore.getItemAsync('student')
-
-    // if (studentStorage) {
-    //   setStudent(JSON.parse(studentStorage))
-    // }
-  }
-
-  useEffect(() => {
-    loadStorageData()
+    router.push('/')
   }, [])
 
   return <AuthContext.Provider value={{
