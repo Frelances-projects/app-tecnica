@@ -19,9 +19,9 @@ export class GetCalendarBySchool {
     try {
       const calendar = await this.calendarRepository.findBySchool(schoolId)
 
-      if (!calendar) {
-        throw new NotFoundException('calendar not found')
-      }
+      // if (!calendar) {
+      //   throw new NotFoundException('calendar not found')
+      // }
 
       return {
         calendar,

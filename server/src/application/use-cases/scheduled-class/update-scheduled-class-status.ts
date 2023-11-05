@@ -32,7 +32,7 @@ export class UpdateScheduledClassStatus {
 
       scheduledClass.status = status ?? scheduledClass.status
 
-      await this.scheduledClassRepository.create(scheduledClass)
+      await this.scheduledClassRepository.save(scheduledClass)
 
       return {
         scheduledClass,

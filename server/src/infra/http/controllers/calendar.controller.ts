@@ -44,7 +44,7 @@ export class CalendarController {
     const { calendar } = await this.getCalendarBySchool.execute(schoolId)
 
     return {
-      calendar: CalendarViewModel.toHTTP(calendar),
+      calendar: calendar ? CalendarViewModel.toHTTP(calendar) : undefined,
     }
   }
 

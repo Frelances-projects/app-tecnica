@@ -16,6 +16,11 @@ export abstract class ScheduledClassRepository {
     categoryClass: 'THEORETICAL' | 'PRACTICAL',
   ): Promise<ScheduledClass[]>
 
+  abstract findManyByStudentAndCategoryClass(
+    studentId: string,
+    categoryClass: 'THEORETICAL' | 'PRACTICAL',
+  ): Promise<ScheduledClass[]>
+
   abstract save(scheduledClass: ScheduledClass): Promise<void>
   abstract delete(scheduledClassId: string): Promise<void>
 }

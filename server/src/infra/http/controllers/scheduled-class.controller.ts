@@ -19,6 +19,7 @@ import { GetManyScheduledClassesByClass } from '../../../application/use-cases/s
 import { GetManyScheduledClassesBySchool } from '../../../application/use-cases/scheduled-class/get-many-scheduled-classes-by-school'
 import { GetManyScheduledClassesByCategoryClass } from '../../../application/use-cases/scheduled-class/get-many-scheduled-classes-by-category-class'
 import { GetManyScheduledClassesBySchoolAndCategoryClass } from '../../../application/use-cases/scheduled-class/get-many-scheduled-classes-by-school-category-class'
+import { GetManyScheduledClassesByStudentAndCategoryClass } from '../../../application/use-cases/scheduled-class/get-many-scheduled-classes-by-student-and-category'
 import { GetManyScheduledClassesByStudent } from '../../../application/use-cases/scheduled-class/get-many-scheduled-classes-by-student'
 
 import { ScheduledClassViewModel } from '../view-models/scheduled-class-view-model'
@@ -40,6 +41,7 @@ export class ScheduledClassController {
     private getManyScheduledClassesBySchool: GetManyScheduledClassesBySchool,
     private getManyScheduledClassesByCategoryClass: GetManyScheduledClassesByCategoryClass,
     private getManyScheduledClassesBySchoolAndCategoryClass: GetManyScheduledClassesBySchoolAndCategoryClass,
+    private getManyScheduledClassesByStudentAndCategoryClass: GetManyScheduledClassesByStudentAndCategoryClass,
     private getManyScheduledClassesByStudent: GetManyScheduledClassesByStudent,
   ) {}
 
@@ -71,6 +73,26 @@ export class ScheduledClassController {
   async getManyByStudent(@Param('studentId') studentId: string) {
     const { scheduledClasses } =
       await this.getManyScheduledClassesByStudent.execute(studentId)
+
+    const scheduledClassesToHTTP = scheduledClasses.map((scheduledClass) =>
+      ScheduledClassViewModel.toHTTP(scheduledClass),
+    )
+
+    return {
+      scheduledClasses: scheduledClassesToHTTP,
+    }
+  }
+
+  @Get('student/:studentId/category')
+  async getManyByStudentAndCategory(
+    @Param('studentId') studentId: string,
+    @Query('category') category: 'THEORETICAL' | 'PRACTICAL',
+  ) {
+    const { scheduledClasses } =
+      await this.getManyScheduledClassesByStudentAndCategoryClass.execute(
+        studentId,
+        category,
+      )
 
     const scheduledClassesToHTTP = scheduledClasses.map((scheduledClass) =>
       ScheduledClassViewModel.toHTTP(scheduledClass),

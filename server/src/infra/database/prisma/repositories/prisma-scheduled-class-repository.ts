@@ -86,6 +86,22 @@ export class PrismaScheduledClassRepository
     return scheduledClassesToDomain
   }
 
+  async findManyByStudentAndCategoryClass(
+    studentId: string,
+    categoryClass: 'THEORETICAL' | 'PRACTICAL',
+  ): Promise<ScheduledClass[]> {
+    const scheduledClass = await this.prisma.scheduledClass.findMany({
+      where: { student: { id: studentId }, class: { category: categoryClass } },
+      include: { class: true, student: { include: { school: true } } },
+    })
+
+    const scheduledClassesToDomain = scheduledClass.map((scheduledClass) =>
+      PrismaScheduledClassMapper.toDomain(scheduledClass),
+    )
+
+    return scheduledClassesToDomain
+  }
+
   async findManyByStudentId(studentId: string): Promise<ScheduledClass[]> {
     const scheduledClass = await this.prisma.scheduledClass.findMany({
       where: { studentId },
