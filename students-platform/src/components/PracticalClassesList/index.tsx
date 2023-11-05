@@ -1,11 +1,11 @@
-import { Spinner } from "@phosphor-icons/react";
+import { CheckCircle, Spinner, WarningCircle, XCircle } from "@phosphor-icons/react";
 
 import { PracticalClassItem } from "./PracticalClassItem"
 
-import type { PracticalClassesData } from "../../pages/practical-classes/index.page";
+import type { ScheduledClass } from "../../pages/practical-classes/index.page";
 
 interface PracticalClassesListProps {
-  practicalClassesData?: PracticalClassesData[]
+  practicalClassesData?: ScheduledClass[]
   isLoading: boolean
 }
 
@@ -14,6 +14,23 @@ export function PracticalClassesList({ practicalClassesData, isLoading }: Practi
     <div className="flex flex-col gap-10">
       <h1 className="text-black font-semibold text-lg">Listagem de Aulas Práticas</h1>
 
+      <div className="flex flex-col items-start">
+        <div className="flex items-center">
+          <CheckCircle size={24} color="#00A300" weight="fill" />
+          <span className="text-sm">: Aula confirmada/Aula concluida</span>
+        </div>
+
+        <div className="flex items-center">
+          <XCircle size={24} color="#CC0000" weight="fill" />
+          <span className="text-sm">: Aula cancelada</span>
+        </div>
+
+        <div className="flex items-center">
+          <WarningCircle size={24} color="#FDDA0D" weight="fill" />
+          <span className="text-sm">: Aula pendente</span>
+        </div>
+      </div>
+
       <div>
         {isLoading ? (
         <Spinner size={60} className="animate-spin mx-auto"/>
@@ -21,10 +38,12 @@ export function PracticalClassesList({ practicalClassesData, isLoading }: Practi
           practicalClassesData && practicalClassesData.length > 0 ? (
             practicalClassesData?.map(lesson => (
               <PracticalClassItem 
-                key={lesson.id} 
-                title={lesson.name} 
-                date={lesson.scheduledClass?.schedulingDate!!} 
-                status={lesson.scheduledClass?.status!!}
+                key={lesson.id}
+                scheduledPracticalClassId={lesson.id}
+                title={lesson.class.name} 
+                date={lesson?.schedulingDate!!}
+                hour={lesson.schedulingHour!!}
+                status={lesson?.status!!}
               />
             ))
           ) : (

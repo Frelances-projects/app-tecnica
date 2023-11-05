@@ -8,13 +8,14 @@ import { PracticalClassesList } from "@/components/PracticalClassesList";
 import { server } from '@/lib/server'
 import type { Student } from '@/contexts/AuthContext';
 
-interface ScheduledClass {
+export interface ScheduledClass {
   id: string
   schedulingDate?: string
   schedulingHour?: string
   status: 'PENDING' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
   studentId: string
   classId: string
+  class: PracticalClassesData
 }
 
 export interface PracticalClassesData {
@@ -32,14 +33,14 @@ interface PracticalClassesProps {
 }
 
 export default function PracticalClasses({ student }: PracticalClassesProps) {
-  const { data: practicalClassesData, isLoading } = useQuery<PracticalClassesData[]>(['practical-classes'], async () => {
+  const { data: practicalClassesData, isLoading } = useQuery<ScheduledClass[]>(['practical-classes'], async () => {
     try {
-      const { data } = await server.get(`/class/category/${student?.id}`, { params: { category: "PRACTICAL" } })
+      const { data } = await server.get(`/scheduled-class/student/${student?.id}/category`, { params: { category: "PRACTICAL" } })
 
-      return data.classes
+      return data.scheduledClasses
     } catch (error) {
       if (error instanceof AxiosError) {
-        console.log("🚀 ~ file: AuthContext.tsx:52 ~ const{mutateAsync:createSession}=useMutation ~ error:", error.response?.data.message[0])
+        console.log("🚀 ~ file: AuthContext.tsx:52 ~ const{data:practicalClassesData}=useQuery ~ error:", error.response?.data.message[0])
         window.alert(error.response?.data.message[0])
       }
     }
@@ -54,7 +55,7 @@ export default function PracticalClasses({ student }: PracticalClassesProps) {
       <div className="flex gap-2 items-center">
         <h1 className="font-regular">Já completou </h1>
         <p className="font-regular font-bold">
-          {practicalClassesData?.filter(lesson => lesson?.scheduledClass?.status === 'COMPLETED').length ?? 0}
+          {practicalClassesData?.filter(lesson => lesson?.status === 'COMPLETED').length ?? 0}
         </p>
         <p>aulas</p>
       </div>

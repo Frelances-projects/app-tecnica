@@ -22,6 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <>
             {(pathname.startsWith('/info') ||
               pathname.startsWith('/theoretical-classes') ||
+              pathname.startsWith('/calendar') ||
               pathname.startsWith('/practical-classes')) && (
                 <SideBar />
             )}

@@ -3,9 +3,12 @@ import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
-import { Barcode } from '@phosphor-icons/react'
+import { Barcode, Check } from '@phosphor-icons/react'
 
 import { Input } from '@/components/Input'
+import { DefaultButton } from '@/components/buttons/DefaultButton'
+import { useToast } from '@/components/ui/use-toast'
+
 import { server } from '@/lib/server'
 
 import type { Student } from '@/contexts/AuthContext'
@@ -52,9 +55,10 @@ interface TheoreticalClassesProps {
 }
 
 export default function TheoreticalClasses({ student }: TheoreticalClassesProps) {
-  const queryClient = useQueryClient()
-
   const [classCode, setClassCode] = useState('')
+
+  const queryClient = useQueryClient()
+  const { toast } = useToast()
 
   const { data: theoreticalClassesData, isLoading } = useQuery<
     TheoreticalClassesData[]
@@ -76,7 +80,7 @@ export default function TheoreticalClasses({ student }: TheoreticalClassesProps)
     }
   })
 
-  const { mutateAsync: markClassAsCompleted } = useMutation(
+  const { mutateAsync: markClassAsCompleted, isLoading: isMarcClassAsCompletedLoading } = useMutation(
     async ({ classId, studentId }: MarkClassAsCompleted) => {
       try {
         await server.post('/scheduled-class', {
@@ -99,32 +103,31 @@ export default function TheoreticalClasses({ student }: TheoreticalClassesProps)
 
   async function handleMarkLessonAsCompleted(lesson: TheoreticalClassesData) {
     if (lesson.scheduledClass?.status === 'COMPLETED') {
+      setClassCode('')
       return
     }
 
     await markClassAsCompleted({ classId: lesson.id, studentId: student?.id!! })
   }
 
-  const dataTeste = [
-    {
-      id: '1',
-      title: 'Regras gerais',
-      classes: [
-        { id: '10', content: 'aula 01', isChecked: true },
-        { id: '20', content: 'aula 01', isChecked: false },
-        { id: '30', content: 'aula 01', isChecked: true },
-        { id: '40', content: 'aula 01', isChecked: false },
-      ],
-    },
-    {
-      id: '2',
-      title: 'Contraordenações',
-      classes: [
-        { id: '30', content: 'aula 01', isChecked: false },
-        { id: '40', content: 'aula 01', isChecked: false },
-      ],
-    },
-  ]
+  async function onClickButton() {
+    const lesson = theoreticalClassesData?.find(lesson => lesson.code === Number(classCode))
+
+    if (!lesson) {
+      return toast({
+        title: 'Aula de código não encontrada!',
+        description: 'Nenhuma aula de código foi encontrada com esse código!',
+        variant: 'destructive'
+      })
+    }
+
+    await handleMarkLessonAsCompleted(lesson)
+    setClassCode('')
+  }
+
+  const theoreticalClassesCompleted = theoreticalClassesData?.filter(
+    (lesson) => lesson?.scheduledClass?.status === 'COMPLETED',
+  )
 
   return (
     <div className='w-full flex flex-col gap-4 mt-4'>
@@ -136,6 +139,7 @@ export default function TheoreticalClasses({ student }: TheoreticalClassesProps)
           Aluno(a) N° {student?.number}
         </h2>
       </div>
+
       <div className="flex gap-2 items-center">
         <p className="font-regular">Já completou </p>
         <p className="font-regular font-bold text-lg">
@@ -152,13 +156,40 @@ export default function TheoreticalClasses({ student }: TheoreticalClassesProps)
 
       <div className="mt-2 w-full">
         <p className="mb-4 text-lg font-semibold">
-          Listagem de Aulas de código
+          Listagem de Aulas de código concluidas
         </p>
         <Input
           placeholder="Código da aula"
+          type='number'
           Icon={<Barcode size={32} weight="fill" />}
+          classNameFieldset='mb-3'
+          value={classCode}
+          onChange={(event) => setClassCode(event.target.value)}
+        />
+
+        <DefaultButton
+          title='Marcar aula como concluída'
+          disabled={classCode.trim() === '' || isMarcClassAsCompletedLoading}
+          onClick={() => onClickButton()}
         />
       </div>
+
+      {theoreticalClassesCompleted?.map(lesson => (
+        <div
+          key={lesson.id}
+          className="mx-auto mb-2 flex w-[94%] flex-row items-center justify-between rounded-md border border-zinc-300 border-opacity-10 px-3 py-2 shadow"
+        >
+          <div className="flex-row items-center gap-x-1">
+            <span className="font-bold">{lesson.name}</span>
+          </div>
+          
+          <div
+            className={`text-green-500 opacity-100`}
+          >
+            <Check />
+          </div>
+        </div>
+      ))}
     </div>
   )
 }

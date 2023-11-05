@@ -1,6 +1,4 @@
-'use client'
 import { useState } from 'react';
-import { useRouter } from 'next/navigation'
 import Link from 'next/link';
 import Image from 'next/image';
 import { List, X } from '@phosphor-icons/react';
@@ -34,6 +32,7 @@ export function SideBar() {
           <button onClick={toggleMenu} className='ml-auto mb-10 -mt-8 -mr-6 text-white'>
             <X size={24} weight='bold'/>
           </button>
+
           <div className="group cursor-pointer w-full bg-white rounded-full">
             <button
               onClick={toggleMenu}
@@ -44,6 +43,7 @@ export function SideBar() {
               </Link>
             </button>
           </div>
+
           <div className="group cursor-pointer w-full bg-white rounded-full">
             <button
               onClick={toggleMenu}
@@ -54,6 +54,18 @@ export function SideBar() {
               </Link>
             </button>
           </div>
+
+          <div className="group cursor-pointer w-full bg-white rounded-full">
+            <button
+              onClick={toggleMenu}
+              className="w-full py-2 px-4 text-zinc-800 hover:text-[#E86255] text-center flex transition-colors items-center duration-200 ease-out"
+            >
+              <Link href='/calendar' className="w-full hover:text-[#E86255] text-center" >
+                Calendário de aulas
+              </Link>
+            </button>
+          </div>
+
           <div className="group cursor-pointer w-full bg-white rounded-full">
             <button
               onClick={toggleMenu}
@@ -64,6 +76,7 @@ export function SideBar() {
               </Link>
             </button>
           </div>
+
           <div className="group cursor-pointer w-full bg-white rounded-full">
             <button
               className="w-full py-2 px-4 text-zinc-800 hover:text-[#E86255] text-center transition-colors duration-200 ease-out"
@@ -86,6 +99,7 @@ export function SideBar() {
             Grupo Técnica
           </span>
         </button>
+
         <div className="mt-4 flex flex-col gap-2">
           <div className="group cursor-pointer ml-2">
             <button
@@ -96,6 +110,7 @@ export function SideBar() {
               </Link>
             </button>
           </div>
+
           <div className="group cursor-pointer ml-2">
             <button
               className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between transition-colors duration-200 ease-out"
@@ -105,6 +120,17 @@ export function SideBar() {
               </Link>
             </button>
           </div>
+
+          <div className="group cursor-pointer ml-2">
+            <button
+              className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between transition-colors duration-200 ease-out"
+            >
+              <Link href='/calendar' className={`flex gap-2 hover:text-[#E86255]`} >
+                <span className="flex whitespace-nowrap">Calendário de aulas</span>
+              </Link>
+            </button>
+          </div>
+
           <div className="group cursor-pointer ml-2">
             <button
               className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between transition-colors duration-200 ease-out"
@@ -114,6 +140,7 @@ export function SideBar() {
               </Link>
             </button>
           </div>
+
           <div className="group cursor-pointer ml-2">
             <button
               className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between transition-colors duration-200 ease-out"

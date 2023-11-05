@@ -74,7 +74,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
   if (student) {
     return {
       redirect: {
-        destination: '/pratical-classes',
+        destination: '/practical-classes',
         permanent: false,
       },
     }
