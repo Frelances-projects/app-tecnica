@@ -12,6 +12,8 @@ async function bootstrap() {
       'http://localhost:3000',
       'https://app-tecnica-rodrigo001.vercel.app',
       'https://app-tecnica-kfjrsf1rm-rodrigo001.vercel.app',
+      'https://students-platform-mu.vercel.app',
+      'https://students-platform-53j6s246g-filipesilvestre0-gmailcom.vercel.app',
     ],
     methods: ['POST', 'PUT', 'DELETE', 'GET'],
   })
