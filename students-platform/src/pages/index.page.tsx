@@ -33,7 +33,7 @@ export default function Home() {
     await login({ number: Number(data.number), password: data.password })
     reset()
 
-    router.push('/pratical-classes')
+    router.push('/practical-classes')
   }
 
   return (
