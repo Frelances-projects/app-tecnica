@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useState } from 'react'
 import { GetServerSideProps } from 'next'
+import Head from 'next/head'
 import { parseCookies } from 'nookies'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
@@ -131,6 +132,10 @@ export default function TheoreticalClasses({ student }: TheoreticalClassesProps)
 
   return (
     <div className='w-full flex flex-col gap-4 mt-4'>
+      <Head>
+        <title>Alunos - Grupo Técnica</title>
+      </Head>
+
       <div className='flex flex-col gap-2'>
         <h1 className="text-2xl font-semibold">
           Bem-vindo(a), {student?.name}

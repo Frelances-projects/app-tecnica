@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next';
+import Head from 'next/head'
 import { parseCookies } from 'nookies';
 import { useQuery } from '@tanstack/react-query'
 import { AxiosError } from "axios";
@@ -48,6 +49,10 @@ export default function PracticalClasses({ student }: PracticalClassesProps) {
 
   return (
     <div className="flex flex-col gap-4 mt-4 items-start">
+      <Head>
+        <title>Alunos - Grupo Técnica</title>
+      </Head>
+
       <div className='flex flex-col gap-4'>
         <div className="text-xl font-semibold">Bem-vindo(a), {student?.name}</div>
         <div className="font-regular text-sm">Aluno(a) N° {student?.number}</div>

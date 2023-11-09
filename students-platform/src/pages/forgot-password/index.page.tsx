@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Head from 'next/head'
 import { useRouter } from "next/navigation";
 
 import { SubmitButton } from "@/components/buttons/SubmitButton";
@@ -10,8 +11,13 @@ import logo from '../../assets/tecnica_LOGO.jpg'
 
 export default function ForgotPassword() {
   const router = useRouter()
+  
   return (
     <div className="flex h-screen pb-16 flex-col items-center justify-center">
+      <Head>
+        <title>Alunos - Grupo Técnica</title>
+      </Head>
+
       <Image src={logo} alt='Logo' width={295} height={295} className='mx-auto mb-32'/>
 
       <div className="flex flex-col w-full items-center justify-center gap-9 px-8">

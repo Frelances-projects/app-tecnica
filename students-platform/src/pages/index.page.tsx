@@ -1,6 +1,7 @@
 import { GetServerSideProps } from 'next'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 import { useForm } from 'react-hook-form'
 import Link from 'next/link'
 import { parseCookies } from 'nookies'
@@ -38,6 +39,10 @@ export default function Home() {
 
   return (
     <section className="items-center justify-center px-4 max-w-xs flex flex-col mx-auto m-36">
+      <Head>
+        <title>Alunos - Grupo Técnica</title>
+      </Head>
+
      <Image src={logo} alt='Logo' width={295} height={295} className='mx-auto mb-32'/>
 
       <form onSubmit={handleSubmit(handleLogin)} className="flex flex-col w-full items-center justify-center gap-6">

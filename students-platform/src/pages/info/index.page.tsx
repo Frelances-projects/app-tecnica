@@ -1,5 +1,6 @@
 import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
+import Head from 'next/head'
 import { useQuery } from '@tanstack/react-query'
 import { CheckCircle, Spinner, WarningCircle, XCircle } from '@phosphor-icons/react'
 import { AxiosError } from 'axios'
@@ -125,6 +126,10 @@ export default function Info({ student }: InfoProps) {
 
   return (
     <div className="flex flex-col gap-4 items-start mt-6">
+      <Head>
+        <title>Alunos - Grupo Técnica</title>
+      </Head>
+
         <div>
           <h1 className="text-xl font-semibold">Bem-vindo(a), {student?.name}</h1>
           <span className="mb-12 font-regular text-sm">Aluno(a) N° {student?.number}</span>
