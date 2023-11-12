@@ -1,10 +1,12 @@
-import { Body, Controller, Get, Param, Put, Post } from '@nestjs/common'
+import { Body, Controller, Get, Param, Put, Post, Patch } from '@nestjs/common'
 
 import { CreateUser } from '../../../application/use-cases/user/create-user'
 import { CreateUserSession } from '../../../application/use-cases/user/create-user-session'
 import { UpdateUser } from '../../../application/use-cases/user/update-user'
 import { GetUserById } from '../../../application/use-cases/user/get-user-by-id'
 import { GetManyUsers } from '../../../application/use-cases/user/get-many-users'
+import { ForgotUserPassword } from '../../../application/use-cases/user/forgot-user-password'
+import { ResetUserPassword } from '../../../application/use-cases/user/reset-user-password'
 import { GetManyUsersBySchool } from '../../../application/use-cases/user/get-many-users-by-school'
 
 import { UserViewModel } from '../view-models/user-view-model'
@@ -12,6 +14,8 @@ import { UserViewModel } from '../view-models/user-view-model'
 import { CreateUserBody } from '../dtos/user/create-user-body'
 import { CreateUserSessionBody } from '../dtos/user/create-user-session-body'
 import { UpdateUserBody } from '../dtos/user/update-user-body'
+import { ForgotUserPasswordBody } from '../dtos/user/forgot-password-user-body'
+import { ResetUserPasswordBody } from '../dtos/user/reset-password-user-body'
 
 @Controller('user')
 export class UserController {
@@ -21,6 +25,8 @@ export class UserController {
     private updateUser: UpdateUser,
     private getUserById: GetUserById,
     private getManyUsers: GetManyUsers,
+    private forgotUserPassword: ForgotUserPassword,
+    private resetUserPassword: ResetUserPassword,
     private getManyUsersBySchool: GetManyUsersBySchool,
   ) {}
 
@@ -87,5 +93,22 @@ export class UserController {
     return {
       user: UserViewModel.toHTTP(user),
     }
+  }
+
+  @Post('password/forgot-password')
+  async forgotPassword(@Body() body: ForgotUserPasswordBody) {
+    const { email, link } = body
+
+    await this.forgotUserPassword.execute({ email, link })
+  }
+
+  @Patch('password/reset-password/:token')
+  async resetPassword(
+    @Param('token') token: string,
+    @Body() body: ResetUserPasswordBody,
+  ) {
+    const { newPassword } = body
+
+    await this.resetUserPassword.execute({ token, newPassword })
   }
 }

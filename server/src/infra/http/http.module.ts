@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 
 import { DatabaseModule } from '../database/database.module'
+import { EmailModule } from 'src/mail/email.module'
 
 // CONTROLLERS
 import { InformationController } from './controllers/information.controller'
@@ -33,6 +34,8 @@ import { GetStudentByNumber } from '../../application/use-cases/student/get-stud
 import { UpdateStudent } from '../../application/use-cases/student/update-student'
 import { DeleteStudent } from '../../application/use-cases/student/delete-student'
 import { CreateStudentSession } from 'src/application/use-cases/student/create-student-session'
+import { ForgotStudentPassword } from 'src/application/use-cases/student/forgot-user-password'
+import { ResetStudentPassword } from 'src/application/use-cases/student/reset-student-password'
 
 // CALENDAR
 import { CreateCalendar } from '../../application/use-cases/calendar/create-calendar'
@@ -100,13 +103,15 @@ import { GetManyUsersBySchool } from 'src/application/use-cases/user/get-many-us
 import { GetUserByEmail } from 'src/application/use-cases/user/get-user-by-email'
 import { GetUserById } from 'src/application/use-cases/user/get-user-by-id'
 import { UpdateUser } from 'src/application/use-cases/user/update-user'
+import { ForgotUserPassword } from 'src/application/use-cases/user/forgot-user-password'
+import { ResetUserPassword } from 'src/application/use-cases/user/reset-user-password'
 
 import { GenerateHash } from 'src/helpers/generate-hash'
 import { CompareHash } from 'src/helpers/compare-hash'
 import { CreateToken } from 'src/helpers/create-token'
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, EmailModule],
   controllers: [
     InformationController,
     StudentController,
@@ -138,6 +143,8 @@ import { CreateToken } from 'src/helpers/create-token'
     GetStudentByNumber,
     UpdateStudent,
     DeleteStudent,
+    ForgotStudentPassword,
+    ResetStudentPassword,
 
     // CALENDAR
     CreateCalendar,
@@ -205,6 +212,8 @@ import { CreateToken } from 'src/helpers/create-token'
     GetUserByEmail,
     GetUserById,
     UpdateUser,
+    ForgotUserPassword,
+    ResetUserPassword,
 
     GenerateHash,
     CompareHash,

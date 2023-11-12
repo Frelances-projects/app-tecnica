@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Put, Post, Delete } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Put,
+  Post,
+  Delete,
+  Patch,
+} from '@nestjs/common'
 
 import { CreateStudent } from '../../../application/use-cases/student/create-student'
 import { CreateStudentSession } from '../../../application/use-cases/student/create-student-session'
@@ -7,12 +16,16 @@ import { GetStudentById } from '../../../application/use-cases/student/get-stude
 import { GetManyStudents } from '../../../application/use-cases/student/get-many-students'
 import { DeleteStudent } from '../../../application/use-cases/student/delete-student'
 import { GetManyStudentsBySchool } from 'src/application/use-cases/student/get-many-students-by-school'
+import { ForgotStudentPassword } from 'src/application/use-cases/student/forgot-user-password'
+import { ResetStudentPassword } from 'src/application/use-cases/student/reset-student-password'
 
 import { StudentViewModel } from '../view-models/student-view-model'
 
 import { CreateStudentBody } from '../dtos/student/create-student-body'
 import { CreateStudentSessionBody } from '../dtos/student/create-student-session-body'
 import { UpdateStudentBody } from '../dtos/student/update-student-body'
+import { ForgotStudentPasswordBody } from '../dtos/student/forgot-password-student-body'
+import { ResetStudentPasswordBody } from '../dtos/student/reset-password-student-body'
 
 @Controller('student')
 export class StudentController {
@@ -23,6 +36,8 @@ export class StudentController {
     private deleteStudent: DeleteStudent,
     private getStudentById: GetStudentById,
     private getManyStudents: GetManyStudents,
+    private forgotStudentPassword: ForgotStudentPassword,
+    private resetStudentPassword: ResetStudentPassword,
     private getManyStudentsBySchool: GetManyStudentsBySchool,
   ) {}
 
@@ -111,5 +126,22 @@ export class StudentController {
   @Delete(':studentId')
   async delete(@Param('studentId') studentId: string) {
     await this.deleteStudent.execute(studentId)
+  }
+
+  @Post('password/forgot-password')
+  async forgotPassword(@Body() body: ForgotStudentPasswordBody) {
+    const { email, link } = body
+
+    await this.forgotStudentPassword.execute({ email, link })
+  }
+
+  @Patch('password/reset-password/:token')
+  async resetPassword(
+    @Param('token') token: string,
+    @Body() body: ResetStudentPasswordBody,
+  ) {
+    const { newPassword } = body
+
+    await this.resetStudentPassword.execute({ token, newPassword })
   }
 }
