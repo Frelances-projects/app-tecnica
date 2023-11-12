@@ -56,7 +56,7 @@ export function LoginUserForm() {
         </Link>
 
         <Link
-          href={'/'}
+          href={'/forgot-password'}
           className='text-gray-400 text-sm font-semibold'
         >
           Esqueci minha senha

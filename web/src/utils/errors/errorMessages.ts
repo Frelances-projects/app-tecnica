@@ -1,5 +1,8 @@
 export const errorMessages = {
   passwordEmpty: 'password should not be empty',
+  newPasswordEmpty: 'newPassword should not be empty',
+  linkEmpty: 'link should not be empty',
+  emailEmpty: 'email should not be empty',
   studentNotFound: 'Student not found',
   schoolNotFound: 'School not found',
   scheduledClassNotFound: 'ScheduledClass not found',
