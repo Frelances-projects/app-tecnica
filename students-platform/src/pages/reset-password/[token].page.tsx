@@ -2,8 +2,9 @@ import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
 import Image from "next/image";
 import Head from 'next/head'
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import { EnvelopeSimple } from "@phosphor-icons/react";
+import { Lock } from '@phosphor-icons/react'
 import { AxiosError } from "axios";
 
 import { SubmitButton } from "@/components/buttons/SubmitButton";
@@ -15,11 +16,17 @@ import { errorMessages } from "@/utils/errors/errorMessages";
 
 import logo from '../../assets/tecnica_LOGO.jpg'
 
-interface ForgotFormData {
-  email: string
+interface ResetFormData {
+  password: string
 }
 
-export default function ForgotPassword() {
+interface ResetPasswordParams {
+  token: string
+}
+
+export default function ResetPassword() {
+  const { query, push } = useRouter()
+  const { token } = query as unknown as ResetPasswordParams
   const { toast } = useToast()
 
   const {
@@ -27,39 +34,36 @@ export default function ForgotPassword() {
     handleSubmit,
     formState: { isSubmitting },
     reset,
-  } = useForm<ForgotFormData>()
+  } = useForm<ResetFormData>()
 
-  async function handleForgotPassword(data: ForgotFormData) {
+  async function handleResetPassword(data: ResetFormData) {
     try {
-      await server.post('/student/password/forgot-password',
-        { email: data.email, link: 'http://localhost:3000' }
+      await server.patch(`/student/password/reset-password/${token}`,
+        { newPassword: data.password }
       )
       reset()
 
       toast({
-        title: 'Enviado com sucesso!',
-        description: 'Caso o e-mail digitado exista você irá receber um e-mail para recuperação da senha.'
+        title: 'Redefinição concluída',
+        description: 'A redefinição de senha com concluida com sucesso, agora você pose entrar na plataforma'
       })
+
+      push('/practical-classes')
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response?.data?.message) {
-          if (error.response?.data.message[0] === errorMessages.emailEmpty) {
+          if (error.response?.data.message[0] === errorMessages.newPasswordEmpty) {
             return toast({
               title: 'Campo obrigatório',
-              description: 'O E-mail é um campo obrigatório',
-              variant: 'destructive'
-            })
-          } else if (error.response?.data.message === errorMessages.linkEmpty) {
-            return toast({
-              title: 'Erro ao enviar!',
-              description: 'Erro ao enviar o link, tente novamente mais tarde!',
+              description: 'A senha é um campo obrigatório',
               variant: 'destructive'
             })
           }
         }
       }
+
       return toast({
-        title: 'Erro ao enviar!',
+        title: 'Erro',
         description: 'Ocorreu um erro no servidor! Por favor tente novamente mais tarde',
         variant: 'destructive'
       })
@@ -74,19 +78,20 @@ export default function ForgotPassword() {
 
       <Image src={logo} alt='Logo' width={295} height={295} className='mx-auto mb-32'/>
 
-      <form onSubmit={handleSubmit(handleForgotPassword)} className="flex flex-col w-full items-center justify-center gap-9 px-8">
+      <form onSubmit={handleSubmit(handleResetPassword)} className="flex flex-col w-full items-center justify-center gap-9 px-8">
         <div className="w-full">
           <Input
-            {...register('email')}
             required
-            Icon={<EnvelopeSimple size={24} weight="fill" color={'#000000'} />}
-            placeholder="Email"
+            {...register('password')}
+            Icon={<Lock size={24} weight="fill" color={'#000000'} />}
+            placeholder="Nova Password"
+            type='password'
           />
         </div>
 
         <SubmitButton
           disabled={isSubmitting}
-          title="Enviar"
+          title="Redefinir"
           type="submit"
         />
       </form>
