@@ -17,7 +17,7 @@ async function bootstrap() {
       'https://backoffice-app-tecnica.vercel.app',
       'https://backoffice-app-tecnica-rgqa8nfnq-filipesilvestre0-gmailcom.vercel.app',
     ],
-    methods: ['POST', 'PUT', 'DELETE', 'GET'],
+    methods: ['POST', 'PUT', 'DELETE', 'GET', 'PATCH'],
   })
 
   await app.listen(3333)
