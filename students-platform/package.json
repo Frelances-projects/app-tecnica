@@ -19,6 +19,7 @@
     "clsx": "^2.0.0",
     "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.0",
+    "firebase": "^10.6.0",
     "lucide-react": "^0.288.0",
     "next": "latest",
     "nookies": "^2.5.2",

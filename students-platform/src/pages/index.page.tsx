@@ -3,12 +3,12 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { useForm } from 'react-hook-form'
+import { Lock, User } from '@phosphor-icons/react'
 import Link from 'next/link'
 import { parseCookies } from 'nookies'
 
 import { Input } from '@/components/Input'
 import { SubmitButton } from '@/components/buttons/SubmitButton'
-import { Lock, User } from '@phosphor-icons/react'
 
 import { useAuth } from '@/hooks/useAuth'
 

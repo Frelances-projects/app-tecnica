@@ -1,12 +1,15 @@
+import { useEffect } from 'react';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head'
 import { parseCookies } from 'nookies';
 import { useQuery } from '@tanstack/react-query'
+import { getMessaging, getToken } from "firebase/messaging";
 import { AxiosError } from "axios";
 
 import { PracticalClassesList } from "@/components/PracticalClassesList";
 
 import { server } from '@/lib/server'
+import { firebaseApp } from '@/lib/firebase';
 import type { Student } from '@/contexts/AuthContext';
 
 export interface ScheduledClass {
@@ -46,6 +49,59 @@ export default function PracticalClasses({ student }: PracticalClassesProps) {
       }
     }
   })
+
+  useEffect(() => {
+    const messaging = getMessaging(firebaseApp);
+
+    async function requestNotificationPermission() {
+      try {
+        const permission = await Notification.requestPermission();
+        
+        if (permission === 'granted') {
+          const token = await getToken(messaging, { vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY });
+
+          if (token) {
+            console.log("🚀 ~ file: index.page.tsx:76 ~ requestNotificationPermission ~ token:", token)
+
+            await server.put(`/student/${student?.id}`, {
+              firebaseToken: token,
+              name: student.name,
+              email: student.email,
+              schoolId: student.schoolId,
+              driverLicenseCategoryId: student?.driverLicenseCategoryId,
+              number: student.number
+            })
+          }
+        } else {
+          console.log('Permissão de notificação negada pelo usuário.');
+
+          const permission = await Notification.requestPermission();
+
+          if (permission === 'granted') {
+            const token = await getToken(messaging, { vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY });
+
+            if (token) {
+              console.log("🚀 ~ file: index.page.tsx:86 ~ requestNotificationPermission ~ token:", token)
+
+              await server.put(`/student/${student?.id}`, {
+                firebaseToken: token,
+                name: student.name,
+                email: student.email,
+                schoolId: student.schoolId,
+                driverLicenseCategoryId: student?.driverLicenseCategoryId,
+                number: student.number
+              })
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Erro ao solicitar permissão de notificação:', error);
+      }
+    };
+
+    requestNotificationPermission();
+  }, [student?.id]);
+
 
   return (
     <div className="flex flex-col gap-4 mt-4 items-start">
