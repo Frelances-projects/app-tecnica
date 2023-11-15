@@ -10,6 +10,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:3000',
+      'http://localhost:3001',
       'https://app-tecnica-rodrigo001.vercel.app',
       'https://app-tecnica-kfjrsf1rm-rodrigo001.vercel.app',
       'https://students-platform-mu.vercel.app',

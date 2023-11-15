@@ -16,6 +16,8 @@ export class UpdateStudentBody {
   @IsUUID()
   driverLicenseCategoryId: string
 
+  firebaseToken?: string
+
   // @IsString()
   // enrolledAt: string
 

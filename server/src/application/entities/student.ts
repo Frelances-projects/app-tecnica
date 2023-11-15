@@ -11,6 +11,7 @@ interface StudentProps {
   schoolId: string
   paymentId?: string | null
   token?: string | null
+  firebaseTokens?: string[] | null
   driverLicenseCategoryId: string
   createdAt?: Date | null
 }
@@ -93,6 +94,14 @@ export class Student {
 
   public get token(): string {
     return this.props.token
+  }
+
+  public set firebaseTokens(firebaseTokens: string[]) {
+    this.props.firebaseTokens = firebaseTokens
+  }
+
+  public get firebaseTokens(): string[] | null {
+    return this.props.firebaseTokens
   }
 
   public set driverLicenseCategoryId(driverLicenseCategoryId: string) {

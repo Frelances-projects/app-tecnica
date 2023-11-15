@@ -16,6 +16,7 @@ interface UpdateStudentRequest {
   email?: string
   schoolId?: string
   driverLicenseCategoryId?: string
+  firebaseToken?: string
   // enrolledAt?: string
   number?: number
 }
@@ -42,6 +43,7 @@ export class UpdateStudent {
         number,
         schoolId,
         driverLicenseCategoryId,
+        firebaseToken,
         // enrolledAt,
       } = request
 
@@ -80,6 +82,20 @@ export class UpdateStudent {
       student.driverLicenseCategoryId =
         driverLicenseCategoryId ?? student.driverLicenseCategoryId
       student.number = number ?? student.number
+
+      if (firebaseToken) {
+        const studentFirebaseTokens = student.firebaseTokens
+
+        const token = studentFirebaseTokens.find(
+          (token) => token === firebaseToken,
+        )
+
+        if (!token) {
+          studentFirebaseTokens.push(firebaseToken)
+
+          student.firebaseTokens = studentFirebaseTokens
+        }
+      }
 
       await this.studentsRepository.save(student)
 

@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt'
 
 import { DatabaseModule } from '../database/database.module'
 import { EmailModule } from 'src/mail/email.module'
+import { PushNotificationModule } from 'src/push-notification/push-notification.module'
 
 // CONTROLLERS
 import { InformationController } from './controllers/information.controller'
@@ -111,7 +112,7 @@ import { CompareHash } from 'src/helpers/compare-hash'
 import { CreateToken } from 'src/helpers/create-token'
 
 @Module({
-  imports: [DatabaseModule, EmailModule],
+  imports: [DatabaseModule, EmailModule, PushNotificationModule],
   controllers: [
     InformationController,
     StudentController,

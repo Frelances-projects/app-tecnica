@@ -8,6 +8,8 @@ import {
   Put,
   Query,
 } from '@nestjs/common'
+import { format } from 'date-fns'
+import { pt } from 'date-fns/locale'
 
 import { CreateTest } from 'src/application/use-cases/test/create-test'
 import { GetManyTests } from 'src/application/use-cases/test/get-many-tests'
@@ -24,6 +26,8 @@ import { TestViewModel } from '../view-models/test-view-model'
 import { CreateTestBody } from '../dtos/test/create-test-body'
 import { UpdateTestBody } from '../dtos/test/update-test-body'
 
+import { PushNotificationService } from 'src/push-notification/push-notification.service'
+
 @Controller('test')
 export class TestController {
   constructor(
@@ -36,6 +40,7 @@ export class TestController {
     private getManyTestsBySchool: GetManyTestsBySchool,
     private getManyTestsByCategory: GetManyTestsByCategory,
     private getManyTestsBySchoolAndCategory: GetManyTestsBySchoolAndCategory,
+    private pushNotificationService: PushNotificationService,
   ) {}
 
   @Get(':testId')
@@ -116,6 +121,19 @@ export class TestController {
     @Body() body: CreateTestBody,
   ) {
     const { test } = await this.createTest.execute({ ...body, studentId })
+
+    await this.pushNotificationService.sendNotificationToStudent({
+      studentId,
+      title:
+        test.category === 'THEORETICAL'
+          ? 'Um novo exame de código foi marcado para você!'
+          : 'Um novo exame de condução foi marcado para você!',
+      body: `O exame foi marcado para: ${format(
+        new Date(test.testDate),
+        'PPP',
+        { locale: pt },
+      )} ás ${test.testHour}`,
+    })
 
     return {
       test: TestViewModel.toHTTP(test),

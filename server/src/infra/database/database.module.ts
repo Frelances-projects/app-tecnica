@@ -77,6 +77,7 @@ import { PrismaUserRepository } from './prisma/repositories/prisma-user-reposito
     },
   ],
   exports: [
+    PrismaService,
     InformationRepository,
     StudentsRepository,
     CalendarRepository,

@@ -8,6 +8,8 @@ import { GetManyCalendar } from '../../../application/use-cases/calendar/get-man
 import { CalendarViewModel } from '../view-models/calendar-view-model'
 import { CreateCalendarBody } from '../dtos/calendar/create-calendar-body'
 
+import { PushNotificationService } from 'src/push-notification/push-notification.service'
+
 @Controller('calendar')
 export class CalendarController {
   constructor(
@@ -15,6 +17,7 @@ export class CalendarController {
     private getCalendarById: GetCalendarById,
     private getCalendarBySchool: GetCalendarBySchool,
     private getManyCalendar: GetManyCalendar,
+    private pushNotificationService: PushNotificationService,
   ) {}
 
   @Get(':calendarId')
@@ -51,6 +54,12 @@ export class CalendarController {
   @Post()
   async create(@Body() body: CreateCalendarBody) {
     const { calendar } = await this.createCalendar.execute(body)
+
+    await this.pushNotificationService.sendNotificationToSchool({
+      schoolId: calendar.schoolId,
+      title: 'Novo Calendário de aulas!',
+      body: 'A sua escola acabou de adicionar um novo calendário de aulas',
+    })
 
     return {
       calendar: CalendarViewModel.toHTTP(calendar),

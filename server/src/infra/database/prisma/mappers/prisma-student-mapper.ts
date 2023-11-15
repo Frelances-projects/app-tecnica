@@ -14,6 +14,7 @@ export class PrismaStudentMapper {
       driverLicenseCategoryId: student.driverLicenseCategoryId,
       number: student.number,
       token: student.token,
+      firebaseTokens: student.firebaseTokens,
       enrolledAt: student.enrolledAt,
       createdAt: student.createdAt,
     }
@@ -30,6 +31,7 @@ export class PrismaStudentMapper {
         driverLicenseCategoryId: raw.driverLicenseCategoryId,
         number: raw.number,
         token: raw.token,
+        firebaseTokens: raw.firebaseTokens,
         enrolledAt: raw.enrolledAt,
         createdAt: raw.createdAt,
         ...raw,

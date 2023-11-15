@@ -12,6 +12,8 @@ import { InformationViewModel } from '../view-models/information-view-model'
 import { CreateInformationBody } from '../dtos/information/create-information-body'
 import { UpdateInformationBody } from '../dtos/information/update-information-body'
 
+import { PushNotificationService } from 'src/push-notification/push-notification.service'
+
 @Controller('information')
 export class InformationController {
   constructor(
@@ -21,6 +23,7 @@ export class InformationController {
     private updateInformation: UpdateInformation,
     private getManyInformation: GetManyInformation,
     private getManyInformationBySchool: GetManyInformationBySchool,
+    private pushNotificationService: PushNotificationService,
   ) {}
 
   @Get(':informationId')
@@ -63,6 +66,12 @@ export class InformationController {
   @Post()
   async create(@Body() body: CreateInformationBody) {
     const { information } = await this.createInformation.execute(body)
+
+    await this.pushNotificationService.sendNotificationToSchool({
+      schoolId: information.schoolId,
+      title: 'Um novo alerta foi gerado na sua escola!',
+      body: `Sobre o alerta: ${information.description}`,
+    })
 
     return {
       information: InformationViewModel.toHTTP(information),

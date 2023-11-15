@@ -98,6 +98,7 @@ model Student {
   schoolId                String
   paymentId               String?               @unique
   token                   String?
+  firebaseTokens          String[]
   createdAt               DateTime              @default(now())
   updatedAt               DateTime              @updatedAt
   scheduledClass          ScheduledClass[]

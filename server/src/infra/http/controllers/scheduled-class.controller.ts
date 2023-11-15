@@ -8,6 +8,8 @@ import {
   Put,
   Query,
 } from '@nestjs/common'
+import { format } from 'date-fns'
+import { pt } from 'date-fns/locale'
 
 import { CreateScheduledClass } from '../../../application/use-cases/scheduled-class/create-scheduled-class'
 import { UpdateScheduledClass } from '../../../application/use-cases/scheduled-class/update-scheduled-class'
@@ -28,6 +30,8 @@ import { CreateScheduledClassBody } from '../dtos/scheduled-class/create-schedul
 import { UpdateScheduledClassBody } from '../dtos/scheduled-class/update-scheduled-class-body'
 import { UpdateScheduledClassStatusBody } from '../dtos/scheduled-class/update-scheduled-class-status-body'
 
+import { PushNotificationService } from 'src/push-notification/push-notification.service'
+
 @Controller('scheduled-class')
 export class ScheduledClassController {
   constructor(
@@ -43,6 +47,7 @@ export class ScheduledClassController {
     private getManyScheduledClassesBySchoolAndCategoryClass: GetManyScheduledClassesBySchoolAndCategoryClass,
     private getManyScheduledClassesByStudentAndCategoryClass: GetManyScheduledClassesByStudentAndCategoryClass,
     private getManyScheduledClassesByStudent: GetManyScheduledClassesByStudent,
+    private pushNotificationService: PushNotificationService,
   ) {}
 
   @Get(':scheduledClassId')
@@ -170,6 +175,20 @@ export class ScheduledClassController {
   @Post()
   async create(@Body() body: CreateScheduledClassBody) {
     const { scheduledClass } = await this.createScheduledClass.execute(body)
+
+    if (scheduledClass.schedulingDate && scheduledClass.schedulingHour) {
+      await this.pushNotificationService.sendNotificationToStudent({
+        studentId: scheduledClass.studentId,
+        title: 'Aula de condução marcada!',
+        body: `Uma nova aula de condução foi marcada para: ${format(
+          new Date(scheduledClass.schedulingDate),
+          'PPP',
+          { locale: pt },
+        )} ás ${
+          scheduledClass.schedulingHour
+        }, por favor, confirme a sua presença!`,
+      })
+    }
 
     return {
       scheduledClass: ScheduledClassViewModel.toHTTP(scheduledClass),

@@ -106,6 +106,7 @@ export class StudentController {
       driverLicenseCategoryId,
       // enrolledAt,
       schoolId,
+      firebaseToken,
     } = body
 
     const { student } = await this.updateStudent.execute({
@@ -116,6 +117,7 @@ export class StudentController {
       driverLicenseCategoryId,
       // enrolledAt,
       schoolId,
+      firebaseToken,
     })
 
     return {
