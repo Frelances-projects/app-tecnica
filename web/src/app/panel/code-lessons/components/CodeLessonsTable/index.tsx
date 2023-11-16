@@ -23,7 +23,7 @@ export function CodeLessonsTable({ classes }: CodeLessonsTableProps) {
             <TableHead>Código da aula</TableHead>
             <TableHead>Título da aula</TableHead>
             <TableHead>Descrição da aula</TableHead>
-            <TableHead>Deletar</TableHead>
+            <TableHead>Apagar</TableHead>
           </TableRow>
         </TableHeader>
 

@@ -41,7 +41,7 @@ export async function registerUser(data: FormData) {
         } else if (error.response?.data.message === errorMessages.emailHasAlreadyBeenUsed) {
           return { message: 'Esse E-mail já está sendo utilizando, por favor coloque outro E-mail' }
         } else if (error.response?.data.message[0] === errorMessages.strongPassword) {
-          return { message: 'A senha não é forte o suficiente! Por favor digite uma senha mais forte(Coloque pelo menos uma letra maiúscula 1, 1 caracter especial e 1 número)' }
+          return { message: 'A senha não é forte o suficiente! Por favor insira uma senha mais forte(Coloque pelo menos uma letra maiúscula 1, 1 caracter especial e 1 número)' }
         }
       }
     }

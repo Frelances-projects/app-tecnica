@@ -25,16 +25,16 @@ export function ScheduledDrivingLessonsTable({ scheduledClasses }: ScheduledDriv
             <TableHead>Data da aula</TableHead>
             <TableHead>Título da aula</TableHead>
             <TableHead>Nome do aluno</TableHead>
-            <TableHead>Escola de registro</TableHead>
+            <TableHead>Escola</TableHead>
             <TableHead>Editar</TableHead>
-            <TableHead>Deletar</TableHead>
+            <TableHead>Apagar</TableHead>
           </TableRow>
         </TableHeader>
 
         <TableBody>
           {scheduledClasses.map(scheduledClass => (
             <TableRow key={scheduledClass.id}>
-              <TableCell>{scheduledClass.status}</TableCell>
+              <TableCell>{scheduledClass.status === 'COMPLETED' ? 'COMPLETADA' : scheduledClass.status === 'CONFIRMED' ? 'CONFIRMADA' : scheduledClass.status === 'CANCELED' ? 'CANCELADA' : 'PENDENTE'}</TableCell>
               <TableCell>{scheduledClass.schedulingDate} {scheduledClass.schedulingHour}</TableCell>
               <TableCell>{scheduledClass.class.name}</TableCell>
               <TableCell>{scheduledClass.student.name}</TableCell>

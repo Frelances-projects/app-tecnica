@@ -23,8 +23,8 @@ export function DriverLicenseCategoriesTable({ driverLicenseCategories }: Driver
             <TableHead>Nome da categoria</TableHead>
             <TableHead>Preço de cada parcela</TableHead>
             <TableHead>Total</TableHead>
-            <TableHead>Escola de registro</TableHead>
-            <TableHead>Deletar</TableHead>
+            <TableHead>Escola</TableHead>
+            <TableHead>Apagar</TableHead>
           </TableRow>
         </TableHeader>
 

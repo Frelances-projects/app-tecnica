@@ -37,11 +37,11 @@ export function StudentsTable({ students, activePathname, schools, categoryCard 
             <TableHead>Número</TableHead>
             <TableHead>Email</TableHead>
             <TableHead>Data inscrição</TableHead>
-            <TableHead>Escola de registro</TableHead>
+            <TableHead>Escola</TableHead>
             {hasEditStudentModal && (
               <TableHead>Editar</TableHead>
             )}
-            <TableHead>Deletar</TableHead>
+            <TableHead>Apagar</TableHead>
           </TableRow>
         </TableHeader>
 

@@ -24,16 +24,16 @@ export function DrivingExamsListTable({ tests }: DrivingExamsListTableProps) {
             <TableHead>Status do exame</TableHead>
             <TableHead>Data do exame</TableHead>
             <TableHead>Nome do aluno</TableHead>
-            <TableHead>Escola de registro</TableHead>
+            <TableHead>Escola</TableHead>
             <TableHead>Editar</TableHead>
-            <TableHead>Deletar</TableHead>
+            <TableHead>Apagar</TableHead>
           </TableRow>
         </TableHeader>
 
         <TableBody>
           {tests.map(test => (
             <TableRow key={test.id}>
-              <TableCell>{test.status}</TableCell>
+              <TableCell>{test.status === 'APPROVED' ? 'APROVADO' : test.status === 'DISAPPROVED' ? 'REPROVADO' : 'MARCADO'}</TableCell>
               <TableCell>{test.testDate} {test.testHour}</TableCell>
               <TableCell>{test.student.name}</TableCell>
               <TableCell>{test.student.school.name}</TableCell>

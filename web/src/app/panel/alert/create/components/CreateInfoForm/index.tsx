@@ -55,7 +55,7 @@ export function CreateInfoForm({ userFunction, schools }: CreateInfoFormProps) {
         required
         id='title'
         label="Título do Alerta"
-        placeholder='Digite o Título'
+        placeholder='Insira o Título'
         type='text'
       />
 

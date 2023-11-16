@@ -30,12 +30,12 @@ export function NumberOfInstallment({
     "2":
         <>
           <EuroInput
-            placeholder="valor:"
+            placeholder="Valor:"
             formattedValue={firstInstallment}
             setFormattedValue={setFirstInstallment}
           />
           <EuroInput
-            placeholder="valor:"
+            placeholder="Valor:"
             formattedValue={secondInstallment}
             setFormattedValue={setSecondInstallment}
           />
@@ -43,17 +43,17 @@ export function NumberOfInstallment({
     "3": 
         <>
           <EuroInput
-            placeholder="valor:"
+            placeholder="Valor:"
             formattedValue={firstInstallment}
             setFormattedValue={setFirstInstallment}
           />
           <EuroInput
-            placeholder="valor:"
+            placeholder="Valor:"
             formattedValue={secondInstallment}
             setFormattedValue={setSecondInstallment}
           />
           <EuroInput
-            placeholder="valor:"
+            placeholder="Valor:"
             required={false}
             formattedValue={thirdInstallment}
             setFormattedValue={setThirdInstallment}
@@ -62,23 +62,23 @@ export function NumberOfInstallment({
     "4":
         <>
           <EuroInput
-            placeholder="valor:"
+            placeholder="Valor:"
             formattedValue={firstInstallment}
             setFormattedValue={setFirstInstallment}
           />
           <EuroInput
-            placeholder="valor:"
+            placeholder="Valor:"
             formattedValue={secondInstallment}
             setFormattedValue={setSecondInstallment}
           />
           <EuroInput
-            placeholder="valor:"
+            placeholder="Valor:"
             required={false}
             formattedValue={thirdInstallment}
             setFormattedValue={setThirdInstallment}
           />
           <EuroInput
-            placeholder="valor:"
+            placeholder="Valor:"
             required={false}
             formattedValue={fourthInstallment}
             setFormattedValue={setFourthInstallment}

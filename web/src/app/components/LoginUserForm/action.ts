@@ -31,7 +31,7 @@ export async function loginUser(data: FormData) {
         } else if (error.response?.data.message === errorMessages.emailOrPasswordIncorrect) {
           return { message: 'E-mail ou senha incorretos, por favor tente novamente!' }
         } else if (error.response?.data.message[0] === errorMessages.strongPassword) {
-          return { message: 'A senha não é forte o suficiente! Por favor digite uma senha mais forte(Coloque pelo menos uma letra maiúscula 1, 1 caracter especial e 1 número)' }
+          return { message: 'A senha não é forte o suficiente! Por favor insira uma senha mais forte(Coloque pelo menos uma letra maiúscula 1, 1 caracter especial e 1 número)' }
         }
       }
     }

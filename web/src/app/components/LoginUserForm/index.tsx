@@ -59,7 +59,7 @@ export function LoginUserForm() {
           href={'/forgot-password'}
           className='text-gray-400 text-sm font-semibold'
         >
-          Esqueci minha senha
+          Esqueci minha password
         </Link>
       </div>
 

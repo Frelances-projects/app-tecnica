@@ -38,9 +38,9 @@ export function InformationTable({ information }: InformationTableProps) {
             <TableHead>Nome</TableHead>
             <TableHead>Descrição</TableHead>
             <TableHead>Data da criação</TableHead>
-            <TableHead>Escola de registro</TableHead>
+            <TableHead>Escola</TableHead>
             <TableHead>Editar</TableHead>
-            <TableHead>Deletar</TableHead>
+            <TableHead>Apagar</TableHead>
           </TableRow>
         </TableHeader>
 

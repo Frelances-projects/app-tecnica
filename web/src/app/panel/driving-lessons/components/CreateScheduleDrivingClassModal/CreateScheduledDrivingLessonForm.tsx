@@ -14,17 +14,11 @@ import { cn } from "@/lib/utils"
 import { api } from "@/lib/api"
 
 interface CreateScheduledDrivingLessonInputs {
-  lessonId?: string
-  lessonName?: string
+  lessonName: string
   lessonDescription?: string
   schedulingDate: string
   schedulingHour: string
   studentId: string
-}
-
-interface CreateClassMutation {
-  name: string
-  description?: string
 }
 
 interface CreateScheduledDrivingLessonMutation {
@@ -32,27 +26,22 @@ interface CreateScheduledDrivingLessonMutation {
   schedulingHour: string
   status?: 'PENDING' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
   studentId: string
-  classId: string
+  className: string
+  classDescription?: string
 }
 
 interface CreateScheduledDrivingLessonFormProps {
-  selectedLessonId?: string
-  setSelectedLessonId: (value: string | undefined) => void
   students: {
     value: string;
     label: string;
   }[]
   setIsModalOpen: (isOpen: boolean) => void
-  setShowCreateScheduledForm: (isOpen: boolean) => void
 }
 
 export function CreateScheduledDrivingLessonForm(
   {
-    selectedLessonId,
-    setSelectedLessonId,
     students,
     setIsModalOpen,
-    setShowCreateScheduledForm
   }: CreateScheduledDrivingLessonFormProps) {
   const {
     register,
@@ -63,7 +52,6 @@ export function CreateScheduledDrivingLessonForm(
     formState: { isSubmitting }
   } = useForm<CreateScheduledDrivingLessonInputs>({ defaultValues: 
     {
-      lessonId: selectedLessonId,
       lessonName: undefined,
       lessonDescription: undefined,
     }
@@ -72,20 +60,8 @@ export function CreateScheduledDrivingLessonForm(
 
   function handleCloseModal() {
     reset()
-    setSelectedLessonId(undefined)
-    setShowCreateScheduledForm(false)
     setIsModalOpen(false)
   }
-
-  const { mutateAsync: handleCreateClass } = useMutation(
-    {
-      mutationFn: async ({ name, description }: CreateClassMutation) => {
-        const { data } = await api.post('/class', { name, description, category: 'PRACTICAL' })
-
-        return data.class
-      }
-    }
-  )
 
   const { mutateAsync: createScheduledDrivingLesson } = useMutation(
     {
@@ -94,12 +70,13 @@ export function CreateScheduledDrivingLessonForm(
           schedulingDate,
           schedulingHour,
           status,
-          classId,
+          className,
+          classDescription,
           studentId
         }: CreateScheduledDrivingLessonMutation
       ) => {
-        await api.post('/scheduled-class', 
-          { schedulingDate: new Date(schedulingDate).toISOString(), schedulingHour, status, studentId, classId }
+        await api.post('/scheduled-class/practical-class', 
+          { schedulingDate: new Date(schedulingDate).toISOString(), schedulingHour, status, studentId, className, classDescription }
         )
       }
     }
@@ -107,19 +84,10 @@ export function CreateScheduledDrivingLessonForm(
 
   async function handleCreateScheduledDrivingLessonForm(data: CreateScheduledDrivingLessonInputs) {
     try {
-      let classId = data.lessonId
-
-      if (!selectedLessonId) {
-        const { id } = await handleCreateClass(
-          { name: data.lessonName!, description: data.lessonDescription }
-        )
-
-        classId = id
-      }
-
       await createScheduledDrivingLesson(
         { 
-          classId: classId!,
+          className: data.lessonName,
+          classDescription: data.lessonDescription,
           studentId: data.studentId,
           schedulingDate: data.schedulingDate,
           schedulingHour: data.schedulingHour,
@@ -129,8 +97,6 @@ export function CreateScheduledDrivingLessonForm(
 
       reset()
       setIsModalOpen(false)
-      setShowCreateScheduledForm(false)
-      setSelectedLessonId(undefined)
       toast({
         title: 'Aula marcada com sucesso!',
         description: 'A aula foi marcada com sucesso!'
@@ -151,25 +117,20 @@ export function CreateScheduledDrivingLessonForm(
       onSubmit={handleSubmit(handleCreateScheduledDrivingLessonForm)}
       className="flex flex-col gap-[2.08rem] mt-5 mb-4"
     >
-      {!selectedLessonId &&  (
-        <>
-          <InputModal
-            placeholder="Digite o título da aula"
-            type="text"
-            required={!selectedLessonId}
-            {...register('lessonName')}
-          />
+      <InputModal
+        placeholder="Insira o título da aula"
+        type="text"
+        required
+        {...register('lessonName')}
+      />
 
-          <textarea
-            {...register('lessonDescription')}
-            required={!selectedLessonId}
-            minLength={5}
-            maxLength={460}
-            placeholder="Digite a descrição da aula(Opcional)"
-            className='resize-none w-[520px] h-[142px] bg-white border border-[#C6C6C6] outline-none rounded-lg px-2 py-[0.375rem] text-black'
-          />
-        </>
-      )}
+      <textarea
+        {...register('lessonDescription')}
+        minLength={5}
+        maxLength={460}
+        placeholder="Insira a descrição da aula(Opcional)"
+        className='resize-none w-[520px] h-[142px] bg-white border border-[#C6C6C6] outline-none rounded-lg px-2 py-[0.375rem] text-black'
+      />
 
       <Select
         id="student_id"
