@@ -4,12 +4,14 @@ import Image from 'next/image';
 import { List, X } from '@phosphor-icons/react';
 
 import { useAuth } from '@/hooks/useAuth';
+import { useSidebar } from '@/hooks/useSidebar';
 
-import logo from '../assets/tecnica_LOGO.jpg'
+import logo from '../../public/logo.svg'
 
 export function SideBar() {
   const [isDisabledButton, setIsDisabledButton] = useState(false)
-  const [toggleButton, setToggleButton] = useState(false);
+
+  const { toggleButton, setToggleButton } = useSidebar()
 
   const { logout } = useAuth()
 
@@ -20,9 +22,9 @@ export function SideBar() {
 
   return (
     <>
-      <div className='w-full py-2 px-4 md:hidden'>
+      <div className='w-full h-full py-2 px-4 md:hidden'>
         <div className='flex justify-between items-center'>
-          <Image src={logo} alt='Logo' width={60} height={100}/>
+          <Image src={logo} alt='Logo' width={180} height={280}/>
           <button onClick={toggleMenu}>
             <List size={24} weight='bold'/>
           </button>
@@ -94,7 +96,7 @@ export function SideBar() {
         <button
           className="flex gap-4 items-center justify-start overflow-hidden w-full py-3 px-4 bg-[#F9F9F9] text-zinc-800 text-left mt-1 outline-none"
         >
-          <Image src={logo} alt='Logo' width={40} height={100}/>
+          <Image src={logo} alt='Logo' width={90} height={180}/>
           <span className="flex whitespace-nowrap">
             Grupo Técnica
           </span>

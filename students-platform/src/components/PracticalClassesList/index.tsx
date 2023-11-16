@@ -12,8 +12,6 @@ interface PracticalClassesListProps {
 export function PracticalClassesList({ practicalClassesData, isLoading }: PracticalClassesListProps) {
   return (
     <div className="flex flex-col gap-10">
-      <h1 className="text-black font-semibold text-lg">Listagem de Aulas Práticas</h1>
-
       <div className="flex flex-col items-start">
         <div className="flex items-center">
           <CheckCircle size={24} color="#00A300" weight="fill" />
@@ -31,7 +29,7 @@ export function PracticalClassesList({ practicalClassesData, isLoading }: Practi
         </div>
       </div>
 
-      <div>
+      <div className="w-full flex flex-col gap-y-4 items-start">
         {isLoading ? (
         <Spinner size={60} className="animate-spin mx-auto"/>
         ) : (

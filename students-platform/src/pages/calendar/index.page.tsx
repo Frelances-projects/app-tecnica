@@ -57,13 +57,17 @@ export default function Calendar({ student }: CalendarProps) {
 
       <div className='flex flex-col items-start'>
         {data?.fileUrl ? (
-          <a
-            href={data?.fileUrl}
-            target="_blank"
-            className="flex h-10 items-center justify-center gap-2 rounded bg-primary-500 px-4 text-white disabled:cursor-not-allowed"
-          >
-            Ver calendário das aulas
-          </a>
+          <>
+            <span className='mb-5'>Realizar download do calendário das aulas deste mês</span>
+
+            <a
+              href={data?.fileUrl}
+              target="_blank"
+              className="flex h-10 items-center justify-center gap-2 rounded bg-primary-500 px-4 text-white disabled:cursor-not-allowed"
+            >
+              Ver calendário das aulas
+            </a>
+          </>
         ) : (
           <span>Nenhum calendário de aulas encontrado</span>
         )}

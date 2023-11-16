@@ -12,7 +12,7 @@ import { SubmitButton } from '@/components/buttons/SubmitButton'
 
 import { useAuth } from '@/hooks/useAuth'
 
-import logo from '../assets/tecnica_LOGO.jpg'
+import logo from '../../public/logo.svg'
 
 interface LoginFormData {
   number: string
@@ -34,7 +34,7 @@ export default function Home() {
     await login({ number: Number(data.number), password: data.password })
     reset()
 
-    router.push('/practical-classes')
+    router.push('/menu')
   }
 
   return (
@@ -43,7 +43,7 @@ export default function Home() {
         <title>Alunos - Grupo Técnica</title>
       </Head>
 
-     <Image src={logo} alt='Logo' width={295} height={295} className='mx-auto mb-32'/>
+     <Image src={logo} alt='Logo' width={295} height={295} className='mx-auto mb-28'/>
 
       <form onSubmit={handleSubmit(handleLogin)} className="flex flex-col w-full items-center justify-center gap-6">
         <Input
@@ -61,7 +61,7 @@ export default function Home() {
         />
 
         <Link href={'/forgot-password'} className='text-[#858585] font-regular'>
-          Esqueceu-se da sua senha?
+          Esquecei da minha password
         </Link>
 
         <SubmitButton
@@ -79,7 +79,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
   if (student) {
     return {
       redirect: {
-        destination: '/practical-classes',
+        destination: '/menu',
         permanent: false,
       },
     }

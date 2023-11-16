@@ -48,7 +48,7 @@ export default function ResetPassword() {
         description: 'A redefinição de senha com concluida com sucesso, agora você pose entrar na plataforma'
       })
 
-      push('/practical-classes')
+      push('/menu')
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response?.data?.message) {
@@ -105,7 +105,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
   if (student) {
     return {
       redirect: {
-        destination: '/practical-classes',
+        destination: '/menu',
         permanent: false,
       },
     }

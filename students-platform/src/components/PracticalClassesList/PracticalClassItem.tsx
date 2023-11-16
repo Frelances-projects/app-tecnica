@@ -55,9 +55,14 @@ export function PracticalClassItem({ scheduledPracticalClassId, title, date, hou
   }
   
   return (
-    <div className="flex mb-8 flex-col gap-x-5 text-black items-center font-regular text-sm">
-      <div className="flex flex-row items-center gap-x-2">
-        <span>{format(new Date(date), 'dd/MM/yyyy')} {hour}</span>
+    <div className="w-full">
+      <div className="flex gap-x-3 text-black items-center font-regular text-sm">
+        <div className="flex flex-row items-center gap-x-2">
+          <span>{format(new Date(date), 'dd/MM/yyyy')} {hour}</span>
+        </div>
+
+        <h1>{title}</h1>
+
         {
           (status === 'COMPLETED' || status === 'CONFIRMED') ? 
           <CheckCircle size={24} color="#00A300" weight="fill" /> 
@@ -66,11 +71,10 @@ export function PracticalClassItem({ scheduledPracticalClassId, title, date, hou
           : <WarningCircle size={24} color="#FDDA0D" weight="fill" />
         }
       </div>
-      <h1>{title}</h1>
 
       {status === 'PENDING' && (
         <button 
-          className="bg-primary-500 mt-1 px-3 py-1 flex items-center rounded-sm text-white enabled:hover:opacity-80 enabled:hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
+          className="bg-primary-500 w-full mt-1 px-3 py-1 flex items-center justify-center rounded-md text-white enabled:hover:opacity-80 enabled:hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
           type="button"
           onClick={() => handleChangeStatus()}
           disabled={isLoading}

@@ -140,29 +140,31 @@ export default function TheoreticalClasses({ student }: TheoreticalClassesProps)
         <h1 className="text-2xl font-semibold">
           Bem-vindo(a), {student?.name}
         </h1>
+
         <h2 className="font-regular">
           Aluno(a) N° {student?.number}
         </h2>
       </div>
 
-      <div className="flex gap-2 items-center">
-        <p className="font-regular">Já completou </p>
-        <p className="font-regular font-bold text-lg">
-          {
-            theoreticalClassesData?.filter(
-              (lesson) => lesson?.scheduledClass?.status === 'COMPLETED',
-            ).length
-          }
+      <div className="w-full">
+        <p className="mb-2 text-lg font-semibold">
+          Listagem de Aulas de código
         </p>
-        <p className="font-regular"> de </p>
-        <p className="font-regular font-bold text-lg">28 </p>
-        <p className="font-regular text-sm">aulas</p>
-      </div>
 
-      <div className="mt-2 w-full">
-        <p className="mb-4 text-lg font-semibold">
-          Listagem de Aulas de código concluidas
-        </p>
+        <div className="mb-4 flex gap-2 items-center">
+          <p className="font-regular">Já completou </p>
+          <p className="font-regular font-bold text-lg">
+            {
+              theoreticalClassesData?.filter(
+                (lesson) => lesson?.scheduledClass?.status === 'COMPLETED',
+              ).length
+            }
+          </p>
+          <p className="font-regular"> de </p>
+          <p className="font-regular font-bold text-lg">28 </p>
+          <p className="font-regular text-sm">aulas</p>
+        </div>
+
         <Input
           placeholder="Código da aula"
           type='number'

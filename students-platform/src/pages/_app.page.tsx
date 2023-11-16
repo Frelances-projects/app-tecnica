@@ -25,7 +25,6 @@ export default function App({ Component, pageProps }: AppProps) {
     if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
       const messaging = getMessaging(firebaseApp);
       const unsubscribe = onMessage(messaging, (payload) => {
-        console.log('Foreground push notification received:', payload);
         toast({
           title: payload.notification?.title,
           description: payload.notification?.body
@@ -45,7 +44,8 @@ export default function App({ Component, pageProps }: AppProps) {
             {(pathname.startsWith('/info') ||
               pathname.startsWith('/theoretical-classes') ||
               pathname.startsWith('/calendar') ||
-              pathname.startsWith('/practical-classes')) && (
+              pathname.startsWith('/practical-classes') || 
+              pathname.startsWith('/menu')) && (
                 <SideBar />
             )}
           </>
