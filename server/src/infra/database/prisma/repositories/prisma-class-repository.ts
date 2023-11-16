@@ -28,6 +28,18 @@ export class PrismaClassRepository implements ClassRepository {
     return PrismaClassMapper.toDomain(lesson)
   }
 
+  async findByName(className: string): Promise<Class> {
+    const lesson = await this.prisma.class.findFirst({
+      where: { name: { equals: className, mode: 'insensitive' } },
+    })
+
+    if (!lesson) {
+      return null
+    }
+
+    return PrismaClassMapper.toDomain(lesson)
+  }
+
   async findByCode(code: number): Promise<Class> {
     const lesson = await this.prisma.class.findUnique({
       where: { code },

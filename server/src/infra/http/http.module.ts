@@ -78,12 +78,14 @@ import { CreateClass } from 'src/application/use-cases/class/create-class'
 import { DeleteClass } from 'src/application/use-cases/class/delete-class'
 import { GetClassById } from 'src/application/use-cases/class/get-class-by-id'
 import { GetClassByCode } from 'src/application/use-cases/class/get-class-by-code'
+import { GetClassByName } from 'src/application/use-cases/class/get-class-by-name'
 import { GetManyClasses } from 'src/application/use-cases/class/get-many-classes'
 import { GetManyClassesByCategory } from 'src/application/use-cases/class/get-many-classes-by-category'
 import { GetManyClassesByCategoryAndStudent } from 'src/application/use-cases/class/get-many-classes-by-category-and-student'
 
 // SCHEDULE CLASS
 import { CreateScheduledClass } from 'src/application/use-cases/scheduled-class/create-scheduled-class'
+import { CreatePracticalScheduledClass } from 'src/application/use-cases/scheduled-class/create-practical-scheduled-class'
 import { GetManyScheduledClasses } from 'src/application/use-cases/scheduled-class/get-many-scheduled-classes'
 import { GetManyScheduledClassesByClass } from 'src/application/use-cases/scheduled-class/get-many-scheduled-classes-by-class'
 import { GetManyScheduledClassesByStudent } from 'src/application/use-cases/scheduled-class/get-many-scheduled-classes-by-student'
@@ -187,12 +189,14 @@ import { CreateToken } from 'src/helpers/create-token'
     DeleteClass,
     GetClassById,
     GetClassByCode,
+    GetClassByName,
     GetManyClasses,
     GetManyClassesByCategory,
     GetManyClassesByCategoryAndStudent,
 
     // SCHEDULE CLASS
     CreateScheduledClass,
+    CreatePracticalScheduledClass,
     GetManyScheduledClasses,
     GetManyScheduledClassesByClass,
     GetManyScheduledClassesByStudent,

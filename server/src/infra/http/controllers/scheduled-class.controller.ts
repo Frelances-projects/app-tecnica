@@ -29,13 +29,16 @@ import { ScheduledClassViewModel } from '../view-models/scheduled-class-view-mod
 import { CreateScheduledClassBody } from '../dtos/scheduled-class/create-scheduled-class-body'
 import { UpdateScheduledClassBody } from '../dtos/scheduled-class/update-scheduled-class-body'
 import { UpdateScheduledClassStatusBody } from '../dtos/scheduled-class/update-scheduled-class-status-body'
+import { CreatePracticalScheduledClassBody } from '../dtos/scheduled-class/create-practical-scheduled-class-body'
 
 import { PushNotificationService } from 'src/push-notification/push-notification.service'
+import { CreatePracticalScheduledClass } from 'src/application/use-cases/scheduled-class/create-practical-scheduled-class'
 
 @Controller('scheduled-class')
 export class ScheduledClassController {
   constructor(
     private createScheduledClass: CreateScheduledClass,
+    private createPracticalScheduledClass: CreatePracticalScheduledClass,
     private updateScheduledClass: UpdateScheduledClass,
     private updateScheduledClassStatus: UpdateScheduledClassStatus,
     private deleteScheduledClass: DeleteScheduledClass,
@@ -189,6 +192,31 @@ export class ScheduledClassController {
         }, por favor, confirme a sua presença!`,
       })
     }
+
+    return {
+      scheduledClass: ScheduledClassViewModel.toHTTP(scheduledClass),
+    }
+  }
+
+  @Post('practical-class')
+  async createScheduledClassPractical(
+    @Body() body: CreatePracticalScheduledClassBody,
+  ) {
+    const { scheduledClass } = await this.createPracticalScheduledClass.execute(
+      body,
+    )
+
+    await this.pushNotificationService.sendNotificationToStudent({
+      studentId: scheduledClass.studentId,
+      title: 'Aula de condução marcada!',
+      body: `Uma nova aula de condução foi marcada para: ${format(
+        new Date(scheduledClass.schedulingDate),
+        'PPP',
+        { locale: pt },
+      )} ás ${
+        scheduledClass.schedulingHour
+      }, por favor, confirme a sua presença!`,
+    })
 
     return {
       scheduledClass: ScheduledClassViewModel.toHTTP(scheduledClass),
