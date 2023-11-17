@@ -13,8 +13,8 @@ import { EmailService } from './email.service'
         port: 587,
         secure: false,
         auth: {
-          user: process.env.USER,
-          pass: process.env.PASSWORD,
+          user: process.env.MAIL_USER,
+          pass: process.env.MAIL_PASSWORD,
         },
       },
       defaults: {
