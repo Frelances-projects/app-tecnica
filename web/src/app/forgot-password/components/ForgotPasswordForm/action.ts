@@ -10,7 +10,7 @@ export async function forgotPassword(data: FormData) {
     const email = data.get('email')?.toString()
     
     await api.post('/user/password/forgot-password', 
-      { email, link: 'http://localhost:3000/reset-password' }
+      { email, link: 'https://backoffice-application.grupotecnica.pt/reset-password' }
     )
 
     return { message: 'Success!' }
