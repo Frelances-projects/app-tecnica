@@ -11,9 +11,11 @@ interface ResetPasswordProps {
 }
 
 export default function ResetPassword({ params }: ResetPasswordProps) {
+ return (
   <main className="w-full max-w-7xl mx-auto flex flex-col items-center justify-center p-24 gap-36">
     <Image src={Logo} alt='Imagem do logotipo da app técnica' />
 
     <ResetPasswordForm token={params.token} />
   </main>
+ )
 }
