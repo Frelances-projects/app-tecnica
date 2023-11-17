@@ -32,7 +32,7 @@ export default function ForgotPassword() {
   async function handleForgotPassword(data: ForgotFormData) {
     try {
       await server.post('/student/password/forgot-password',
-        { email: data.email, link: 'http://localhost:3000' }
+        { email: data.email, link: 'http://localhost:3000/reset-password' }
       )
       reset()
 
