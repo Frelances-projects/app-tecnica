@@ -61,7 +61,7 @@ export default function Home() {
         />
 
         <Link href={'/forgot-password'} className='text-[#858585] font-regular'>
-          Esquecei da minha password
+          Recuperar password
         </Link>
 
         <SubmitButton

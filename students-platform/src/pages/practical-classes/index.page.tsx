@@ -47,6 +47,9 @@ export default function PracticalClasses({ student }: PracticalClassesProps) {
     }
   })
 
+  const completedPracticalClasses = practicalClassesData?.filter(lesson => lesson?.status === 'COMPLETED').length ?? 0
+  const confirmedPracticalClasses = practicalClassesData?.filter(lesson => lesson?.status === 'CONFIRMED').length ?? 0
+
   return (
     <div className="flex flex-col gap-4 mt-4 items-start">
       <Head>
@@ -63,7 +66,7 @@ export default function PracticalClasses({ student }: PracticalClassesProps) {
       <div className="flex gap-2 items-center">
         <h1 className="font-regular">Já completou </h1>
         <p className="font-regular font-bold">
-          {practicalClassesData?.filter(lesson => lesson?.status === 'COMPLETED').length ?? 0}
+          {completedPracticalClasses + confirmedPracticalClasses}
         </p>
         <p>aulas</p>
       </div>
