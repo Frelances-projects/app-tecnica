@@ -11,6 +11,7 @@ interface EditStudentFormProps {
   studentName: string
   studentEmail: string
   studentNumber: number
+  studentPhone?: string
   categoryCard: {
     value: string;
     label: string;
@@ -32,6 +33,7 @@ export function EditStudentForm({
   studentName,
   studentEmail,
   studentNumber,
+  studentPhone,
   schools,
   categoryCard,
   handleEditStudent
@@ -44,7 +46,8 @@ export function EditStudentForm({
     {
       student_name: studentName,
       student_email: studentEmail,
-      student_number: String(studentNumber)
+      student_number: String(studentNumber),
+      student_phone: studentPhone,
     }
   })
   
@@ -62,6 +65,12 @@ export function EditStudentForm({
         type="number"
         placeholder="Número do Aluno"
         {...register('student_number')}
+      />
+
+      <InputModal
+        type="number"
+        placeholder="Telefone do aluno"
+        {...register('student_phone')}
       />
 
       <InputModal

@@ -85,6 +85,14 @@ export function RegisterStudentForm({ categoryCard, schools }: RegisterStudentFo
 
       <ItemInputForm
         required
+        id="student_phone"
+        label="Telefone do Aluno"
+        type='number'
+        placeholder="Telefone Aluno"
+      />
+
+      <ItemInputForm
+        required
         id="student_email"
         label="E-mail do Aluno"
         type='email'

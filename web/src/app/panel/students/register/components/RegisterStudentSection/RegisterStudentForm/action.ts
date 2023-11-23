@@ -9,6 +9,7 @@ export async function createStudent(data: FormData) {
   try {
     const name = data.get('student_name')?.toString()
     const number = data.get('student_number')?.toString()
+    const phone = data.get('student_phone')?.toString()
     const email = data.get('student_email')?.toString()
     const date = data.get('student_date')?.toString()
     const schoolId = data.get('student_register')?.toString()
@@ -19,6 +20,7 @@ export async function createStudent(data: FormData) {
       { 
         name,
         number: Number(number),
+        phone: `+351${phone}`,
         email,
         enrolledAt: String(new Date(date!!).toISOString()),
         schoolId,

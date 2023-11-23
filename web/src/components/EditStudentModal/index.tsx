@@ -21,6 +21,7 @@ export interface EditStudentFormInput {
   student_name: string
   student_school?: string
   student_number: string
+  student_phone?: string
   student_category_card?: string
   student_email: string
 }
@@ -50,7 +51,8 @@ export function EditStudentModal({ student, categoryCard, schools }: EditStudent
           schoolId: data.student_school ?? student.schoolId,
           driverLicenseCategoryId: data.student_category_card ?? student.driverLicenseCategoryId,
           // enrolledAt: data.student_enrolled_at && data.student_enrolled_at.trim() !== '' ? String(new Date(data.student_enrolled_at).toISOString()) : String(new Date(student.enrolledAt).toISOString()),
-          number: Number(data.student_number) ?? Number(student.number)
+          number: Number(data.student_number) ?? Number(student.number),
+          phone: `+351${data.student_phone}` ?? student.phone
         }
       )
 
@@ -110,6 +112,7 @@ export function EditStudentModal({ student, categoryCard, schools }: EditStudent
           studentName={student.name}
           studentEmail={student.email}
           studentNumber={student.number}
+          studentPhone={student.phone}
           schools={schools}
           categoryCard={categoryCard}
           handleEditStudent={handleEditStudent}

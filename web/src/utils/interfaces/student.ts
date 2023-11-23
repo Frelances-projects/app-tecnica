@@ -3,6 +3,7 @@ export interface Student {
   name: string;
   email: string;
   number: number;
+  phone?: string;
   driverLicenseCategoryId: string;
   paymentId: string;
   token: string | null;
