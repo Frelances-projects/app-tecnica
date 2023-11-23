@@ -14,6 +14,7 @@ export type Student = {
   name: string
   email: string
   number: number
+  phone?: string
   token?: string
   paymentId?: string
   driverLicenseCategory: 'A' | 'B' | 'C' | 'ALL'
