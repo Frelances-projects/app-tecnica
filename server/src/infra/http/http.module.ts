@@ -109,6 +109,9 @@ import { UpdateUser } from 'src/application/use-cases/user/update-user'
 import { ForgotUserPassword } from 'src/application/use-cases/user/forgot-user-password'
 import { ResetUserPassword } from 'src/application/use-cases/user/reset-user-password'
 
+// SCHEDULER
+import { SendSmsPaymentScheduler } from '../scheduler/send-sms-payment-scheduler'
+
 import { GenerateHash } from 'src/helpers/generate-hash'
 import { CompareHash } from 'src/helpers/compare-hash'
 import { CreateToken } from 'src/helpers/create-token'
@@ -224,6 +227,7 @@ import { CreateToken } from 'src/helpers/create-token'
     CompareHash,
     CreateToken,
     JwtService,
+    SendSmsPaymentScheduler,
   ],
 })
 export class HttpModule {}

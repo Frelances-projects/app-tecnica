@@ -67,11 +67,18 @@ export class InformationController {
   async create(@Body() body: CreateInformationBody) {
     const { information } = await this.createInformation.execute(body)
 
-    await this.pushNotificationService.sendNotificationToSchool({
-      schoolId: information.schoolId,
-      title: 'Um novo alerta foi gerado na sua escola!',
-      body: `Sobre o alerta: ${information.description}`,
-    })
+    await Promise.all([
+      this.pushNotificationService.sendSmsToSchool({
+        schoolId: information.schoolId,
+        body: `Grupo Técnica - Um novo alerta foi gerado na sua escola! Sobre o alerta: ${information.description}`,
+      }),
+
+      this.pushNotificationService.sendNotificationToSchool({
+        schoolId: information.schoolId,
+        title: 'Um novo alerta foi gerado na sua escola!',
+        body: `Sobre o alerta: ${information.description}`,
+      }),
+    ])
 
     return {
       information: InformationViewModel.toHTTP(information),

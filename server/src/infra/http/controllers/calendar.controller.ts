@@ -55,11 +55,18 @@ export class CalendarController {
   async create(@Body() body: CreateCalendarBody) {
     const { calendar } = await this.createCalendar.execute(body)
 
-    await this.pushNotificationService.sendNotificationToSchool({
-      schoolId: calendar.schoolId,
-      title: 'Novo Calendário de aulas!',
-      body: 'A sua escola acabou de adicionar um novo calendário de aulas',
-    })
+    await Promise.all([
+      this.pushNotificationService.sendSmsToSchool({
+        schoolId: calendar.schoolId,
+        body: 'Grupo Técnica - Novo Calendário de aulas! A sua escola acabou de adicionar um novo calendário de aulas',
+      }),
+
+      this.pushNotificationService.sendNotificationToSchool({
+        schoolId: calendar.schoolId,
+        title: 'Novo Calendário de aulas!',
+        body: 'A sua escola acabou de adicionar um novo calendário de aulas',
+      }),
+    ])
 
     return {
       calendar: CalendarViewModel.toHTTP(calendar),

@@ -7,6 +7,7 @@ interface StudentProps {
   email: string
   password?: string | null
   number: number
+  phone?: string
   enrolledAt: string
   schoolId: string
   paymentId?: string | null
@@ -62,6 +63,14 @@ export class Student {
 
   public get number(): number {
     return this.props.number
+  }
+
+  public set phone(phone: string | null) {
+    this.props.phone = phone
+  }
+
+  public get phone(): string | null {
+    return this.props.phone
   }
 
   public set enrolledAt(enrolledAt: string) {

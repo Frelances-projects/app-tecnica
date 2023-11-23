@@ -19,6 +19,7 @@ interface UpdateStudentRequest {
   firebaseToken?: string
   // enrolledAt?: string
   number?: number
+  phone?: string
 }
 
 interface UpdateStudentResponse {
@@ -44,6 +45,7 @@ export class UpdateStudent {
         schoolId,
         driverLicenseCategoryId,
         firebaseToken,
+        phone,
         // enrolledAt,
       } = request
 
@@ -82,6 +84,7 @@ export class UpdateStudent {
       student.driverLicenseCategoryId =
         driverLicenseCategoryId ?? student.driverLicenseCategoryId
       student.number = number ?? student.number
+      student.phone = phone ?? student.phone
 
       if (firebaseToken) {
         const studentFirebaseTokens = student.firebaseTokens

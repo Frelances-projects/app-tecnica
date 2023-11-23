@@ -180,17 +180,30 @@ export class ScheduledClassController {
     const { scheduledClass } = await this.createScheduledClass.execute(body)
 
     if (scheduledClass.schedulingDate && scheduledClass.schedulingHour) {
-      await this.pushNotificationService.sendNotificationToStudent({
-        studentId: scheduledClass.studentId,
-        title: 'Aula de condução marcada!',
-        body: `Uma nova aula de condução foi marcada para: ${format(
-          new Date(scheduledClass.schedulingDate),
-          'PPP',
-          { locale: pt },
-        )} ás ${
-          scheduledClass.schedulingHour
-        }, por favor, confirme a sua presença!`,
-      })
+      await Promise.all([
+        this.pushNotificationService.sendNotificationToStudent({
+          studentId: scheduledClass.studentId,
+          title: 'Aula de condução marcada!',
+          body: `Uma nova aula de condução foi marcada para: ${format(
+            new Date(scheduledClass.schedulingDate),
+            'PPP',
+            { locale: pt },
+          )} ás ${
+            scheduledClass.schedulingHour
+          }, por favor, confirme a sua presença!`,
+        }),
+
+        this.pushNotificationService.sendSmsToStudent({
+          studentId: scheduledClass.studentId,
+          body: `Aula de condução marcada! Uma nova aula de condução foi marcada para: ${format(
+            new Date(scheduledClass.schedulingDate),
+            'PPP',
+            { locale: pt },
+          )} ás ${
+            scheduledClass.schedulingHour
+          }, por favor, confirme a sua presença!`,
+        }),
+      ])
     }
 
     return {
@@ -206,17 +219,30 @@ export class ScheduledClassController {
       body,
     )
 
-    await this.pushNotificationService.sendNotificationToStudent({
-      studentId: scheduledClass.studentId,
-      title: 'Aula de condução marcada!',
-      body: `Uma nova aula de condução foi marcada para: ${format(
-        new Date(scheduledClass.schedulingDate),
-        'PPP',
-        { locale: pt },
-      )} ás ${
-        scheduledClass.schedulingHour
-      }, por favor, confirme a sua presença!`,
-    })
+    await Promise.all([
+      this.pushNotificationService.sendNotificationToStudent({
+        studentId: scheduledClass.studentId,
+        title: 'Aula de condução marcada!',
+        body: `Uma nova aula de condução foi marcada para: ${format(
+          new Date(scheduledClass.schedulingDate),
+          'PPP',
+          { locale: pt },
+        )} ás ${
+          scheduledClass.schedulingHour
+        }, por favor, confirme a sua presença!`,
+      }),
+
+      this.pushNotificationService.sendSmsToStudent({
+        studentId: scheduledClass.studentId,
+        body: `Grupo Técnica - Aula de condução marcada! Uma nova aula de condução foi marcada para: ${format(
+          new Date(scheduledClass.schedulingDate),
+          'PPP',
+          { locale: pt },
+        )} ás ${
+          scheduledClass.schedulingHour
+        }, por favor, confirme a sua presença!`,
+      }),
+    ])
 
     return {
       scheduledClass: ScheduledClassViewModel.toHTTP(scheduledClass),

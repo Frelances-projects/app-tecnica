@@ -93,6 +93,7 @@ model Student {
   email                   String                @unique
   password                String?
   number                  Int                   @unique
+  phone                   String?
   enrolledAt              String
   driverLicenseCategoryId String
   schoolId                String

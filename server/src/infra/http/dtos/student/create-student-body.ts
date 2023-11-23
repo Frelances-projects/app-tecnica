@@ -24,6 +24,9 @@ export class CreateStudentBody {
   number: number
 
   @IsNotEmpty()
+  phone: string
+
+  @IsNotEmpty()
   @IsUUID()
   driverLicenseCategoryId: string
 }

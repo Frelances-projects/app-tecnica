@@ -122,18 +122,36 @@ export class TestController {
   ) {
     const { test } = await this.createTest.execute({ ...body, studentId })
 
-    await this.pushNotificationService.sendNotificationToStudent({
-      studentId,
-      title:
-        test.category === 'THEORETICAL'
-          ? 'Um novo exame de código foi marcado para você!'
-          : 'Um novo exame de condução foi marcado para você!',
-      body: `O exame foi marcado para: ${format(
-        new Date(test.testDate),
-        'PPP',
-        { locale: pt },
-      )} ás ${test.testHour}`,
-    })
+    await Promise.all([
+      this.pushNotificationService.sendNotificationToStudent({
+        studentId,
+        title:
+          test.category === 'THEORETICAL'
+            ? 'Um novo exame de código foi marcado para você!'
+            : 'Um novo exame de condução foi marcado para você!',
+        body: `O exame foi marcado para: ${format(
+          new Date(test.testDate),
+          'PPP',
+          { locale: pt },
+        )} ás ${test.testHour}`,
+      }),
+
+      this.pushNotificationService.sendSmsToStudent({
+        studentId,
+        body:
+          test.category === 'THEORETICAL'
+            ? `Grupo Técnica - Um novo exame de código foi marcado para você! O exame foi marcado para: ${format(
+                new Date(test.testDate),
+                'PPP',
+                { locale: pt },
+              )} ás ${test.testHour}`
+            : `Grupo Técnica - Um novo exame de condução foi marcado para você! O exame foi marcado para: ${format(
+                new Date(test.testDate),
+                'PPP',
+                { locale: pt },
+              )} ás ${test.testHour}`,
+      }),
+    ])
 
     return {
       test: TestViewModel.toHTTP(test),

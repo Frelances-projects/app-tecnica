@@ -18,6 +18,7 @@ interface CreateStudentRequest {
   paymentMethod: 'INSTALLMENTS' | 'INCASH'
   driverLicenseCategoryId: string
   number: number
+  phone: string
   enrolledAt: string
 }
 
@@ -45,6 +46,7 @@ export class CreateStudent {
         paymentMethod,
         driverLicenseCategoryId,
         number,
+        phone,
       } = request
 
       const { student: foundStudentByEmail } =
@@ -99,6 +101,7 @@ export class CreateStudent {
         schoolId,
         paymentId: payment.id,
         driverLicenseCategoryId,
+        phone,
       })
 
       await this.studentsRepository.create(student)
