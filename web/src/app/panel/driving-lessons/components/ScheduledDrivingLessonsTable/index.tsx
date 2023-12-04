@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/table"
 import { DeleteScheduledDrivingLesson } from "./DeleteScheduledDrivingLesson";
 import { EditScheduledDrivingLessonModal } from "./EditScheduledDrivingLessonModal";
+import { StudentInfoModal } from "@/components/StudentInfoModal";
 
 import { ScheduleClass } from "@/utils/interfaces/schedule-class";
 
@@ -25,6 +26,7 @@ export function ScheduledDrivingLessonsTable({ scheduledClasses }: ScheduledDriv
             <TableHead>Data da aula</TableHead>
             <TableHead>Título da aula</TableHead>
             <TableHead>Nome do aluno</TableHead>
+            <TableHead>Contato</TableHead>
             <TableHead>Escola</TableHead>
             <TableHead>Editar</TableHead>
             <TableHead>Apagar</TableHead>
@@ -38,6 +40,9 @@ export function ScheduledDrivingLessonsTable({ scheduledClasses }: ScheduledDriv
               <TableCell>{scheduledClass.schedulingDate} {scheduledClass.schedulingHour}</TableCell>
               <TableCell>{scheduledClass.class.name}</TableCell>
               <TableCell>{scheduledClass.student.name}</TableCell>
+              <TableCell>
+                <StudentInfoModal student={scheduledClass.student} />
+              </TableCell>
               <TableCell>{scheduledClass.student.school.name}</TableCell>
               <TableCell>
                 <EditScheduledDrivingLessonModal scheduledClass={scheduledClass} />
