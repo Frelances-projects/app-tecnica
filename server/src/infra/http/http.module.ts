@@ -111,6 +111,7 @@ import { ResetUserPassword } from 'src/application/use-cases/user/reset-user-pas
 
 // SCHEDULER
 import { SendSmsPaymentScheduler } from '../scheduler/send-sms-payment-scheduler'
+import { SendSmsBirthDateScheduler } from '../scheduler/send-sms-birth-date-scheduler'
 
 import { GenerateHash } from 'src/helpers/generate-hash'
 import { CompareHash } from 'src/helpers/compare-hash'
@@ -228,6 +229,7 @@ import { CreateToken } from 'src/helpers/create-token'
     CreateToken,
     JwtService,
     SendSmsPaymentScheduler,
+    SendSmsBirthDateScheduler,
   ],
 })
 export class HttpModule {}
