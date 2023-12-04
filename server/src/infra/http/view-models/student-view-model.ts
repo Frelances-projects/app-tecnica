@@ -15,6 +15,7 @@ export class StudentViewModel {
       enrolledAt: student.enrolledAt,
       createdAt: student.createdAt,
       school: student.props.school,
+      scheduledClass: student.props.scheduledClass,
       firebaseTokens: student.firebaseTokens,
     }
   }
