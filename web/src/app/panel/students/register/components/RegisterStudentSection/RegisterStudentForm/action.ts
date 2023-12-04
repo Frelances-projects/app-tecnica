@@ -11,17 +11,20 @@ export async function createStudent(data: FormData) {
     const number = data.get('student_number')?.toString()
     const phone = data.get('student_phone')?.toString()
     const email = data.get('student_email')?.toString()
+    const birthDate = data.get('student_birth_date')?.toString()
     const date = data.get('student_date')?.toString()
     const schoolId = data.get('student_register')?.toString()
     const driverLicenseCategoryId = data.get('category')?.toString()
     const paymentMethod = data.get('payment_method')?.toString()
 
+    console.log("🚀 ~ file: action.ts:27 ~ createStudent ~ String(new Date(birthDate!!).toISOString()):", String(new Date(birthDate!!).toISOString()))
     await api.post(`/student`,
       { 
         name,
         number: Number(number),
         phone: `+351${phone}`,
         email,
+        birthDate: String(new Date(birthDate!!).toISOString()),
         enrolledAt: String(new Date(date!!).toISOString()),
         schoolId,
         driverLicenseCategoryId,

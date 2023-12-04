@@ -101,6 +101,14 @@ export function RegisterStudentForm({ categoryCard, schools }: RegisterStudentFo
 
       <ItemInputForm
         required
+        id="student_birth_date"
+        label="Data de nascimento do aluno"
+        type='date'
+        placeholder="Data de nascimento"
+      />
+
+      <ItemInputForm
+        required
         id="student_date"
         label="Data de inscrição do Aluno"
         type='date'

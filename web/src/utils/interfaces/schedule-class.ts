@@ -6,7 +6,7 @@ export interface ScheduleClass {
   schedulingDate?: string;
   schedulingDateNotFormatted?: string
   schedulingHour?: string;
-  status: 'PENDING' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED';
+  status: 'PENDING' | 'UNCHECKED' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED';
   studentId: string;
   classId: string;
   class: Class;

@@ -34,7 +34,7 @@ export function ScheduledDrivingLessonsTable({ scheduledClasses }: ScheduledDriv
         <TableBody>
           {scheduledClasses.map(scheduledClass => (
             <TableRow key={scheduledClass.id}>
-              <TableCell>{scheduledClass.status === 'COMPLETED' ? 'COMPLETADA' : scheduledClass.status === 'CONFIRMED' ? 'CONFIRMADA' : scheduledClass.status === 'CANCELED' ? 'CANCELADA' : 'PENDENTE'}</TableCell>
+              <TableCell>{scheduledClass.status === 'COMPLETED' ? 'COMPLETADA' : scheduledClass.status === 'CONFIRMED' ? 'CONFIRMADA' : scheduledClass.status === 'CANCELED' ? 'CANCELADA' :  scheduledClass.status === 'PENDING' ? 'PENDENTE' : 'DESMARCADA'}</TableCell>
               <TableCell>{scheduledClass.schedulingDate} {scheduledClass.schedulingHour}</TableCell>
               <TableCell>{scheduledClass.class.name}</TableCell>
               <TableCell>{scheduledClass.student.name}</TableCell>

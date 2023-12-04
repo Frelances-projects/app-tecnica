@@ -21,11 +21,12 @@ interface EditScheduledClassFormProps {
 interface EditScheduledClassInputs {
   schedulingDate?: string
   schedulingHour: string
-  status: 'PENDING' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
+  status: 'PENDING' | 'UNCHECKED' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
 }
 
 const scheduledClassStatus = [
   { value: "PENDING", label: "PENDENTE" },
+  { value: "UNCHECKED", label: "DESMARCADA" },
   { value: "CANCELED", label: "CANCELADA" },
   { value: "CONFIRMED", label: "CONFIRMADA" },
   { value: "COMPLETED", label: "COMPLETADA" },

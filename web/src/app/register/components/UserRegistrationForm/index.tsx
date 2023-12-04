@@ -1,6 +1,7 @@
 "use client"
 import { ReactNode } from 'react';
 import { useRouter } from 'next/navigation'
+import Link from 'next/link';
 import { UserSquare, Lock, Mail } from 'lucide-react';
 
 import { SubmitButton } from "./SubmitButton";
@@ -63,6 +64,13 @@ export function UserRegistrationForm({ children }: UserRegistrationFormProps) {
       {children}
       <SelectFunction />
       <SubmitButton text='Registrar' />
+
+      <Link
+        href={'/'}
+        className='text-gray-400 text-sm font-semibold'
+      >
+        Voltar para o login
+      </Link>
     </form>
   )
 }
