@@ -183,7 +183,7 @@ export class ScheduledClassController {
       await Promise.all([
         this.pushNotificationService.sendNotificationToStudent({
           studentId: scheduledClass.studentId,
-          title: 'Aula de condução marcada!',
+          title: 'Nova aula de condução marcada!',
           body: `Uma nova aula de condução foi marcada para: ${format(
             new Date(scheduledClass.schedulingDate),
             'PPP',
@@ -195,13 +195,11 @@ export class ScheduledClassController {
 
         this.pushNotificationService.sendSmsToStudent({
           studentId: scheduledClass.studentId,
-          body: `Aula de condução marcada! Uma nova aula de condução foi marcada para: ${format(
+          body: `Nova aula de condução marcada, ${format(
             new Date(scheduledClass.schedulingDate),
             'PPP',
             { locale: pt },
-          )} ás ${
-            scheduledClass.schedulingHour
-          }, por favor, confirme a sua presença!`,
+          )} ás ${scheduledClass.schedulingHour}, confirma a tua presença!`,
         }),
       ])
     }
@@ -234,13 +232,11 @@ export class ScheduledClassController {
 
       this.pushNotificationService.sendSmsToStudent({
         studentId: scheduledClass.studentId,
-        body: `Grupo Técnica - Aula de condução marcada! Uma nova aula de condução foi marcada para: ${format(
+        body: `Nova aula de condução marcada, ${format(
           new Date(scheduledClass.schedulingDate),
           'PPP',
           { locale: pt },
-        )} ás ${
-          scheduledClass.schedulingHour
-        }, por favor, confirme a sua presença!`,
+        )} ás ${scheduledClass.schedulingHour}, confirma a tua presença!`,
       }),
     ])
 

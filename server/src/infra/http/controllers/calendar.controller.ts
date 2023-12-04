@@ -58,7 +58,7 @@ export class CalendarController {
     await Promise.all([
       this.pushNotificationService.sendSmsToSchool({
         schoolId: calendar.schoolId,
-        body: 'Grupo Técnica - Novo Calendário de aulas! A sua escola acabou de adicionar um novo calendário de aulas',
+        body: 'Novo Calendário de Aulas disponível na área de aluno.',
       }),
 
       this.pushNotificationService.sendNotificationToSchool({

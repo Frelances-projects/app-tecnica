@@ -127,25 +127,23 @@ export class TestController {
         studentId,
         title:
           test.category === 'THEORETICAL'
-            ? 'Um novo exame de código foi marcado para você!'
-            : 'Um novo exame de condução foi marcado para você!',
-        body: `O exame foi marcado para: ${format(
-          new Date(test.testDate),
-          'PPP',
-          { locale: pt },
-        )} ás ${test.testHour}`,
+            ? 'O teu exame de código foi marcado para:'
+            : 'O teu exame de condução foi marcado para:',
+        body: `${format(new Date(test.testDate), 'PPP', { locale: pt })} ás ${
+          test.testHour
+        }`,
       }),
 
       this.pushNotificationService.sendSmsToStudent({
         studentId,
         body:
           test.category === 'THEORETICAL'
-            ? `Grupo Técnica - Um novo exame de código foi marcado para você! O exame foi marcado para: ${format(
+            ? `O teu exame de código foi marcado para: ${format(
                 new Date(test.testDate),
                 'PPP',
                 { locale: pt },
               )} ás ${test.testHour}`
-            : `Grupo Técnica - Um novo exame de condução foi marcado para você! O exame foi marcado para: ${format(
+            : `O teu exame de condução foi marcado para: ${format(
                 new Date(test.testDate),
                 'PPP',
                 { locale: pt },

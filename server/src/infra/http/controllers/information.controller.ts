@@ -70,7 +70,7 @@ export class InformationController {
     await Promise.all([
       this.pushNotificationService.sendSmsToSchool({
         schoolId: information.schoolId,
-        body: `Grupo Técnica - Um novo alerta foi gerado na sua escola! Sobre o alerta: ${information.description}`,
+        body: `Foi criado um novo alerta na tua escola: ${information.description}`,
       }),
 
       this.pushNotificationService.sendNotificationToSchool({
