@@ -62,7 +62,11 @@ export default async function DrivingExams() {
       <h1 className='text-xl'>Exames Condução</h1>
       <div className='mx-auto -mt-5 max-w-[1440px] w-full h-[1px] bg-[#BFBFBF]'/>
 
-      <DrivingExamsList tests={formattedData} students={returnedStudentData} />
+      <DrivingExamsList
+        tests={formattedData}
+        students={returnedStudentData}
+        userFunction={formattedUser.function}
+      />
     </main>
   )
 }

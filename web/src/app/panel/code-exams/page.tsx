@@ -59,7 +59,11 @@ export default async function CodeExams() {
       <h1 className='text-xl'>Exames Código</h1>
       <div className='mx-auto -mt-5 max-w-[1440px] w-full h-[1px] bg-[#BFBFBF]'/>
 
-      <CodeExamsList tests={formattedData} students={returnedStudentData} />
+      <CodeExamsList
+        tests={formattedData}
+        students={returnedStudentData}
+        userFunction={formattedUser.function}
+      />
     </main>
   )
 }

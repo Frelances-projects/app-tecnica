@@ -11,9 +11,10 @@ import { Test } from "@/utils/interfaces/tests"
 interface CodeExamsListProps {
   tests: Test[]
   students: Student[]
+  userFunction: 'ADMIN' | 'DIRECTOR' | 'INSTRUCTOR'
 }
 
-export function CodeExamsList({ tests, students }: CodeExamsListProps) {
+export function CodeExamsList({ tests, students, userFunction }: CodeExamsListProps) {
   const [inputValue, setInputValue] = useState<string>('')
   
   const filteredTests = tests?.filter(test => {
@@ -34,9 +35,11 @@ export function CodeExamsList({ tests, students }: CodeExamsListProps) {
           placeholder="Filtrar por nome de aluno"
           className="!w-96"
         >
-          <CreateCodeExamModal
-            students={students.map(student => { return { label: student.name, value: student.id } })}
-          />
+          {userFunction !== 'INSTRUCTOR' && (
+            <CreateCodeExamModal
+              students={students.map(student => { return { label: student.name, value: student.id } })}
+            />
+          )}
         </SearchInput>
       </div>
 

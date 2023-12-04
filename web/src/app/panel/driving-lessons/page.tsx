@@ -69,6 +69,7 @@ export default async function DrivingLessons() {
       <ScheduledDrivingLessonsList
         scheduledClasses={formattedData}
         students={returnedStudentData}
+        userFunction={formattedUser.function}
       />
     </main>
   )

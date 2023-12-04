@@ -11,9 +11,10 @@ import { Student } from "@/utils/interfaces/student"
 interface ScheduledDrivingLessonsListProps {
   scheduledClasses: ScheduleClass[]
   students: Student[];
+  userFunction: 'ADMIN' | 'DIRECTOR' | 'INSTRUCTOR'
 }
 
-export function ScheduledDrivingLessonsList({ scheduledClasses, students }: ScheduledDrivingLessonsListProps) {
+export function ScheduledDrivingLessonsList({ scheduledClasses, students, userFunction }: ScheduledDrivingLessonsListProps) {
   const [inputValue, setInputValue] = useState<string>('')
   
   const filteredScheduledClasses = scheduledClasses?.filter(scheduledClass => {
@@ -34,9 +35,11 @@ export function ScheduledDrivingLessonsList({ scheduledClasses, students }: Sche
           placeholder="Filtrar por nome de aluno"
           className="!w-96"
         >
-          <CreateScheduleDrivingClassModal
-            students={students.map(student => { return { label: student.name, value: student.id } })}
-          />
+          {userFunction !== 'INSTRUCTOR' && (
+            <CreateScheduleDrivingClassModal
+              students={students.map(student => { return { label: student.name, value: student.id } })}
+            />
+          )}
         </SearchInput>
       </div>
 

@@ -11,9 +11,10 @@ import { Test } from "@/utils/interfaces/tests"
 interface DrivingExamsListProps {
   tests: Test[]
   students: Student[]
+  userFunction: 'ADMIN' | 'DIRECTOR' | 'INSTRUCTOR'
 }
 
-export function DrivingExamsList({ tests, students }: DrivingExamsListProps) {
+export function DrivingExamsList({ tests, students, userFunction }: DrivingExamsListProps) {
   const [inputValue, setInputValue] = useState<string>('')
   
   const filteredTests = tests?.filter(test => {
@@ -34,9 +35,11 @@ export function DrivingExamsList({ tests, students }: DrivingExamsListProps) {
           placeholder="Filtrar por nome de aluno"
           className="!w-96"
         >
-          <CreateDrivingExamsModal
-            students={students.map(student => { return { label: student.name, value: student.id } })}
-          />
+          {userFunction !== 'INSTRUCTOR' && (
+            <CreateDrivingExamsModal
+              students={students.map(student => { return { label: student.name, value: student.id } })}
+            />
+          )}
         </SearchInput>
       </div>
 
