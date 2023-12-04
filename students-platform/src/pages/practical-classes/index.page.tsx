@@ -13,7 +13,7 @@ export interface ScheduledClass {
   id: string
   schedulingDate?: string
   schedulingHour?: string
-  status: 'PENDING' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
+  status: 'PENDING' | 'UNCHECKED' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
   studentId: string
   classId: string
   class: PracticalClassesData

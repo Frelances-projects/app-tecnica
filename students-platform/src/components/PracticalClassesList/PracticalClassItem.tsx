@@ -15,7 +15,7 @@ interface PracticalClassItemProps {
   date: string
   hour: string
   title: string
-  status: 'PENDING' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
+  status: 'PENDING' | 'UNCHECKED' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
 }
 
 export function PracticalClassItem({ scheduledPracticalClassId, title, date, hour, status }: PracticalClassItemProps) {
@@ -66,7 +66,7 @@ export function PracticalClassItem({ scheduledPracticalClassId, title, date, hou
         {
           (status === 'COMPLETED' || status === 'CONFIRMED') ? 
           <CheckCircle size={24} color="#00A300" weight="fill" /> 
-          : status === 'CANCELED' ?
+          : (status === 'CANCELED' || status === 'UNCHECKED') ?
           <XCircle size={24} color="#CC0000" weight="fill" />
           : <WarningCircle size={24} color="#FDDA0D" weight="fill" />
         }
