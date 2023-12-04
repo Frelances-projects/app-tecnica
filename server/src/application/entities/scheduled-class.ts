@@ -5,7 +5,13 @@ import { Replace } from '../../helpers/Replace'
 interface ScheduledClassProps {
   schedulingDate?: string | null
   schedulingHour?: string | null
-  status?: 'PENDING' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED' | null
+  status?:
+    | 'PENDING'
+    | 'UNCHECKED'
+    | 'CONFIRMED'
+    | 'CANCELED'
+    | 'COMPLETED'
+    | null
   studentId: string
   classId: string
   createdAt?: Date | null
@@ -48,13 +54,20 @@ export class ScheduledClass {
   }
 
   public set status(
-    status: 'PENDING' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED' | null,
+    status:
+      | 'PENDING'
+      | 'UNCHECKED'
+      | 'CONFIRMED'
+      | 'CANCELED'
+      | 'COMPLETED'
+      | null,
   ) {
     this.props.status = status
   }
 
   public get status():
     | 'PENDING'
+    | 'UNCHECKED'
     | 'CONFIRMED'
     | 'CANCELED'
     | 'COMPLETED'

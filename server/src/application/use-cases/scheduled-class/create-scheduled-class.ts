@@ -6,7 +6,7 @@ import { ScheduledClass } from '../../entities/scheduled-class'
 interface CreateScheduledClassRequest {
   schedulingDate?: string
   schedulingHour?: string
-  status?: 'PENDING' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
+  status?: 'PENDING' | 'UNCHECKED' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
   studentId: string
   classId: string
 }

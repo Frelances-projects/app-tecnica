@@ -6,7 +6,7 @@ import { GetScheduledClassById } from './get-scheduled-class-by-id'
 
 interface UpdateScheduledClassStatusRequest {
   scheduledClassId: string
-  status: 'PENDING' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
+  status: 'PENDING' | 'UNCHECKED' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
 }
 
 interface UpdateScheduledClassStatusResponse {

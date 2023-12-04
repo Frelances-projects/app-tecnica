@@ -9,7 +9,7 @@ import { GetClassByName } from '../class/get-class-by-name'
 interface CreatePracticalScheduledClassRequest {
   schedulingDate: string
   schedulingHour: string
-  status?: 'PENDING' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
+  status?: 'PENDING' | 'UNCHECKED' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
   studentId: string
   className: string
   classDescription?: string

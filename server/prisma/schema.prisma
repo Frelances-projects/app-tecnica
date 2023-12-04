@@ -94,6 +94,7 @@ model Student {
   password                String?
   number                  Int                   @unique
   phone                   String?
+  birthDate               String?
   enrolledAt              String
   driverLicenseCategoryId String
   schoolId                String
@@ -166,6 +167,7 @@ enum UserFunction {
 }
 
 enum ScheduledClassStatus {
+  UNCHECKED
   PENDING
   CONFIRMED
   CANCELED

@@ -5,7 +5,7 @@ export class UpdateScheduledClassBody {
 
   schedulingHour: string
 
-  status: 'PENDING' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
+  status: 'PENDING' | 'UNCHECKED' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
 
   @IsUUID()
   classId: string
