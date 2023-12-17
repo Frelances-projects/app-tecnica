@@ -4,7 +4,12 @@ import { api } from "@/lib/api";
 
 import { RegisterStudentForm } from "./RegisterStudentForm";
 
-import { User } from '@/utils/interfaces/user';
+import type { User } from '@/utils/interfaces/user';
+import type { Group } from '@/utils/interfaces/group';
+
+type AxiosData = {
+  group: Group
+}
 
 export async function RegisterStudentSection() {
   const user = cookies().get('user')?.value
@@ -17,14 +22,6 @@ export async function RegisterStudentSection() {
     const { data } = await api.get(`/school`)
 
     schools = data.school?.map((school: any) => {
-      categoryCard = school.driverLicenseCategories.map((category: any) => {
-        return {
-          value: category.id,
-          label: category.name,
-          schoolId: category.schoolId
-        }
-      })
-
       return {
         value: school.id,
         label: school.name
@@ -39,20 +36,25 @@ export async function RegisterStudentSection() {
         label: data.school.name
       }
     ]
-    categoryCard = data.school.driverLicenseCategories.map((category: any) => {
-      return {
-        value: category.id,
-        label: category.name,
-        schoolId: category.schoolId
-      }
-    })
   }
+
+  const { data } = await api.get<AxiosData>('/group/name/find', { params: { groupName: 'Grupo Técnica' } })
+  const categories = data.group?.schools.flatMap(school => {
+    return school.driverLicenseCategories
+  })
+  categoryCard = categories.map(category => {
+    return {
+      value: category.id,
+      label: category.name,
+      schoolId: category.schoolId
+    }
+  })
 
   return (
     <section className="w-full max-w-7xl pl-10">
       <h1 className='mb-11 mt-5 text-lg font-medium'>Adicionar Alunos</h1>
 
-      <RegisterStudentForm schools={schools} categoryCard={categoryCard} />
+      <RegisterStudentForm schools={schools} categoryCard={categoryCard as any} />
     </section>
   )
 }

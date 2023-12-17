@@ -54,12 +54,12 @@ export function RegisterStudentForm({ categoryCard, schools }: RegisterStudentFo
     }
   }
   
-  useEffect(() => {
-    if (selectedSchool) {
-      setCategoryCardState(categoryCard.filter(category => category.schoolId === selectedSchool))
-      setSelectedCategoryCard(undefined)
-    }
-  }, [selectedSchool, categoryCard])
+  // useEffect(() => {
+  //   if (selectedSchool) {
+  //     setCategoryCardState(categoryCard.filter(category => category.schoolId === selectedSchool))
+  //     setSelectedCategoryCard(undefined)
+  //   }
+  // }, [selectedSchool, categoryCard])
 
   return (
     <form
