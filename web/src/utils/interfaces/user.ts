@@ -5,4 +5,8 @@ export interface User {
   function: 'ADMIN' | 'DIRECTOR' | 'INSTRUCTOR',
   schoolId: string,
   createdAt: Date
+  school?: {
+    id: string
+    name: string
+  }
 }

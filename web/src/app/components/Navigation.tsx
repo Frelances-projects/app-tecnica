@@ -21,6 +21,7 @@ import {
   Euro,
   BookOpenCheck,
   ScrollText,
+  Users,
 } from 'lucide-react';
 
 import Logo from '../../assets/Tecnica_LOGO_outline_icon.svg'
@@ -183,6 +184,29 @@ export function SideBar({ userFunction }: SideBarProps) {
             </Link>
           </div>
         </div>
+
+        {(userFunction === 'DIRECTOR') && (
+          <div className="group cursor-pointer ml-2">
+            <button
+              className="w-full py-2 px-4 bg-[#F9F9F9] text-zinc-800 hover:text-[#E86255] text-left flex items-center justify-between"
+              onClick={() => handleDropdownClick('users')}
+            >
+              <div className='flex gap-5 items-center'>
+                <Users size={20} />
+                <span className={`${collapsed ? 'hidden' : 'flex whitespace-nowrap'}`}>
+                  Usuários
+                </span>
+              </div>
+              <ChevronUp className={`transform ${dropDown === 'users' ? 'rotate-180' : 'rotate-90'} ${collapsed ? 'hidden' : ''} transition-all duration-300`} />
+            </button>
+
+            <div className={`transform flex flex-col gap-4 ml-10 mt-2 ${collapsed ? 'ml-6' : ''} ${dropDown === 'users' ? 'h-max' : 'hidden'} transition-all ease-linear duration-300`}>
+              <Link href='/panel/users' className='flex gap-2 hover:text-[#E86255]'>
+                <Users size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Listagem dos Usuários</span>
+              </Link>
+            </div>
+          </div>
+        )}
 
         {(userFunction === 'DIRECTOR' || userFunction === 'ADMIN') && (
           <div className="group cursor-pointer ml-2">
