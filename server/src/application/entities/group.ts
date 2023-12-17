@@ -2,17 +2,16 @@ import { randomUUID } from 'crypto'
 
 import { Replace } from '../../helpers/Replace'
 
-interface SchoolProps {
+interface GroupProps {
   name: string
-  groupId?: string | null
   createdAt?: Date | null
 }
 
-export class School {
+export class Group {
   private _id: string
-  private props: SchoolProps
+  private props: GroupProps
 
-  constructor(props: Replace<SchoolProps, { createdAt?: Date }>, id?: string) {
+  constructor(props: Replace<GroupProps, { createdAt?: Date }>, id?: string) {
     this._id = id ?? randomUUID()
     this.props = {
       ...props,
@@ -30,14 +29,6 @@ export class School {
 
   public get name(): string {
     return this.props.name
-  }
-
-  public set groupId(groupId: string | null) {
-    this.props.groupId = groupId
-  }
-
-  public get groupId(): string | null {
-    return this.props.groupId
   }
 
   public get createdAt(): Date {

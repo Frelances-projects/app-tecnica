@@ -9,6 +9,7 @@ import { PushNotificationModule } from 'src/push-notification/push-notification.
 import { InformationController } from './controllers/information.controller'
 import { StudentController } from './controllers/student.controller'
 import { CalendarController } from './controllers/calendar.controller'
+import { GroupController } from './controllers/group.contoller'
 import { SchoolController } from './controllers/school.controller'
 import { DriverLicenseCategoryController } from './controllers/driver-license-category.controller'
 import { TestController } from './controllers/test.controller'
@@ -43,6 +44,12 @@ import { CreateCalendar } from '../../application/use-cases/calendar/create-cale
 import { GetCalendarById } from '../../application/use-cases/calendar/get-calendar-by-id'
 import { GetCalendarBySchool } from '../../application/use-cases/calendar/get-calendar-by-school'
 import { GetManyCalendar } from '../../application/use-cases/calendar/get-many-calendars'
+
+// GROUP
+import { CreateGroup } from '../../application/use-cases/group/create-group'
+import { GetGroupById } from '../../application/use-cases/group/get-group-by-id'
+import { GetGroupByName } from '../../application/use-cases/group/get-group-by-name'
+import { GetManyGroups } from '../../application/use-cases/group/get-many-groups'
 
 // SCHOOL
 import { CreateSchool } from '../../application/use-cases/school/create-school'
@@ -123,6 +130,7 @@ import { CreateToken } from 'src/helpers/create-token'
     InformationController,
     StudentController,
     CalendarController,
+    GroupController,
     SchoolController,
     DriverLicenseCategoryController,
     TestController,
@@ -158,6 +166,12 @@ import { CreateToken } from 'src/helpers/create-token'
     GetCalendarById,
     GetCalendarBySchool,
     GetManyCalendar,
+
+    // GROUP
+    CreateGroup,
+    GetGroupById,
+    GetGroupByName,
+    GetManyGroups,
 
     // SCHOOL
     CreateSchool,

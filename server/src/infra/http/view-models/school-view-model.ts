@@ -5,6 +5,7 @@ export class SchoolViewModel {
     return {
       id: school.id,
       name: school.name,
+      groupId: school.groupId,
       createdAt: school.createdAt,
       driverLicenseCategories: school.props.driverLicenseCategories,
     }

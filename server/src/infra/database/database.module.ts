@@ -14,6 +14,9 @@ import { PrismaCalendarRepository } from './prisma/repositories/prisma-calendar-
 import { PaymentRepository } from '../../application/repositories/payment-repository'
 import { PrismaPaymentRepository } from './prisma/repositories/prisma-payment-repository'
 
+import { GroupsRepository } from '../../application/repositories/groups-repository'
+import { PrismaGroupsRepository } from './prisma/repositories/prisma-groups-repository'
+
 import { SchoolRepository } from '../../application/repositories/school-repository'
 import { PrismaSchoolRepository } from './prisma/repositories/prisma-school-repository'
 
@@ -52,6 +55,10 @@ import { PrismaUserRepository } from './prisma/repositories/prisma-user-reposito
       useClass: PrismaCalendarRepository,
     },
     {
+      provide: GroupsRepository,
+      useClass: PrismaGroupsRepository,
+    },
+    {
       provide: SchoolRepository,
       useClass: PrismaSchoolRepository,
     },
@@ -82,6 +89,7 @@ import { PrismaUserRepository } from './prisma/repositories/prisma-user-reposito
     StudentsRepository,
     CalendarRepository,
     PaymentRepository,
+    GroupsRepository,
     SchoolRepository,
     DriverLicenseCategoryRepository,
     TestRepository,

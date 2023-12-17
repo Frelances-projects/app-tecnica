@@ -7,6 +7,7 @@ export class PrismaSchoolMapper {
     return {
       id: school.id,
       name: school.name,
+      groupId: school.groupId,
       createdAt: school.createdAt,
     }
   }
@@ -15,6 +16,7 @@ export class PrismaSchoolMapper {
     return new School(
       {
         name: raw.name,
+        groupId: raw.groupId,
         createdAt: raw.createdAt,
         ...raw,
       },

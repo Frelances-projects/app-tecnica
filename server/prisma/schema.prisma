@@ -44,11 +44,23 @@ model Calendar {
   @@map("calendars")
 }
 
+model Group {
+  id        String   @id
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  schools   School[]
+
+  @@map("groups")
+}
+
 model School {
   id                      String                  @id
   name                    String
+  groupId                 String?
   createdAt               DateTime                @default(now())
   updatedAt               DateTime                @updatedAt
+  group                   Group?                  @relation(fields: [groupId], references: [id])
   students                Student[]
   users                   User[]
   driverLicenseCategories DriverLicenseCategory[]

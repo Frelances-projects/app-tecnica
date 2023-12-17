@@ -1,8 +1,6 @@
 import { IsNotEmpty } from 'class-validator'
 
-export class CreateSchoolBody {
+export class CreateGroupBody {
   @IsNotEmpty()
   name: string
-
-  groupId: string
 }

@@ -5,6 +5,7 @@ import { School } from '../../entities/school'
 
 interface CreateSchoolRequest {
   name: string
+  groupId?: string
 }
 
 interface CreateSchoolResponse {
@@ -17,9 +18,9 @@ export class CreateSchool {
 
   async execute(request: CreateSchoolRequest): Promise<CreateSchoolResponse> {
     try {
-      const { name } = request
+      const { name, groupId } = request
 
-      const school = new School({ name })
+      const school = new School({ name, groupId })
 
       await this.schoolRepository.create(school)
 
