@@ -26,6 +26,7 @@ export class PrismaUserMapper {
         function: raw.function,
         token: raw.token,
         createdAt: raw.createdAt,
+        ...raw,
       },
       raw.id,
     )
