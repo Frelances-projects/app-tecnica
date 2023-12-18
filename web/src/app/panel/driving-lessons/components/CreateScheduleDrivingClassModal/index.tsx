@@ -1,7 +1,7 @@
 'use client'
 import { useState } from "react";
 
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogPortal, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { CreateScheduledDrivingLessonForm } from "./CreateScheduledDrivingLessonForm";
 
 interface CreateScheduleDrivingClassModalProps {
@@ -21,17 +21,19 @@ export function CreateScheduleDrivingClassModal({ students }: CreateScheduleDriv
       >
         Marcar aula
       </DialogTrigger>
-      <DialogContent className="w-full max-w-xl">
-        <DialogHeader>
-          <DialogTitle>Marcar uma nova aula de condução para um aluno</DialogTitle>
-          <DialogDescription>Para marcar uma nova aula de condução preencha os campos a seguir</DialogDescription>
-        </DialogHeader>
-        
-        <CreateScheduledDrivingLessonForm
-          students={students}
-          setIsModalOpen={setIsModalOpen}
-        />
-      </DialogContent>
+      <DialogPortal>
+        <DialogContent className="w-full max-w-xl overflow-auto">
+          <DialogHeader>
+            <DialogTitle>Marcar uma nova aula de condução para um aluno</DialogTitle>
+            <DialogDescription>Para marcar uma nova aula de condução preencha os campos a seguir</DialogDescription>
+          </DialogHeader>
+          
+          <CreateScheduledDrivingLessonForm
+            students={students}
+            setIsModalOpen={setIsModalOpen}
+          />
+        </DialogContent>
+      </DialogPortal>
     </Dialog>
   )
 }
