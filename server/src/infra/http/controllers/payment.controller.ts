@@ -40,12 +40,9 @@ export class PaymentController {
     @Param('paymentId') paymentId: string,
     @Body() body: UpdatePaymentBody,
   ) {
-    const { method, total } = body
-
     const { payment } = await this.updatePayment.execute({
       id: paymentId,
-      method,
-      total,
+      ...body,
     })
 
     return {

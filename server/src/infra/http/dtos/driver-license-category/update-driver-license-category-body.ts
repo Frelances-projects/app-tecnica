@@ -12,9 +12,7 @@ export class UpdateDriverLicenseCategoryBody {
   @IsNumber()
   secondInstallment: number
 
-  @IsNumber()
   thirdInstallment: number
 
-  @IsNumber()
   fourthInstallment: number
 }
