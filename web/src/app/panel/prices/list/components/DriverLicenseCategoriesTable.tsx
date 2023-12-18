@@ -7,6 +7,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { DeleteDriverLicenseCategoryModal } from "./DeleteDriverLicenseCategoryModal";
+import { EditDriverLicenseCategoryModal } from "./EditDriverLicenseCategoryModal";
 
 import { DriverLicenseCategory } from '@/utils/interfaces/driver-license-category';
 
@@ -24,6 +25,7 @@ export function DriverLicenseCategoriesTable({ driverLicenseCategories }: Driver
             <TableHead>Preço de cada parcela</TableHead>
             <TableHead>Total</TableHead>
             <TableHead>Escola</TableHead>
+            <TableHead>Editar</TableHead>
             <TableHead>Apagar</TableHead>
           </TableRow>
         </TableHeader>
@@ -46,6 +48,11 @@ export function DriverLicenseCategoriesTable({ driverLicenseCategories }: Driver
               </TableCell>
               <TableCell>{driverLicenseCategory.price}</TableCell>
               <TableCell>{driverLicenseCategory.school.name}</TableCell>
+              <TableCell>
+                <EditDriverLicenseCategoryModal
+                  driverLicenseCategory={driverLicenseCategory}
+                />
+              </TableCell>
               <TableCell>
                 <DeleteDriverLicenseCategoryModal
                   id={driverLicenseCategory?.id}
