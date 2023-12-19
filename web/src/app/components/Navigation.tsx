@@ -194,7 +194,7 @@ export function SideBar({ userFunction }: SideBarProps) {
               <div className='flex gap-5 items-center'>
                 <Users size={20} />
                 <span className={`${collapsed ? 'hidden' : 'flex whitespace-nowrap'}`}>
-                  Usuários
+                  Utilizadores
                 </span>
               </div>
               <ChevronUp className={`transform ${dropDown === 'users' ? 'rotate-180' : 'rotate-90'} ${collapsed ? 'hidden' : ''} transition-all duration-300`} />
@@ -202,7 +202,7 @@ export function SideBar({ userFunction }: SideBarProps) {
 
             <div className={`transform flex flex-col gap-4 ml-10 mt-2 ${collapsed ? 'ml-6' : ''} ${dropDown === 'users' ? 'h-max' : 'hidden'} transition-all ease-linear duration-300`}>
               <Link href='/panel/users' className='flex gap-2 hover:text-[#E86255]'>
-                <Users size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Listagem dos Usuários</span>
+                <Users size={20} /> <span className={`${collapsed ? 'hidden' : ''}`}>Listagem dos utilizadores</span>
               </Link>
             </div>
           </div>

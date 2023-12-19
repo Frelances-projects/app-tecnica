@@ -117,8 +117,7 @@ export function CreateScheduledDrivingLessonForm(
 
   async function handleCreateScheduledDrivingLessonForm(data: CreateScheduledDrivingLessonInputs) {
     try {
-      data.lessons.map(async lesson => {
-
+      for (const lesson of data.lessons) {
         await createScheduledDrivingLesson(
           { 
             className: lesson.lessonName,
@@ -129,7 +128,7 @@ export function CreateScheduledDrivingLessonForm(
             status: 'PENDING',
           }
         )
-      })
+      }
 
       reset()
       setIsModalOpen(false)
@@ -139,7 +138,7 @@ export function CreateScheduledDrivingLessonForm(
       })
       setTimeout(() => {
         location.reload()
-      }, 1000);
+      }, 1800);
     } catch (error) {
       console.log("🚀 ~ file: CreateScheduledDrivingLessonForm.tsx:62 ~ handleCreateScheduledDrivingLessonForm ~ error:", error)
       toast({

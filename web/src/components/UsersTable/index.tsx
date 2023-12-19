@@ -6,6 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { DeleteUserModal } from "./DeleteUserModal"
 
 import { User } from '@/utils/interfaces/user'
 
@@ -24,6 +25,7 @@ export function UsersTable({ users }: UsersTableProps) {
             <TableHead>Email</TableHead>
             <TableHead>Data inscrição</TableHead>
             <TableHead>Escola</TableHead>
+            <TableHead>Apagar</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -36,6 +38,9 @@ export function UsersTable({ users }: UsersTableProps) {
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.createdAt as any}</TableCell>
                 <TableCell>{user?.school?.name}</TableCell>
+                <TableCell>
+                  <DeleteUserModal user={user} />
+                </TableCell>
               </TableRow>
             )
           })}
