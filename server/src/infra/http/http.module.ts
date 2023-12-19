@@ -113,6 +113,7 @@ import { GetManyUsersBySchool } from 'src/application/use-cases/user/get-many-us
 import { GetUserByEmail } from 'src/application/use-cases/user/get-user-by-email'
 import { GetUserById } from 'src/application/use-cases/user/get-user-by-id'
 import { UpdateUser } from 'src/application/use-cases/user/update-user'
+import { DeleteUser } from 'src/application/use-cases/user/delete-user'
 import { ForgotUserPassword } from 'src/application/use-cases/user/forgot-user-password'
 import { ResetUserPassword } from 'src/application/use-cases/user/reset-user-password'
 
@@ -235,6 +236,7 @@ import { CreateToken } from 'src/helpers/create-token'
     GetUserByEmail,
     GetUserById,
     UpdateUser,
+    DeleteUser,
     ForgotUserPassword,
     ResetUserPassword,
 

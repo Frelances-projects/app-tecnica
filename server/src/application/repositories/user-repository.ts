@@ -7,4 +7,5 @@ export abstract class UserRepository {
   abstract findMany(): Promise<User[]>
   abstract findManyBySchool(schoolId: string): Promise<User[]>
   abstract save(user: User): Promise<void>
+  abstract delete(userId: string): Promise<void>
 }

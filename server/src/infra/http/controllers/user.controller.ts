@@ -1,8 +1,18 @@
-import { Body, Controller, Get, Param, Put, Post, Patch } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Put,
+  Post,
+  Patch,
+  Delete,
+} from '@nestjs/common'
 
 import { CreateUser } from '../../../application/use-cases/user/create-user'
 import { CreateUserSession } from '../../../application/use-cases/user/create-user-session'
 import { UpdateUser } from '../../../application/use-cases/user/update-user'
+import { DeleteUser } from '../../../application/use-cases/user/delete-user'
 import { GetUserById } from '../../../application/use-cases/user/get-user-by-id'
 import { GetManyUsers } from '../../../application/use-cases/user/get-many-users'
 import { ForgotUserPassword } from '../../../application/use-cases/user/forgot-user-password'
@@ -23,6 +33,7 @@ export class UserController {
     private createUser: CreateUser,
     private createUserSession: CreateUserSession,
     private updateUser: UpdateUser,
+    private deleteUser: DeleteUser,
     private getUserById: GetUserById,
     private getManyUsers: GetManyUsers,
     private forgotUserPassword: ForgotUserPassword,
@@ -110,5 +121,10 @@ export class UserController {
     const { newPassword } = body
 
     await this.resetUserPassword.execute({ token, newPassword })
+  }
+
+  @Delete(':userId')
+  async delete(@Param('userId') userId: string) {
+    await this.deleteUser.execute(userId)
   }
 }
