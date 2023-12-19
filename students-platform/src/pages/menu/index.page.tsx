@@ -26,8 +26,6 @@ export default function Menu({ student }: MenuProps) {
           const token = await getToken(messaging, { vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY });
 
           if (token) {
-            console.log("🚀 ~ file: index.page.tsx:76 ~ requestNotificationPermission ~ token:", token)
-
             await server.put(`/student/${student?.id}`, {
               firebaseToken: token,
               name: student.name,
