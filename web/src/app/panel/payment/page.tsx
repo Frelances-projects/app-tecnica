@@ -21,16 +21,35 @@ export default async function Payment() {
 
   let returnedData
 
+  const euroFormat = new Intl.NumberFormat('en-DE', {
+    style: 'currency',
+    currency: 'EUR',
+  })
+
   if (formattedUser.function === 'DIRECTOR') {
     const { data } = await api.get<AxiosData>(`/payment`)
 
-    returnedData = data.payments
+    const formattedData = data.payments.map((payment) => {
+      return {
+        ...payment,
+        formattedTotal: euroFormat.format(payment.total / 100),
+      }
+    })
+
+    returnedData = formattedData
   } else {
     const { data } = await api.get<AxiosData>(
       `/payment/school/${formattedUser.schoolId}`,
     )
 
-    returnedData = data.payments
+    const formattedData = data.payments.map((payment) => {
+      return {
+        ...payment,
+        formattedTotal: euroFormat.format(payment.total / 100),
+      }
+    })
+
+    returnedData = formattedData
   }
 
   return (
