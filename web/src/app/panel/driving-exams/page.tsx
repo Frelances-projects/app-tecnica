@@ -19,7 +19,6 @@ type StudentsAxiosData = {
 
 export default async function DrivingExams() {
   const headersList = headers();
-  const activePath = headersList.get("x-invoke-path");
 
   const user = cookies().get('user')?.value
   const formattedUser = JSON.parse(user!!)
