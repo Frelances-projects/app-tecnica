@@ -79,6 +79,10 @@ import { DeleteTest } from 'src/application/use-cases/test/delete-test'
 import { CreatePayment } from 'src/application/use-cases/payment/create-payment'
 import { GetPaymentById } from 'src/application/use-cases/payment/get-payment-by-id'
 import { UpdatePayment } from 'src/application/use-cases/payment/update-payment'
+import { DeletePayment } from 'src/application/use-cases/payment/delete-payment'
+import { GetManyPayments } from 'src/application/use-cases/payment/get-many-payments'
+import { GetManyPaymentsBySchool } from 'src/application/use-cases/payment/get-many-payments-by-school'
+import { GetPaymentByStudent } from 'src/application/use-cases/payment/get-payment-by-student'
 
 // CLASS
 import { CreateClass } from 'src/application/use-cases/class/create-class'
@@ -202,6 +206,10 @@ import { CreateToken } from 'src/helpers/create-token'
     CreatePayment,
     GetPaymentById,
     UpdatePayment,
+    DeletePayment,
+    GetManyPayments,
+    GetManyPaymentsBySchool,
+    GetPaymentByStudent,
 
     // CLASS
     CreateClass,
