@@ -11,14 +11,27 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   required?: boolean
 }
 
-export function Input({ className, hasIcon, id, type, placeholder, name, onChangeInput, inputValue, required, ...rest }: InputProps) {
+export function Input({
+  className,
+  hasIcon,
+  id,
+  type,
+  placeholder,
+  name,
+  onChangeInput,
+  inputValue,
+  required,
+  ...rest
+}: InputProps) {
   return (
-    <div className={`border w-[520px] border-[#C6C6C6] outline-none flex items-center justify-between bg-white rounded-lg px-2 py-[0.375rem] text-black ${className}`}>
+    <div
+      className={`flex w-[520px] items-center justify-between rounded-lg border border-[#C6C6C6] bg-white px-2 py-[0.375rem] text-black outline-none ${className}`}
+    >
       <input
-        className={`outline-none flex-1`}
-        id={id} 
-        type={type} 
-        placeholder={placeholder} 
+        className={`flex-1 outline-none`}
+        id={id}
+        type={type}
+        placeholder={placeholder}
         name={name}
         onChange={onChangeInput}
         value={inputValue}

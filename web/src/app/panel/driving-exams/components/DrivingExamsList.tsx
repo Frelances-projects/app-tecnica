@@ -1,12 +1,12 @@
 'use client'
-import { useState } from "react"
+import { useState } from 'react'
 
-import { SearchInput } from "@/components/SearchInput"
-import { CreateDrivingExamsModal } from "./CreateDrivingExamsModal"
-import { DrivingExamsListTable } from "./DrivingExamsListTable"
+import { SearchInput } from '@/components/SearchInput'
+import { CreateDrivingExamsModal } from './CreateDrivingExamsModal'
+import { DrivingExamsListTable } from './DrivingExamsListTable'
 
-import { Student } from "@/utils/interfaces/student"
-import { Test } from "@/utils/interfaces/tests"
+import { Student } from '@/utils/interfaces/student'
+import { Test } from '@/utils/interfaces/tests'
 
 interface DrivingExamsListProps {
   tests: Test[]
@@ -14,22 +14,30 @@ interface DrivingExamsListProps {
   userFunction: 'ADMIN' | 'DIRECTOR' | 'INSTRUCTOR'
 }
 
-export function DrivingExamsList({ tests, students, userFunction }: DrivingExamsListProps) {
+export function DrivingExamsList({
+  tests,
+  students,
+  userFunction,
+}: DrivingExamsListProps) {
   const [inputValue, setInputValue] = useState<string>('')
-  
-  const filteredTests = tests?.filter(test => {
+
+  const filteredTests = tests?.filter((test) => {
     if (inputValue === '') return test
 
-    const testFilteredByStudent = test.student?.name?.toLocaleUpperCase()?.startsWith(inputValue.toLocaleUpperCase())
+    const testFilteredByStudent = test.student?.name
+      ?.toLocaleUpperCase()
+      ?.startsWith(inputValue.toLocaleUpperCase())
 
     return testFilteredByStudent
   })
 
   return (
-    <section className="w-full max-w-7xl -mt-4 pl-10">
-      <h1 className='text-lg mt-6 font-medium mb-9'>Listagem dos Exames de condução marcados</h1>
-      
-      <div className="flex items-center max-w-3xl">
+    <section className="-mt-4 w-full max-w-7xl pl-10">
+      <h1 className="mb-9 mt-6 text-lg font-medium">
+        Listagem dos Exames de condução marcados
+      </h1>
+
+      <div className="flex max-w-3xl items-center">
         <SearchInput
           setInputValue={setInputValue}
           placeholder="Filtrar por nome de aluno"
@@ -37,15 +45,15 @@ export function DrivingExamsList({ tests, students, userFunction }: DrivingExams
         >
           {userFunction !== 'INSTRUCTOR' && (
             <CreateDrivingExamsModal
-              students={students.map(student => { return { label: student.name, value: student.id } })}
+              students={students.map((student) => {
+                return { label: student.name, value: student.id }
+              })}
             />
           )}
         </SearchInput>
       </div>
 
-      <DrivingExamsListTable
-        tests={filteredTests}
-      />
+      <DrivingExamsListTable tests={filteredTests} />
     </section>
   )
 }

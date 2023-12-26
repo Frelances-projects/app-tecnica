@@ -1,15 +1,17 @@
-import { InputHTMLAttributes, forwardRef } from "react";
+import { InputHTMLAttributes, forwardRef } from 'react'
 
-interface InputInformationProps extends InputHTMLAttributes<HTMLInputElement> {}
+type InputInformationProps = InputHTMLAttributes<HTMLInputElement>
 
-export const InputModal = forwardRef(({ ...rest }: InputInformationProps, ref) => {
-  return (
-    <input
-      className="border w-full border-[#C6C6C6] outline-none flex items-center justify-between bg-white rounded-lg px-2 py-[0.375rem] text-black"
-      {...rest}
-      ref={ref as any}
-    />
-  )
-})
+export const InputModal = forwardRef(
+  ({ ...rest }: InputInformationProps, ref) => {
+    return (
+      <input
+        className="flex w-full items-center justify-between rounded-lg border border-[#C6C6C6] bg-white px-2 py-[0.375rem] text-black outline-none"
+        {...rest}
+        ref={ref as any}
+      />
+    )
+  },
+)
 
 InputModal.displayName = 'InputModal'

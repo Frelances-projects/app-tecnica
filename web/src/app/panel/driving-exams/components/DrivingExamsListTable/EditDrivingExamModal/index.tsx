@@ -1,4 +1,4 @@
-import { Pencil } from "lucide-react"
+import { Pencil } from 'lucide-react'
 
 import {
   AlertDialog,
@@ -7,10 +7,10 @@ import {
   AlertDialogContent,
   AlertDialogFooter,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { EditDrivingExamForm } from "./EditDrivingExamForm"
+} from '@/components/ui/alert-dialog'
+import { EditDrivingExamForm } from './EditDrivingExamForm'
 
-import { Test } from "@/utils/interfaces/tests"
+import { Test } from '@/utils/interfaces/tests'
 
 interface EditDrivingExamModalProps {
   test: Test
@@ -23,18 +23,16 @@ export function EditDrivingExamModal({ test }: EditDrivingExamModalProps) {
         <Pencil size={16} className="hover:cursor-pointer" />
       </AlertDialogTrigger>
       <AlertDialogContent className="w-full max-w-xl overflow-y-auto">
-        <h1 className="font-bold text-lg">
+        <h1 className="text-lg font-bold">
           Editar exame de código do aluno: {test.student.name}
         </h1>
 
-        <EditDrivingExamForm
-          test={test}
-        >
+        <EditDrivingExamForm test={test}>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancelar</AlertDialogCancel>
             <AlertDialogAction
               type="submit"
-              className="bg-[#E3000F] enabled:hover:bg-[#E3000F]/80 disabled:bg-[#E3000F]/60 disabled:cursor-not-allowed transition-colors duration-300"
+              className="bg-[#E3000F] transition-colors duration-300 enabled:hover:bg-[#E3000F]/80 disabled:cursor-not-allowed disabled:bg-[#E3000F]/60"
             >
               Editar
             </AlertDialogAction>

@@ -1,17 +1,19 @@
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from '@/components/ui/skeleton'
 
 export default function CodeLessonsLoading() {
   return (
-    <main className="w-full max-w-[80vw] flex flex-col gap-10 mt-14 mb-16">
-       <h1 className='text-xl'>Aulas de Código</h1>
-      <div className='mx-auto -mt-9 max-w-[1440px] w-full h-[1px] bg-[#BFBFBF]'/>
+    <main className="mb-16 mt-14 flex w-full max-w-[80vw] flex-col gap-10">
+      <h1 className="text-xl">Aulas de Código</h1>
+      <div className="mx-auto -mt-9 h-[1px] w-full max-w-[1440px] bg-[#BFBFBF]" />
 
-      <section className="w-full max-w-7xl -mt-4 pl-10">
-      <h1 className='text-lg mt-6 font-medium mb-9'>Listagem das aulas de código</h1>
-      
-      <Skeleton className='w-[520px] rounded-lg h-8' />
-      <Skeleton className='mt-11 w-full rounded-lg h-72' />
-    </section>
+      <section className="-mt-4 w-full max-w-7xl pl-10">
+        <h1 className="mb-9 mt-6 text-lg font-medium">
+          Listagem das aulas de código
+        </h1>
+
+        <Skeleton className="h-8 w-[520px] rounded-lg" />
+        <Skeleton className="mt-11 h-72 w-full rounded-lg" />
+      </section>
     </main>
   )
 }

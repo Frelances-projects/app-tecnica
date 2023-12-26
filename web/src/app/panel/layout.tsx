@@ -27,16 +27,14 @@ export default function PanelLayout({
   const formattedUserData = JSON.parse(user) as User
 
   return (
-    <div className='overflow-x-hidden'>
+    <div className="overflow-x-hidden">
       <Header username={formattedUserData.name} />
 
       <ReactQueryProvider>
-        <div className='mx-auto max-w-[1440px] w-full h-[1px] bg-black'/>
-        <div className='flex gap-11'>
+        <div className="mx-auto h-[1px] w-full max-w-[1440px] bg-black" />
+        <div className="flex gap-11">
           <SideBar userFunction={formattedUserData.function} />
-          <div className="w-full max-w-6xl flex justify-center">
-            {children}
-          </div>
+          <div className="flex w-full max-w-6xl justify-center">{children}</div>
         </div>
       </ReactQueryProvider>
     </div>

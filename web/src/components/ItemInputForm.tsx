@@ -1,7 +1,7 @@
-import { ChangeEventHandler, ReactNode } from "react";
+import { ChangeEventHandler, ReactNode } from 'react'
 
-import { WrapperItem } from "./WrapperItem";
-import { Input } from "./Input";
+import { WrapperItem } from './WrapperItem'
+import { Input } from './Input'
 
 interface ItemInputFormProps {
   label: string

@@ -1,4 +1,4 @@
-import { DriverLicenseCategory } from "./driver-license-category"
+import { DriverLicenseCategory } from './driver-license-category'
 
 export interface Group {
   id: string

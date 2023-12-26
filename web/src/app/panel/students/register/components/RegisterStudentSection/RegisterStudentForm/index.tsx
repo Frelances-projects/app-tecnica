@@ -1,45 +1,52 @@
 'use client'
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react'
 
-import { Button } from "@/components/Button";
-import { ItemInputForm } from "@/components/ItemInputForm";
-import { ItemSelectForm } from "@/components/ItemSelectForm";
-import { useToast } from "@/components/ui/use-toast";
+import { Button } from '@/components/Button'
+import { ItemInputForm } from '@/components/ItemInputForm'
+import { ItemSelectForm } from '@/components/ItemSelectForm'
+import { useToast } from '@/components/ui/use-toast'
 
-import { createStudent } from "./action";
+import { createStudent } from './action'
 
 interface RegisterStudentFormProps {
   categoryCard: {
-    value: string;
-    label: string;
+    value: string
+    label: string
     schoolId: string
   }[]
   schools: {
-    value: string;
-    label: string;
+    value: string
+    label: string
   }[]
 }
 
-export function RegisterStudentForm({ categoryCard, schools }: RegisterStudentFormProps) {
+export function RegisterStudentForm({
+  categoryCard,
+  schools,
+}: RegisterStudentFormProps) {
   const { toast } = useToast()
-  const formRef = useRef<HTMLFormElement>(null);
+  const formRef = useRef<HTMLFormElement>(null)
 
   const [categoryCardState, setCategoryCardState] = useState(categoryCard)
-  const [selectedSchool, setSelectedSchool] = useState<undefined | string>(undefined)
-  const [selectedCategoryCard, setSelectedCategoryCard] = useState<undefined | string>(undefined)
-  
+  const [selectedSchool, setSelectedSchool] = useState<undefined | string>(
+    undefined,
+  )
+  const [selectedCategoryCard, setSelectedCategoryCard] = useState<
+    undefined | string
+  >(undefined)
+
   const paymentMethod = [
-    {value:"INCASH", label:"Pronto Pagamento"},
-    {value:"INSTALLMENTS", label:"Prestações"},
+    { value: 'INCASH', label: 'Pronto Pagamento' },
+    { value: 'INSTALLMENTS', label: 'Prestações' },
   ]
 
   async function handleCreateStudent(data: FormData) {
     const { message } = await createStudent(data)
 
     if (message === 'Success!') {
-      formRef?.current?.reset();
-      setSelectedSchool(undefined);
-      setSelectedCategoryCard(undefined);
+      formRef?.current?.reset()
+      setSelectedSchool(undefined)
+      setSelectedCategoryCard(undefined)
 
       toast({
         title: 'Estudante cadastrado!',
@@ -49,11 +56,11 @@ export function RegisterStudentForm({ categoryCard, schools }: RegisterStudentFo
       toast({
         title: 'Erro!',
         description: message,
-        variant: 'destructive'
+        variant: 'destructive',
       })
     }
   }
-  
+
   // useEffect(() => {
   //   if (selectedSchool) {
   //     setCategoryCardState(categoryCard.filter(category => category.schoolId === selectedSchool))
@@ -65,13 +72,13 @@ export function RegisterStudentForm({ categoryCard, schools }: RegisterStudentFo
     <form
       ref={formRef}
       action={handleCreateStudent}
-      className="flex flex-col gap-[2.08rem] mt-5 mb-4"
+      className="mb-4 mt-5 flex flex-col gap-[2.08rem]"
     >
       <ItemInputForm
         required
         id="student_name"
         label="Nome do Aluno"
-        type='text'
+        type="text"
         placeholder="Nome Aluno"
       />
 
@@ -79,7 +86,7 @@ export function RegisterStudentForm({ categoryCard, schools }: RegisterStudentFo
         required
         id="student_number"
         label="Número do Aluno"
-        type='number'
+        type="number"
         placeholder="Número Aluno"
       />
 
@@ -87,7 +94,7 @@ export function RegisterStudentForm({ categoryCard, schools }: RegisterStudentFo
         required
         id="student_phone"
         label="Telefone do Aluno"
-        type='number'
+        type="number"
         placeholder="Telefone Aluno"
       />
 
@@ -95,7 +102,7 @@ export function RegisterStudentForm({ categoryCard, schools }: RegisterStudentFo
         required
         id="student_email"
         label="E-mail do Aluno"
-        type='email'
+        type="email"
         placeholder="Email Aluno"
       />
 
@@ -103,7 +110,7 @@ export function RegisterStudentForm({ categoryCard, schools }: RegisterStudentFo
         required
         id="student_birth_date"
         label="Data de nascimento do aluno"
-        type='date'
+        type="date"
         placeholder="Data de nascimento"
       />
 
@@ -111,7 +118,7 @@ export function RegisterStudentForm({ categoryCard, schools }: RegisterStudentFo
         required
         id="student_date"
         label="Data de inscrição do Aluno"
-        type='date'
+        type="date"
         placeholder="Data de Inscrição"
       />
 
@@ -141,7 +148,7 @@ export function RegisterStudentForm({ categoryCard, schools }: RegisterStudentFo
       />
 
       <div className="flex justify-end">
-        <Button title="Adicionar" type='submit' />
+        <Button title="Adicionar" type="submit" />
       </div>
     </form>
   )

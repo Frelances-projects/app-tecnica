@@ -1,9 +1,12 @@
 import { TextareaHTMLAttributes } from 'react'
 
-interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {}
+type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement>
 
 export function TextArea({ className, ...rest }: TextAreaProps) {
   return (
-    <textarea className={`px-5 py-3 w-[18.188rem] outline-none border border-[#C6C6C6] rounded-lg text-black ${className}`} {...rest} />
+    <textarea
+      className={`w-[18.188rem] rounded-lg border border-[#C6C6C6] px-5 py-3 text-black outline-none ${className}`}
+      {...rest}
+    />
   )
 }

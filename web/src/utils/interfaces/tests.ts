@@ -1,4 +1,4 @@
-import { Student } from "./student"
+import { Student } from './student'
 
 export interface Test {
   id: string
@@ -8,5 +8,5 @@ export interface Test {
   testDate: string
   testDateNotFormatted?: string
   testHour: string
-  student: Student;
+  student: Student
 }

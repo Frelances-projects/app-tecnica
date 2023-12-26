@@ -1,10 +1,10 @@
 'use client'
-import { ReactNode } from "react"
-import { useForm } from "react-hook-form"
+import { ReactNode } from 'react'
+import { useForm } from 'react-hook-form'
 
-import { EditStudentFormInput } from "../EditStudentModal"
-import { InputModal } from "../InputModal"
-import { Select } from "../Select"
+import { EditStudentFormInput } from '../EditStudentModal'
+import { InputModal } from '../InputModal'
+import { Select } from '../Select'
 
 interface EditStudentFormProps {
   children: ReactNode
@@ -13,19 +13,22 @@ interface EditStudentFormProps {
   studentNumber: number
   studentPhone?: string
   categoryCard: {
-    value: string;
-    label: string;
+    value: string
+    label: string
     schoolId: string
   }[]
   schools: {
-    value: string;
-    label: string;
+    value: string
+    label: string
   }[]
-  handleEditStudent: (data: EditStudentFormInput) => Promise<{
-    id: string;
-    dismiss: () => void;
-    update: (props: any) => void;
-  } | undefined>
+  handleEditStudent: (data: EditStudentFormInput) => Promise<
+    | {
+        id: string
+        dismiss: () => void
+        update: (props: any) => void
+      }
+    | undefined
+  >
 }
 
 export function EditStudentForm({
@@ -36,24 +39,21 @@ export function EditStudentForm({
   studentPhone,
   schools,
   categoryCard,
-  handleEditStudent
+  handleEditStudent,
 }: EditStudentFormProps) {
-  const {
-    register,
-    setValue,
-    handleSubmit,
-  } = useForm<EditStudentFormInput>({ defaultValues: 
-    {
+  const { register, setValue, handleSubmit } = useForm<EditStudentFormInput>({
+    defaultValues: {
       student_name: studentName,
       student_email: studentEmail,
       student_number: String(studentNumber),
       student_phone: studentPhone,
-    }
+    },
   })
-  
+
   return (
-    <form onSubmit={handleSubmit(handleEditStudent)}
-      className="flex flex-col gap-[2.08rem] mt-5 mb-4"
+    <form
+      onSubmit={handleSubmit(handleEditStudent)}
+      className="mb-4 mt-5 flex flex-col gap-[2.08rem]"
     >
       <InputModal
         type="text"
@@ -100,7 +100,9 @@ export function EditStudentForm({
           placeHolder="Categoria de Carta"
           data={categoryCard}
           className="w-full"
-          onChange={(event) => setValue('student_category_card', event.target.value)}
+          onChange={(event) =>
+            setValue('student_category_card', event.target.value)
+          }
         />
 
         {/* <Select id="payment_method" placeHolder="Método de Pagamento" data={paymentMethod} className="w-full" /> */}

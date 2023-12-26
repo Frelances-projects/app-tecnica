@@ -5,10 +5,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { DeleteCodeLesson } from "./DeleteCodeLesson";
+} from '@/components/ui/table'
+import { DeleteCodeLesson } from './DeleteCodeLesson'
 
-import { Class } from "@/utils/interfaces/class";
+import { Class } from '@/utils/interfaces/class'
 
 interface CodeLessonsTableProps {
   classes: Class[]
@@ -28,7 +28,7 @@ export function CodeLessonsTable({ classes }: CodeLessonsTableProps) {
         </TableHeader>
 
         <TableBody>
-          {classes.map(lesson => (
+          {classes.map((lesson) => (
             <TableRow key={lesson.id}>
               <TableCell>{lesson.code}</TableCell>
               <TableCell>{lesson.name}</TableCell>

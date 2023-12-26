@@ -5,8 +5,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { DeleteUserModal } from "./DeleteUserModal"
+} from '@/components/ui/table'
+import { DeleteUserModal } from './DeleteUserModal'
 
 import { User } from '@/utils/interfaces/user'
 
@@ -30,11 +30,13 @@ export function UsersTable({ users }: UsersTableProps) {
         </TableHeader>
 
         <TableBody>
-          {users.map(user => {
+          {users.map((user) => {
             return (
               <TableRow key={user.id}>
                 <TableCell>{user.name}</TableCell>
-                <TableCell>{user.function === 'ADMIN' ? 'ADMINISTRADOR' : 'INSTRUTOR'}</TableCell>
+                <TableCell>
+                  {user.function === 'ADMIN' ? 'ADMINISTRADOR' : 'INSTRUTOR'}
+                </TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.createdAt as any}</TableCell>
                 <TableCell>{user?.school?.name}</TableCell>

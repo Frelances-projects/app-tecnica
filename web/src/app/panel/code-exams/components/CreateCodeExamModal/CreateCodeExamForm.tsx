@@ -1,18 +1,18 @@
-import { useForm } from "react-hook-form"
-import { UseMutateAsyncFunction } from "@tanstack/react-query"
+import { useForm } from 'react-hook-form'
+import { UseMutateAsyncFunction } from '@tanstack/react-query'
 
-import { DialogFooter } from "@/components/ui/dialog"
-import { Select } from "@/components/Select"
-import { FormField } from "@/components/ui/form"
-import { InputModal } from "@/components/InputModal"
-import { DatePicker } from "@/components/ui/date-picker"
-import { buttonVariants } from "@/components/ui/button"
-import { Button } from "@/components/Button"
-import { useToast } from "@/components/ui/use-toast"
+import { DialogFooter } from '@/components/ui/dialog'
+import { Select } from '@/components/Select'
+import { FormField } from '@/components/ui/form'
+import { InputModal } from '@/components/InputModal'
+import { DatePicker } from '@/components/ui/date-picker'
+import { buttonVariants } from '@/components/ui/button'
+import { Button } from '@/components/Button'
+import { useToast } from '@/components/ui/use-toast'
 
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils'
 
-import { CreateCodeExamMutation } from "."
+import { CreateCodeExamMutation } from '.'
 
 export interface CreateCodeExamFormInput {
   studentId: string
@@ -23,26 +23,30 @@ export interface CreateCodeExamFormInput {
 
 interface CreateCodeExamFormProps {
   students: {
-    value: string;
-    label: string;
+    value: string
+    label: string
   }[]
   setIsModalOpen: (isOpen: boolean) => void
-  createCodeExam: UseMutateAsyncFunction<any, Error, CreateCodeExamMutation, unknown>
+  createCodeExam: UseMutateAsyncFunction<
+    any,
+    Error,
+    CreateCodeExamMutation,
+    unknown
+  >
 }
 
-export function CreateCodeExamForm(
-  {
-    students,
-    setIsModalOpen,
-    createCodeExam
-  }: CreateCodeExamFormProps) {
+export function CreateCodeExamForm({
+  students,
+  setIsModalOpen,
+  createCodeExam,
+}: CreateCodeExamFormProps) {
   const {
     register,
     control,
     setValue,
     reset,
     handleSubmit,
-    formState: { isSubmitting }
+    formState: { isSubmitting },
   } = useForm<CreateCodeExamFormInput>()
   const { toast } = useToast()
 
@@ -53,28 +57,30 @@ export function CreateCodeExamForm(
 
   async function handleCreateCodeExam(data: CreateCodeExamFormInput) {
     try {
-      await createCodeExam(
-        {
-          status: 'MARKED',
-          studentId: data.studentId,
-          testDate: new Date(data.testDate).toISOString(),
-          testHour: data.testHour
-        }
-      )
+      await createCodeExam({
+        status: 'MARKED',
+        studentId: data.studentId,
+        testDate: new Date(data.testDate).toISOString(),
+        testHour: data.testHour,
+      })
 
       reset()
       setIsModalOpen(false)
       toast({
         title: 'Exame de código marcado!',
-        description: 'O Exame de código foi marcado com sucesso!'
+        description: 'O Exame de código foi marcado com sucesso!',
       })
       location.reload()
     } catch (error) {
-      console.log("🚀 ~ file: CreateScheduledDrivingLessonForm.tsx:62 ~ handleCreateScheduledDrivingLessonForm ~ error:", error)
+      console.log(
+        '🚀 ~ file: CreateScheduledDrivingLessonForm.tsx:62 ~ handleCreateScheduledDrivingLessonForm ~ error:',
+        error,
+      )
       toast({
         variant: 'destructive',
         title: 'Error ao tentar marcar o Exame de código',
-        description: 'Ocorreu um erro no servidor! Por favor tente novamente mais tarde'
+        description:
+          'Ocorreu um erro no servidor! Por favor tente novamente mais tarde',
       })
     }
   }
@@ -82,7 +88,7 @@ export function CreateCodeExamForm(
   return (
     <form
       onSubmit={handleSubmit(handleCreateCodeExam)}
-      className="flex flex-col gap-[2.08rem] mt-5 mb-4"
+      className="mb-4 mt-5 flex flex-col gap-[2.08rem]"
     >
       <Select
         id="student_id"
@@ -93,13 +99,12 @@ export function CreateCodeExamForm(
         onChange={(event) => setValue('studentId', event.target.value)}
       />
 
-      <div className="flex gap-4 w-full">
+      <div className="flex w-full gap-4">
         <FormField
           rules={{ required: true }}
           control={control}
           name="testDate"
-          render={({ field }) => 
-          (
+          render={({ field }) => (
             <DatePicker
               placeholder="Selecione a data para marcar o exame de código"
               field={field}
@@ -111,26 +116,23 @@ export function CreateCodeExamForm(
           {...register('testHour')}
           required
           type="time"
-          className="w-28 border border-[#C6C6C6] rounded-lg px-2 outline-none"
+          className="w-28 rounded-lg border border-[#C6C6C6] px-2 outline-none"
         />
       </div>
 
       <DialogFooter>
         <button
-          className={cn(
-            buttonVariants({ variant: "outline" }),
-            "mt-2 sm:mt-0"
-          )}
+          className={cn(buttonVariants({ variant: 'outline' }), 'mt-2 sm:mt-0')}
           onClick={() => handleCloseModal()}
         >
           Cancelar
         </button>
-        
+
         <Button
           type="submit"
           title="Marcar Exame"
           disabled={isSubmitting}
-          className="!w-40 !h-[2.125rem] mt-[2px]"
+          className="mt-[2px] !h-[2.125rem] !w-40"
         />
       </DialogFooter>
     </form>

@@ -1,14 +1,14 @@
 import { cookies } from 'next/headers'
 
-import { api } from "@/lib/api";
+import { api } from '@/lib/api'
 
-import { CreatePricesForm } from "./CreatePricesForm"
+import { CreatePricesForm } from './CreatePricesForm'
 
-import { User } from '@/utils/interfaces/user';
+import { User } from '@/utils/interfaces/user'
 
 export async function CreatePricesSection() {
   const user = cookies().get('user')?.value
-  const formattedUser = JSON.parse(user!!) as User
+  const formattedUser = JSON.parse(user!) as User
 
   let schools
 
@@ -16,9 +16,9 @@ export async function CreatePricesSection() {
     const { data } = await api.get(`/school`)
 
     schools = data.school?.map((school: any) => {
-      return  {
+      return {
         value: school.id,
-        label: school.name
+        label: school.name,
       }
     })
   } else {
@@ -27,15 +27,15 @@ export async function CreatePricesSection() {
     schools = [
       {
         value: data.school.id,
-        label: data.school.name
-      }
+        label: data.school.name,
+      },
     ]
   }
-  
+
   return (
     <section className="w-full max-w-7xl pl-10">
-      <h1 className='text-lg mt-6 font-medium mb-9'>Adicionar Valores</h1>
-      
+      <h1 className="mb-9 mt-6 text-lg font-medium">Adicionar Valores</h1>
+
       <CreatePricesForm schools={schools} />
     </section>
   )

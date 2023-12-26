@@ -14,28 +14,30 @@ type AxiosData = {
 
 export default async function ManageAlerts() {
   const user = cookies().get('user')?.value
-  const formattedUser = JSON.parse(user!!) as User
-  
+  const formattedUser = JSON.parse(user!) as User
+
   if (formattedUser.function === 'INSTRUCTOR') {
     redirect('/panel/driving-lessons')
   }
 
   let returnedData
-  
+
   if (formattedUser.function === 'DIRECTOR') {
     const { data } = await api.get<AxiosData>(`/information`)
 
     returnedData = data.information
   } else {
-    const { data } = await api.get<AxiosData>(`/information/school/${formattedUser.schoolId}`)
+    const { data } = await api.get<AxiosData>(
+      `/information/school/${formattedUser.schoolId}`,
+    )
 
     returnedData = data.information
   }
-  
+
   return (
-    <main className="w-full max-w-[80vw] flex flex-col gap-10 mt-14 mb-16">
-      <h1 className='text-xl'>Gerir Alertas</h1>
-      <div className='mx-auto -mt-9 max-w-[1440px] w-full h-[1px] bg-[#BFBFBF]'/>
+    <main className="mb-16 mt-14 flex w-full max-w-[80vw] flex-col gap-10">
+      <h1 className="text-xl">Gerir Alertas</h1>
+      <div className="mx-auto -mt-9 h-[1px] w-full max-w-[1440px] bg-[#BFBFBF]" />
 
       <ListOfInformation information={returnedData} />
     </main>

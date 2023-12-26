@@ -13,10 +13,10 @@ export function SubmitButton({ text }: SubmitButtonProps) {
   return (
     <button
       disabled={pending}
-      className='text-white bg-[#E3000F] w-40 h-10 rounded-[20px] enabled:hover:bg-[#E3000F]/90 transition-colors duration-300 disabled:bg-[#E3000F]/50 disabled:cursor-not-allowed'
-      type='submit'
+      className="h-10 w-40 rounded-[20px] bg-[#E3000F] text-white transition-colors duration-300 enabled:hover:bg-[#E3000F]/90 disabled:cursor-not-allowed disabled:bg-[#E3000F]/50"
+      type="submit"
     >
       {pending ? <Spinner /> : text}
     </button>
   )
-} 
+}

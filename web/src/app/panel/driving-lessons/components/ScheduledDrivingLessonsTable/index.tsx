@@ -5,18 +5,20 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { DeleteScheduledDrivingLesson } from "./DeleteScheduledDrivingLesson";
-import { EditScheduledDrivingLessonModal } from "./EditScheduledDrivingLessonModal";
-import { StudentInfoModal } from "@/components/StudentInfoModal";
+} from '@/components/ui/table'
+import { DeleteScheduledDrivingLesson } from './DeleteScheduledDrivingLesson'
+import { EditScheduledDrivingLessonModal } from './EditScheduledDrivingLessonModal'
+import { StudentInfoModal } from '@/components/StudentInfoModal'
 
-import { ScheduleClass } from "@/utils/interfaces/schedule-class";
+import { ScheduleClass } from '@/utils/interfaces/schedule-class'
 
 interface ScheduledDrivingLessonsTableProps {
   scheduledClasses: ScheduleClass[]
 }
 
-export function ScheduledDrivingLessonsTable({ scheduledClasses }: ScheduledDrivingLessonsTableProps) {
+export function ScheduledDrivingLessonsTable({
+  scheduledClasses,
+}: ScheduledDrivingLessonsTableProps) {
   return (
     <div className="relative overflow-x-auto">
       <TableComponent>
@@ -34,10 +36,22 @@ export function ScheduledDrivingLessonsTable({ scheduledClasses }: ScheduledDriv
         </TableHeader>
 
         <TableBody>
-          {scheduledClasses.map(scheduledClass => (
+          {scheduledClasses.map((scheduledClass) => (
             <TableRow key={scheduledClass.id}>
-              <TableCell>{scheduledClass.status === 'COMPLETED' ? 'COMPLETADA' : scheduledClass.status === 'CONFIRMED' ? 'CONFIRMADA' : scheduledClass.status === 'CANCELED' ? 'CANCELADA' :  scheduledClass.status === 'PENDING' ? 'PENDENTE' : 'DESMARCADA'}</TableCell>
-              <TableCell>{scheduledClass.schedulingDate} {scheduledClass.schedulingHour}</TableCell>
+              <TableCell>
+                {scheduledClass.status === 'COMPLETED'
+                  ? 'COMPLETADA'
+                  : scheduledClass.status === 'CONFIRMED'
+                    ? 'CONFIRMADA'
+                    : scheduledClass.status === 'CANCELED'
+                      ? 'CANCELADA'
+                      : scheduledClass.status === 'PENDING'
+                        ? 'PENDENTE'
+                        : 'DESMARCADA'}
+              </TableCell>
+              <TableCell>
+                {scheduledClass.schedulingDate} {scheduledClass.schedulingHour}
+              </TableCell>
               <TableCell>{scheduledClass.class.name}</TableCell>
               <TableCell>{scheduledClass.student.name}</TableCell>
               <TableCell>
@@ -45,7 +59,9 @@ export function ScheduledDrivingLessonsTable({ scheduledClasses }: ScheduledDriv
               </TableCell>
               <TableCell>{scheduledClass.student.school.name}</TableCell>
               <TableCell>
-                <EditScheduledDrivingLessonModal scheduledClass={scheduledClass} />
+                <EditScheduledDrivingLessonModal
+                  scheduledClass={scheduledClass}
+                />
               </TableCell>
               <TableCell>
                 <DeleteScheduledDrivingLesson scheduledClass={scheduledClass} />

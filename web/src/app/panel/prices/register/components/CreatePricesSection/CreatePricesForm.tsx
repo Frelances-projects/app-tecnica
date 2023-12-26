@@ -1,20 +1,20 @@
 'use client'
-import { FormEvent, useState } from "react";
+import { FormEvent, useState } from 'react'
 import { revalidatePath } from 'next/cache'
-import { EuroIcon } from "lucide-react";
-import { AxiosError } from "axios";
+import { EuroIcon } from 'lucide-react'
+import { AxiosError } from 'axios'
 
-import { api } from "@/lib/api";
+import { api } from '@/lib/api'
 
-import { Button } from "@/components/Button";
-import { Select } from "@/components/Select";
-import { NumberOfInstallment } from "./NumberOfInstallment";
-import { EuroInput } from "./EuroInput";
-import { useToast } from "@/components/ui/use-toast";
+import { Button } from '@/components/Button'
+import { Select } from '@/components/Select'
+import { NumberOfInstallment } from './NumberOfInstallment'
+import { EuroInput } from './EuroInput'
+import { useToast } from '@/components/ui/use-toast'
 
 interface CreatePricesFormProps {
   schools: {
-    label: string,
+    label: string
     value: string
   }[]
 }
@@ -33,9 +33,9 @@ export function CreatePricesForm({ schools }: CreatePricesFormProps) {
   const [selectSchool, setSelectSchool] = useState('')
 
   const installment = [
-    { value: "2", label: "Em 2x" },
-    { value: "3", label: "Em 3x" },
-    { value: "4", label: "Em 4x" },
+    { value: '2', label: 'Em 2x' },
+    { value: '3', label: 'Em 3x' },
+    { value: '4', label: 'Em 4x' },
   ]
 
   async function handleCreateDriverLicenseCategory(event: FormEvent) {
@@ -46,8 +46,14 @@ export function CreatePricesForm({ schools }: CreatePricesFormProps) {
       const formattedPrice = totalValue.replace(',', '.')
       const formattedFirstInstallment = firstInstallment.replace(',', '.')
       const formattedSecondInstallment = secondInstallment.replace(',', '.')
-      const formattedThirdInstallment = thirdInstallment.trim() === '' ? undefined : thirdInstallment.replace(',', '.')
-      const formattedFourthInstallment = fourthInstallment.trim() === '' ? undefined : fourthInstallment.replace(',', '.')
+      const formattedThirdInstallment =
+        thirdInstallment.trim() === ''
+          ? undefined
+          : thirdInstallment.replace(',', '.')
+      const formattedFourthInstallment =
+        fourthInstallment.trim() === ''
+          ? undefined
+          : fourthInstallment.replace(',', '.')
 
       await api.post(`/driver-license-category`, {
         name: driverLicenseCategoryName,
@@ -56,7 +62,7 @@ export function CreatePricesForm({ schools }: CreatePricesFormProps) {
         firstInstallment: Number(formattedFirstInstallment),
         secondInstallment: Number(formattedSecondInstallment),
         thirdInstallment: formattedThirdInstallment,
-        fourthInstallment: formattedFourthInstallment
+        fourthInstallment: formattedFourthInstallment,
       })
 
       setNumberOfInstallments('')
@@ -78,8 +84,9 @@ export function CreatePricesForm({ schools }: CreatePricesFormProps) {
       if (error instanceof AxiosError) {
         toast({
           title: 'Error!',
-          description: 'Ocorreu um erro no servidor! Por favor tente novamente mais tarde',
-          variant: 'destructive'
+          description:
+            'Ocorreu um erro no servidor! Por favor tente novamente mais tarde',
+          variant: 'destructive',
         })
       }
     } finally {
@@ -90,7 +97,7 @@ export function CreatePricesForm({ schools }: CreatePricesFormProps) {
   return (
     <form
       onSubmit={handleCreateDriverLicenseCategory}
-      className="flex flex-col gap-4 mt-14 max-w-[290px]"
+      className="mt-14 flex max-w-[290px] flex-col gap-4"
     >
       <Select
         placeHolder="Definir Escola"
@@ -100,11 +107,11 @@ export function CreatePricesForm({ schools }: CreatePricesFormProps) {
         onChange={(event) => setSelectSchool(event.target.value)}
       />
 
-      <fieldset className="flex gap-4 w-full">
+      <fieldset className="flex w-full gap-4">
         <input
           required
           placeholder="Nome da categoria"
-          className="w-[18.188rem] outline-none border border-[#C6C6C6] bg-white rounded-lg px-2 py-[0.375rem] text-black"
+          className="w-[18.188rem] rounded-lg border border-[#C6C6C6] bg-white px-2 py-[0.375rem] text-black outline-none"
           type="text"
           value={driverLicenseCategoryName}
           onChange={(event) => setDriverLicenseCategoryName(event.target.value)}

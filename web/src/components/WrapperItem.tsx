@@ -1,4 +1,4 @@
-import { ReactNode } from "react"
+import { ReactNode } from 'react'
 
 interface WrapperItemProps {
   children: ReactNode
@@ -7,13 +7,15 @@ interface WrapperItemProps {
   classNameLabel?: string
 }
 
-export function WrapperItem({ children, label, htmlFor, classNameLabel }: WrapperItemProps) {
+export function WrapperItem({
+  children,
+  label,
+  htmlFor,
+  classNameLabel,
+}: WrapperItemProps) {
   return (
     <fieldset className={`flex justify-between`}>
-      <label
-        htmlFor={htmlFor}
-        className={classNameLabel}
-      >
+      <label htmlFor={htmlFor} className={classNameLabel}>
         {label}
       </label>
       {children}

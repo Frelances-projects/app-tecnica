@@ -1,11 +1,11 @@
 import { cookies } from 'next/headers'
 
-import { api } from "@/lib/api";
+import { api } from '@/lib/api'
 
-import { RegisterStudentForm } from "./RegisterStudentForm";
+import { RegisterStudentForm } from './RegisterStudentForm'
 
-import type { User } from '@/utils/interfaces/user';
-import type { Group } from '@/utils/interfaces/group';
+import type { User } from '@/utils/interfaces/user'
+import type { Group } from '@/utils/interfaces/group'
 
 type AxiosData = {
   group: Group
@@ -13,10 +13,9 @@ type AxiosData = {
 
 export async function RegisterStudentSection() {
   const user = cookies().get('user')?.value
-  const formattedUser = JSON.parse(user!!) as User
+  const formattedUser = JSON.parse(user!) as User
 
   let schools
-  let categoryCard
 
   if (formattedUser.function === 'DIRECTOR') {
     const { data } = await api.get(`/school`)
@@ -24,7 +23,7 @@ export async function RegisterStudentSection() {
     schools = data.school?.map((school: any) => {
       return {
         value: school.id,
-        label: school.name
+        label: school.name,
       }
     })
   } else {
@@ -33,28 +32,33 @@ export async function RegisterStudentSection() {
     schools = [
       {
         value: data.school.id,
-        label: data.school.name
-      }
+        label: data.school.name,
+      },
     ]
   }
 
-  const { data } = await api.get<AxiosData>('/group/name/find', { params: { groupName: 'Grupo Técnica' } })
-  const categories = data.group?.schools.flatMap(school => {
+  const { data } = await api.get<AxiosData>('/group/name/find', {
+    params: { groupName: 'Grupo Técnica' },
+  })
+  const categories = data.group?.schools.flatMap((school) => {
     return school.driverLicenseCategories
   })
-  categoryCard = categories.map(category => {
+  const categoryCard = categories.map((category) => {
     return {
       value: category.id,
       label: category.name,
-      schoolId: category.schoolId
+      schoolId: category.schoolId,
     }
   })
 
   return (
     <section className="w-full max-w-7xl pl-10">
-      <h1 className='mb-11 mt-5 text-lg font-medium'>Adicionar Alunos</h1>
+      <h1 className="mb-11 mt-5 text-lg font-medium">Adicionar Alunos</h1>
 
-      <RegisterStudentForm schools={schools} categoryCard={categoryCard as any} />
+      <RegisterStudentForm
+        schools={schools}
+        categoryCard={categoryCard as any}
+      />
     </section>
   )
 }

@@ -8,25 +8,28 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { DeleteInformationModal } from "./DeleteInformationModal";
-import { EditInformationModal } from "./EditInformationModal";
+} from '@/components/ui/table'
+import { DeleteInformationModal } from './DeleteInformationModal'
+import { EditInformationModal } from './EditInformationModal'
 
-import { Information } from '@/utils/interfaces/information';
+import { Information } from '@/utils/interfaces/information'
 
 interface InformationTableProps {
   information: Information[]
 }
 
 export function InformationTable({ information }: InformationTableProps) {
-  const formattedInformationData = information.map(info => {
+  const formattedInformationData = information.map((info) => {
     const formattedDate = format(addDays(new Date(info.date), 1), 'yyyy-MM-dd')
-    const formattedTableDate = format(addDays(new Date(info.date), 1), 'dd/MM/yyyy')
-    
+    const formattedTableDate = format(
+      addDays(new Date(info.date), 1),
+      'dd/MM/yyyy',
+    )
+
     return {
       ...info,
       date: formattedDate,
-      tableDate: formattedTableDate
+      tableDate: formattedTableDate,
     }
   })
 
@@ -45,16 +48,14 @@ export function InformationTable({ information }: InformationTableProps) {
         </TableHeader>
 
         <TableBody>
-          {formattedInformationData.map(information => (
+          {formattedInformationData.map((information) => (
             <TableRow key={information.id}>
               <TableCell>{information.name}</TableCell>
               <TableCell>{information.description}</TableCell>
               <TableCell>{information.tableDate}</TableCell>
               <TableCell>{information.school.name}</TableCell>
               <TableCell>
-                <EditInformationModal
-                  information={information}
-                />
+                <EditInformationModal information={information} />
               </TableCell>
               <TableCell>
                 <DeleteInformationModal

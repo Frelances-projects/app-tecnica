@@ -1,15 +1,15 @@
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
-import { CreateInfoForm } from "./components/CreateInfoForm";
+import { CreateInfoForm } from './components/CreateInfoForm'
 
-import { api } from '@/lib/api';
+import { api } from '@/lib/api'
 
-import { User } from '@/utils/interfaces/user';
+import { User } from '@/utils/interfaces/user'
 
 export default async function CreateInfo() {
   const user = cookies().get('user')?.value
-  const formattedUser = JSON.parse(user!!) as User
+  const formattedUser = JSON.parse(user!) as User
 
   if (formattedUser.function === 'INSTRUCTOR') {
     redirect('/panel/driving-lessons')
@@ -18,16 +18,16 @@ export default async function CreateInfo() {
   const { data } = await api.get(`/school`)
 
   const schools = data.school?.map((school: any) => {
-    return  {
+    return {
       value: school.id,
-      label: school.name
+      label: school.name,
     }
   })
-  
+
   return (
-    <main className="w-full max-w-[800px] flex flex-col gap-10 mt-14 mb-16">
-      <h1 className='text-lg'>Criar Alerta</h1>
-      <div className='mx-auto -mt-9 max-w-[1440px] w-full h-[1px] bg-[#BFBFBF]'/>
+    <main className="mb-16 mt-14 flex w-full max-w-[800px] flex-col gap-10">
+      <h1 className="text-lg">Criar Alerta</h1>
+      <div className="mx-auto -mt-9 h-[1px] w-full max-w-[1440px] bg-[#BFBFBF]" />
 
       <CreateInfoForm userFunction={formattedUser.function} schools={schools} />
     </main>
