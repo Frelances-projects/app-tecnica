@@ -50,6 +50,9 @@ interface Payment {
   id: string
   method: "INSTALLMENTS" | "INCASH"
   total: number
+  amountOfInstallments?: number
+  amountOfInstallmentsPaid?: number
+  amountOfRemainingInstallments?: number
   installments?: Installment[]
 }
 
@@ -262,17 +265,17 @@ export default function Info({ student }: InfoProps) {
               <p className="font-regular text-sm mb-5">
                 {studentInfo?.payment.method === 'INCASH' && `Pagamento de ${studentInfo.payment.total} realizado com sucesso`}
                 {
-                  studentInfo?.payment.method === 'INSTALLMENTS' 
-                  && studentInfo?.payment?.installments &&
-                  `Prestação ${studentInfo.payment.installments[0].amountOfInstallmentsPaid} de ${studentInfo.payment.installments!![0].amountOfInstallments} a pagamento: ${studentInfo.payment.installments!![0].valueOfAnInstallment}`
+                  studentInfo?.payment.method === 'INSTALLMENTS'
+                  && studentInfo?.payment?.amountOfInstallments && studentInfo?.payment?.amountOfInstallmentsPaid && studentInfo?.payment?.amountOfRemainingInstallments &&
+                  `Prestações pagas ${studentInfo.payment.amountOfInstallmentsPaid} de ${studentInfo.payment.amountOfInstallments} a pagamento: ${studentInfo.payment.amountOfRemainingInstallments}`
                 }
               </p>
 
               {
-                studentInfo?.payment.method === 'INSTALLMENTS' &&
+                studentInfo?.payment.method === 'INSTALLMENTS' && studentInfo?.payment?.amountOfInstallments !== studentInfo?.payment?.amountOfInstallmentsPaid ?
                 <p className="font-regular text-sm">
-                  Dirige-te à escola para proceder ao pagamento.
-                </p>
+                  Dirige-te à escola para proceder o pagamento das prestações restantes.
+                </p> : studentInfo?.payment?.amountOfInstallments === studentInfo?.payment?.amountOfInstallmentsPaid && <p className="font-regular text-sm mb-5">Pagamento de {studentInfo?.payment.total} realizado com sucesso</p>
               }
             </>
           )}
