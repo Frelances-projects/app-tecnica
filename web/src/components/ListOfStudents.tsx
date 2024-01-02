@@ -7,7 +7,6 @@ import { Student } from '@/utils/interfaces/student'
 
 interface ListOfStudentsProps {
   students: Student[]
-  activePathname: string
   categoryCard?: {
     value: string
     label: string
@@ -21,7 +20,6 @@ interface ListOfStudentsProps {
 
 export function ListOfStudents({
   students,
-  activePathname,
   categoryCard,
   schools,
 }: ListOfStudentsProps) {
@@ -44,7 +42,6 @@ export function ListOfStudents({
 
       <StudentsTable
         students={filteredStudents}
-        activePathname={activePathname}
         schools={schools!}
         categoryCard={categoryCard!}
       />

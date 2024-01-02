@@ -1,3 +1,5 @@
+import { usePathname } from 'next/navigation'
+
 import {
   Table as TableComponent,
   TableBody,
@@ -13,7 +15,6 @@ import { Student } from '@/utils/interfaces/student'
 
 interface StudentsTableProps {
   students: Student[]
-  activePathname: string
   categoryCard: {
     value: string
     label: string
@@ -27,11 +28,11 @@ interface StudentsTableProps {
 
 export function StudentsTable({
   students,
-  activePathname,
   schools,
   categoryCard,
 }: StudentsTableProps) {
-  const hasEditStudentModal = activePathname === '/panel/students/list'
+  const pathname = usePathname()
+  const hasEditStudentModal = pathname === '/panel/students/list'
 
   return (
     <div className="relative overflow-x-auto">

@@ -1,7 +1,5 @@
 'use client'
 import { Trash } from 'lucide-react'
-import { AxiosError } from 'axios'
-import { api } from '@/lib/api'
 
 import {
   AlertDialog,
@@ -14,9 +12,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-import { useToast } from './ui/use-toast'
+import { useToast } from '../ui/use-toast'
 
-import { errorMessages } from '@/utils/errors/errorMessages'
+import { deleteStudent } from './action'
 
 interface DeleteStudentModalProps {
   id: string
@@ -27,41 +25,19 @@ export function DeleteStudentModal({ id, title }: DeleteStudentModalProps) {
   const { toast } = useToast()
 
   async function handleDeleteStudent() {
-    try {
-      await api.delete(`/student/${id}`)
+    const { message } = await deleteStudent(id)
 
+    if (message === 'Success!') {
       toast({
         title: 'Estudante Deletado!',
         description: 'Estudante deletado com sucesso!',
       })
-      location.reload()
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        if (error.response?.data?.message) {
-          if (error.response?.data.message === errorMessages.studentNotFound) {
-            return toast({
-              title: 'Estudante não encontrado!',
-              description:
-                'Parece que esse estudante já foi deletado, por favor atualize a página',
-              variant: 'destructive',
-            })
-          }
-        } else {
-          return toast({
-            title: 'Erro!',
-            description:
-              'Ocorreu um erro no servidor! Por favor tente novamente mais tarde',
-            variant: 'destructive',
-          })
-        }
-      } else {
-        toast({
-          title: 'Erro!',
-          description:
-            'Ocorreu um erro no servidor! Por favor tente novamente mais tarde',
-          variant: 'destructive',
-        })
-      }
+    } else {
+      toast({
+        title: 'Erro!',
+        description: message,
+        variant: 'destructive',
+      })
     }
   }
 

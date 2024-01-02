@@ -1,6 +1,5 @@
 import { ReactNode } from 'react'
 import { useForm } from 'react-hook-form'
-import { AxiosError } from 'axios'
 
 import { InputModal } from '@/components/InputModal'
 import { DatePicker } from '@/components/ui/date-picker'
@@ -8,17 +7,15 @@ import { FormField } from '@/components/ui/form'
 import { useToast } from '@/components/ui/use-toast'
 import { Select } from '@/components/Select'
 
-import { api } from '@/lib/api'
-import { errorMessages } from '@/utils/errors/errorMessages'
 import { ScheduleClass } from '@/utils/interfaces/schedule-class'
-import { format } from 'date-fns'
+import { editScheduledDrivingLesson } from './action'
 
 interface EditScheduledClassFormProps {
   scheduledClass: ScheduleClass
   children: ReactNode
 }
 
-interface EditScheduledClassInputs {
+export interface EditScheduledClassInputs {
   schedulingDate?: string
   schedulingHour: string
   status: 'PENDING' | 'UNCHECKED' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
@@ -46,49 +43,26 @@ export function EditScheduledClassForm({
   const { toast } = useToast()
 
   async function handleEditScheduledClass(data: EditScheduledClassInputs) {
-    try {
-      await api.put(`/scheduled-class/${scheduledClass.id}`, {
-        schedulingDate: data.schedulingDate
-          ? new Date(data.schedulingDate).toISOString()
-          : new Date(scheduledClass.schedulingDateNotFormatted!).toISOString(),
-        schedulingHour: data.schedulingHour,
-        status: data.status,
-        classId: scheduledClass.classId,
-      })
+    const { message } = await editScheduledDrivingLesson({
+      scheduledClassId: scheduledClass.id,
+      classId: scheduledClass.classId,
+      schedulingDateNotFormatted: scheduledClass.schedulingDateNotFormatted!,
+      data,
+    })
 
+    if (message === 'Success!') {
       reset()
       toast({
         title: 'Marcação da aula de condução atualizada!',
         description:
           'A marcação da aula de condução foi atualizada com sucesso!',
       })
-      location.reload()
-    } catch (error) {
-      console.log(
-        '🚀 ~ file: EditScheduledClassForm.tsx:62 ~ handleEditScheduledClass ~ error:',
-        error,
-      )
-      if (error instanceof AxiosError) {
-        if (error.response?.data?.message) {
-          if (
-            error.response?.data.message ===
-            errorMessages.scheduledClassNotFound
-          ) {
-            return toast({
-              title: 'Marcação da aula de condução não encontrado!',
-              description: 'Parece que essa marcação já foi deletada!',
-              variant: 'destructive',
-            })
-          }
-        } else {
-          return toast({
-            title: 'Erro!',
-            description:
-              'Ocorreu um erro no servidor! Por favor tente novamente mais tarde',
-            variant: 'destructive',
-          })
-        }
-      }
+    } else {
+      toast({
+        title: 'Erro!',
+        description: message,
+        variant: 'destructive',
+      })
     }
   }
 

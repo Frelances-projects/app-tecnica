@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios'
 import { Trash } from 'lucide-react'
 
 import {
@@ -14,10 +13,8 @@ import {
 } from '@/components/ui/alert-dialog'
 import { useToast } from '@/components/ui/use-toast'
 
-import { api } from '@/lib/api'
-
 import { ScheduleClass } from '@/utils/interfaces/schedule-class'
-import { errorMessages } from '@/utils/errors/errorMessages'
+import { deleteScheduledDrivingLesson } from './action'
 
 interface DeleteScheduledDrivingLessonProps {
   scheduledClass: ScheduleClass
@@ -29,36 +26,19 @@ export function DeleteScheduledDrivingLesson({
   const { toast } = useToast()
 
   async function handleDeleteScheduledDrivingLesson() {
-    try {
-      await api.delete(`/scheduled-class/${scheduledClass.id}`)
+    const { message } = await deleteScheduledDrivingLesson(scheduledClass.id)
 
+    if (message === 'Success!') {
       toast({
         title: 'Marcação da aula de condução deletada!',
         description: 'A marcação da aula de condução foi deletada com sucesso!',
       })
-      location.reload()
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        if (error.response?.data?.message) {
-          if (
-            error.response?.data.message ===
-            errorMessages.scheduledClassNotFound
-          ) {
-            return toast({
-              title: 'Marcação da aula de condução não encontrado!',
-              description: 'Parece que essa marcação já foi deletada!',
-              variant: 'destructive',
-            })
-          }
-        } else {
-          return toast({
-            title: 'Erro!',
-            description:
-              'Ocorreu um erro no servidor! Por favor tente novamente mais tarde',
-            variant: 'destructive',
-          })
-        }
-      }
+    } else {
+      toast({
+        title: 'Erro!',
+        description: message,
+        variant: 'destructive',
+      })
     }
   }
 

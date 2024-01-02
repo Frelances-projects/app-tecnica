@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios'
 import { Trash } from 'lucide-react'
 
 import {
@@ -14,10 +13,9 @@ import {
 } from '@/components/ui/alert-dialog'
 import { useToast } from '@/components/ui/use-toast'
 
-import { api } from '@/lib/api'
+import { deleteCodeLesson } from './action'
 
 import { Class } from '@/utils/interfaces/class'
-import { errorMessages } from '@/utils/errors/errorMessages'
 
 interface DeleteCodeLessonProps {
   lesson: Class
@@ -27,33 +25,19 @@ export function DeleteCodeLesson({ lesson }: DeleteCodeLessonProps) {
   const { toast } = useToast()
 
   async function handleDeleteCodeLesson() {
-    try {
-      await api.delete(`/class/${lesson.id}`)
+    const { message } = await deleteCodeLesson(lesson.id)
 
+    if (message === 'Success!') {
       toast({
         title: 'Aula de código deletada!',
         description: 'A aula de código foi deletada com sucesso!',
       })
-      location.reload()
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        if (error.response?.data?.message) {
-          if (error.response?.data.message === errorMessages.classNotFound) {
-            return toast({
-              title: 'Aula de código não encontrado!',
-              description: 'Parece que essa aula de código já foi deletada!',
-              variant: 'destructive',
-            })
-          }
-        } else {
-          return toast({
-            title: 'Erro!',
-            description:
-              'Ocorreu um erro no servidor! Por favor tente novamente mais tarde',
-            variant: 'destructive',
-          })
-        }
-      }
+    } else {
+      toast({
+        title: 'Erro!',
+        description: message,
+        variant: 'destructive',
+      })
     }
   }
 

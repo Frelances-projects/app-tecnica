@@ -1,6 +1,5 @@
 import { ReactNode } from 'react'
 import { useForm } from 'react-hook-form'
-import { AxiosError } from 'axios'
 
 import { InputModal } from '@/components/InputModal'
 import { DatePicker } from '@/components/ui/date-picker'
@@ -8,16 +7,16 @@ import { FormField } from '@/components/ui/form'
 import { useToast } from '@/components/ui/use-toast'
 import { Select } from '@/components/Select'
 
-import { api } from '@/lib/api'
-import { errorMessages } from '@/utils/errors/errorMessages'
 import { Test } from '@/utils/interfaces/tests'
+
+import { editCodeExam } from './action'
 
 interface EditCodeExamFormProps {
   test: Test
   children: ReactNode
 }
 
-interface EditCodeExamInputs {
+export interface EditCodeExamInputs {
   testDate?: string
   testHour: string
   status: 'MARKED' | 'APPROVED' | 'DISAPPROVED'
@@ -40,44 +39,24 @@ export function EditCodeExamForm({ test, children }: EditCodeExamFormProps) {
   const { toast } = useToast()
 
   async function handleEditCodeExam(data: EditCodeExamInputs) {
-    try {
-      await api.put(`/test/${test.id}`, {
-        testDate: data.testDate
-          ? new Date(data.testDate).toISOString()
-          : new Date(test.testDateNotFormatted!).toISOString(),
-        testHour: data.testHour,
-        status: data.status,
-      })
+    const { message } = await editCodeExam({
+      testId: test.id,
+      data,
+      testDateNotFormatted: test.testDateNotFormatted!,
+    })
 
+    if (message === 'Success!') {
       reset()
       toast({
         title: 'Exame de código atualizado!',
         description: 'O exame de código foi atualizado com sucesso!',
       })
-      location.reload()
-    } catch (error) {
-      console.log(
-        '🚀 ~ file: EditScheduledClassForm.tsx:62 ~ handleEditCodeExam ~ error:',
-        error,
-      )
-      if (error instanceof AxiosError) {
-        if (error.response?.data?.message) {
-          if (error.response?.data.message === errorMessages.testNotFound) {
-            return toast({
-              title: 'Exame de código não encontrado!',
-              description: 'Parece que esse exame de código já foi deletado!',
-              variant: 'destructive',
-            })
-          }
-        } else {
-          return toast({
-            title: 'Erro!',
-            description:
-              'Ocorreu um erro no servidor! Por favor tente novamente mais tarde',
-            variant: 'destructive',
-          })
-        }
-      }
+    } else {
+      toast({
+        title: 'Erro!',
+        description: message,
+        variant: 'destructive',
+      })
     }
   }
 

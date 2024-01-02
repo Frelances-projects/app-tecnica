@@ -16,6 +16,7 @@ import { api } from '@/lib/api'
 import { Student } from '@/utils/interfaces/student'
 import { errorMessages } from '@/utils/errors/errorMessages'
 import { EditStudentForm } from './EditStudentForm'
+import { editStudent } from './action'
 
 export interface EditStudentFormInput {
   student_name: string
@@ -47,71 +48,21 @@ export function EditStudentModal({
   const { toast } = useToast()
 
   async function handleEditStudent(data: EditStudentFormInput) {
-    try {
-      await api.put(`/student/${student.id}`, {
-        name: data.student_name ?? student.name,
-        email: data.student_email ?? student.email,
-        schoolId: data.student_school ?? student.schoolId,
-        driverLicenseCategoryId:
-          data.student_category_card ?? student.driverLicenseCategoryId,
-        // enrolledAt: data.student_enrolled_at && data.student_enrolled_at.trim() !== '' ? String(new Date(data.student_enrolled_at).toISOString()) : String(new Date(student.enrolledAt).toISOString()),
-        number: Number(data.student_number) ?? Number(student.number),
-        phone: `+351${data.student_phone}` ?? student.phone,
-      })
+    const { message } = await editStudent({ data, student })
 
+    if (message === 'Success!') {
       toast({
         title: 'Dados do estudante atualizados!',
         description: 'Todos os dados do estudante foram atualizados',
       })
-
-      location.reload()
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        if (error.response?.data?.message) {
-          if (
-            error.response?.data.message ===
-            errorMessages.emailHasAlreadyBeenUsed
-          ) {
-            return toast({
-              title: 'Error!',
-              description:
-                'Esse E-mail já está sendo utilizando, por favor coloque outro E-mail',
-              variant: 'destructive',
-            })
-          } else if (
-            error.response?.data.message ===
-            errorMessages.numberHasAlreadyBeenUsed
-          ) {
-            return toast({
-              title: 'Error!',
-              description:
-                'Esse número já está sendo utilizado, por favor coloque outro',
-              variant: 'destructive',
-            })
-          }
-        } else {
-          return toast({
-            title: 'Error!',
-            description:
-              'Ocorreu um erro no servidor! Por favor tente novamente mais tarde',
-            variant: 'destructive',
-          })
-        }
-      } else {
-        toast({
-          title: 'Error!',
-          description:
-            'Ocorreu um erro no servidor! Por favor tente novamente mais tarde',
-          variant: 'destructive',
-        })
-      }
+    } else {
+      toast({
+        title: 'Erro!',
+        description: message,
+        variant: 'destructive',
+      })
     }
   }
-
-  const paymentMethod = [
-    { value: 'INCASH', label: 'Pronto Pagamento' },
-    { value: 'INSTALLMENTS', label: 'Prestações' },
-  ]
 
   return (
     <AlertDialog>

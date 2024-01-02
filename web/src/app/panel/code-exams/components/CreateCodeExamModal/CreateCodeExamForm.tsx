@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form'
-import { UseMutateAsyncFunction } from '@tanstack/react-query'
 
 import { DialogFooter } from '@/components/ui/dialog'
 import { Select } from '@/components/Select'
@@ -11,8 +10,7 @@ import { Button } from '@/components/Button'
 import { useToast } from '@/components/ui/use-toast'
 
 import { cn } from '@/lib/utils'
-
-import { CreateCodeExamMutation } from '.'
+import { createCodeExam } from './action'
 
 export interface CreateCodeExamFormInput {
   studentId: string
@@ -27,18 +25,11 @@ interface CreateCodeExamFormProps {
     label: string
   }[]
   setIsModalOpen: (isOpen: boolean) => void
-  createCodeExam: UseMutateAsyncFunction<
-    any,
-    Error,
-    CreateCodeExamMutation,
-    unknown
-  >
 }
 
 export function CreateCodeExamForm({
   students,
   setIsModalOpen,
-  createCodeExam,
 }: CreateCodeExamFormProps) {
   const {
     register,
@@ -56,31 +47,20 @@ export function CreateCodeExamForm({
   }
 
   async function handleCreateCodeExam(data: CreateCodeExamFormInput) {
-    try {
-      await createCodeExam({
-        status: 'MARKED',
-        studentId: data.studentId,
-        testDate: new Date(data.testDate).toISOString(),
-        testHour: data.testHour,
-      })
+    const { message } = await createCodeExam(data)
 
+    if (message === 'Success!') {
       reset()
       setIsModalOpen(false)
       toast({
         title: 'Exame de código marcado!',
         description: 'O Exame de código foi marcado com sucesso!',
       })
-      location.reload()
-    } catch (error) {
-      console.log(
-        '🚀 ~ file: CreateScheduledDrivingLessonForm.tsx:62 ~ handleCreateScheduledDrivingLessonForm ~ error:',
-        error,
-      )
+    } else {
       toast({
+        title: 'Erro!',
+        description: message,
         variant: 'destructive',
-        title: 'Error ao tentar marcar o Exame de código',
-        description:
-          'Ocorreu um erro no servidor! Por favor tente novamente mais tarde',
       })
     }
   }

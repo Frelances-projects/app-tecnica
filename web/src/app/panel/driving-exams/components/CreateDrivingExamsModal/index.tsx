@@ -1,6 +1,5 @@
 'use client'
 import { useState } from 'react'
-import { useMutation } from '@tanstack/react-query'
 
 import {
   Dialog,
@@ -11,8 +10,6 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { CreateDrivingExamForm } from './CreateDrivingExamForm'
-
-import { api } from '@/lib/api'
 
 export interface CreateDrivingExamMutation {
   studentId: string
@@ -33,24 +30,6 @@ export function CreateDrivingExamsModal({
 }: CreateDrivingExamModalProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const { mutateAsync: createDrivingExam } = useMutation({
-    mutationFn: async ({
-      studentId,
-      testDate,
-      testHour,
-      status,
-    }: CreateDrivingExamMutation) => {
-      const { data } = await api.post(`/test/${studentId}`, {
-        testDate,
-        testHour,
-        category: 'PRACTICAL',
-        status,
-      })
-
-      return data.test
-    },
-  })
-
   return (
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
       <DialogTrigger className="w-72 rounded bg-[#E3000F] px-7 py-[0.375rem] text-white transition-colors duration-300 enabled:hover:bg-[#E3000F]/80 disabled:cursor-not-allowed disabled:bg-[#E3000F]/60">
@@ -67,7 +46,6 @@ export function CreateDrivingExamsModal({
         <CreateDrivingExamForm
           students={students}
           setIsModalOpen={setIsModalOpen}
-          createDrivingExam={createDrivingExam}
         />
       </DialogContent>
     </Dialog>

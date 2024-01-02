@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form'
-import { UseMutateAsyncFunction } from '@tanstack/react-query'
 
 import { DialogFooter } from '@/components/ui/dialog'
 import { Select } from '@/components/Select'
@@ -11,8 +10,7 @@ import { Button } from '@/components/Button'
 import { useToast } from '@/components/ui/use-toast'
 
 import { cn } from '@/lib/utils'
-
-import { CreateDrivingExamMutation } from '.'
+import { createDrivingExam } from './action'
 
 export interface CreateDrivingExamFormInput {
   studentId: string
@@ -27,18 +25,11 @@ interface CreateDrivingExamFormProps {
     label: string
   }[]
   setIsModalOpen: (isOpen: boolean) => void
-  createDrivingExam: UseMutateAsyncFunction<
-    any,
-    Error,
-    CreateDrivingExamMutation,
-    unknown
-  >
 }
 
 export function CreateDrivingExamForm({
   students,
   setIsModalOpen,
-  createDrivingExam,
 }: CreateDrivingExamFormProps) {
   const {
     register,
@@ -56,31 +47,20 @@ export function CreateDrivingExamForm({
   }
 
   async function handleCreateDrivingExam(data: CreateDrivingExamFormInput) {
-    try {
-      await createDrivingExam({
-        status: 'MARKED',
-        studentId: data.studentId,
-        testDate: new Date(data.testDate).toISOString(),
-        testHour: data.testHour,
-      })
+    const { message } = await createDrivingExam(data)
 
+    if (message === 'Success!') {
       reset()
       setIsModalOpen(false)
       toast({
         title: 'Exame de condução marcado!',
         description: 'O Exame de condução foi marcado com sucesso!',
       })
-      location.reload()
-    } catch (error) {
-      console.log(
-        '🚀 ~ file: CreateScheduledDrivingLessonForm.tsx:62 ~ handleCreateScheduledDrivingLessonForm ~ error:',
-        error,
-      )
+    } else {
       toast({
+        title: 'Erro!',
+        description: message,
         variant: 'destructive',
-        title: 'Error ao tentar marcar o Exame de condução',
-        description:
-          'Ocorreu um erro no servidor! Por favor tente novamente mais tarde',
       })
     }
   }

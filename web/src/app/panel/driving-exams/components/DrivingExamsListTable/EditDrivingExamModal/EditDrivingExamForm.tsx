@@ -1,6 +1,5 @@
 import { ReactNode } from 'react'
 import { useForm } from 'react-hook-form'
-import { AxiosError } from 'axios'
 
 import { InputModal } from '@/components/InputModal'
 import { DatePicker } from '@/components/ui/date-picker'
@@ -8,8 +7,8 @@ import { FormField } from '@/components/ui/form'
 import { useToast } from '@/components/ui/use-toast'
 import { Select } from '@/components/Select'
 
-import { api } from '@/lib/api'
-import { errorMessages } from '@/utils/errors/errorMessages'
+import { editDrivingExam } from './action'
+
 import { Test } from '@/utils/interfaces/tests'
 
 interface EditDrivingExamFormProps {
@@ -17,7 +16,7 @@ interface EditDrivingExamFormProps {
   children: ReactNode
 }
 
-interface EditDrivingExamFormInputs {
+export interface EditDrivingExamFormInputs {
   testDate?: string
   testHour: string
   status: 'MARKED' | 'APPROVED' | 'DISAPPROVED'
@@ -43,44 +42,24 @@ export function EditDrivingExamForm({
   const { toast } = useToast()
 
   async function handleEditDrivingExam(data: EditDrivingExamFormInputs) {
-    try {
-      await api.put(`/test/${test.id}`, {
-        testDate: data.testDate
-          ? new Date(data.testDate).toISOString()
-          : new Date(test.testDateNotFormatted!).toISOString(),
-        testHour: data.testHour,
-        status: data.status,
-      })
+    const { message } = await editDrivingExam({
+      testId: test.id,
+      testDateNotFormatted: test.testDateNotFormatted!,
+      data,
+    })
 
+    if (message === 'Success!') {
       reset()
       toast({
         title: 'Exame de condução atualizado!',
         description: 'O exame de condução foi atualizado com sucesso!',
       })
-      location.reload()
-    } catch (error) {
-      console.log(
-        '🚀 ~ file: EditScheduledClassForm.tsx:62 ~ handleEditCodeExam ~ error:',
-        error,
-      )
-      if (error instanceof AxiosError) {
-        if (error.response?.data?.message) {
-          if (error.response?.data.message === errorMessages.testNotFound) {
-            return toast({
-              title: 'Exame de condução não encontrado!',
-              description: 'Parece que esse exame de condução já foi deletado!',
-              variant: 'destructive',
-            })
-          }
-        } else {
-          return toast({
-            title: 'Erro!',
-            description:
-              'Ocorreu um erro no servidor! Por favor tente novamente mais tarde',
-            variant: 'destructive',
-          })
-        }
-      }
+    } else {
+      toast({
+        title: 'Erro!',
+        description: message,
+        variant: 'destructive',
+      })
     }
   }
 

@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios'
 import { Trash } from 'lucide-react'
 
 import {
@@ -14,10 +13,8 @@ import {
 } from '@/components/ui/alert-dialog'
 import { useToast } from '@/components/ui/use-toast'
 
-import { api } from '@/lib/api'
-
 import { Test } from '@/utils/interfaces/tests'
-import { errorMessages } from '@/utils/errors/errorMessages'
+import { deleteDrivingExam } from './action'
 
 interface DeleteDrivingExamModalProps {
   test: Test
@@ -27,33 +24,19 @@ export function DeleteDrivingExamModal({ test }: DeleteDrivingExamModalProps) {
   const { toast } = useToast()
 
   async function handleDeleteDrivingExam() {
-    try {
-      await api.delete(`/test/${test.id}`)
+    const { message } = await deleteDrivingExam(test.id)
 
+    if (message === 'Success!') {
       toast({
         title: 'Exame de condução deletado!',
         description: 'O exame de condução foi deletado com sucesso',
       })
-      location.reload()
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        if (error.response?.data?.message) {
-          if (error.response?.data.message === errorMessages.testNotFound) {
-            return toast({
-              title: 'Exame de condução não encontrado!',
-              description: 'Parece que esse exame de condução já foi deletado!',
-              variant: 'destructive',
-            })
-          }
-        } else {
-          return toast({
-            title: 'Erro!',
-            description:
-              'Ocorreu um erro no servidor! Por favor tente novamente mais tarde',
-            variant: 'destructive',
-          })
-        }
-      }
+    } else {
+      toast({
+        title: 'Erro!',
+        description: message,
+        variant: 'destructive',
+      })
     }
   }
 

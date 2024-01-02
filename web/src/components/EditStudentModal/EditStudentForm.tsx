@@ -21,14 +21,7 @@ interface EditStudentFormProps {
     value: string
     label: string
   }[]
-  handleEditStudent: (data: EditStudentFormInput) => Promise<
-    | {
-        id: string
-        dismiss: () => void
-        update: (props: any) => void
-      }
-    | undefined
-  >
+  handleEditStudent: (data: EditStudentFormInput) => Promise<void>
 }
 
 export function EditStudentForm({

@@ -1,4 +1,4 @@
-import { cookies, headers } from 'next/headers'
+import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { addDays } from 'date-fns'
 import { format } from 'date-fns-tz'
@@ -14,9 +14,6 @@ type AxiosData = {
 }
 
 export default async function ManageStudents() {
-  const headersList = headers()
-  const activePath = headersList.get('x-invoke-path')
-
   const user = cookies().get('user')?.value
   const formattedUser = JSON.parse(user!)
 
@@ -98,7 +95,6 @@ export default async function ManageStudents() {
 
       <ListOfStudents
         students={formattedData}
-        activePathname={activePath!}
         categoryCard={categoryCard}
         schools={schools}
       />

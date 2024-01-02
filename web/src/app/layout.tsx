@@ -1,5 +1,3 @@
-import { headers, cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
 import { Inter } from 'next/font/google'
 
 import { Toaster } from '@/components/ui/toaster'
@@ -13,20 +11,11 @@ export const metadata = {
   description: 'Escola de condução',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const headersList = headers()
-  const activePath = headersList.get('x-invoke-path')
-
-  const user = cookies().get('user')?.value
-
-  if (user && (activePath === '/' || activePath === '/register')) {
-    redirect('/panel/alert/create')
-  }
-
   return (
     <html lang="pt-PT">
       <body className={inter.className}>
