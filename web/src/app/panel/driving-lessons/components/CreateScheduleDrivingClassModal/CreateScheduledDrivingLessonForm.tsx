@@ -1,6 +1,6 @@
 import { useForm, useFieldArray } from 'react-hook-form'
-import { useMutation } from '@tanstack/react-query'
 import { X } from 'lucide-react'
+import { format } from 'date-fns-tz'
 
 import { InputModal } from '@/components/InputModal'
 import { Select } from '@/components/Select'
@@ -13,8 +13,7 @@ import { useToast } from '@/components/ui/use-toast'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 
 import { cn } from '@/lib/utils'
-import { api } from '@/lib/api'
-import { format } from 'date-fns-tz'
+import { createScheduledDrivingLesson } from './actions'
 
 interface Lesson {
   lessonName: string
@@ -24,22 +23,13 @@ interface Lesson {
   studentId: string
 }
 
-interface CreateScheduledDrivingLessonInputs {
+export interface CreateScheduledDrivingLessonInputs {
   lessonName: string
   lessonDescription?: string
   schedulingDate: string | undefined
   schedulingHour: string
   studentId: string
   lessons: Lesson[]
-}
-
-interface CreateScheduledDrivingLessonMutation {
-  schedulingDate: string
-  schedulingHour: string
-  status?: 'PENDING' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
-  studentId: string
-  className: string
-  classDescription?: string
 }
 
 interface CreateScheduledDrivingLessonFormProps {
@@ -99,41 +89,12 @@ export function CreateScheduledDrivingLessonForm({
     setIsModalOpen(false)
   }
 
-  const { mutateAsync: createScheduledDrivingLesson } = useMutation({
-    mutationFn: async ({
-      schedulingDate,
-      schedulingHour,
-      status,
-      className,
-      classDescription,
-      studentId,
-    }: CreateScheduledDrivingLessonMutation) => {
-      await api.post('/scheduled-class/practical-class', {
-        schedulingDate: new Date(schedulingDate).toISOString(),
-        schedulingHour,
-        status,
-        studentId,
-        className,
-        classDescription,
-      })
-    },
-  })
-
   async function handleCreateScheduledDrivingLessonForm(
     data: CreateScheduledDrivingLessonInputs,
   ) {
-    try {
-      for (const lesson of data.lessons) {
-        await createScheduledDrivingLesson({
-          className: lesson.lessonName,
-          classDescription: lesson.lessonDescription,
-          studentId: lesson.studentId,
-          schedulingDate: lesson.schedulingDate,
-          schedulingHour: lesson.schedulingHour,
-          status: 'PENDING',
-        })
-      }
+    const { message } = await createScheduledDrivingLesson(data)
 
+    if (message === 'Success!') {
       reset()
       setIsModalOpen(false)
       toast({
@@ -146,19 +107,11 @@ export function CreateScheduledDrivingLessonForm({
             ? 'As aulas foram marcadas com sucesso!'
             : 'A aula foi marcada com sucesso!',
       })
-      setTimeout(() => {
-        location.reload()
-      }, 1800)
-    } catch (error) {
-      console.log(
-        '🚀 ~ file: CreateScheduledDrivingLessonForm.tsx:62 ~ handleCreateScheduledDrivingLessonForm ~ error:',
-        error,
-      )
+    } else {
       toast({
         variant: 'destructive',
-        title: 'Error ao tentar marcar a aula',
-        description:
-          'Ocorreu um erro no servidor! Por favor tente novamente mais tarde',
+        title: 'Erro!',
+        description: message,
       })
     }
   }
