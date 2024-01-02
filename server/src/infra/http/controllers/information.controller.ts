@@ -73,11 +73,11 @@ export class InformationController {
         body: `Foi criado um novo alerta na tua escola: ${information.description}`,
       }),
 
-      this.pushNotificationService.sendNotificationToSchool({
-        schoolId: information.schoolId,
-        title: 'Um novo alerta foi gerado na sua escola!',
-        body: `Sobre o alerta: ${information.description}`,
-      }),
+      // this.pushNotificationService.sendNotificationToSchool({
+      //   schoolId: information.schoolId,
+      //   title: 'Um novo alerta foi gerado na sua escola!',
+      //   body: `Sobre o alerta: ${information.description}`,
+      // }),
     ])
 
     return {
