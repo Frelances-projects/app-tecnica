@@ -218,17 +218,17 @@ export class ScheduledClassController {
     )
 
     await Promise.all([
-      this.pushNotificationService.sendNotificationToStudent({
-        studentId: scheduledClass.studentId,
-        title: 'Aula de condução marcada!',
-        body: `Uma nova aula de condução foi marcada para: ${format(
-          new Date(scheduledClass.schedulingDate),
-          'PPP',
-          { locale: pt },
-        )} ás ${
-          scheduledClass.schedulingHour
-        }, por favor, confirme a sua presença!`,
-      }),
+      // this.pushNotificationService.sendNotificationToStudent({
+      //   studentId: scheduledClass.studentId,
+      //   title: 'Aula de condução marcada!',
+      //   body: `Uma nova aula de condução foi marcada para: ${format(
+      //     new Date(scheduledClass.schedulingDate),
+      //     'PPP',
+      //     { locale: pt },
+      //   )} ás ${
+      //     scheduledClass.schedulingHour
+      //   }, por favor, confirme a sua presença!`,
+      // }),
 
       this.pushNotificationService.sendSmsToStudent({
         studentId: scheduledClass.studentId,
