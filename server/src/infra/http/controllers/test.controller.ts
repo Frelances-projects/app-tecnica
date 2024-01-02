@@ -123,16 +123,16 @@ export class TestController {
     const { test } = await this.createTest.execute({ ...body, studentId })
 
     await Promise.all([
-      this.pushNotificationService.sendNotificationToStudent({
-        studentId,
-        title:
-          test.category === 'THEORETICAL'
-            ? 'O teu exame de código foi marcado para:'
-            : 'O teu exame de condução foi marcado para:',
-        body: `${format(new Date(test.testDate), 'PPP', { locale: pt })} ás ${
-          test.testHour
-        }`,
-      }),
+      // this.pushNotificationService.sendNotificationToStudent({
+      //   studentId,
+      //   title:
+      //     test.category === 'THEORETICAL'
+      //       ? 'O teu exame de código foi marcado para:'
+      //       : 'O teu exame de condução foi marcado para:',
+      //   body: `${format(new Date(test.testDate), 'PPP', { locale: pt })} ás ${
+      //     test.testHour
+      //   }`,
+      // }),
 
       this.pushNotificationService.sendSmsToStudent({
         studentId,
