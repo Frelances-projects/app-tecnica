@@ -9,6 +9,11 @@ import { User } from '@/utils/interfaces/user'
 
 export default async function CreateInfo() {
   const user = cookies().get('user')?.value
+
+  if (!user) {
+    redirect('/')
+  }
+
   const formattedUser = JSON.parse(user!) as User
 
   if (formattedUser.function === 'INSTRUCTOR') {

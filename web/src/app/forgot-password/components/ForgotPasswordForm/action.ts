@@ -11,7 +11,7 @@ export async function forgotPassword(data: FormData) {
 
     await api.post('/user/password/forgot-password', {
       email,
-      link: 'https://backoffice-application.grupotecnica.pt/reset-password',
+      link: 'https://backoffice-app-tecnica.vercel.app/reset-password',
     })
 
     return { message: 'Success!' }
