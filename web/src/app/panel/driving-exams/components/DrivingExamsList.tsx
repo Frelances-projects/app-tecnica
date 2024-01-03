@@ -19,16 +19,27 @@ export function DrivingExamsList({
   students,
   userFunction,
 }: DrivingExamsListProps) {
-  const [inputValue, setInputValue] = useState<string>('')
+  const [inputValueName, setInputValueName] = useState<string>('')
+  const [inputValueCode, setInputValueCode] = useState<string>('')
 
   const filteredTests = tests?.filter((test) => {
-    if (inputValue === '') return test
+    if (inputValueName === '') return test
 
     const testFilteredByStudent = test.student?.name
       ?.toLocaleUpperCase()
-      ?.startsWith(inputValue.toLocaleUpperCase())
+      ?.startsWith(inputValueName.toLocaleUpperCase())
 
     return testFilteredByStudent
+  })
+
+  const filteredTestByStudentNumber = filteredTests.filter((test) => {
+    if (inputValueCode === '') return filteredTests
+
+    const studentFiltered = String(test.student?.number)
+      ?.toLocaleUpperCase()
+      ?.startsWith(inputValueCode.toLocaleUpperCase())
+
+    return studentFiltered
   })
 
   return (
@@ -39,7 +50,7 @@ export function DrivingExamsList({
 
       <div className="flex max-w-3xl items-center">
         <SearchInput
-          setInputValue={setInputValue}
+          setInputValue={setInputValueName}
           placeholder="Filtrar por nome de aluno"
           className="!w-96"
         >
@@ -53,7 +64,14 @@ export function DrivingExamsList({
         </SearchInput>
       </div>
 
-      <DrivingExamsListTable tests={filteredTests} />
+      <SearchInput
+        className="!-mt-5 !w-96"
+        placeholder="Pesquisar pelo número do aluno"
+        setInputValue={setInputValueCode}
+        type="number"
+      />
+
+      <DrivingExamsListTable tests={filteredTestByStudentNumber} />
     </section>
   )
 }

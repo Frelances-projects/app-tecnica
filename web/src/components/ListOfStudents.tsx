@@ -23,14 +23,25 @@ export function ListOfStudents({
   categoryCard,
   schools,
 }: ListOfStudentsProps) {
-  const [inputValue, setInputValue] = useState<string>('')
+  const [inputValueName, setInputValueName] = useState<string>('')
+  const [inputValueCode, setInputValueCode] = useState<string>('')
 
   const filteredStudents = students?.filter((student) => {
-    if (inputValue === '') return student
+    if (inputValueName === '') return student
 
     const studentFiltered = student?.name
       ?.toLocaleUpperCase()
-      ?.startsWith(inputValue.toLocaleUpperCase())
+      ?.startsWith(inputValueName.toLocaleUpperCase())
+
+    return studentFiltered
+  })
+
+  const filteredStudentsByNumber = filteredStudents.filter((student) => {
+    if (inputValueCode === '') return filteredStudents
+
+    const studentFiltered = String(student?.number)
+      ?.toLocaleUpperCase()
+      ?.startsWith(inputValueCode.toLocaleUpperCase())
 
     return studentFiltered
   })
@@ -38,10 +49,17 @@ export function ListOfStudents({
   return (
     <section className="-mt-4 w-full max-w-7xl pl-10">
       <h1 className="mb-9 mt-6 text-lg font-medium">Listagem dos Alunos</h1>
-      <SearchInput setInputValue={setInputValue} />
+      <div className="flex">
+        <SearchInput setInputValue={setInputValueName} />
+        <SearchInput
+          placeholder="Pesquisar pelo número do aluno"
+          setInputValue={setInputValueCode}
+          type="number"
+        />
+      </div>
 
       <StudentsTable
-        students={filteredStudents}
+        students={filteredStudentsByNumber}
         schools={schools!}
         categoryCard={categoryCard!}
       />

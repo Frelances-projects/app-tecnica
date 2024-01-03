@@ -67,6 +67,8 @@ export function SideBar({ userFunction }: SideBarProps) {
       className={`sidebar mt-1 ${
         collapsed ? 'w-20' : 'w-[360px]'
       } bg-[#F9F9F9] text-zinc-800 transition-all duration-300 ${
+        pathname !== '/panel/students/list' &&
+        pathname !== '/panel/payment' &&
         pathname !== '/panel/code-lessons' &&
         pathname !== '/panel/students/register' &&
         pathname !== '/panel/prices/list' &&

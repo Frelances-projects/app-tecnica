@@ -19,19 +19,31 @@ export function ScheduledDrivingLessonsList({
   students,
   userFunction,
 }: ScheduledDrivingLessonsListProps) {
-  const [inputValue, setInputValue] = useState<string>('')
+  const [inputValueName, setInputValueName] = useState<string>('')
+  const [inputValueCode, setInputValueCode] = useState<string>('')
 
   const filteredScheduledClasses = scheduledClasses?.filter(
     (scheduledClass) => {
-      if (inputValue === '') return scheduledClass
+      if (inputValueName === '') return scheduledClass
 
       const studentFiltered = scheduledClass.student?.name
         ?.toLocaleUpperCase()
-        ?.startsWith(inputValue.toLocaleUpperCase())
+        ?.startsWith(inputValueName.toLocaleUpperCase())
 
       return studentFiltered
     },
   )
+
+  const filteredScheduledClassesByStudentNumber =
+    filteredScheduledClasses.filter((scheduledClass) => {
+      if (inputValueCode === '') return filteredScheduledClasses
+
+      const studentFiltered = String(scheduledClass.student?.number)
+        ?.toLocaleUpperCase()
+        ?.startsWith(inputValueCode.toLocaleUpperCase())
+
+      return studentFiltered
+    })
 
   return (
     <section className="-mt-4 w-full max-w-7xl pl-10">
@@ -41,7 +53,7 @@ export function ScheduledDrivingLessonsList({
 
       <div className="flex max-w-3xl items-center">
         <SearchInput
-          setInputValue={setInputValue}
+          setInputValue={setInputValueName}
           placeholder="Filtrar por nome de aluno"
           className="!w-96"
         >
@@ -55,8 +67,15 @@ export function ScheduledDrivingLessonsList({
         </SearchInput>
       </div>
 
+      <SearchInput
+        className="!-mt-5 !w-96"
+        placeholder="Pesquisar pelo número do aluno"
+        setInputValue={setInputValueCode}
+        type="number"
+      />
+
       <ScheduledDrivingLessonsTable
-        scheduledClasses={filteredScheduledClasses}
+        scheduledClasses={filteredScheduledClassesByStudentNumber}
       />
     </section>
   )
