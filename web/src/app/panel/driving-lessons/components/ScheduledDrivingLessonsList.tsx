@@ -60,7 +60,11 @@ export function ScheduledDrivingLessonsList({
           {userFunction !== 'INSTRUCTOR' && (
             <CreateScheduleDrivingClassModal
               students={students.map((student) => {
-                return { label: student.name, value: student.id }
+                return {
+                  label: student.name,
+                  value: student.id,
+                  number: String(student.number),
+                }
               })}
             />
           )}

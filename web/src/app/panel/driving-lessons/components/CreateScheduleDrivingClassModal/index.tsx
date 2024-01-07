@@ -16,6 +16,7 @@ interface CreateScheduleDrivingClassModalProps {
   students: {
     value: string
     label: string
+    number?: string
   }[]
 }
 

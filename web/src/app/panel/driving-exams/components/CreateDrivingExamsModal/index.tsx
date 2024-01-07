@@ -22,6 +22,7 @@ interface CreateDrivingExamModalProps {
   students: {
     value: string
     label: string
+    number?: string
   }[]
 }
 

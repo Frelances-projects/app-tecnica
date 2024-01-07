@@ -3,7 +3,6 @@ import { X } from 'lucide-react'
 import { format } from 'date-fns-tz'
 
 import { InputModal } from '@/components/InputModal'
-import { Select } from '@/components/Select'
 import { DatePicker } from '@/components/ui/date-picker'
 import { FormField } from '@/components/ui/form'
 import { DialogFooter } from '@/components/ui/dialog'
@@ -11,6 +10,7 @@ import { Button } from '@/components/Button'
 import { buttonVariants } from '@/components/ui/button'
 import { useToast } from '@/components/ui/use-toast'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
+import { Combobox } from '@/components/ui/Combobox'
 
 import { cn } from '@/lib/utils'
 import { createScheduledDrivingLesson } from './actions'
@@ -36,6 +36,7 @@ interface CreateScheduledDrivingLessonFormProps {
   students: {
     value: string
     label: string
+    number?: string
   }[]
   setIsModalOpen: (isOpen: boolean) => void
 }
@@ -136,13 +137,12 @@ export function CreateScheduledDrivingLessonForm({
         className="h-[142px] w-[520px] resize-none rounded-lg border border-[#C6C6C6] bg-white px-2 py-[0.375rem] text-black outline-none"
       />
 
-      <Select
-        id="student_id"
-        required={fields.length === 0}
-        placeHolder="Selecione o estudante para marcar a aula"
+      <Combobox
         data={students}
-        className="w-full"
-        onChange={(event) => setValue('studentId', event.target.value)}
+        onSelect={(value) => setValue('studentId', value)}
+        placeholder="Selecione o estudante para marcar a aula"
+        inputPlaceholder="Digite o número do estudante"
+        emptyHeading="Estudante não encontrado."
       />
 
       <div className="flex w-full gap-4">

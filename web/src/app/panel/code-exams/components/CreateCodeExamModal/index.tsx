@@ -22,6 +22,7 @@ interface CreateCodeExamModalProps {
   students: {
     value: string
     label: string
+    number: string
   }[]
 }
 

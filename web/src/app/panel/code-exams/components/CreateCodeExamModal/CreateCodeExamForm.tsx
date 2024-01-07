@@ -1,13 +1,13 @@
 import { useForm } from 'react-hook-form'
 
 import { DialogFooter } from '@/components/ui/dialog'
-import { Select } from '@/components/Select'
 import { FormField } from '@/components/ui/form'
 import { InputModal } from '@/components/InputModal'
 import { DatePicker } from '@/components/ui/date-picker'
 import { buttonVariants } from '@/components/ui/button'
 import { Button } from '@/components/Button'
 import { useToast } from '@/components/ui/use-toast'
+import { Combobox } from '@/components/ui/Combobox'
 
 import { cn } from '@/lib/utils'
 import { createCodeExam } from './action'
@@ -23,6 +23,7 @@ interface CreateCodeExamFormProps {
   students: {
     value: string
     label: string
+    number?: string
   }[]
   setIsModalOpen: (isOpen: boolean) => void
 }
@@ -70,13 +71,12 @@ export function CreateCodeExamForm({
       onSubmit={handleSubmit(handleCreateCodeExam)}
       className="mb-4 mt-5 flex flex-col gap-[2.08rem]"
     >
-      <Select
-        id="student_id"
-        required
-        placeHolder="Selecione o estudante para marcar o exame de código"
+      <Combobox
         data={students}
-        className="w-full"
-        onChange={(event) => setValue('studentId', event.target.value)}
+        onSelect={(value) => setValue('studentId', value)}
+        placeholder="Selecione o estudante para marcar o exame de código"
+        inputPlaceholder="Digite o número do estudante"
+        emptyHeading="Estudante não encontrado."
       />
 
       <div className="flex w-full gap-4">
