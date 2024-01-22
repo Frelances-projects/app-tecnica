@@ -18,6 +18,14 @@ export class PrismaScheduledClassRepository
     await this.prisma.scheduledClass.create({ data: raw })
   }
 
+  async createMany(scheduledClasses: ScheduledClass[]): Promise<void> {
+    const raws = scheduledClasses.map((scheduledClass) =>
+      PrismaScheduledClassMapper.toPrisma(scheduledClass),
+    )
+
+    await this.prisma.scheduledClass.createMany({ data: raws })
+  }
+
   async findById(scheduledClassId: string): Promise<ScheduledClass> {
     const scheduledClass = await this.prisma.scheduledClass.findUnique({
       where: { id: scheduledClassId },

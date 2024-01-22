@@ -12,6 +12,7 @@ import { format } from 'date-fns'
 import { pt } from 'date-fns/locale'
 
 import { CreateScheduledClass } from '../../../application/use-cases/scheduled-class/create-scheduled-class'
+import { CreateManyScheduledClasses } from '../../../application/use-cases/scheduled-class/create-many-scheduled-class'
 import { UpdateScheduledClass } from '../../../application/use-cases/scheduled-class/update-scheduled-class'
 import { UpdateScheduledClassStatus } from '../../../application/use-cases/scheduled-class/update-scheduled-class-status'
 import { DeleteScheduledClass } from 'src/application/use-cases/scheduled-class/delete-scheduled-class'
@@ -27,6 +28,7 @@ import { GetManyScheduledClassesByStudent } from '../../../application/use-cases
 import { ScheduledClassViewModel } from '../view-models/scheduled-class-view-model'
 
 import { CreateScheduledClassBody } from '../dtos/scheduled-class/create-scheduled-class-body'
+import { CreateManyScheduledClassBody } from '../dtos/scheduled-class/create-many-scheduled-class-body'
 import { UpdateScheduledClassBody } from '../dtos/scheduled-class/update-scheduled-class-body'
 import { UpdateScheduledClassStatusBody } from '../dtos/scheduled-class/update-scheduled-class-status-body'
 import { CreatePracticalScheduledClassBody } from '../dtos/scheduled-class/create-practical-scheduled-class-body'
@@ -38,6 +40,7 @@ import { CreatePracticalScheduledClass } from 'src/application/use-cases/schedul
 export class ScheduledClassController {
   constructor(
     private createScheduledClass: CreateScheduledClass,
+    private createManyScheduledClasses: CreateManyScheduledClasses,
     private createPracticalScheduledClass: CreatePracticalScheduledClass,
     private updateScheduledClass: UpdateScheduledClass,
     private updateScheduledClassStatus: UpdateScheduledClassStatus,
@@ -242,6 +245,19 @@ export class ScheduledClassController {
 
     return {
       scheduledClass: ScheduledClassViewModel.toHTTP(scheduledClass),
+    }
+  }
+
+  @Post('practical-class/create-many')
+  async createManyScheduledClass(@Body() body: CreateManyScheduledClassBody) {
+    const { scheduledClasses } = await this.createManyScheduledClasses.execute(
+      body,
+    )
+
+    return {
+      scheduledClasses: scheduledClasses.map((scheduledClass) =>
+        ScheduledClassViewModel.toHTTP(scheduledClass),
+      ),
     }
   }
 

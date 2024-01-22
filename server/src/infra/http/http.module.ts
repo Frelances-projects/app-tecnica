@@ -96,6 +96,7 @@ import { GetManyClassesByCategoryAndStudent } from 'src/application/use-cases/cl
 
 // SCHEDULE CLASS
 import { CreateScheduledClass } from 'src/application/use-cases/scheduled-class/create-scheduled-class'
+import { CreateManyScheduledClasses } from 'src/application/use-cases/scheduled-class/create-many-scheduled-class'
 import { CreatePracticalScheduledClass } from 'src/application/use-cases/scheduled-class/create-practical-scheduled-class'
 import { GetManyScheduledClasses } from 'src/application/use-cases/scheduled-class/get-many-scheduled-classes'
 import { GetManyScheduledClassesByClass } from 'src/application/use-cases/scheduled-class/get-many-scheduled-classes-by-class'
@@ -224,6 +225,7 @@ import { CreateToken } from 'src/helpers/create-token'
 
     // SCHEDULE CLASS
     CreateScheduledClass,
+    CreateManyScheduledClasses,
     CreatePracticalScheduledClass,
     GetManyScheduledClasses,
     GetManyScheduledClassesByClass,

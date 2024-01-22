@@ -2,6 +2,7 @@ import { ScheduledClass } from '../entities/scheduled-class'
 
 export abstract class ScheduledClassRepository {
   abstract create(scheduledClass: ScheduledClass): Promise<void>
+  abstract createMany(scheduledClasses: ScheduledClass[]): Promise<void>
   abstract findById(scheduledClassId: string): Promise<ScheduledClass | null>
   abstract findMany(): Promise<ScheduledClass[]>
   abstract findManyBySchoolId(schoolId: string): Promise<ScheduledClass[]>
