@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { SearchInput } from '@/components/SearchInput'
 import { ScheduledDrivingLessonsTable } from './ScheduledDrivingLessonsTable'
 import { CreateScheduleDrivingClassModal } from './CreateScheduleDrivingClassModal'
+import { CreateManyScheduleDrivingClassModal } from './CreateManyScheduleDrivingClassModal'
 
 import { ScheduleClass } from '@/utils/interfaces/schedule-class'
 import { Student } from '@/utils/interfaces/student'
@@ -58,15 +59,27 @@ export function ScheduledDrivingLessonsList({
           className="!w-96"
         >
           {userFunction !== 'INSTRUCTOR' && (
-            <CreateScheduleDrivingClassModal
-              students={students.map((student) => {
-                return {
-                  label: student.name,
-                  value: student.id,
-                  number: String(student.number),
-                }
-              })}
-            />
+            <>
+              <CreateScheduleDrivingClassModal
+                students={students.map((student) => {
+                  return {
+                    label: student.name,
+                    value: student.id,
+                    number: String(student.number),
+                  }
+                })}
+              />
+
+              <CreateManyScheduleDrivingClassModal
+                students={students.map((student) => {
+                  return {
+                    label: student.name,
+                    value: student.id,
+                    number: String(student.number),
+                  }
+                })}
+              />
+            </>
           )}
         </SearchInput>
       </div>
