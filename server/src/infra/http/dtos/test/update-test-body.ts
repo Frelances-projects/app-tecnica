@@ -7,6 +7,8 @@ export class UpdateTestBody {
   @IsString()
   testHour: string
 
+  place?: string
+
   @IsString()
   status: 'APPROVED' | 'DISAPPROVED' | 'MARKED'
 }

@@ -5,6 +5,7 @@ import { Replace } from 'src/helpers/Replace'
 interface TestProps {
   testDate: string
   testHour: string
+  place?: string | null
   status: 'APPROVED' | 'DISAPPROVED' | 'MARKED'
   studentId: string
   category: 'THEORETICAL' | 'PRACTICAL'
@@ -41,6 +42,14 @@ export class Test {
 
   public get testHour(): string {
     return this.props.testHour
+  }
+
+  public set place(place: string | null) {
+    this.props.place = place
+  }
+
+  public get place(): string | null {
+    return this.props.place
   }
 
   public set status(status: 'APPROVED' | 'DISAPPROVED' | 'MARKED') {

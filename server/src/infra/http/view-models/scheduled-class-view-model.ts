@@ -6,6 +6,7 @@ export class ScheduledClassViewModel {
       id: scheduledClass.id,
       schedulingDate: scheduledClass.schedulingDate,
       schedulingHour: scheduledClass.schedulingHour,
+      justification: scheduledClass.justification,
       status: scheduledClass.status,
       studentId: scheduledClass.studentId,
       classId: scheduledClass.classId,

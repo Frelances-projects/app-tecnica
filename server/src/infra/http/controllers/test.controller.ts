@@ -142,12 +142,16 @@ export class TestController {
                 new Date(test.testDate),
                 'PPP',
                 { locale: pt },
-              )} ás ${test.testHour}`
+              )} ás ${test.testHour} ${
+                test.place && `local do exame: ${test.place}`
+              }`
             : `O teu exame de condução foi marcado para: ${format(
                 new Date(test.testDate),
                 'PPP',
                 { locale: pt },
-              )} ás ${test.testHour}`,
+              )} ás ${test.testHour} ${
+                test.place && `local do exame: ${test.place}`
+              }`,
       }),
     ])
 

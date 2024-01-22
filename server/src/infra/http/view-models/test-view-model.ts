@@ -9,6 +9,7 @@ export class TestViewModel {
       studentId: test.studentId,
       testDate: test.testDate,
       testHour: test.testHour,
+      place: test.place,
       createdAt: test.createdAt,
       student: test.props.student ?? undefined,
     }

@@ -10,6 +10,7 @@ export class PrismaTestMapper {
       status: test.status,
       testDate: test.testDate,
       testHour: test.testHour,
+      place: test.place,
       studentId: test.studentId,
       createdAt: test.createdAt,
     }
@@ -22,6 +23,7 @@ export class PrismaTestMapper {
         status: raw.status,
         testDate: raw.testDate,
         testHour: raw.testHour,
+        place: raw.place,
         studentId: raw.studentId,
         createdAt: raw.createdAt,
         ...raw,

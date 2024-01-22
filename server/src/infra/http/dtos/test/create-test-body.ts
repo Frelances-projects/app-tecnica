@@ -7,6 +7,8 @@ export class CreateTestBody {
   @IsNotEmpty()
   testHour: string
 
+  place?: string
+
   @IsNotEmpty()
   status: 'APPROVED' | 'DISAPPROVED' | 'MARKED'
 

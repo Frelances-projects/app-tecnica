@@ -144,6 +144,7 @@ model Test {
   id        String       @id
   testDate  String
   testHour  String
+  place     String?
   status    TestStatus   @default(MARKED)
   studentId String
   category  TestCategory @default(THEORETICAL)

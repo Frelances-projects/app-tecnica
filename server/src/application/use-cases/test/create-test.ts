@@ -6,6 +6,7 @@ import { TestRepository } from 'src/application/repositories/tests-repository'
 interface CreateTestRequest {
   testDate: string
   testHour: string
+  place?: string
   studentId: string
   status: 'APPROVED' | 'DISAPPROVED' | 'MARKED'
   category: 'THEORETICAL' | 'PRACTICAL'
@@ -21,8 +22,15 @@ export class CreateTest {
 
   async execute(request: CreateTestRequest): Promise<CreateTestResponse> {
     try {
-      const { testDate, testHour, studentId, status, category } = request
-      const test = new Test({ testDate, testHour, studentId, status, category })
+      const { testDate, testHour, place, studentId, status, category } = request
+      const test = new Test({
+        testDate,
+        testHour,
+        place,
+        studentId,
+        status,
+        category,
+      })
 
       await this.testRepository.create(test)
       return {

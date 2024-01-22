@@ -8,6 +8,7 @@ interface UpdateTestRequest {
   id: string
   testDate?: string
   testHour?: string
+  place?: string
   status?: 'APPROVED' | 'DISAPPROVED' | 'MARKED'
   category?: 'THEORETICAL' | 'PRACTICAL'
 }
@@ -25,7 +26,7 @@ export class UpdateTest {
 
   async execute(request: UpdateTestRequest): Promise<UpdateTestResponse> {
     try {
-      const { id, category, status, testDate, testHour } = request
+      const { id, category, status, testDate, testHour, place } = request
 
       const { test } = await this.getTestById.execute(id)
 
@@ -33,6 +34,7 @@ export class UpdateTest {
       test.status = status ?? test.status
       test.testDate = testDate ?? test.testDate
       test.testHour = testHour ?? test.testHour
+      test.place = place ?? test.place
 
       await this.testRepository.save(test)
 
