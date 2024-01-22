@@ -81,7 +81,7 @@ export function CreateCodeExamForm({
       />
 
       <InputModal
-        placeholder="Local do exame"
+        placeholder="Local e hora de saída do exame"
         type="text"
         {...register('place')}
       />
