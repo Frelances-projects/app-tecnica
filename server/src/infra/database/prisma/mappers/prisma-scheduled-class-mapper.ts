@@ -8,6 +8,7 @@ export class PrismaScheduledClassMapper {
       id: scheduledClass.id,
       schedulingDate: scheduledClass.schedulingDate,
       schedulingHour: scheduledClass.schedulingHour,
+      justification: scheduledClass.justification,
       status: scheduledClass.status,
       studentId: scheduledClass.studentId,
       classId: scheduledClass.classId,
@@ -20,6 +21,7 @@ export class PrismaScheduledClassMapper {
       {
         schedulingDate: raw.schedulingDate,
         schedulingHour: raw.schedulingHour,
+        justification: raw.justification,
         status: raw.status,
         studentId: raw.studentId,
         classId: raw.classId,

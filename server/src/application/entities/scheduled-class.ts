@@ -5,6 +5,7 @@ import { Replace } from '../../helpers/Replace'
 interface ScheduledClassProps {
   schedulingDate?: string | null
   schedulingHour?: string | null
+  justification?: string | null
   status?:
     | 'PENDING'
     | 'UNCHECKED'
@@ -89,6 +90,14 @@ export class ScheduledClass {
 
   public get classId(): string {
     return this.props.classId
+  }
+
+  public set justification(justification: string | null) {
+    this.props.justification = justification
+  }
+
+  public get justification(): string | null {
+    return this.props.justification
   }
 
   public get createdAt(): Date {

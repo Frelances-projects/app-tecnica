@@ -1,5 +1,3 @@
-import { IsUUID } from 'class-validator'
-
 export class UpdateScheduledClassBody {
   schedulingDate: string
 
@@ -7,6 +5,7 @@ export class UpdateScheduledClassBody {
 
   status: 'PENDING' | 'UNCHECKED' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
 
-  @IsUUID()
+  justification: string
+
   classId: string
 }

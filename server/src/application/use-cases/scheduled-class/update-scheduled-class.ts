@@ -8,6 +8,7 @@ interface UpdateScheduledClassRequest {
   scheduledClassId: string
   schedulingDate?: string
   schedulingHour?: string
+  justification?: string
   classId?: string
   status?: 'PENDING' | 'UNCHECKED' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
 }
@@ -31,6 +32,7 @@ export class UpdateScheduledClass {
         scheduledClassId,
         schedulingDate,
         schedulingHour,
+        justification,
         classId,
         status,
       } = request
@@ -43,6 +45,8 @@ export class UpdateScheduledClass {
         schedulingDate ?? scheduledClass.schedulingDate
       scheduledClass.schedulingHour =
         schedulingHour ?? scheduledClass.schedulingHour
+      scheduledClass.justification =
+        justification ?? scheduledClass.justification
       scheduledClass.classId = classId ?? scheduledClass.classId
       scheduledClass.status = status ?? scheduledClass.status
 
