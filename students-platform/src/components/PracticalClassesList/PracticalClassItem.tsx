@@ -5,9 +5,15 @@ import { format } from "date-fns-tz"
 
 import { useToast } from "../ui/use-toast"
 import { server } from "@/lib/server"
+import { useState } from "react"
 
 interface ChangeStatus {
   status: 'PENDING' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
+}
+
+interface ChangePracticalClass {
+  status: 'PENDING' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
+  justification: string
 }
 
 interface PracticalClassItemProps {
@@ -21,12 +27,39 @@ interface PracticalClassItemProps {
 export function PracticalClassItem({ scheduledPracticalClassId, title, date, hour, status }: PracticalClassItemProps) {
   const { toast } = useToast()
   const queryClient = useQueryClient()
+
+  const [isItShowJustificationTextArea, setIsItShowJustificationTextArea] = useState(false)
+  const  [justification, setJustification] = useState('')
   
   const { mutateAsync: changeStatus, isLoading } = useMutation(
     async ({ status }: ChangeStatus) => {
       try {
         await server.put(`/scheduled-class/${scheduledPracticalClassId}/status`, {
           status,
+        })
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          toast({
+            title: "Ops! Erro no servidor",
+            description: "Tente novamente mais tarde",
+            variant: 'destructive'
+          })
+        }
+      }
+    },
+    {
+      onSuccess() {
+        queryClient.invalidateQueries({ queryKey: ['practical-classes'] })
+      },
+    },
+  )
+
+  const { mutateAsync: changePracticalClass, isLoading: isChangePracticalClassLoading } = useMutation(
+    async ({ status, justification }: ChangePracticalClass) => {
+      try {
+        await server.put(`/scheduled-class/${scheduledPracticalClassId}`, {
+          status,
+          justification
         })
       } catch (error) {
         if (error instanceof AxiosError) {
@@ -53,6 +86,18 @@ export function PracticalClassItem({ scheduledPracticalClassId, title, date, hou
       description: "Sua presença para a aula de condução foi confirmada com sucesso!",
     })
   }
+
+  async function handleChangePracticalClass() {
+    await changePracticalClass({ status: 'CANCELED', justification })
+
+    setIsItShowJustificationTextArea(false)
+    setJustification('')
+
+    toast({
+      title: "Aula de condução cancelada!",
+      description: "Sua presença para a aula de condução foi cancelada!",
+    })
+  }
   
   return (
     <div className="w-full">
@@ -73,14 +118,34 @@ export function PracticalClassItem({ scheduledPracticalClassId, title, date, hou
       </div>
 
       {status === 'PENDING' && (
+        <div>
+          <button 
+          className="bg-primary-500 w-full mt-1 px-3 py-1 flex items-center justify-center rounded-md text-white enabled:hover:opacity-80 enabled:hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
+          type="button"
+          onClick={() => justification.trim().length > 0 ? handleChangePracticalClass() : setIsItShowJustificationTextArea(!isItShowJustificationTextArea)}
+          disabled={isLoading}
+        >
+          {justification.trim().length > 0 ? 'Enviar' : 'Não posso'}
+        </button>
+
         <button 
           className="bg-primary-500 w-full mt-1 px-3 py-1 flex items-center justify-center rounded-md text-white enabled:hover:opacity-80 enabled:hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
           type="button"
           onClick={() => handleChangeStatus()}
           disabled={isLoading}
-        >
+          >
           Confirmar presença
-        </button>
+          </button>
+        </div>
+      )}
+
+      {isItShowJustificationTextArea && (
+        <textarea 
+          value={justification}
+          onChange={(event) => setJustification(event.target.value)} 
+          placeholder="Justificativa"
+          className="w-full placeholder-slate-500 resize-none outline-none border border-zinc-300 rounded-md px-3 pt-2 h-28 mt-4"
+        />
       )}
     </div>
   )
