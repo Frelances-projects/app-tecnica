@@ -12,6 +12,7 @@ export async function createDrivingExam(data: CreateDrivingExamFormInput) {
       studentId: data.studentId,
       testDate: new Date(data.testDate).toISOString(),
       testHour: data.testHour,
+      place: data?.place,
       category: 'PRACTICAL',
     })
 

@@ -10,6 +10,7 @@ export async function createCodeExam(data: CreateCodeExamFormInput) {
     await api.post(`/test/${data.studentId}`, {
       testDate: new Date(data.testDate).toISOString(),
       testHour: data.testHour,
+      place: data?.place,
       category: 'THEORETICAL',
       status: 'MARKED',
     })

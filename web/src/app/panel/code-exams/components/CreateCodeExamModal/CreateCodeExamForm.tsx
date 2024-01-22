@@ -16,6 +16,7 @@ export interface CreateCodeExamFormInput {
   studentId: string
   testDate: string
   testHour: string
+  place?: string
   status?: 'APPROVED' | 'DISAPPROVED' | 'MARKED'
 }
 
@@ -77,6 +78,12 @@ export function CreateCodeExamForm({
         placeholder="Selecione o estudante para marcar o exame de código"
         inputPlaceholder="Digite o número do estudante"
         emptyHeading="Estudante não encontrado."
+      />
+
+      <InputModal
+        placeholder="Local do exame"
+        type="text"
+        {...register('place')}
       />
 
       <div className="flex w-full gap-4">
