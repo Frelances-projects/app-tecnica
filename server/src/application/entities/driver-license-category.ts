@@ -14,6 +14,7 @@ interface DriverLicenseCategoryProps {
   price: number
   schoolId: string
   installments: any
+  vehicles?: string[] | null
   createdAt?: Date | null
 }
 
@@ -66,6 +67,14 @@ export class DriverLicenseCategory {
 
   public get installments(): Installments {
     return this.props.installments
+  }
+
+  public set vehicles(vehicles: string[]) {
+    this.props.vehicles = vehicles
+  }
+
+  public get vehicles(): string[] | null {
+    return this.props.vehicles
   }
 
   public get createdAt(): Date {

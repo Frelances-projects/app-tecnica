@@ -87,6 +87,7 @@ export class DriverLicenseCategoryController {
     const {
       name,
       price,
+      vehicles,
       firstInstallment,
       secondInstallment,
       thirdInstallment,
@@ -97,6 +98,7 @@ export class DriverLicenseCategoryController {
       await this.updateDriverLicenseCategory.execute({
         driverLicenseCategoryId,
         name,
+        vehicles,
         price,
         firstInstallment,
         secondInstallment,

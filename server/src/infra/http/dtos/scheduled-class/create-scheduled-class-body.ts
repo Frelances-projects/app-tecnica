@@ -14,4 +14,8 @@ export class CreateScheduledClassBody {
   @IsNotEmpty()
   @IsUUID()
   classId: string
+
+  vehicle?: string
+
+  instructorId?: string
 }

@@ -54,7 +54,23 @@ export class PrismaStudentsRepository implements StudentsRepository {
 
   async findMany(): Promise<Student[]> {
     const students = await this.prisma.student.findMany({
-      include: { school: true, scheduledClass: { include: { class: true } } },
+      include: {
+        school: {
+          include: {
+            users: {
+              select: {
+                email: true,
+                id: true,
+                schoolId: true,
+                name: true,
+                function: true,
+              },
+            },
+          },
+        },
+        driverLicenseCategory: true,
+        scheduledClass: { include: { class: true } },
+      },
     })
 
     const studentsToDomain = students.map((student) =>
@@ -67,7 +83,22 @@ export class PrismaStudentsRepository implements StudentsRepository {
   async findManyBySchool(schoolId: string): Promise<Student[]> {
     const students = await this.prisma.student.findMany({
       where: { schoolId },
-      include: { school: true },
+      include: {
+        school: {
+          include: {
+            users: {
+              select: {
+                email: true,
+                id: true,
+                schoolId: true,
+                name: true,
+                function: true,
+              },
+            },
+          },
+        },
+        driverLicenseCategory: true,
+      },
     })
 
     const studentsToDomain = students.map((student) =>

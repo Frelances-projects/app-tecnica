@@ -17,6 +17,7 @@ export class StudentViewModel {
       school: student.props.school,
       scheduledClass: student.props.scheduledClass,
       firebaseTokens: student.firebaseTokens,
+      driverLicenseCategory: student.props.driverLicenseCategory,
     }
   }
 }

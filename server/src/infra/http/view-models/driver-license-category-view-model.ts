@@ -8,6 +8,7 @@ export class DriverLicenseCategoryViewModel {
       price: driverLicenseCategory.price,
       schoolId: driverLicenseCategory.schoolId,
       installments: driverLicenseCategory.installments,
+      vehicles: driverLicenseCategory.vehicles,
       createdAt: driverLicenseCategory.createdAt,
       school: driverLicenseCategory.props.school,
     }

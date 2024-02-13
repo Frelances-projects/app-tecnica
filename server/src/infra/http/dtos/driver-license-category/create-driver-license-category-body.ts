@@ -23,4 +23,6 @@ export class CreateDriverLicenseCategoryBody {
   thirdInstallment: number
 
   fourthInstallment: number
+
+  vehicles: string[]
 }

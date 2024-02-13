@@ -8,4 +8,8 @@ export class UpdateScheduledClassBody {
   justification: string
 
   classId: string
+
+  vehicle?: string
+
+  instructorId?: string
 }

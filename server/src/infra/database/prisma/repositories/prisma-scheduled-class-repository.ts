@@ -40,7 +40,27 @@ export class PrismaScheduledClassRepository
 
   async findMany(): Promise<ScheduledClass[]> {
     const scheduledClass = await this.prisma.scheduledClass.findMany({
-      include: { class: true, student: { include: { school: true } } },
+      include: {
+        class: true,
+        instructor: true,
+        student: {
+          include: {
+            school: {
+              include: {
+                users: {
+                  select: {
+                    id: true,
+                    schoolId: true,
+                    name: true,
+                    function: true,
+                  },
+                },
+              },
+            },
+            driverLicenseCategory: true,
+          },
+        },
+      },
     })
 
     const scheduledClassesToDomain = scheduledClass.map((scheduledClass) =>
@@ -53,7 +73,27 @@ export class PrismaScheduledClassRepository
   async findManyBySchoolId(schoolId: string): Promise<ScheduledClass[]> {
     const scheduledClass = await this.prisma.scheduledClass.findMany({
       where: { student: { schoolId } },
-      include: { class: true, student: { include: { school: true } } },
+      include: {
+        class: true,
+        instructor: true,
+        student: {
+          include: {
+            school: {
+              include: {
+                users: {
+                  select: {
+                    id: true,
+                    schoolId: true,
+                    name: true,
+                    function: true,
+                  },
+                },
+              },
+            },
+            driverLicenseCategory: true,
+          },
+        },
+      },
     })
 
     const scheduledClassesToDomain = scheduledClass.map((scheduledClass) =>
@@ -68,7 +108,27 @@ export class PrismaScheduledClassRepository
   ): Promise<ScheduledClass[]> {
     const scheduledClass = await this.prisma.scheduledClass.findMany({
       where: { class: { category: categoryClass } },
-      include: { class: true, student: { include: { school: true } } },
+      include: {
+        class: true,
+        instructor: true,
+        student: {
+          include: {
+            school: {
+              include: {
+                users: {
+                  select: {
+                    id: true,
+                    schoolId: true,
+                    name: true,
+                    function: true,
+                  },
+                },
+              },
+            },
+            driverLicenseCategory: true,
+          },
+        },
+      },
     })
 
     const scheduledClassesToDomain = scheduledClass.map((scheduledClass) =>
@@ -84,7 +144,27 @@ export class PrismaScheduledClassRepository
   ): Promise<ScheduledClass[]> {
     const scheduledClass = await this.prisma.scheduledClass.findMany({
       where: { student: { schoolId }, class: { category: categoryClass } },
-      include: { class: true, student: { include: { school: true } } },
+      include: {
+        class: true,
+        instructor: true,
+        student: {
+          include: {
+            school: {
+              include: {
+                users: {
+                  select: {
+                    id: true,
+                    schoolId: true,
+                    name: true,
+                    function: true,
+                  },
+                },
+              },
+            },
+            driverLicenseCategory: true,
+          },
+        },
+      },
     })
 
     const scheduledClassesToDomain = scheduledClass.map((scheduledClass) =>
@@ -100,7 +180,27 @@ export class PrismaScheduledClassRepository
   ): Promise<ScheduledClass[]> {
     const scheduledClass = await this.prisma.scheduledClass.findMany({
       where: { student: { id: studentId }, class: { category: categoryClass } },
-      include: { class: true, student: { include: { school: true } } },
+      include: {
+        class: true,
+        instructor: true,
+        student: {
+          include: {
+            school: {
+              include: {
+                users: {
+                  select: {
+                    id: true,
+                    schoolId: true,
+                    name: true,
+                    function: true,
+                  },
+                },
+              },
+            },
+            driverLicenseCategory: true,
+          },
+        },
+      },
     })
 
     const scheduledClassesToDomain = scheduledClass.map((scheduledClass) =>

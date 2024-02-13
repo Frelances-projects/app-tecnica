@@ -15,4 +15,6 @@ export class UpdateDriverLicenseCategoryBody {
   thirdInstallment: number
 
   fourthInstallment: number
+
+  vehicles: string[]
 }

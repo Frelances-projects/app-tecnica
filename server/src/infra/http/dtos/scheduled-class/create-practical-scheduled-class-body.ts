@@ -17,4 +17,8 @@ export class CreatePracticalScheduledClassBody {
   className: string
 
   classDescription: string
+
+  vehicle?: string
+
+  instructorId?: string
 }

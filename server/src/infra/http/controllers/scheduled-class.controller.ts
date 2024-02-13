@@ -266,7 +266,14 @@ export class ScheduledClassController {
     @Param('scheduledClassId') scheduledClassId: string,
     @Body() body: UpdateScheduledClassBody,
   ) {
-    const { classId, schedulingDate, schedulingHour, status } = body
+    const {
+      classId,
+      schedulingDate,
+      schedulingHour,
+      status,
+      vehicle,
+      instructorId,
+    } = body
 
     const { scheduledClass } = await this.updateScheduledClass.execute({
       scheduledClassId,
@@ -274,6 +281,8 @@ export class ScheduledClassController {
       schedulingDate,
       schedulingHour,
       status,
+      vehicle,
+      instructorId,
     })
 
     return {

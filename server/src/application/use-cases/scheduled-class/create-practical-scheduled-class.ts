@@ -9,10 +9,18 @@ import { GetClassByName } from '../class/get-class-by-name'
 interface CreatePracticalScheduledClassRequest {
   schedulingDate: string
   schedulingHour: string
-  status?: 'PENDING' | 'UNCHECKED' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
+  status?:
+    | 'PENDING'
+    | 'UNCHECKED'
+    | 'CONFIRMED'
+    | 'CANCELED'
+    | 'COMPLETED'
+    | 'MISSED'
   studentId: string
   className: string
   classDescription?: string
+  vehicle?: string
+  instructorId?: string
 }
 
 interface CreatePracticalScheduledClassResponse {
@@ -38,6 +46,8 @@ export class CreatePracticalScheduledClass {
         studentId,
         className,
         classDescription,
+        vehicle,
+        instructorId,
       } = request
 
       const { class: lesson } = await this.getClassByName.execute(className)
@@ -51,6 +61,8 @@ export class CreatePracticalScheduledClass {
           studentId,
           classId: lesson.id,
           status,
+          vehicle,
+          instructorId,
         })
       } else {
         const { class: lesson } = await this.createClass.execute({
@@ -65,6 +77,8 @@ export class CreatePracticalScheduledClass {
           studentId,
           classId: lesson.id,
           status,
+          vehicle,
+          instructorId,
         })
       }
 

@@ -6,9 +6,17 @@ import { ScheduledClass } from '../../entities/scheduled-class'
 interface CreateScheduledClassRequest {
   schedulingDate?: string
   schedulingHour?: string
-  status?: 'PENDING' | 'UNCHECKED' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
+  status?:
+    | 'PENDING'
+    | 'UNCHECKED'
+    | 'CONFIRMED'
+    | 'CANCELED'
+    | 'COMPLETED'
+    | 'MISSED'
   studentId: string
   classId: string
+  vehicle?: string
+  instructorId?: string
 }
 
 interface CreateScheduledClassResponse {
@@ -23,8 +31,15 @@ export class CreateScheduledClass {
     request: CreateScheduledClassRequest,
   ): Promise<CreateScheduledClassResponse> {
     try {
-      const { schedulingDate, schedulingHour, status, studentId, classId } =
-        request
+      const {
+        schedulingDate,
+        schedulingHour,
+        status,
+        studentId,
+        classId,
+        instructorId,
+        vehicle,
+      } = request
 
       const scheduledClass = new ScheduledClass({
         schedulingDate,
@@ -32,6 +47,8 @@ export class CreateScheduledClass {
         studentId,
         classId,
         status,
+        instructorId,
+        vehicle,
       })
 
       await this.scheduledClassRepository.create(scheduledClass)

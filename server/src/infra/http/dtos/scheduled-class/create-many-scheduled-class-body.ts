@@ -6,4 +6,8 @@ export class CreateManyScheduledClassBody {
   @IsNotEmpty()
   @IsUUID()
   studentId: string
+
+  vehicle?: string
+
+  instructorId?: string
 }

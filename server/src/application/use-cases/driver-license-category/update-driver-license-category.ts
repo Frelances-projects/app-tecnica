@@ -8,6 +8,7 @@ interface UpdateDriverLicenseCategoryRequest {
   driverLicenseCategoryId: string
   name?: string
   price?: number
+  vehicles?: string[]
   firstInstallment?: number
   secondInstallment?: number
   thirdInstallment?: number
@@ -33,6 +34,7 @@ export class UpdateDriverLicenseCategory {
         driverLicenseCategoryId,
         name,
         price,
+        vehicles,
         firstInstallment,
         secondInstallment,
         thirdInstallment,
@@ -43,6 +45,8 @@ export class UpdateDriverLicenseCategory {
         await this.getDriverLicenseCategoryById.execute(driverLicenseCategoryId)
 
       driverLicenseCategory.name = name ?? driverLicenseCategory.name
+      driverLicenseCategory.vehicles =
+        vehicles ?? driverLicenseCategory.vehicles
       driverLicenseCategory.price =
         Number(price) * 100 ?? driverLicenseCategory.price
       driverLicenseCategory.installments.firstInstallment =

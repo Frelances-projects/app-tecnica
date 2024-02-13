@@ -6,15 +6,18 @@ interface ScheduledClassProps {
   schedulingDate?: string | null
   schedulingHour?: string | null
   justification?: string | null
+  vehicle?: string | null
   status?:
     | 'PENDING'
     | 'UNCHECKED'
     | 'CONFIRMED'
     | 'CANCELED'
     | 'COMPLETED'
+    | 'MISSED'
     | null
   studentId: string
   classId: string
+  instructorId?: string | null
   createdAt?: Date | null
 }
 
@@ -61,6 +64,7 @@ export class ScheduledClass {
       | 'CONFIRMED'
       | 'CANCELED'
       | 'COMPLETED'
+      | 'MISSED'
       | null,
   ) {
     this.props.status = status
@@ -72,6 +76,7 @@ export class ScheduledClass {
     | 'CONFIRMED'
     | 'CANCELED'
     | 'COMPLETED'
+    | 'MISSED'
     | null {
     return this.props.status
   }
@@ -98,6 +103,22 @@ export class ScheduledClass {
 
   public get justification(): string | null {
     return this.props.justification
+  }
+
+  public set vehicle(vehicle: string | null) {
+    this.props.vehicle = vehicle
+  }
+
+  public get vehicle(): string | null {
+    return this.props.vehicle
+  }
+
+  public set instructorId(instructorId: string | null) {
+    this.props.instructorId = instructorId
+  }
+
+  public get instructorId(): string | null {
+    return this.props.instructorId
   }
 
   public get createdAt(): Date {

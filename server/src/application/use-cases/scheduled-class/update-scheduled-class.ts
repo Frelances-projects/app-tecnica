@@ -9,8 +9,16 @@ interface UpdateScheduledClassRequest {
   schedulingDate?: string
   schedulingHour?: string
   justification?: string
+  vehicle?: string
   classId?: string
-  status?: 'PENDING' | 'UNCHECKED' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
+  instructorId?: string
+  status?:
+    | 'PENDING'
+    | 'UNCHECKED'
+    | 'CONFIRMED'
+    | 'CANCELED'
+    | 'COMPLETED'
+    | 'MISSED'
 }
 
 interface UpdateScheduledClassResponse {
@@ -35,6 +43,8 @@ export class UpdateScheduledClass {
         justification,
         classId,
         status,
+        vehicle,
+        instructorId,
       } = request
 
       const { scheduledClass } = await this.getScheduledClassById.execute(
@@ -49,6 +59,8 @@ export class UpdateScheduledClass {
         justification ?? scheduledClass.justification
       scheduledClass.classId = classId ?? scheduledClass.classId
       scheduledClass.status = status ?? scheduledClass.status
+      scheduledClass.vehicle = vehicle ?? scheduledClass.vehicle
+      scheduledClass.instructorId = instructorId ?? scheduledClass.instructorId
 
       await this.scheduledClassRepository.save(scheduledClass)
 

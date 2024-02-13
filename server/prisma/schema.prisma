@@ -76,6 +76,7 @@ model DriverLicenseCategory {
   price        Float
   installments Json
   schoolId     String
+  vehicles     String[]
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
   school       School    @relation(fields: [schoolId], references: [id])
@@ -85,16 +86,17 @@ model DriverLicenseCategory {
 }
 
 model User {
-  id        String       @id
-  name      String
-  email     String       @unique
-  password  String
-  schoolId  String
-  function  UserFunction @default(ADMIN)
-  token     String?
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
-  school    School       @relation(fields: [schoolId], references: [id])
+  id               String           @id
+  name             String
+  email            String           @unique
+  password         String
+  schoolId         String
+  function         UserFunction     @default(ADMIN)
+  token            String?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  school           School           @relation(fields: [schoolId], references: [id])
+  scheduledClasses ScheduledClass[]
 
   @@map("users")
 }
@@ -132,10 +134,13 @@ model ScheduledClass {
   status         ScheduledClassStatus @default(PENDING)
   studentId      String
   classId        String
+  vehicle        String?
+  instructorId   String?
   createdAt      DateTime             @default(now())
   updatedAt      DateTime             @updatedAt
   class          Class                @relation(fields: [classId], references: [id])
   student        Student              @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  instructor     User?                @relation(fields: [instructorId], references: [id], onDelete: Cascade)
 
   @@map("scheduled_classes")
 }
@@ -185,6 +190,7 @@ enum ScheduledClassStatus {
   PENDING
   CONFIRMED
   CANCELED
+  MISSED
   COMPLETED
 }
 

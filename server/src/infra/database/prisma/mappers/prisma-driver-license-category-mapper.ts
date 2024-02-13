@@ -13,6 +13,7 @@ export class PrismaDriverLicenseCategoryMapper {
       schoolId: driverLicenseCategory.schoolId,
       price: driverLicenseCategory.price,
       installments: driverLicenseCategory.installments,
+      vehicles: driverLicenseCategory.vehicles,
       createdAt: driverLicenseCategory.createdAt,
     }
   }
@@ -24,6 +25,7 @@ export class PrismaDriverLicenseCategoryMapper {
         schoolId: raw.schoolId,
         price: raw.price,
         installments: raw.installments as unknown as Installments,
+        vehicles: raw.vehicles,
         createdAt: raw.createdAt,
         ...raw,
       },

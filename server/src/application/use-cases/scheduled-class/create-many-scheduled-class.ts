@@ -9,6 +9,8 @@ import { CreateClass } from '../class/create-class'
 interface CreateManyScheduledClassRequest {
   totalClasses: number
   studentId: string
+  vehicle?: string
+  instructorId?: string
 }
 
 interface CreateManyScheduledClassResponse {
@@ -27,7 +29,7 @@ export class CreateManyScheduledClasses {
     request: CreateManyScheduledClassRequest,
   ): Promise<CreateManyScheduledClassResponse> {
     try {
-      const { studentId, totalClasses } = request
+      const { studentId, totalClasses, vehicle, instructorId } = request
 
       let lessonName = 'Aula'
       const scheduledClasses: ScheduledClass[] = []
@@ -42,6 +44,8 @@ export class CreateManyScheduledClasses {
             classId: lesson.id,
             studentId,
             status: 'COMPLETED',
+            vehicle,
+            instructorId,
           })
 
           scheduledClasses.push(scheduledClass)
@@ -55,6 +59,8 @@ export class CreateManyScheduledClasses {
             classId: newLesson.id,
             studentId,
             status: 'COMPLETED',
+            vehicle,
+            instructorId,
           })
 
           scheduledClasses.push(scheduledClass)

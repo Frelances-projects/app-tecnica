@@ -7,6 +7,7 @@ interface CreateDriverLicenseCategoryRequest {
   name: string
   price: number
   schoolId: string
+  vehicles: string[]
   firstInstallment: number
   secondInstallment: number
   thirdInstallment?: number
@@ -31,6 +32,7 @@ export class CreateDriverLicenseCategory {
         name,
         price,
         schoolId,
+        vehicles,
         firstInstallment,
         secondInstallment,
         thirdInstallment,
@@ -41,6 +43,7 @@ export class CreateDriverLicenseCategory {
         name,
         price: Number(price) * 100,
         schoolId,
+        vehicles,
         installments: {
           firstInstallment: Number(firstInstallment) * 100,
           secondInstallment: Number(secondInstallment) * 100,
