@@ -28,6 +28,8 @@ export async function editScheduledDrivingLesson({
       schedulingHour: data.schedulingHour,
       status: data.status,
       classId,
+      vehicle: data.vehicle,
+      instructorId: data.instructorId,
     })
 
     revalidatePath('/panel/driving-lessons')

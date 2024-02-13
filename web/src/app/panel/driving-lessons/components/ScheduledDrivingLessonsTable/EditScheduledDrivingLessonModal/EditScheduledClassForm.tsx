@@ -18,13 +18,22 @@ interface EditScheduledClassFormProps {
 export interface EditScheduledClassInputs {
   schedulingDate?: string
   schedulingHour: string
-  status: 'PENDING' | 'UNCHECKED' | 'CONFIRMED' | 'CANCELED' | 'COMPLETED'
+  status:
+    | 'PENDING'
+    | 'UNCHECKED'
+    | 'CONFIRMED'
+    | 'CANCELED'
+    | 'COMPLETED'
+    | 'MISSED'
+  vehicle: string
+  instructorId: string
 }
 
 const scheduledClassStatus = [
   { value: 'PENDING', label: 'PENDENTE' },
   { value: 'UNCHECKED', label: 'DESMARCADA' },
   { value: 'CANCELED', label: 'CANCELADA' },
+  { value: 'MISSED', label: 'FALTOU' },
   { value: 'CONFIRMED', label: 'CONFIRMADA' },
   { value: 'COMPLETED', label: 'COMPLETADA' },
 ]
@@ -33,14 +42,19 @@ export function EditScheduledClassForm({
   scheduledClass,
   children,
 }: EditScheduledClassFormProps) {
-  const { register, control, setValue, reset, handleSubmit } =
+  const { register, control, setValue, watch, reset, handleSubmit } =
     useForm<EditScheduledClassInputs>({
       defaultValues: {
         schedulingHour: scheduledClass.schedulingHour!,
         status: scheduledClass.status,
+        vehicle: scheduledClass.vehicle,
       },
     })
   const { toast } = useToast()
+
+  const instructors = scheduledClass.student.school.users?.filter(
+    (user) => user.function === 'INSTRUCTOR',
+  )
 
   async function handleEditScheduledClass(data: EditScheduledClassInputs) {
     const { message } = await editScheduledDrivingLesson({
@@ -83,7 +97,8 @@ export function EditScheduledClassForm({
               | 'PENDING'
               | 'CONFIRMED'
               | 'CANCELED'
-              | 'COMPLETED',
+              | 'COMPLETED'
+              | 'MISSED',
           )
         }
       />
@@ -106,6 +121,34 @@ export function EditScheduledClassForm({
           className="w-28 rounded-lg border border-[#C6C6C6] px-2 outline-none"
         />
       </div>
+
+      <Select
+        placeHolder="Selecione o veículo da aula"
+        data={scheduledClass.student.driverLicenseCategory?.vehicles?.map(
+          (vehicle) => {
+            return {
+              label: vehicle,
+              value: vehicle,
+            }
+          },
+        )}
+        className="w-full"
+        value={watch('vehicle')}
+        onChange={(event) => setValue('vehicle', event.target.value)}
+      />
+
+      <Select
+        placeHolder="Selecione o intrutor da aulas"
+        data={instructors?.map((instructor) => {
+          return {
+            label: instructor.name,
+            value: instructor.id,
+          }
+        })}
+        className="w-full"
+        value={watch('instructorId')}
+        onChange={(event) => setValue('instructorId', event.target.value)}
+      />
 
       {children}
     </form>

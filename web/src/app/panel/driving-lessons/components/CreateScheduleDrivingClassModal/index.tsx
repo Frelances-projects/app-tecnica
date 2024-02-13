@@ -12,11 +12,19 @@ import {
 } from '@/components/ui/dialog'
 import { CreateScheduledDrivingLessonForm } from './CreateScheduledDrivingLessonForm'
 
+import type { User } from '@/utils/interfaces/user'
+
 interface CreateScheduleDrivingClassModalProps {
   students: {
     value: string
     label: string
     number?: string
+    vehicles?: string[]
+    school?: {
+      id: string
+      name: string
+      users?: User[]
+    }
   }[]
 }
 

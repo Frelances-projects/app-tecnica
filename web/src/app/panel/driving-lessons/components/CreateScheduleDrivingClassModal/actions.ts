@@ -17,6 +17,8 @@ export async function createScheduledDrivingLesson(
         studentId: lesson.studentId,
         schedulingHour: lesson.schedulingHour,
         status: 'PENDING',
+        vehicle: lesson.vehicle,
+        instructorId: lesson.instructorId,
       })
     }
 

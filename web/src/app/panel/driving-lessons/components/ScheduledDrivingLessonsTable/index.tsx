@@ -29,7 +29,9 @@ export function ScheduledDrivingLessonsTable({
             <TableHead>Título da aula</TableHead>
             <TableHead>Nome do aluno</TableHead>
             <TableHead>Contato</TableHead>
+            <TableHead>Veículo</TableHead>
             <TableHead>Escola</TableHead>
+            <TableHead>Instrutor</TableHead>
             <TableHead>Editar</TableHead>
             <TableHead>Apagar</TableHead>
           </TableRow>
@@ -47,7 +49,9 @@ export function ScheduledDrivingLessonsTable({
                       ? 'CANCELADA'
                       : scheduledClass.status === 'PENDING'
                         ? 'PENDENTE'
-                        : 'DESMARCADA'}
+                        : scheduledClass.status === 'MISSED'
+                          ? 'FALTOU'
+                          : 'DESMARCADA'}
               </TableCell>
               <TableCell>
                 {scheduledClass.schedulingDate} {scheduledClass.schedulingHour}
@@ -57,7 +61,11 @@ export function ScheduledDrivingLessonsTable({
               <TableCell>
                 <StudentInfoModal student={scheduledClass.student} />
               </TableCell>
+              <TableCell>{scheduledClass.vehicle ?? 'Não informado'}</TableCell>
               <TableCell>{scheduledClass.student.school.name}</TableCell>
+              <TableCell>
+                {scheduledClass?.instructor?.name ?? 'Não informado'}
+              </TableCell>
               <TableCell>
                 <EditScheduledDrivingLessonModal
                   scheduledClass={scheduledClass}

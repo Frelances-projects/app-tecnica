@@ -1,4 +1,6 @@
+import { DriverLicenseCategory } from './driver-license-category'
 import { ScheduleClass } from './schedule-class'
+import { User } from './user'
 
 export interface Student {
   id: string
@@ -14,6 +16,8 @@ export interface Student {
   school: {
     id: string
     name: string
+    users?: User[]
   }
   scheduledClass?: ScheduleClass[]
+  driverLicenseCategory?: DriverLicenseCategory
 }

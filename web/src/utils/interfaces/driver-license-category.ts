@@ -11,6 +11,7 @@ export interface DriverLicenseCategory {
   price: number
   installments: Installments
   schoolId: string
+  vehicles?: string[]
   school: {
     id: string
     name: string

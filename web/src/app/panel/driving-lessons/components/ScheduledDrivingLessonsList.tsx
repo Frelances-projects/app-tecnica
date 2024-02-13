@@ -8,6 +8,7 @@ import { CreateManyScheduleDrivingClassModal } from './CreateManyScheduleDriving
 
 import { ScheduleClass } from '@/utils/interfaces/schedule-class'
 import { Student } from '@/utils/interfaces/student'
+import { Select } from '@/components/Select'
 
 interface ScheduledDrivingLessonsListProps {
   scheduledClasses: ScheduleClass[]
@@ -22,6 +23,7 @@ export function ScheduledDrivingLessonsList({
 }: ScheduledDrivingLessonsListProps) {
   const [inputValueName, setInputValueName] = useState<string>('')
   const [inputValueCode, setInputValueCode] = useState<string>('')
+  const [inputValueDate, setInputValueDate] = useState<string>('all')
 
   const filteredScheduledClasses = scheduledClasses?.filter(
     (scheduledClass) => {
@@ -46,6 +48,29 @@ export function ScheduledDrivingLessonsList({
       return studentFiltered
     })
 
+  const filteredScheduledClassesByDate =
+    filteredScheduledClassesByStudentNumber.filter((scheduledClass) => {
+      if (inputValueDate === 'all') return filteredScheduledClasses
+
+      const dateFiltered = scheduledClass.schedulingDate === inputValueDate
+
+      return dateFiltered
+    })
+
+  const dates = scheduledClasses
+    .map((scheduledClass) => {
+      return {
+        label: scheduledClass.schedulingDate!,
+        value: scheduledClass.schedulingDate!,
+      }
+    })
+    .filter((date) => date.value !== null && date.value !== undefined)
+
+  const uniqueDates = dates.filter(
+    (date, index, self) =>
+      index === self.findIndex((t) => t.value === date.value),
+  )
+
   return (
     <section className="-mt-4 w-full max-w-7xl pl-10">
       <h1 className="mb-9 mt-6 text-lg font-medium">
@@ -66,6 +91,8 @@ export function ScheduledDrivingLessonsList({
                     label: student.name,
                     value: student.id,
                     number: String(student.number),
+                    vehicles: student.driverLicenseCategory?.vehicles,
+                    school: student.school,
                   }
                 })}
               />
@@ -76,6 +103,8 @@ export function ScheduledDrivingLessonsList({
                     label: student.name,
                     value: student.id,
                     number: String(student.number),
+                    vehicles: student.driverLicenseCategory?.vehicles,
+                    school: student.school,
                   }
                 })}
               />
@@ -85,14 +114,21 @@ export function ScheduledDrivingLessonsList({
       </div>
 
       <SearchInput
-        className="!-mt-5 !w-96"
+        className="!w-80"
         placeholder="Pesquisar pelo número do aluno"
         setInputValue={setInputValueCode}
         type="number"
-      />
+      >
+        <Select
+          className="!w-96"
+          placeHolder="Filtrar por dia"
+          data={[{ label: 'Todos', value: 'all' }, ...uniqueDates]}
+          onChange={(event) => setInputValueDate(event.target.value)}
+        />
+      </SearchInput>
 
       <ScheduledDrivingLessonsTable
-        scheduledClasses={filteredScheduledClassesByStudentNumber}
+        scheduledClasses={filteredScheduledClassesByDate}
       />
     </section>
   )

@@ -20,6 +20,7 @@ interface CreateManyScheduledDrivingLessonFormProps {
     value: string
     label: string
     number?: string
+    vehicles?: string[]
   }[]
   setIsModalOpen: (isOpen: boolean) => void
 }

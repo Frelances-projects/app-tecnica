@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { useForm, useFieldArray } from 'react-hook-form'
 import { X } from 'lucide-react'
 import { format } from 'date-fns-tz'
@@ -14,6 +15,9 @@ import { Combobox } from '@/components/ui/Combobox'
 
 import { cn } from '@/lib/utils'
 import { createScheduledDrivingLesson } from './actions'
+import { Select } from '@/components/Select'
+
+import type { User } from '@/utils/interfaces/user'
 
 interface Lesson {
   lessonName: string
@@ -21,6 +25,8 @@ interface Lesson {
   schedulingDate: string
   schedulingHour: string
   studentId: string
+  vehicle: string
+  instructorId: string
 }
 
 export interface CreateScheduledDrivingLessonInputs {
@@ -29,6 +35,8 @@ export interface CreateScheduledDrivingLessonInputs {
   schedulingDate: string | undefined
   schedulingHour: string
   studentId: string
+  vehicle: string
+  instructorId: string
   lessons: Lesson[]
 }
 
@@ -37,6 +45,12 @@ interface CreateScheduledDrivingLessonFormProps {
     value: string
     label: string
     number?: string
+    vehicles?: string[]
+    school?: {
+      id: string
+      name: string
+      users?: User[]
+    }
   }[]
   setIsModalOpen: (isOpen: boolean) => void
 }
@@ -69,12 +83,19 @@ export function CreateScheduledDrivingLessonForm({
   const lessonDate = watch('schedulingDate')
   const lessonHour = watch('schedulingHour')
   const studentId = watch('studentId')
+  const vehicle = watch('vehicle')
+  const instructorId = watch('instructorId')
   const disabledButton =
     lessonName?.trim() === '' ||
     !lessonDate ||
     lessonHour?.trim() === '' ||
     studentId?.trim() === ''
   const { toast } = useToast()
+
+  const [vehicles, setVehicles] = useState<string[]>([])
+  const [instructors, setInstructors] = useState<
+    { label: string; value: string }[]
+  >([])
 
   function handleAddLessonIntoArray(lesson: Lesson) {
     append(lesson)
@@ -116,6 +137,22 @@ export function CreateScheduledDrivingLessonForm({
       })
     }
   }
+
+  useEffect(() => {
+    const student = students.find((student) => student.value === studentId)
+
+    setVehicles(student?.vehicles ?? [])
+
+    const instructors = student?.school?.users?.filter(
+      (user) => user.function === 'INSTRUCTOR',
+    )
+
+    setInstructors(
+      instructors?.map((user) => {
+        return { label: user.name, value: user.id }
+      }) ?? [],
+    )
+  }, [studentId, students])
 
   return (
     <form
@@ -165,6 +202,27 @@ export function CreateScheduledDrivingLessonForm({
           className="w-28 rounded-lg border border-[#C6C6C6] px-2 outline-none"
         />
       </div>
+
+      <Select
+        disabled={vehicles.length === 0}
+        placeHolder="Selecione o veículo da aula"
+        data={vehicles.map((vehicle) => {
+          return {
+            label: vehicle,
+            value: vehicle,
+          }
+        })}
+        className="w-full"
+        onChange={(event) => setValue('vehicle', event.target.value)}
+      />
+
+      <Select
+        disabled={instructors.length === 0}
+        placeHolder="Selecione o instrutor"
+        data={instructors}
+        className="w-full"
+        onChange={(event) => setValue('instructorId', event.target.value)}
+      />
 
       <ScrollArea className="h-24">
         <div className="flex w-full flex-col items-start gap-y-2">
@@ -216,6 +274,8 @@ export function CreateScheduledDrivingLessonForm({
               studentId,
               schedulingDate: new Date(lessonDate!).toISOString(),
               schedulingHour: lessonHour,
+              vehicle,
+              instructorId,
             })
           }
         >

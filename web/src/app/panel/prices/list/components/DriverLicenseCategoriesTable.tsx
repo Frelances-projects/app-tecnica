@@ -26,6 +26,7 @@ export function DriverLicenseCategoriesTable({
             <TableHead>Nome da categoria</TableHead>
             <TableHead>Preço de cada parcela</TableHead>
             <TableHead>Total</TableHead>
+            <TableHead>Veículos</TableHead>
             <TableHead>Escola</TableHead>
             <TableHead>Editar</TableHead>
             <TableHead>Apagar</TableHead>
@@ -55,6 +56,13 @@ export function DriverLicenseCategoriesTable({
                 )}
               </TableCell>
               <TableCell>{driverLicenseCategory.price}</TableCell>
+              <TableCell>
+                {driverLicenseCategory.vehicles &&
+                  driverLicenseCategory.vehicles.length > 0 &&
+                  driverLicenseCategory.vehicles.map((vehicle) => (
+                    <div key={vehicle}>{vehicle}</div>
+                  ))}
+              </TableCell>
               <TableCell>{driverLicenseCategory.school.name}</TableCell>
               <TableCell>
                 <EditDriverLicenseCategoryModal
