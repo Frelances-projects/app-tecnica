@@ -34,39 +34,37 @@ export function InformationTable({ information }: InformationTableProps) {
   })
 
   return (
-    <div className="relative overflow-x-auto">
-      <TableComponent>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Nome</TableHead>
-            <TableHead>Descrição</TableHead>
-            <TableHead>Data da criação</TableHead>
-            <TableHead>Escola</TableHead>
-            <TableHead>Editar</TableHead>
-            <TableHead>Apagar</TableHead>
-          </TableRow>
-        </TableHeader>
+    <TableComponent>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Nome</TableHead>
+          <TableHead>Descrição</TableHead>
+          <TableHead>Data da criação</TableHead>
+          <TableHead>Escola</TableHead>
+          <TableHead>Editar</TableHead>
+          <TableHead>Apagar</TableHead>
+        </TableRow>
+      </TableHeader>
 
-        <TableBody>
-          {formattedInformationData.map((information) => (
-            <TableRow key={information.id}>
-              <TableCell>{information.name}</TableCell>
-              <TableCell>{information.description}</TableCell>
-              <TableCell>{information.tableDate}</TableCell>
-              <TableCell>{information.school.name}</TableCell>
-              <TableCell>
-                <EditInformationModal information={information} />
-              </TableCell>
-              <TableCell>
-                <DeleteInformationModal
-                  id={information?.id}
-                  title={information.name}
-                />
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </TableComponent>
-    </div>
+      <TableBody>
+        {formattedInformationData.map((information) => (
+          <TableRow key={information.id}>
+            <TableCell>{information.name}</TableCell>
+            <TableCell>{information.description}</TableCell>
+            <TableCell>{information.tableDate}</TableCell>
+            <TableCell>{information.school.name}</TableCell>
+            <TableCell>
+              <EditInformationModal information={information} />
+            </TableCell>
+            <TableCell>
+              <DeleteInformationModal
+                id={information?.id}
+                title={information.name}
+              />
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </TableComponent>
   )
 }

@@ -69,13 +69,19 @@ export function CreateManyScheduledDrivingLessonForm({
       onSubmit={handleSubmit(handleCreateManyScheduledDrivingLessonForm)}
       className="mb-4 mt-5 flex flex-col gap-[2.08rem]"
     >
-      <Combobox
-        data={students}
-        onSelect={(value) => setValue('studentId', value)}
-        placeholder="Selecione o estudante para marcar a aula"
-        inputPlaceholder="Digite o número do estudante"
-        emptyHeading="Estudante não encontrado."
-      />
+      <fieldset>
+        <label htmlFor="fileInput" className="text-sm">
+          Selecione o estudante para marcar a aula
+        </label>
+
+        <Combobox
+          data={students}
+          onSelect={(value) => setValue('studentId', value)}
+          placeholder="Selecione um estudante"
+          inputPlaceholder="Digite o número do estudante"
+          emptyHeading="Estudante não encontrado."
+        />
+      </fieldset>
 
       <InputModal
         type="number"
@@ -86,7 +92,10 @@ export function CreateManyScheduledDrivingLessonForm({
 
       <DialogFooter>
         <button
-          className={cn(buttonVariants({ variant: 'outline' }), 'mt-2 sm:mt-0')}
+          className={cn(
+            buttonVariants({ variant: 'outline' }),
+            'mt-2 sm:mt-0 md:mr-auto',
+          )}
           onClick={() => handleCloseModal()}
         >
           Cancelar
@@ -96,7 +105,7 @@ export function CreateManyScheduledDrivingLessonForm({
           type="submit"
           title="Criar aulas"
           disabled={isSubmitting}
-          className="mt-[2px] !h-[2.125rem] !w-40"
+          className="mt-[2px] !h-[2.125rem] w-full md:!w-40"
         />
       </DialogFooter>
     </form>

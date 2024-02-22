@@ -72,13 +72,19 @@ export function CreateDrivingExamForm({
       onSubmit={handleSubmit(handleCreateDrivingExam)}
       className="mb-4 mt-5 flex flex-col gap-[2.08rem]"
     >
-      <Combobox
-        data={students}
-        onSelect={(value) => setValue('studentId', value)}
-        placeholder="Selecione o estudante para marcar o exame de condução"
-        inputPlaceholder="Digite o número do estudante"
-        emptyHeading="Estudante não encontrado."
-      />
+      <fieldset>
+        <label htmlFor="fileInput">
+          Selecione o estudante para marcar o exame de condução
+        </label>
+
+        <Combobox
+          data={students}
+          onSelect={(value) => setValue('studentId', value)}
+          placeholder="Selecione um estudante"
+          inputPlaceholder="Digite o número do estudante"
+          emptyHeading="Estudante não encontrado."
+        />
+      </fieldset>
 
       <InputModal
         placeholder="Local e hora de saída do exame"
@@ -92,10 +98,7 @@ export function CreateDrivingExamForm({
           control={control}
           name="testDate"
           render={({ field }) => (
-            <DatePicker
-              placeholder="Selecione a data para marcar o exame de condução"
-              field={field}
-            />
+            <DatePicker placeholder="Selecione uma data" field={field} />
           )}
         />
 
@@ -109,7 +112,10 @@ export function CreateDrivingExamForm({
 
       <DialogFooter>
         <button
-          className={cn(buttonVariants({ variant: 'outline' }), 'mt-2 sm:mt-0')}
+          className={cn(
+            buttonVariants({ variant: 'outline' }),
+            'mt-2 sm:mt-0 md:mr-auto',
+          )}
           onClick={() => handleCloseModal()}
         >
           Cancelar
@@ -119,7 +125,7 @@ export function CreateDrivingExamForm({
           type="submit"
           title="Marcar Exame"
           disabled={isSubmitting}
-          className="mt-[2px] !h-[2.125rem] !w-40"
+          className="mt-[2px] !h-[2.125rem] w-full md:!w-40"
         />
       </DialogFooter>
     </form>

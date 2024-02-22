@@ -14,7 +14,9 @@ export function WrapperItem({
   classNameLabel,
 }: WrapperItemProps) {
   return (
-    <fieldset className={`flex justify-between`}>
+    <fieldset
+      className={`flex flex-col gap-1 lg:flex-row lg:justify-between lg:gap-0`}
+    >
       <label htmlFor={htmlFor} className={classNameLabel}>
         {label}
       </label>

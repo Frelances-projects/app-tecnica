@@ -6,7 +6,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { DeletePaymentModal } from './DeletePaymentModal'
 import { EditPaymentModal } from './EditPaymentModal'
 
 import type { Payment } from '@/utils/interfaces/payment'
@@ -36,7 +35,7 @@ export function PaymentsTable({ payments }: PaymentsTableProps) {
         <TableBody>
           {payments.map((payment) => (
             <TableRow key={payment.id}>
-              <TableCell>{payment.student.name}</TableCell>
+              <TableCell>{payment?.student?.name}</TableCell>
 
               <TableCell>
                 {payment.method === 'INSTALLMENTS'
@@ -52,19 +51,19 @@ export function PaymentsTable({ payments }: PaymentsTableProps) {
 
               <TableCell>
                 {payment.method === 'INSTALLMENTS'
-                  ? payment.amountOfInstallmentsPaid
+                  ? payment?.amountOfInstallmentsPaid
                   : 'Não possui'}
               </TableCell>
 
               <TableCell>
                 {payment.method === 'INSTALLMENTS'
-                  ? payment.amountOfRemainingInstallments
+                  ? payment?.amountOfRemainingInstallments
                   : 'Não possui'}
               </TableCell>
 
-              <TableCell>{payment.student.school.name}</TableCell>
+              <TableCell>{payment?.student?.school?.name}</TableCell>
 
-              <TableCell>{payment.formattedTotal}</TableCell>
+              <TableCell>{payment?.formattedTotal}</TableCell>
 
               {/* <TableCell>
                 <DeletePaymentModal

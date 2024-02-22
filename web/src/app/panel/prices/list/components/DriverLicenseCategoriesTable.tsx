@@ -44,6 +44,7 @@ export function DriverLicenseCategoriesTable({
                 <div>
                   2ª {driverLicenseCategory.installments.secondInstallment}
                 </div>
+
                 {driverLicenseCategory.installments.thirdInstallment && (
                   <div>
                     3ª {driverLicenseCategory.installments.thirdInstallment}

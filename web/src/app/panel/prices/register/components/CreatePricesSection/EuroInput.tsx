@@ -1,5 +1,5 @@
 'use client'
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
+import { ChangeEvent, Dispatch, SetStateAction } from 'react'
 
 interface EuroInputProps {
   formattedValue: string
@@ -32,7 +32,7 @@ export function EuroInput({
     <input
       required={required}
       placeholder={placeholder ?? 'Valor total:'}
-      className="rounded-lg border border-[#C6C6C6] bg-white px-2 py-[0.375rem] text-black outline-none"
+      className="w-full rounded-lg border border-[#C6C6C6] bg-white px-2 py-[0.375rem] text-black outline-none"
       type="text"
       value={formattedValue}
       onChange={handleInputChange}

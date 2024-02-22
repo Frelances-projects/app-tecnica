@@ -19,9 +19,13 @@ import { Test } from '@/utils/interfaces/tests'
 
 interface DeleteCodeExamModalProps {
   test: Test
+  trigger?: boolean
 }
 
-export function DeleteCodeExamModal({ test }: DeleteCodeExamModalProps) {
+export function DeleteCodeExamModal({
+  test,
+  trigger,
+}: DeleteCodeExamModalProps) {
   const { toast } = useToast()
 
   async function handleDeleteCodeExam() {
@@ -43,9 +47,18 @@ export function DeleteCodeExamModal({ test }: DeleteCodeExamModalProps) {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger>
-        <Trash size={16} className="hover:cursor-pointer hover:text-red-500" />
-      </AlertDialogTrigger>
+      {trigger ? (
+        <AlertDialogTrigger className="w-full rounded-lg border px-4 py-2 transition-colors duration-200 ease-linear hover:bg-[#E86255] hover:text-white">
+          Deletar exame
+        </AlertDialogTrigger>
+      ) : (
+        <AlertDialogTrigger>
+          <Trash
+            size={16}
+            className="hover:cursor-pointer hover:text-red-500"
+          />
+        </AlertDialogTrigger>
+      )}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
@@ -31,7 +32,7 @@ export default async function CreateInfo() {
 
   return (
     <main className="mb-16 mt-14 flex w-full max-w-[800px] flex-col gap-10">
-      <h1 className="text-lg">Criar Alerta</h1>
+      <h1 className="px-4 text-lg">Criar Alerta</h1>
       <div className="mx-auto -mt-9 h-[1px] w-full max-w-[1440px] bg-[#BFBFBF]" />
 
       <CreateInfoForm userFunction={formattedUser.function} schools={schools} />

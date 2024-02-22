@@ -171,16 +171,22 @@ export function CreateScheduledDrivingLessonForm({
         minLength={5}
         maxLength={460}
         placeholder="Insira a descrição da aula(Opcional)"
-        className="h-[142px] w-[520px] resize-none rounded-lg border border-[#C6C6C6] bg-white px-2 py-[0.375rem] text-black outline-none"
+        className="h-[142px] w-full max-w-[520px] resize-none rounded-lg border border-[#C6C6C6] bg-white px-2 py-[0.375rem] text-black outline-none"
       />
 
-      <Combobox
-        data={students}
-        onSelect={(value) => setValue('studentId', value)}
-        placeholder="Selecione o estudante para marcar a aula"
-        inputPlaceholder="Digite o número do estudante"
-        emptyHeading="Estudante não encontrado."
-      />
+      <fieldset>
+        <label htmlFor="fileInput" className="text-sm">
+          Selecione o estudante para marcar a aula
+        </label>
+
+        <Combobox
+          data={students}
+          onSelect={(value) => setValue('studentId', value)}
+          placeholder="Selecione um estudante"
+          inputPlaceholder="Digite o número do estudante"
+          emptyHeading="Estudante não encontrado."
+        />
+      </fieldset>
 
       <div className="flex w-full gap-4">
         <FormField
@@ -188,10 +194,7 @@ export function CreateScheduledDrivingLessonForm({
           rules={{ required: fields.length === 0 }}
           name="schedulingDate"
           render={({ field }) => (
-            <DatePicker
-              placeholder="Selecione a data para marcar a aula"
-              field={field}
-            />
+            <DatePicker placeholder="Selecione uma data" field={field} />
           )}
         />
 
@@ -199,7 +202,7 @@ export function CreateScheduledDrivingLessonForm({
           {...register('schedulingHour')}
           required={fields.length === 0}
           type="time"
-          className="w-28 rounded-lg border border-[#C6C6C6] px-2 outline-none"
+          className="w-24 rounded-lg border border-[#C6C6C6] px-2 outline-none"
         />
       </div>
 
@@ -212,7 +215,7 @@ export function CreateScheduledDrivingLessonForm({
             value: vehicle,
           }
         })}
-        className="w-full"
+        className="w-full lg:w-full"
         onChange={(event) => setValue('vehicle', event.target.value)}
       />
 
@@ -220,37 +223,38 @@ export function CreateScheduledDrivingLessonForm({
         disabled={instructors.length === 0}
         placeHolder="Selecione o instrutor"
         data={instructors}
-        className="w-full"
+        className="w-full lg:w-full"
         onChange={(event) => setValue('instructorId', event.target.value)}
       />
+      {fields && fields?.length > 0 && (
+        <ScrollArea className="h-24">
+          <div className="flex w-full flex-col items-start gap-y-2">
+            {fields.map((lesson, index) => {
+              const formattedLessonDate = format(
+                new Date(lesson.schedulingDate),
+                'dd/MM/yyyy',
+              )
 
-      <ScrollArea className="h-24">
-        <div className="flex w-full flex-col items-start gap-y-2">
-          {fields.map((lesson, index) => {
-            const formattedLessonDate = format(
-              new Date(lesson.schedulingDate),
-              'dd/MM/yyyy',
-            )
-
-            return (
-              <span
-                key={lesson.id}
-                className="flex items-center justify-center truncate rounded-sm bg-slate-100 px-2 py-1 font-medium text-slate-900"
-              >
-                {lesson.lessonName} - {formattedLessonDate}
-                <button
-                  onClick={() => remove(index)}
-                  className="ml-1 rounded-full border border-slate-300 p-1"
+              return (
+                <span
+                  key={lesson.id}
+                  className="flex items-center justify-center truncate rounded-sm bg-slate-100 px-2 py-1 font-medium text-slate-900"
                 >
-                  <X size={14} color="black" />
-                </button>
-              </span>
-            )
-          })}
-        </div>
+                  {lesson.lessonName} - {formattedLessonDate}
+                  <button
+                    onClick={() => remove(index)}
+                    className="ml-1 rounded-full border border-slate-300 p-1"
+                  >
+                    <X size={14} color="black" />
+                  </button>
+                </span>
+              )
+            })}
+          </div>
 
-        <ScrollBar orientation="vertical" />
-      </ScrollArea>
+          <ScrollBar orientation="vertical" />
+        </ScrollArea>
+      )}
 
       <DialogFooter>
         <button

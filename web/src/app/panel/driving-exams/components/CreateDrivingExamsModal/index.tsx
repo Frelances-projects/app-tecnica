@@ -33,11 +33,11 @@ export function CreateDrivingExamsModal({
 
   return (
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-      <DialogTrigger className="w-72 rounded bg-[#E3000F] px-7 py-[0.375rem] text-white transition-colors duration-300 enabled:hover:bg-[#E3000F]/80 disabled:cursor-not-allowed disabled:bg-[#E3000F]/60">
+      <DialogTrigger className="w-full rounded bg-[#E3000F] px-7 py-[0.375rem] text-white transition-colors duration-300 enabled:hover:bg-[#E3000F]/80 disabled:cursor-not-allowed disabled:bg-[#E3000F]/60 md:w-72">
         Marcar Exame de condução
       </DialogTrigger>
-      <DialogContent className="w-full max-w-xl">
-        <DialogHeader>
+      <DialogContent className="w-[95vw] max-w-xl">
+        <DialogHeader className="mt-2">
           <DialogTitle>Marcar um exame de condução para um aluno</DialogTitle>
           <DialogDescription>
             Para marcar o exame preencha os campos abaixo

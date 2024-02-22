@@ -20,9 +20,10 @@ import type { User } from '@/utils/interfaces/user'
 
 interface DeleteUserModalProps {
   user: User
+  trigger?: boolean
 }
 
-export function DeleteUserModal({ user }: DeleteUserModalProps) {
+export function DeleteUserModal({ user, trigger }: DeleteUserModalProps) {
   const { toast } = useToast()
 
   async function handleDeleteUser() {
@@ -44,9 +45,18 @@ export function DeleteUserModal({ user }: DeleteUserModalProps) {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger>
-        <Trash size={16} className="hover:cursor-pointer hover:text-red-500" />
-      </AlertDialogTrigger>
+      {trigger ? (
+        <AlertDialogTrigger className="rounded-lg border py-2 transition-colors duration-200 ease-linear hover:bg-[#E86255] hover:text-white">
+          Deletar Utilizador
+        </AlertDialogTrigger>
+      ) : (
+        <AlertDialogTrigger>
+          <Trash
+            size={16}
+            className="hover:cursor-pointer hover:text-red-500"
+          />
+        </AlertDialogTrigger>
+      )}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>

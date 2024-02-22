@@ -35,9 +35,9 @@ export default async function ManageAlerts() {
   }
 
   return (
-    <main className="mb-16 mt-14 flex w-full max-w-[80vw] flex-col gap-10">
+    <main className="mb-16 mt-14 flex w-full flex-col gap-10 px-4 md:max-w-[80vw] lg:px-0">
       <h1 className="text-xl">Gerir Alertas</h1>
-      <div className="mx-auto -mt-9 h-[1px] w-full max-w-[1440px] bg-[#BFBFBF]" />
+      <div className="-mt-9 h-[1px] w-full max-w-[1440px] bg-[#BFBFBF]" />
 
       <ListOfInformation information={returnedData} />
     </main>

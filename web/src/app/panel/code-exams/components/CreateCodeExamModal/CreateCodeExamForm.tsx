@@ -70,15 +70,20 @@ export function CreateCodeExamForm({
   return (
     <form
       onSubmit={handleSubmit(handleCreateCodeExam)}
-      className="mb-4 mt-5 flex flex-col gap-[2.08rem]"
+      className="mb-4 mt-5 flex w-full flex-col gap-[2.08rem]"
     >
-      <Combobox
-        data={students}
-        onSelect={(value) => setValue('studentId', value)}
-        placeholder="Selecione o estudante para marcar o exame de código"
-        inputPlaceholder="Digite o número do estudante"
-        emptyHeading="Estudante não encontrado."
-      />
+      <fieldset>
+        <label htmlFor="fileInput" className="text-sm">
+          Selecione o estudante para marcar o exame de código
+        </label>
+        <Combobox
+          data={students}
+          onSelect={(value) => setValue('studentId', value)}
+          placeholder="Selecione o estudante"
+          inputPlaceholder="Digite o número do estudante"
+          emptyHeading="Estudante não encontrado."
+        />
+      </fieldset>
 
       <InputModal
         placeholder="Local e hora de saída do exame"
@@ -92,10 +97,7 @@ export function CreateCodeExamForm({
           control={control}
           name="testDate"
           render={({ field }) => (
-            <DatePicker
-              placeholder="Selecione a data para marcar o exame de código"
-              field={field}
-            />
+            <DatePicker placeholder="Selecione uma data" field={field} />
           )}
         />
 
@@ -103,13 +105,16 @@ export function CreateCodeExamForm({
           {...register('testHour')}
           required
           type="time"
-          className="w-28 rounded-lg border border-[#C6C6C6] px-2 outline-none"
+          className="w-max rounded-lg border border-[#C6C6C6] px-2 outline-none lg:w-28"
         />
       </div>
 
       <DialogFooter>
         <button
-          className={cn(buttonVariants({ variant: 'outline' }), 'mt-2 sm:mt-0')}
+          className={cn(
+            buttonVariants({ variant: 'outline' }),
+            'mt-2 sm:mt-0 md:mr-auto',
+          )}
           onClick={() => handleCloseModal()}
         >
           Cancelar
@@ -119,7 +124,7 @@ export function CreateCodeExamForm({
           type="submit"
           title="Marcar Exame"
           disabled={isSubmitting}
-          className="mt-[2px] !h-[2.125rem] !w-40"
+          className="mt-[2px] !h-[2.125rem] w-full md:!w-40"
         />
       </DialogFooter>
     </form>

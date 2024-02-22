@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -23,15 +23,24 @@ import {
   ScrollText,
   Users,
   CircleDollarSign,
+  X,
 } from 'lucide-react'
 
 import Logo from '../../assets/Tecnica_LOGO_outline_icon.svg'
 
 interface SideBarProps {
   userFunction: 'ADMIN' | 'DIRECTOR' | 'INSTRUCTOR'
+  hasMobile: boolean
+  setOpenSideBar?: Dispatch<SetStateAction<boolean>>
+  openSideBar?: boolean
 }
 
-export function SideBar({ userFunction }: SideBarProps) {
+export function SideBar({
+  userFunction,
+  hasMobile,
+  setOpenSideBar,
+  openSideBar,
+}: SideBarProps) {
   const router = useRouter()
   const pathname = usePathname()
 
@@ -64,30 +73,52 @@ export function SideBar({ userFunction }: SideBarProps) {
 
   return (
     <div
-      className={`sidebar mt-1 ${
-        collapsed ? 'w-20' : 'w-[360px]'
-      } bg-[#F9F9F9] text-zinc-800 transition-all duration-300 ${
-        pathname !== '/panel/students/list' &&
-        pathname !== '/panel/payment' &&
-        pathname !== '/panel/code-lessons' &&
-        pathname !== '/panel/students/register' &&
-        pathname !== '/panel/prices/list' &&
-        'h-screen'
-      }`}
+      className={`sidebar 
+      ${
+        hasMobile
+          ? `fixed left-0 top-0 h-screen w-[90vw] max-w-80 transition-transform duration-300 ease-linear lg:hidden ${
+              openSideBar ? '' : '-translate-x-[90vw]'
+            }`
+          : ''
+      } 
+      ${
+        collapsed ? 'w-20' : 'w-full'
+      } bg-[#F9F9F9] text-zinc-800 transition-all duration-300
+       ${
+         pathname !== '/panel/students/list' &&
+         pathname !== '/panel/payment' &&
+         pathname !== '/panel/code-lessons' &&
+         pathname !== '/panel/students/register' &&
+         pathname !== '/panel/prices/list' &&
+         'h-[92vh]'
+       }`}
     >
-      <button
-        className="mt-1 flex w-full items-center justify-start gap-4 overflow-hidden bg-[#F9F9F9] px-4 py-3 text-left text-zinc-800 outline-none"
-        onClick={toggleCollapse}
-      >
-        <Image src={Logo} alt="Logo" width={40} height={100} />
-        <span
-          className={`${
-            collapsed ? 'hidden' : 'flex whitespace-nowrap'
-          } transition-all duration-1000`}
+      {hasMobile ? (
+        <button
+          onClick={() => {
+            if (setOpenSideBar) {
+              setOpenSideBar(false)
+            }
+          }}
+          className="px-5 pt-6 hover:text-[#E86255]"
         >
-          Grupo Técnica
-        </span>
-      </button>
+          <X size={28} />
+        </button>
+      ) : (
+        <button
+          className="mt-1 flex w-full items-center justify-start gap-4 overflow-hidden bg-[#F9F9F9] px-4 py-3 text-left text-zinc-800 outline-none"
+          onClick={toggleCollapse}
+        >
+          <Image src={Logo} alt="Logo" width={40} height={100} />
+          <span
+            className={`${
+              collapsed ? 'hidden' : 'flex whitespace-nowrap'
+            } transition-all duration-1000`}
+          >
+            Grupo Técnica
+          </span>
+        </button>
+      )}
       <div className="mt-4 flex flex-col gap-2">
         {(userFunction === 'DIRECTOR' || userFunction === 'ADMIN') && (
           <div className="group ml-2 cursor-pointer">

@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { addDays } from 'date-fns'
 import { format } from 'date-fns-tz'
 
 import { api } from '@/lib/api'
@@ -38,11 +38,11 @@ export default async function UsersList() {
   const users = formattedData.filter((user) => user.function !== 'DIRECTOR')
 
   return (
-    <main className="mb-16 mt-14 flex w-full max-w-[80vw] flex-col gap-10">
+    <main className="mb-16 mt-14 flex w-full flex-col gap-10 px-4 lg:max-w-[90vw] lg:px-0">
       <h1 className="text-xl">Listagem dos utilizadores</h1>
       <div className="mx-auto -mt-9 h-[1px] w-full max-w-[1440px] bg-[#BFBFBF]" />
 
-      <ListOfUsers users={users as any} />
+      <ListOfUsers users={users as unknown as any} />
     </main>
   )
 }

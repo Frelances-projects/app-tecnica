@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
@@ -26,7 +27,7 @@ export default async function CreateCodeCalendar() {
 
   return (
     <div className="mb-16 mt-14 flex w-full max-w-[810px] flex-col gap-3">
-      <h1 className="text-lg">Adicionar Calendário Código</h1>
+      <h1 className="px-4 text-lg">Adicionar Calendário Código</h1>
       <div className="mx-auto -mt-1 h-[1px] w-full max-w-[1440px] bg-[#BFBFBF]" />
 
       <CreateCodeCalendarForm

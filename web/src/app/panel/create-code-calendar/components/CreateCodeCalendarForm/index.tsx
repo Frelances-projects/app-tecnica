@@ -71,7 +71,7 @@ export function CreateCodeCalendarForm({
   return (
     <form
       action={handleCreateCodeCalendar}
-      className="mr-auto mt-16 flex flex-col gap-[2.08rem] pl-10"
+      className="mt-16 flex flex-col gap-[2.08rem] px-4 md:mr-auto md:pl-10"
     >
       {userFunction === 'DIRECTOR' && (
         <Select
@@ -81,8 +81,8 @@ export function CreateCodeCalendarForm({
         />
       )}
 
-      <div className="flex items-end gap-9">
-        <fieldset className="w-32 rounded border border-dashed border-[#CDCDCD] bg-[#F0F0F0] px-3 py-3">
+      <div className="flex flex-col items-end gap-9 md:flex-row">
+        <fieldset className="w-full rounded border border-dashed border-[#CDCDCD] bg-[#F0F0F0] px-3 py-3 md:w-32">
           <label
             htmlFor="fileInput"
             className="flex cursor-pointer items-center gap-3"

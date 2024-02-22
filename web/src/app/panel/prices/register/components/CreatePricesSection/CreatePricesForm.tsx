@@ -117,7 +117,7 @@ export function CreatePricesForm({ schools }: CreatePricesFormProps) {
   return (
     <form
       onSubmit={handleCreateDriverLicenseCategory}
-      className="mt-14 flex max-w-[290px] flex-col gap-4"
+      className="mt-14 flex flex-col gap-4 md:max-w-[290px]"
     >
       <Select
         placeHolder="Definir Escola"
@@ -127,17 +127,17 @@ export function CreatePricesForm({ schools }: CreatePricesFormProps) {
         onChange={(event) => setSelectSchool(event.target.value)}
       />
 
-      <fieldset className="flex w-full gap-4">
+      <fieldset className="flex w-full flex-col gap-4 sm:flex-row">
         <input
           required
           placeholder="Nome da categoria"
-          className="w-[18.188rem] rounded-lg border border-[#C6C6C6] bg-white px-2 py-[0.375rem] text-black outline-none"
+          className="w-full rounded-lg border border-[#C6C6C6] bg-white px-2 py-[0.375rem] text-black outline-none md:w-[18.188rem]"
           type="text"
           value={driverLicenseCategoryName}
           onChange={(event) => setDriverLicenseCategoryName(event.target.value)}
         />
 
-        <div className="flex items-center justify-center gap-1">
+        <div className="flex w-full items-center justify-center gap-1">
           <EuroInput
             formattedValue={totalValue}
             setFormattedValue={setTotalValue}
@@ -146,24 +146,22 @@ export function CreatePricesForm({ schools }: CreatePricesFormProps) {
         </div>
       </fieldset>
 
-      <fieldset className="flex w-full gap-4">
+      <fieldset className="flex w-full flex-col gap-4 sm:flex-row">
         <input
           placeholder="Veículos da categoria"
-          className="w-[18.188rem] rounded-lg border border-[#C6C6C6] bg-white px-2 py-[0.375rem] text-black outline-none"
+          className="w-full rounded-lg border border-[#C6C6C6] bg-white px-2 py-[0.375rem] text-black outline-none md:w-[18.188rem]"
           type="text"
           value={vehicle}
           onChange={(event) => setVehicle(event.target.value)}
         />
 
-        <div className="flex items-center justify-center gap-1">
-          <Button
-            title="Adicionar veículo"
-            onClick={handleAddVehicle}
-            disabled={vehicle.trim() === ''}
-            type="button"
-            className={`w-48`}
-          />
-        </div>
+        <Button
+          title="Adicionar veículo"
+          onClick={handleAddVehicle}
+          disabled={vehicle.trim() === ''}
+          type="button"
+          className={`w-full md:w-48`}
+        />
       </fieldset>
 
       <div className="flex items-center gap-5">

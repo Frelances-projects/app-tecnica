@@ -2,7 +2,6 @@ import { Contact } from 'lucide-react'
 
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogFooter,

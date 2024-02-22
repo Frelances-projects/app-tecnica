@@ -44,7 +44,7 @@ export function CreateInfoForm({ userFunction, schools }: CreateInfoFormProps) {
     <form
       ref={formRef}
       action={handleCreateInfo}
-      className="mt-6 flex min-w-[710px] flex-col gap-6 pl-10"
+      className="mt-6 flex w-full flex-col gap-6 px-4"
     >
       {userFunction === 'DIRECTOR' && (
         <ItemSelectForm
@@ -78,7 +78,7 @@ export function CreateInfoForm({ userFunction, schools }: CreateInfoFormProps) {
           minLength={5}
           maxLength={460}
           required
-          className="h-[142px] w-[520px] rounded-lg border border-[#C6C6C6] bg-white px-2 py-[0.375rem] text-black outline-none"
+          className="h-[142px] w-full rounded-lg border border-[#C6C6C6] bg-white px-2 py-[0.375rem] text-black outline-none lg:w-[520px]"
         />
       </WrapperItem>
 

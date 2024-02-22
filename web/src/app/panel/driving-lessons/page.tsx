@@ -71,9 +71,9 @@ export default async function DrivingLessons() {
   })
 
   return (
-    <main className="mb-16 mt-14 flex w-full max-w-[80vw] flex-col gap-6">
+    <main className="mb-16 mt-14 flex w-full flex-col gap-6 px-4 lg:max-w-[80vw]">
       <h1 className="text-xl">Aulas Condução</h1>
-      <div className="mx-auto -mt-5 h-[1px] w-full max-w-[1440px] bg-[#BFBFBF]" />
+      <div className="-mt-5 h-[1px] w-full max-w-[1440px] bg-[#BFBFBF] lg:mx-auto" />
 
       <ScheduledDrivingLessonsList
         scheduledClasses={formattedData}

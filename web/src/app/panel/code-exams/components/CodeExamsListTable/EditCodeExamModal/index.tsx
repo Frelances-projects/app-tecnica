@@ -14,14 +14,21 @@ import { Test } from '@/utils/interfaces/tests'
 
 interface EditCodeExamModalProps {
   test: Test
+  trigger?: boolean
 }
 
-export function EditCodeExamModal({ test }: EditCodeExamModalProps) {
+export function EditCodeExamModal({ test, trigger }: EditCodeExamModalProps) {
   return (
     <AlertDialog>
-      <AlertDialogTrigger>
-        <Pencil size={16} className="hover:cursor-pointer" />
-      </AlertDialogTrigger>
+      {trigger ? (
+        <AlertDialogTrigger className="w-full rounded-lg border px-4 py-2 transition-colors duration-200 ease-linear hover:bg-[#E86255] hover:text-white">
+          Editar exame
+        </AlertDialogTrigger>
+      ) : (
+        <AlertDialogTrigger>
+          <Pencil size={16} className="hover:cursor-pointer" />
+        </AlertDialogTrigger>
+      )}
       <AlertDialogContent className="w-full max-w-xl overflow-y-auto">
         <h1 className="text-lg font-bold">
           Editar exame de código do aluno: {test.student.name}

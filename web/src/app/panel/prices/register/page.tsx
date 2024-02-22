@@ -14,7 +14,7 @@ export default function RegisterDrivingLessons() {
   }
 
   return (
-    <main className="mb-16 mt-14 flex w-full max-w-[80vw] flex-col gap-6">
+    <main className="mb-16 mt-14 flex w-full flex-col gap-6 px-4 lg:max-w-[80vw] lg:px-0">
       <h1 className="text-xl">Definir Preços</h1>
       <div className="mx-auto -mt-5 h-[1px] w-full max-w-[1440px] bg-[#BFBFBF]" />
 

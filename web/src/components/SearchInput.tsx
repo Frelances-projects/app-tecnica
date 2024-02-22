@@ -18,7 +18,7 @@ export function SearchInput({
   type = 'text',
 }: SearchInput) {
   return (
-    <div className="mb-11 flex w-full gap-8">
+    <div className="mb-11 flex w-full flex-col gap-4 sm:flex-row sm:gap-8">
       <Input
         id="search"
         placeholder={placeholder}

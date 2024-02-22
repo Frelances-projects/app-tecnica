@@ -9,7 +9,7 @@ export function Select({ data, className, placeHolder, ...rest }: SelectProps) {
   const dataTeste = data
   return (
     <select
-      className={`w-[18.188rem] rounded-lg border border-[#C6C6C6] bg-white px-2 py-[0.375rem] text-black outline-none ${className}`}
+      className={`w-full rounded-lg border border-[#C6C6C6] bg-white px-2 py-[0.375rem] text-black outline-none lg:w-[18.188rem] ${className}`}
       {...rest}
     >
       <option className="text-gray" value="" disabled selected>

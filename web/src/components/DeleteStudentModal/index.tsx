@@ -19,9 +19,14 @@ import { deleteStudent } from './action'
 interface DeleteStudentModalProps {
   id: string
   title?: string
+  trigger?: boolean
 }
 
-export function DeleteStudentModal({ id, title }: DeleteStudentModalProps) {
+export function DeleteStudentModal({
+  id,
+  title,
+  trigger,
+}: DeleteStudentModalProps) {
   const { toast } = useToast()
 
   async function handleDeleteStudent() {
@@ -43,9 +48,18 @@ export function DeleteStudentModal({ id, title }: DeleteStudentModalProps) {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger>
-        <Trash size={16} className="hover:cursor-pointer hover:text-red-500" />
-      </AlertDialogTrigger>
+      {trigger ? (
+        <AlertDialogTrigger className="w-full rounded-lg border px-4 py-2 transition-colors duration-200 ease-linear hover:bg-[#E86255] hover:text-white">
+          Deletar Aluno
+        </AlertDialogTrigger>
+      ) : (
+        <AlertDialogTrigger>
+          <Trash
+            size={16}
+            className="hover:cursor-pointer hover:text-red-500"
+          />
+        </AlertDialogTrigger>
+      )}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>

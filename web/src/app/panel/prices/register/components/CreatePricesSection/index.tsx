@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { cookies } from 'next/headers'
 
 import { api } from '@/lib/api'
@@ -33,7 +34,7 @@ export async function CreatePricesSection() {
   }
 
   return (
-    <section className="w-full max-w-7xl pl-10">
+    <section className="w-full max-w-7xl lg:pl-10">
       <h1 className="mb-9 mt-6 text-lg font-medium">Adicionar Valores</h1>
 
       <CreatePricesForm schools={schools} />

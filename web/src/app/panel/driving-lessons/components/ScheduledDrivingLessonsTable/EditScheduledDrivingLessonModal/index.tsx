@@ -14,16 +14,24 @@ import { ScheduleClass } from '@/utils/interfaces/schedule-class'
 
 interface EditScheduledDrivingLessonModalProps {
   scheduledClass: ScheduleClass
+  trigger?: boolean
 }
 
 export function EditScheduledDrivingLessonModal({
   scheduledClass,
+  trigger,
 }: EditScheduledDrivingLessonModalProps) {
   return (
     <AlertDialog>
-      <AlertDialogTrigger>
-        <Pencil size={16} className="hover:cursor-pointer" />
-      </AlertDialogTrigger>
+      {trigger ? (
+        <AlertDialogTrigger className="w-full rounded-lg border px-4 py-2 transition-colors duration-200 ease-linear hover:bg-[#E86255] hover:text-white">
+          Editar Aula
+        </AlertDialogTrigger>
+      ) : (
+        <AlertDialogTrigger>
+          <Pencil size={16} className="hover:cursor-pointer" />
+        </AlertDialogTrigger>
+      )}
       <AlertDialogContent className="w-full max-w-xl overflow-y-auto">
         <h1 className="text-lg font-bold">
           Editar marcação da aula de condução para o aluno:{' '}

@@ -35,12 +35,12 @@ export function CreateScheduleDrivingClassModal({
 
   return (
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-      <DialogTrigger className="w-52 rounded bg-[#E3000F] px-7 py-[0.375rem] text-white transition-colors duration-300 enabled:hover:bg-[#E3000F]/80 disabled:cursor-not-allowed disabled:bg-[#E3000F]/60">
+      <DialogTrigger className="w-full rounded bg-[#E3000F] px-7 py-[0.375rem] text-white transition-colors duration-300 enabled:hover:bg-[#E3000F]/80 disabled:cursor-not-allowed disabled:bg-[#E3000F]/60 lg:w-52">
         Marcar aula
       </DialogTrigger>
       <DialogPortal>
-        <DialogContent className="w-full max-w-xl overflow-auto">
-          <DialogHeader>
+        <DialogContent className="h-max max-h-[95vh] w-max max-w-[95vw] overflow-y-auto md:max-w-xl">
+          <DialogHeader className="mt-auto">
             <DialogTitle>
               Marcar uma nova aula de condução para um aluno
             </DialogTitle>

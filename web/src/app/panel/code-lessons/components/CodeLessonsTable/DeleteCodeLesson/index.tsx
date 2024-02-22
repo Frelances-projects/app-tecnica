@@ -19,9 +19,10 @@ import { Class } from '@/utils/interfaces/class'
 
 interface DeleteCodeLessonProps {
   lesson: Class
+  trigger?: boolean
 }
 
-export function DeleteCodeLesson({ lesson }: DeleteCodeLessonProps) {
+export function DeleteCodeLesson({ lesson, trigger }: DeleteCodeLessonProps) {
   const { toast } = useToast()
 
   async function handleDeleteCodeLesson() {
@@ -43,9 +44,18 @@ export function DeleteCodeLesson({ lesson }: DeleteCodeLessonProps) {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger>
-        <Trash size={16} className="hover:cursor-pointer hover:text-red-500" />
-      </AlertDialogTrigger>
+      {trigger ? (
+        <AlertDialogTrigger className="w-full rounded-lg border px-4 py-2 transition-colors duration-200 ease-linear hover:bg-[#E86255] hover:text-white">
+          Deletar Aula
+        </AlertDialogTrigger>
+      ) : (
+        <AlertDialogTrigger>
+          <Trash
+            size={16}
+            className="hover:cursor-pointer hover:text-red-500"
+          />
+        </AlertDialogTrigger>
+      )}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>

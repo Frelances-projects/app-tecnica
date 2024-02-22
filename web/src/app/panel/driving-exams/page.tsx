@@ -1,5 +1,4 @@
-import { cookies, headers } from 'next/headers'
-import { addDays } from 'date-fns'
+import { cookies } from 'next/headers'
 import { format } from 'date-fns-tz'
 
 import { api } from '@/lib/api'
@@ -18,8 +17,6 @@ type StudentsAxiosData = {
 }
 
 export default async function DrivingExams() {
-  const headersList = headers()
-
   const user = cookies().get('user')?.value
   const formattedUser = JSON.parse(user!)
 
@@ -65,7 +62,7 @@ export default async function DrivingExams() {
   })
 
   return (
-    <main className="mb-16 mt-14 flex w-full max-w-[80vw] flex-col gap-6">
+    <main className="mb-16 mt-14 flex w-full flex-col gap-6 px-4 lg:max-w-[90vw] lg:px-0">
       <h1 className="text-xl">Exames Condução</h1>
       <div className="mx-auto -mt-5 h-[1px] w-full max-w-[1440px] bg-[#BFBFBF]" />
 

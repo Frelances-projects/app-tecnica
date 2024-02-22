@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { InputHTMLAttributes, forwardRef } from 'react'
 
 type InputInformationProps = InputHTMLAttributes<HTMLInputElement>

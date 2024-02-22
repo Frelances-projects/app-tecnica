@@ -26,7 +26,7 @@ export function ItemSelectForm({
     <WrapperItem htmlFor={id} label={label}>
       <Select
         data={data}
-        className={`w-[520px] ${className}`}
+        className={`w-full ${className}`}
         placeholder={placeholder}
         name={id}
         id={id}

@@ -31,11 +31,11 @@ export function CreateCodeExamModal({ students }: CreateCodeExamModalProps) {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-      <DialogTrigger className="w-72 rounded bg-[#E3000F] px-7 py-[0.375rem] text-white transition-colors duration-300 enabled:hover:bg-[#E3000F]/80 disabled:cursor-not-allowed disabled:bg-[#E3000F]/60">
+      <DialogTrigger className="w-full rounded bg-[#E3000F] px-7 py-[0.375rem] text-white transition-colors duration-300 enabled:hover:bg-[#E3000F]/80 disabled:cursor-not-allowed disabled:bg-[#E3000F]/60 lg:w-72">
         Marcar Exame de código
       </DialogTrigger>
-      <DialogContent className="w-full max-w-xl">
-        <DialogHeader>
+      <DialogContent className="w-[95vw] lg:max-w-xl">
+        <DialogHeader className="mt-2">
           <DialogTitle>Marcar um exame de código para um aluno</DialogTitle>
           <DialogDescription>
             Para marcar o exame preencha os campos abaixo

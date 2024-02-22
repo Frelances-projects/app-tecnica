@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { cookies } from 'next/headers'
 
 import { api } from '@/lib/api'
@@ -52,7 +53,7 @@ export async function RegisterStudentSection() {
   })
 
   return (
-    <section className="w-full max-w-7xl pl-10">
+    <section className="w-full max-w-7xl px-4 lg:pl-10">
       <h1 className="mb-11 mt-5 text-lg font-medium">Adicionar Alunos</h1>
 
       <RegisterStudentForm

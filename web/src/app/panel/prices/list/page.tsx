@@ -76,7 +76,7 @@ export default async function PricesList() {
   }
 
   return (
-    <main className="mb-16 mt-14 flex w-full max-w-[80vw] flex-col gap-10">
+    <main className="mb-16 mt-14 flex w-full flex-col gap-10 px-4 lg:max-w-[90vw] lg:px-0">
       <h1 className="text-xl">Gerir Preços</h1>
       <div className="mx-auto -mt-9 h-[1px] w-full max-w-[1440px] bg-[#BFBFBF]" />
 

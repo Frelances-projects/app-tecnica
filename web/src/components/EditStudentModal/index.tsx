@@ -1,6 +1,5 @@
 'use client'
 import { Pencil } from 'lucide-react'
-import { AxiosError } from 'axios'
 
 import {
   AlertDialog,
@@ -12,9 +11,7 @@ import {
 } from '@/components/ui/alert-dialog'
 import { useToast } from '../ui/use-toast'
 
-import { api } from '@/lib/api'
 import { Student } from '@/utils/interfaces/student'
-import { errorMessages } from '@/utils/errors/errorMessages'
 import { EditStudentForm } from './EditStudentForm'
 import { editStudent } from './action'
 
@@ -38,12 +35,14 @@ interface EditStudentModalProps {
     value: string
     label: string
   }[]
+  trigger?: boolean
 }
 
 export function EditStudentModal({
   student,
   categoryCard,
   schools,
+  trigger,
 }: EditStudentModalProps) {
   const { toast } = useToast()
 
@@ -66,9 +65,15 @@ export function EditStudentModal({
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger>
-        <Pencil size={16} className="hover:cursor-pointer" />
-      </AlertDialogTrigger>
+      {trigger ? (
+        <AlertDialogTrigger className="w-full rounded-lg border px-4 py-2 transition-colors duration-200 ease-linear hover:bg-[#E86255] hover:text-white">
+          Editar Aluno
+        </AlertDialogTrigger>
+      ) : (
+        <AlertDialogTrigger>
+          <Pencil size={16} className="hover:cursor-pointer" />
+        </AlertDialogTrigger>
+      )}
       <AlertDialogContent className="w-full max-w-xl overflow-y-auto">
         <h1 className="text-lg font-bold">Editar aluno: {student.name}</h1>
 

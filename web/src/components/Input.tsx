@@ -25,10 +25,10 @@ export function Input({
 }: InputProps) {
   return (
     <div
-      className={`flex w-[520px] items-center justify-between rounded-lg border border-[#C6C6C6] bg-white px-2 py-[0.375rem] text-black outline-none ${className}`}
+      className={`flex w-full items-center justify-between rounded-lg border border-[#C6C6C6] bg-white px-2 py-[0.375rem] text-black outline-none lg:w-[520px] ${className}`}
     >
       <input
-        className={`flex-1 outline-none`}
+        className={`w-full flex-1 outline-none`}
         id={id}
         type={type}
         placeholder={placeholder}
