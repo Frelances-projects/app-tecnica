@@ -8,6 +8,7 @@ interface CreateTestRequest {
   testHour: string
   place?: string
   studentId: string
+  instructorId?: string
   status: 'APPROVED' | 'DISAPPROVED' | 'MARKED'
   category: 'THEORETICAL' | 'PRACTICAL'
 }
@@ -22,7 +23,15 @@ export class CreateTest {
 
   async execute(request: CreateTestRequest): Promise<CreateTestResponse> {
     try {
-      const { testDate, testHour, place, studentId, status, category } = request
+      const {
+        testDate,
+        testHour,
+        place,
+        studentId,
+        status,
+        category,
+        instructorId,
+      } = request
       const test = new Test({
         testDate,
         testHour,
@@ -30,6 +39,7 @@ export class CreateTest {
         studentId,
         status,
         category,
+        instructorId,
       })
 
       await this.testRepository.create(test)

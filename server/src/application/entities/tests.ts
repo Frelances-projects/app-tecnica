@@ -8,6 +8,7 @@ interface TestProps {
   place?: string | null
   status: 'APPROVED' | 'DISAPPROVED' | 'MARKED'
   studentId: string
+  instructorId?: string | null
   category: 'THEORETICAL' | 'PRACTICAL'
   createdAt?: Date | null
 }
@@ -66,6 +67,14 @@ export class Test {
 
   public get studentId(): string {
     return this.props.studentId
+  }
+
+  public set instructorId(instructorId: string) {
+    this.props.instructorId = instructorId
+  }
+
+  public get instructorId(): string | null {
+    return this.props.instructorId
   }
 
   public set category(category: 'THEORETICAL' | 'PRACTICAL') {

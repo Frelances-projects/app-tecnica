@@ -97,6 +97,7 @@ model User {
   updatedAt        DateTime         @updatedAt
   school           School           @relation(fields: [schoolId], references: [id])
   scheduledClasses ScheduledClass[]
+  tests            Test[]
 
   @@map("users")
 }
@@ -146,16 +147,18 @@ model ScheduledClass {
 }
 
 model Test {
-  id        String       @id
-  testDate  String
-  testHour  String
-  place     String?
-  status    TestStatus   @default(MARKED)
-  studentId String
-  category  TestCategory @default(THEORETICAL)
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
-  student   Student      @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  id           String       @id
+  testDate     String
+  testHour     String
+  place        String?
+  status       TestStatus   @default(MARKED)
+  studentId    String
+  instructorId String?
+  category     TestCategory @default(THEORETICAL)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  student      Student      @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  instructor   User?        @relation(fields: [instructorId], references: [id], onDelete: Cascade)
 
   @@map("tests")
 }

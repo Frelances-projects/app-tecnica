@@ -27,7 +27,7 @@ export class PrismaTestRepository implements TestRepository {
 
   async findMany(): Promise<Test[]> {
     const test = await this.prisma.test.findMany({
-      include: { student: { include: { school: true } } },
+      include: { student: { include: { school: true } }, instructor: true },
     })
 
     const testToDomain = test.map((test) => PrismaTestMapper.toDomain(test))
@@ -36,7 +36,10 @@ export class PrismaTestRepository implements TestRepository {
   }
 
   async findManyByStudent(studentId: string): Promise<Test[]> {
-    const test = await this.prisma.test.findMany({ where: { studentId } })
+    const test = await this.prisma.test.findMany({
+      where: { studentId },
+      include: { instructor: true },
+    })
 
     const testToDomain = test.map((test) => PrismaTestMapper.toDomain(test))
 
@@ -59,7 +62,7 @@ export class PrismaTestRepository implements TestRepository {
   ): Promise<Test[]> {
     const test = await this.prisma.test.findMany({
       where: { category },
-      include: { student: { include: { school: true } } },
+      include: { student: { include: { school: true } }, instructor: true },
     })
 
     const testToDomain = test.map((test) => PrismaTestMapper.toDomain(test))
@@ -73,7 +76,7 @@ export class PrismaTestRepository implements TestRepository {
   ): Promise<Test[]> {
     const test = await this.prisma.test.findMany({
       where: { category, student: { schoolId } },
-      include: { student: { include: { school: true } } },
+      include: { student: { include: { school: true } }, instructor: true },
     })
 
     const testToDomain = test.map((test) => PrismaTestMapper.toDomain(test))

@@ -14,4 +14,6 @@ export class CreateTestBody {
 
   @IsNotEmpty()
   category: 'THEORETICAL' | 'PRACTICAL'
+
+  instructorId?: string
 }

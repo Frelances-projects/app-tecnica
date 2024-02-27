@@ -162,13 +162,14 @@ export class TestController {
 
   @Put(':testId')
   async update(@Param('testId') testId: string, @Body() body: UpdateTestBody) {
-    const { testDate, testHour, status } = body
+    const { testDate, testHour, status, instructorId } = body
 
     const { test } = await this.updateTest.execute({
       id: testId,
       testDate,
       testHour,
       status,
+      instructorId,
     })
 
     return {

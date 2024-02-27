@@ -11,4 +11,6 @@ export class UpdateTestBody {
 
   @IsString()
   status: 'APPROVED' | 'DISAPPROVED' | 'MARKED'
+
+  instructorId?: string
 }
