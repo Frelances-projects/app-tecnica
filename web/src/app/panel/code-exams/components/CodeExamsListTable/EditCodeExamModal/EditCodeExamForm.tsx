@@ -20,6 +20,7 @@ export interface EditCodeExamInputs {
   testDate?: string
   testHour: string
   status: 'MARKED' | 'APPROVED' | 'DISAPPROVED'
+  instructorId: string
 }
 
 const testStatus = [
@@ -29,14 +30,19 @@ const testStatus = [
 ]
 
 export function EditCodeExamForm({ test, children }: EditCodeExamFormProps) {
-  const { register, control, setValue, reset, handleSubmit } =
+  const { register, control, setValue, watch, reset, handleSubmit } =
     useForm<EditCodeExamInputs>({
       defaultValues: {
         testHour: test.testHour!,
         status: test.status,
+        instructorId: test.instructorId,
       },
     })
   const { toast } = useToast()
+
+  const instructors = test.student.school.users?.filter(
+    (user) => user.function === 'INSTRUCTOR',
+  )
 
   async function handleEditCodeExam(data: EditCodeExamInputs) {
     const { message } = await editCodeExam({
@@ -96,6 +102,19 @@ export function EditCodeExamForm({ test, children }: EditCodeExamFormProps) {
           className="w-28 rounded-lg border border-[#C6C6C6] px-2 outline-none"
         />
       </div>
+
+      <Select
+        placeHolder="Selecione o instrutor para o teste"
+        data={instructors?.map((instructor) => {
+          return {
+            label: instructor.name,
+            value: instructor.id,
+          }
+        })}
+        className="w-full"
+        value={watch('instructorId')}
+        onChange={(event) => setValue('instructorId', event.target.value)}
+      />
 
       {children}
     </form>

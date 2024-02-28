@@ -27,6 +27,7 @@ export function DrivingExamsListTable({ tests }: DrivingExamsListTableProps) {
             <TableHead>Nome do aluno</TableHead>
             <TableHead>Contato</TableHead>
             <TableHead>Escola</TableHead>
+            <TableHead>Instrutor</TableHead>
             <TableHead>Editar</TableHead>
             <TableHead>Apagar</TableHead>
           </TableRow>
@@ -50,6 +51,7 @@ export function DrivingExamsListTable({ tests }: DrivingExamsListTableProps) {
                 <StudentInfoModal student={test.student} />
               </TableCell>
               <TableCell>{test.student.school.name}</TableCell>
+              <TableCell>{test?.instructor?.name ?? 'Não informado'}</TableCell>
               <TableCell>
                 <EditDrivingExamModal test={test} />
               </TableCell>

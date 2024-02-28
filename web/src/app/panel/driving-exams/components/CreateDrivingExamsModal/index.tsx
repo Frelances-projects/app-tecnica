@@ -11,6 +11,8 @@ import {
 } from '@/components/ui/dialog'
 import { CreateDrivingExamForm } from './CreateDrivingExamForm'
 
+import type { User } from '@/utils/interfaces/user'
+
 export interface CreateDrivingExamMutation {
   studentId: string
   testDate: string
@@ -23,6 +25,12 @@ interface CreateDrivingExamModalProps {
     value: string
     label: string
     number?: string
+    vehicles?: string[]
+    school?: {
+      id: string
+      name: string
+      users?: User[]
+    }
   }[]
 }
 

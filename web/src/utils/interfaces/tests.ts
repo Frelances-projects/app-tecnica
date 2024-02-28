@@ -1,4 +1,5 @@
-import { Student } from './student'
+import type { Student } from './student'
+import type { User } from './user'
 
 export interface Test {
   id: string
@@ -8,5 +9,8 @@ export interface Test {
   testDate: string
   testDateNotFormatted?: string
   testHour: string
+  instructorId?: string
+  slug?: 'test'
   student: Student
+  instructor: User
 }

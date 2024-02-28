@@ -24,6 +24,7 @@ import {
   Users,
   CircleDollarSign,
   X,
+  UserRoundSearch,
 } from 'lucide-react'
 
 import Logo from '../../assets/Tecnica_LOGO_outline_icon.svg'
@@ -378,6 +379,22 @@ export function SideBar({
             </div>
           </div>
         )}
+
+        <div className="group ml-2 cursor-pointer">
+          <button className="flex w-full items-center justify-between bg-[#F9F9F9] px-4 py-2 text-left text-zinc-800 hover:text-[#E86255]">
+            <Link
+              href="/panel/instructors-schedule"
+              className={`flex gap-2 hover:text-[#E86255]`}
+            >
+              <UserRoundSearch size={20} />{' '}
+              <span
+                className={`${collapsed ? 'hidden' : 'flex whitespace-nowrap'}`}
+              >
+                Agenda dos instrutores
+              </span>
+            </Link>
+          </button>
+        </div>
 
         {(userFunction === 'DIRECTOR' || userFunction === 'ADMIN') && (
           <div className="group ml-2 cursor-pointer">

@@ -25,6 +25,7 @@ export async function editCodeExam({
         : new Date(testDateNotFormatted!).toISOString(),
       testHour: data.testHour,
       status: data.status,
+      instructorId: data.instructorId,
     })
 
     revalidatePath('/panel/code-exams')

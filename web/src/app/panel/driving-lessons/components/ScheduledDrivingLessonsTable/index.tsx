@@ -27,11 +27,11 @@ export function ScheduledDrivingLessonsTable({
             <TableHead>Status da aula</TableHead>
             <TableHead>Data da aula</TableHead>
             <TableHead>Título da aula</TableHead>
-            <TableHead>Nome do aluno</TableHead>
-            <TableHead>Contato</TableHead>
+            <TableHead>Info aluno</TableHead>
             <TableHead>Veículo</TableHead>
             <TableHead>Escola</TableHead>
             <TableHead>Instrutor</TableHead>
+            <TableHead>Justificativa</TableHead>
             <TableHead>Editar</TableHead>
             <TableHead>Apagar</TableHead>
           </TableRow>
@@ -57,7 +57,6 @@ export function ScheduledDrivingLessonsTable({
                 {scheduledClass.schedulingDate} {scheduledClass.schedulingHour}
               </TableCell>
               <TableCell>{scheduledClass.class.name}</TableCell>
-              <TableCell>{scheduledClass.student.name}</TableCell>
               <TableCell>
                 <StudentInfoModal student={scheduledClass.student} />
               </TableCell>
@@ -65,6 +64,9 @@ export function ScheduledDrivingLessonsTable({
               <TableCell>{scheduledClass.student.school.name}</TableCell>
               <TableCell>
                 {scheduledClass?.instructor?.name ?? 'Não informado'}
+              </TableCell>
+              <TableCell>
+                {scheduledClass?.justification ?? 'Não informado'}
               </TableCell>
               <TableCell>
                 <EditScheduledDrivingLessonModal

@@ -14,6 +14,7 @@ export async function createDrivingExam(data: CreateDrivingExamFormInput) {
       testHour: data.testHour,
       place: data?.place,
       category: 'PRACTICAL',
+      instructorId: data.instructorId,
     })
 
     revalidatePath('/panel/driving-exams')

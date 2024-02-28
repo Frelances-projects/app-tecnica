@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { DialogFooter } from '@/components/ui/dialog'
@@ -8,14 +9,18 @@ import { buttonVariants } from '@/components/ui/button'
 import { Button } from '@/components/Button'
 import { useToast } from '@/components/ui/use-toast'
 import { Combobox } from '@/components/ui/Combobox'
+import { Select } from '@/components/Select'
 
 import { cn } from '@/lib/utils'
 import { createCodeExam } from './action'
+
+import type { User } from '@/utils/interfaces/user'
 
 export interface CreateCodeExamFormInput {
   studentId: string
   testDate: string
   testHour: string
+  instructorId: string
   place?: string
   status?: 'APPROVED' | 'DISAPPROVED' | 'MARKED'
 }
@@ -25,6 +30,11 @@ interface CreateCodeExamFormProps {
     value: string
     label: string
     number?: string
+    school?: {
+      id: string
+      name: string
+      users?: User[]
+    }
   }[]
   setIsModalOpen: (isOpen: boolean) => void
 }
@@ -33,15 +43,22 @@ export function CreateCodeExamForm({
   students,
   setIsModalOpen,
 }: CreateCodeExamFormProps) {
+  const [instructors, setInstructors] = useState<
+    { label: string; value: string }[]
+  >([])
+
   const {
     register,
     control,
     setValue,
+    watch,
     reset,
     handleSubmit,
     formState: { isSubmitting },
   } = useForm<CreateCodeExamFormInput>()
   const { toast } = useToast()
+
+  const studentId = watch('studentId')
 
   function handleCloseModal() {
     reset()
@@ -67,6 +84,20 @@ export function CreateCodeExamForm({
     }
   }
 
+  useEffect(() => {
+    const student = students.find((student) => student.value === studentId)
+
+    const instructors = student?.school?.users?.filter(
+      (user) => user.function === 'INSTRUCTOR',
+    )
+
+    setInstructors(
+      instructors?.map((user) => {
+        return { label: user.name, value: user.id }
+      }) ?? [],
+    )
+  }, [studentId, students])
+
   return (
     <form
       onSubmit={handleSubmit(handleCreateCodeExam)}
@@ -76,6 +107,7 @@ export function CreateCodeExamForm({
         <label htmlFor="fileInput" className="text-sm">
           Selecione o estudante para marcar o exame de código
         </label>
+
         <Combobox
           data={students}
           onSelect={(value) => setValue('studentId', value)}
@@ -89,6 +121,14 @@ export function CreateCodeExamForm({
         placeholder="Local e hora de saída do exame"
         type="text"
         {...register('place')}
+      />
+
+      <Select
+        disabled={instructors.length === 0}
+        placeHolder="Selecione o instrutor"
+        data={instructors}
+        className="w-full lg:w-full"
+        onChange={(event) => setValue('instructorId', event.target.value)}
       />
 
       <div className="flex w-full gap-4">

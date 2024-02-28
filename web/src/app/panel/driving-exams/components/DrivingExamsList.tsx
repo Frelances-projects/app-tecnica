@@ -80,6 +80,8 @@ export function DrivingExamsList({
                   label: student.name,
                   value: student.id,
                   number: String(student.number),
+                  vehicles: student.driverLicenseCategory?.vehicles,
+                  school: student.school,
                 }
               })}
             />
@@ -127,12 +129,14 @@ export function DrivingExamsList({
                       <p className="mt-2 flex items-center justify-between">
                         Escola: <span>{exam.student?.school?.name}</span>
                       </p>
+
                       <p className="flex items-center justify-between">
                         Data:{' '}
                         <span>
                           {exam.testDate} {exam.testHour}
                         </span>
                       </p>
+
                       <p className="flex items-center justify-between">
                         Status:{' '}
                         <span>
@@ -142,6 +146,11 @@ export function DrivingExamsList({
                               ? 'REPROVADO'
                               : 'MARCADO'}
                         </span>
+                      </p>
+
+                      <p className="flex items-center justify-between">
+                        Instrutor:{' '}
+                        <span>{exam?.instructor?.name ?? 'Não informado'}</span>
                       </p>
                     </div>
                     <div className="mt-4 flex gap-4">

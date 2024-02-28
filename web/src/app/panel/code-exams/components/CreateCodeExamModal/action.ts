@@ -13,6 +13,7 @@ export async function createCodeExam(data: CreateCodeExamFormInput) {
       place: data?.place,
       category: 'THEORETICAL',
       status: 'MARKED',
+      instructorId: data.instructorId,
     })
 
     revalidatePath('/panel/code-exams')

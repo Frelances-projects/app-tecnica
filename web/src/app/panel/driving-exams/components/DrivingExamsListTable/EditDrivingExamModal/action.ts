@@ -25,6 +25,7 @@ export async function editDrivingExam({
         : new Date(testDateNotFormatted!).toISOString(),
       testHour: data.testHour,
       status: data.status,
+      instructorId: data.instructorId,
     })
 
     revalidatePath('/panel/driving-exams')

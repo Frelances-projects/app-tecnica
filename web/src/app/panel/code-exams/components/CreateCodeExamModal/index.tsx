@@ -11,6 +11,8 @@ import {
 } from '@/components/ui/dialog'
 import { CreateCodeExamForm } from './CreateCodeExamForm'
 
+import type { User } from '@/utils/interfaces/user'
+
 export interface CreateCodeExamMutation {
   studentId: string
   testDate: string
@@ -22,7 +24,12 @@ interface CreateCodeExamModalProps {
   students: {
     value: string
     label: string
-    number: string
+    number?: string
+    school?: {
+      id: string
+      name: string
+      users?: User[]
+    }
   }[]
 }
 

@@ -22,4 +22,5 @@ export interface ScheduleClass {
   class: Class
   student: Student
   instructor: User
+  slug?: 'scheduled-class'
 }

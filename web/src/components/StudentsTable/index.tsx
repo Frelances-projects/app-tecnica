@@ -1,4 +1,5 @@
 import { usePathname } from 'next/navigation'
+import { Copy } from 'lucide-react'
 
 import {
   Table as TableComponent,
@@ -10,8 +11,10 @@ import {
 } from '@/components/ui/table'
 import { EditStudentModal } from '../EditStudentModal'
 import { DeleteStudentModal } from '../DeleteStudentModal'
+import { useToast } from '../ui/use-toast'
 
 import { Student } from '@/utils/interfaces/student'
+import { CompletedLessonsModal } from './CompletedLessonsModal'
 
 interface StudentsTableProps {
   students: Student[]
@@ -34,18 +37,30 @@ export function StudentsTable({
   const pathname = usePathname()
   const hasEditStudentModal = pathname === '/panel/students/list'
 
+  const { toast } = useToast()
+
+  function handleCopyStudentId(id: string) {
+    navigator.clipboard.writeText(id)
+
+    toast({
+      title: 'ID copiado com sucesso!',
+      description:
+        'ID do estudante copiado para a área de transferência com sucesso',
+    })
+  }
+
   return (
     <div className="relative overflow-x-auto">
       <TableComponent>
         <TableHeader>
           <TableRow>
+            <TableHead>ID</TableHead>
             <TableHead>Nome</TableHead>
             <TableHead>Número</TableHead>
             <TableHead>Email</TableHead>
             <TableHead>Data inscrição</TableHead>
             <TableHead>Escola</TableHead>
-            <TableHead>Aulas de código</TableHead>
-            <TableHead>Aulas de condução</TableHead>
+            <TableHead>Aulas completadas</TableHead>
             {hasEditStudentModal && <TableHead>Editar</TableHead>}
             <TableHead>Apagar</TableHead>
           </TableRow>
@@ -58,25 +73,25 @@ export function StudentsTable({
                 scheduledClass.status === 'COMPLETED' ||
                 scheduledClass.status === 'CONFIRMED',
             )
-            const completedCodeLessons =
-              completedLessons?.filter(
-                (lesson) => lesson.class.category === 'THEORETICAL',
-              ).length || 0
-            const completedPracticalLessons =
-              completedLessons?.filter(
-                (lesson) => lesson.class.category === 'PRACTICAL',
-              ).length || 0
 
             return (
               <TableRow key={student.id}>
+                <TableCell onClick={() => handleCopyStudentId(student.id)}>
+                  <Copy
+                    size={20}
+                    className="hover:cursor-pointer hover:text-green-600"
+                  />
+                </TableCell>
                 <TableCell>{student.name}</TableCell>
                 <TableCell>{student.number}</TableCell>
                 <TableCell>{student.email}</TableCell>
                 <TableCell>{student.enrolledAt}</TableCell>
                 <TableCell>{student.school.name}</TableCell>
-                <TableCell align="center">{completedCodeLessons}</TableCell>
                 <TableCell align="center">
-                  {completedPracticalLessons}
+                  <CompletedLessonsModal
+                    student={student}
+                    completedLessons={completedLessons}
+                  />
                 </TableCell>
                 {hasEditStudentModal && (
                   <TableCell>

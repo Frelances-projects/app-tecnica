@@ -1,5 +1,6 @@
 'use client'
 import { useState, SetStateAction } from 'react'
+import { ChevronLeft, ChevronRight, User2 } from 'lucide-react'
 
 import { SearchInput } from '@/components/SearchInput'
 import { ScheduledDrivingLessonsTable } from './ScheduledDrivingLessonsTable'
@@ -9,7 +10,6 @@ import { CreateManyScheduleDrivingClassModal } from './CreateManyScheduleDriving
 import { ScheduleClass } from '@/utils/interfaces/schedule-class'
 import { Student } from '@/utils/interfaces/student'
 import { Select } from '@/components/Select'
-import { ChevronLeft, ChevronRight, User2 } from 'lucide-react'
 
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { EditScheduledDrivingLessonModal } from './ScheduledDrivingLessonsTable/EditScheduledDrivingLessonModal'
@@ -190,30 +190,42 @@ export function ScheduledDrivingLessonsList({
                       <p className="flex items-center justify-between">
                         Escola: <span>{schedule?.student.school.name}</span>
                       </p>
+
                       <p className="flex items-center justify-between">
                         Data:{' '}
                         <span>
                           {schedule?.schedulingDate} {schedule?.schedulingHour}
                         </span>
                       </p>
+
                       <p className="flex items-center justify-between">
                         Título: <span>{schedule?.class?.name}</span>
                       </p>
+
                       <p className="flex items-center justify-between">
                         Veículo:{' '}
-                        <span>
-                          {schedule?.instructor?.name ?? 'Não informado'}
-                        </span>
+                        <span>{schedule?.vehicle ?? 'Não informado'}</span>
                       </p>
+
                       <p className="flex items-center justify-between">
                         Instrutor:{' '}
                         <span>
                           {schedule?.instructor?.name ?? 'Não informado'}
                         </span>
                       </p>
+
+                      {schedule?.status === 'CANCELED' && (
+                        <p className="flex items-center justify-between">
+                          Justificativa:{' '}
+                          <span>
+                            {schedule?.justification ?? 'Não informado'}
+                          </span>
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
+
                 <div className="flex gap-4">
                   <EditScheduledDrivingLessonModal
                     scheduledClass={schedule}

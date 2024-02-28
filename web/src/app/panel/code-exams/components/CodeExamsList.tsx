@@ -79,6 +79,7 @@ export function CodeExamsList({
                   label: student.name,
                   value: student.id,
                   number: String(student.number),
+                  school: student.school,
                 }
               })}
             />
@@ -132,6 +133,7 @@ export function CodeExamsList({
                           {exam.testDate} {exam.testHour}
                         </span>
                       </p>
+
                       <p className="flex items-center justify-between">
                         Status:{' '}
                         <span>
@@ -141,6 +143,11 @@ export function CodeExamsList({
                               ? 'REPROVADO'
                               : 'MARCADO'}
                         </span>
+                      </p>
+
+                      <p className="flex items-center justify-between">
+                        Instrutor:{' '}
+                        <span>{exam?.instructor?.name ?? 'Não informado'}</span>
                       </p>
                     </div>
                     <div className="mt-4 flex gap-4">
