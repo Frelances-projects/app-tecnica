@@ -143,7 +143,7 @@ export function PracticalClassItem({ scheduledPracticalClassId, title, date, hou
         <textarea 
           value={justification}
           onChange={(event) => setJustification(event.target.value)} 
-          placeholder="Justificativa"
+          placeholder="Sugestão de outro horário"
           className="w-full placeholder-slate-500 resize-none outline-none border border-zinc-300 rounded-md px-3 pt-2 h-28 mt-4"
         />
       )}
