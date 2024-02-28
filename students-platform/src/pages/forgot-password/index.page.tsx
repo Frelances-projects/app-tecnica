@@ -32,7 +32,7 @@ export default function ForgotPassword() {
   async function handleForgotPassword(data: ForgotFormData) {
     try {
       await server.post('/student/password/forgot-password',
-        { email: data.email, link: 'https://alunos.grupotecnica.pt/reset-password' }
+        { email: data.email, link: 'https://students-platform-mu.vercel.app/reset-password' }
       )
       reset()
 
