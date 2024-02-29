@@ -126,6 +126,7 @@ import { ResetUserPassword } from 'src/application/use-cases/user/reset-user-pas
 import { SendSmsPaymentScheduler } from '../scheduler/send-sms-payment-scheduler'
 import { SendSmsBirthDateScheduler } from '../scheduler/send-sms-birth-date-scheduler'
 import { ChangeScheduledClassStatusScheduler } from '../scheduler/change-scheduled-class-status-scheduler'
+import { ChangeCondeLessonsScheduler } from '../scheduler/change-code-lessons-scheduler'
 
 import { GenerateHash } from 'src/helpers/generate-hash'
 import { CompareHash } from 'src/helpers/compare-hash'
@@ -258,6 +259,7 @@ import { CreateToken } from 'src/helpers/create-token'
     SendSmsPaymentScheduler,
     SendSmsBirthDateScheduler,
     ChangeScheduledClassStatusScheduler,
+    ChangeCondeLessonsScheduler,
   ],
 })
 export class HttpModule {}
