@@ -16,6 +16,7 @@ export async function createStudent(data: FormData) {
     const schoolId = data.get('student_register')?.toString()
     const driverLicenseCategoryId = data.get('category')?.toString()
     const paymentMethod = data.get('payment_method')?.toString()
+    const imtId = data.get('imt_id')?.toString()
 
     console.log(
       '🚀 ~ file: action.ts:27 ~ createStudent ~ String(new Date(birthDate!!).toISOString()):',
@@ -31,6 +32,7 @@ export async function createStudent(data: FormData) {
       schoolId,
       driverLicenseCategoryId,
       paymentMethod,
+      imtId,
     })
 
     revalidatePath('/panel/students/list')

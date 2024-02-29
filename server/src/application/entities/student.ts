@@ -9,6 +9,7 @@ interface StudentProps {
   number: number
   phone?: string
   birthDate?: string | null
+  imtId?: string | null
   enrolledAt: string
   schoolId: string
   paymentId?: string | null
@@ -80,6 +81,14 @@ export class Student {
 
   public get birthDate(): string | null {
     return this.props.birthDate
+  }
+
+  public set imtId(imtId: string | null) {
+    this.props.imtId = imtId
+  }
+
+  public get imtId(): string | null {
+    return this.props.imtId
   }
 
   public set enrolledAt(enrolledAt: string) {

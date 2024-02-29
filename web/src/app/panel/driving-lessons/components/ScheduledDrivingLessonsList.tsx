@@ -216,7 +216,7 @@ export function ScheduledDrivingLessonsList({
 
                       {schedule?.status === 'CANCELED' && (
                         <p className="flex items-center justify-between">
-                          Justificativa:{' '}
+                          Justificação:{' '}
                           <span>
                             {schedule?.justification ?? 'Não informado'}
                           </span>

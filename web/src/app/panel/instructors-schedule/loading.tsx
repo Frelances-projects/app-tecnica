@@ -8,7 +8,7 @@ export default function StudentListLoading() {
 
       <section className="-mt-4 w-full max-w-7xl lg:pl-10">
         <h1 className="mb-9 mt-6 text-lg font-medium">
-          Listagem dos afazeres dos instrutores
+          Lista de trabalho diário do instrutor
         </h1>
 
         <Skeleton className="h-8 w-full rounded-lg lg:w-[520px]" />

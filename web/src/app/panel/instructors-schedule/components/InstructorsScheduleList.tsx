@@ -140,7 +140,7 @@ export function InstructorsScheduleList({
   return (
     <section className="-mt-4 w-full max-w-7xl lg:pl-10">
       <h1 className="mb-9 mt-6 text-lg font-medium">
-        Listagem dos afazeres dos instrutores
+        Lista de trabalho diário do instrutor
       </h1>
 
       <div className="flex max-w-3xl flex-col items-center gap-2 xl:flex-row">

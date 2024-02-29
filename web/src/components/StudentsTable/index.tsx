@@ -44,8 +44,7 @@ export function StudentsTable({
 
     toast({
       title: 'ID copiado com sucesso!',
-      description:
-        'ID do estudante copiado para a área de transferência com sucesso',
+      description: 'ID copiado para a área de transferência com sucesso',
     })
   }
 
@@ -60,7 +59,7 @@ export function StudentsTable({
             <TableHead>Email</TableHead>
             <TableHead>Data inscrição</TableHead>
             <TableHead>Escola</TableHead>
-            <TableHead>Aulas completadas</TableHead>
+            <TableHead>Aulas Completas</TableHead>
             {hasEditStudentModal && <TableHead>Editar</TableHead>}
             <TableHead>Apagar</TableHead>
           </TableRow>
@@ -76,7 +75,9 @@ export function StudentsTable({
 
             return (
               <TableRow key={student.id}>
-                <TableCell onClick={() => handleCopyStudentId(student.id)}>
+                <TableCell
+                  onClick={() => handleCopyStudentId(student.imtId ?? '')}
+                >
                   <Copy
                     size={20}
                     className="hover:cursor-pointer hover:text-green-600"

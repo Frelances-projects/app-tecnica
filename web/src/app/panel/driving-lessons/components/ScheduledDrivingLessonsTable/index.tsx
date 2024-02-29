@@ -31,7 +31,7 @@ export function ScheduledDrivingLessonsTable({
             <TableHead>Veículo</TableHead>
             <TableHead>Escola</TableHead>
             <TableHead>Instrutor</TableHead>
-            <TableHead>Justificativa</TableHead>
+            <TableHead>Justificação</TableHead>
             <TableHead>Editar</TableHead>
             <TableHead>Apagar</TableHead>
           </TableRow>

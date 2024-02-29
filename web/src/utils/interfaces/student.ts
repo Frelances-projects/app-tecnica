@@ -11,6 +11,7 @@ export interface Student {
   driverLicenseCategoryId: string
   paymentId: string
   token: string | null
+  imtId?: string
   schoolId: string
   enrolledAt: string
   school: {

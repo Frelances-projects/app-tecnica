@@ -20,6 +20,7 @@ interface CreateStudentRequest {
   number: number
   phone: string
   birthDate: string
+  imtId?: string
   enrolledAt: string
 }
 
@@ -49,6 +50,7 @@ export class CreateStudent {
         number,
         phone,
         birthDate,
+        imtId,
       } = request
 
       const { student: foundStudentByEmail } =
@@ -105,6 +107,7 @@ export class CreateStudent {
         driverLicenseCategoryId,
         phone,
         birthDate,
+        imtId,
       })
 
       await this.studentsRepository.create(student)

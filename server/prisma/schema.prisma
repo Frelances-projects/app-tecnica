@@ -110,6 +110,7 @@ model Student {
   number                  Int                   @unique
   phone                   String?
   birthDate               String?
+  imtId                   String?
   enrolledAt              String
   driverLicenseCategoryId String
   schoolId                String

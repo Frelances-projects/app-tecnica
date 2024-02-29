@@ -19,6 +19,8 @@ export class CreateStudentBody {
   @IsNotEmpty()
   enrolledAt: string
 
+  imtId?: string
+
   @IsNotEmpty()
   @IsNumber()
   number: number
