@@ -74,7 +74,7 @@ export function EditStudentModal({
           <Pencil size={16} className="hover:cursor-pointer" />
         </AlertDialogTrigger>
       )}
-      <AlertDialogContent className="w-full max-w-xl overflow-y-auto">
+      <AlertDialogContent className="w-full max-w-2xl overflow-y-auto">
         <h1 className="text-lg font-bold">Editar aluno: {student.name}</h1>
 
         <EditStudentForm
