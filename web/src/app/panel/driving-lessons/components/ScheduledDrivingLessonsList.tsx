@@ -214,6 +214,13 @@ export function ScheduledDrivingLessonsList({
                         </span>
                       </p>
 
+                      <p className="flex items-center justify-between">
+                        ID Escola:{' '}
+                        <span>
+                          {schedule?.student.imtId ?? 'Não informado'}
+                        </span>
+                      </p>
+
                       {schedule?.status === 'CANCELED' && (
                         <p className="flex items-center justify-between">
                           Justificação:{' '}

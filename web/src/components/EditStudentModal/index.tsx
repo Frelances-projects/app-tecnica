@@ -22,6 +22,7 @@ export interface EditStudentFormInput {
   student_phone?: string
   student_category_card?: string
   student_email: string
+  student_imt_id?: string
 }
 
 interface EditStudentModalProps {
@@ -82,6 +83,7 @@ export function EditStudentModal({
           studentEmail={student.email}
           studentNumber={student.number}
           studentPhone={student.phone}
+          studentImtId={student.imtId}
           schools={schools}
           categoryCard={categoryCard}
           handleEditStudent={handleEditStudent}

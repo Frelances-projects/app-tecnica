@@ -24,6 +24,7 @@ export async function editStudent({ data, student }: EditStudentData) {
       // enrolledAt: data.student_enrolled_at && data.student_enrolled_at.trim() !== '' ? String(new Date(data.student_enrolled_at).toISOString()) : String(new Date(student.enrolledAt).toISOString()),
       number: Number(data.student_number) ?? Number(student.number),
       phone: `+351${data.student_phone}` ?? student.phone,
+      imtId: data.student_imt_id ?? student.imtId,
     })
 
     revalidatePath('/panel/students/list')

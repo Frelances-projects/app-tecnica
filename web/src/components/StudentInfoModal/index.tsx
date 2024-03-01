@@ -43,6 +43,13 @@ export function StudentInfoModal({ student }: StudentInfoModalProps) {
                 {student.phone || 'Nenhum Telefone cadastrado'}
               </strong>
             </div>
+
+            <div className="flex gap-x-4">
+              <span className="text-lg">ID Escola:</span>
+              <strong className="text-lg">
+                {student.imtId || 'Não informado'}
+              </strong>
+            </div>
           </div>
         </AlertDialogHeader>
 
