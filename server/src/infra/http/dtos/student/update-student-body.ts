@@ -18,6 +18,8 @@ export class UpdateStudentBody {
 
   firebaseToken?: string
 
+  imtId?: string
+
   phone: string
 
   // @IsString()

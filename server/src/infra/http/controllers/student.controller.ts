@@ -108,6 +108,7 @@ export class StudentController {
       // enrolledAt,
       schoolId,
       firebaseToken,
+      imtId,
     } = body
 
     const { student } = await this.updateStudent.execute({
@@ -120,6 +121,7 @@ export class StudentController {
       // enrolledAt,
       schoolId,
       firebaseToken,
+      imtId,
     })
 
     return {
