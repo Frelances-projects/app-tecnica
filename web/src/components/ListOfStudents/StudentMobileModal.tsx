@@ -185,7 +185,9 @@ export function StudentMobileModal({
               <div className="mt-4 flex flex-col gap-2 border-y py-2 text-left">
                 <p className="mt-2 flex items-center justify-between">
                   ID
-                  <button onClick={() => handleCopyStudentId(student.id)}>
+                  <button
+                    onClick={() => handleCopyStudentId(student.imtId ?? '')}
+                  >
                     <Copy
                       size={20}
                       className="hover:cursor-pointer hover:text-green-600"

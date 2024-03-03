@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import { useState, SetStateAction } from 'react'
+import { ChevronLeft, ChevronRight, User2, Copy } from 'lucide-react'
 
 import { SearchInput } from './SearchInput'
 import { UsersTable } from './UsersTable'
 
 import { User } from '@/utils/interfaces/user'
-import { ChevronLeft, ChevronRight, User2 } from 'lucide-react'
+import { useToast } from './ui/use-toast'
 
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { DeleteUserModal } from './UsersTable/DeleteUserModal'
@@ -34,8 +35,19 @@ export function ListOfUsers({ users }: ListOfUsersProps) {
   const startIndex = currentPage * itemsPerPage
   const slicedData = filteredUsers?.slice(startIndex, startIndex + itemsPerPage)
 
-  const handlePageChange = (pageNumber: SetStateAction<number>) => {
+  function handlePageChange(pageNumber: SetStateAction<number>) {
     setCurrentPage(pageNumber)
+  }
+
+  const { toast } = useToast()
+
+  function handleCopyUserId(id: string) {
+    navigator.clipboard.writeText(id)
+
+    toast({
+      title: 'ID copiado com sucesso!',
+      description: 'ID copiado para a área de transferência com sucesso',
+    })
   }
 
   return (
@@ -51,6 +63,7 @@ export function ListOfUsers({ users }: ListOfUsersProps) {
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#E86255] text-white">
                   <User2 size={24} />
                 </div>
+
                 <div className="w-[80%] text-left">
                   <p className="w-[85%]  truncate font-medium">{user?.name}</p>
                   <p className="w-[85%] truncate text-sm text-[#b1b2bc]">
@@ -71,11 +84,30 @@ export function ListOfUsers({ users }: ListOfUsersProps) {
                       <p className="flex items-center justify-between">
                         Data: <span>{user?.createdAt as unknown as any}</span>
                       </p>
+
                       <p className="flex items-center justify-between">
                         Escola: <span>{user?.school?.name}</span>
                       </p>
+
                       <p className="flex items-center justify-between">
-                        Função: <span>{user?.function}</span>
+                        Função:{' '}
+                        <span>
+                          {user.function === 'ADMIN'
+                            ? 'ADMINISTRADOR'
+                            : 'INSTRUTOR'}
+                        </span>
+                      </p>
+
+                      <p className="flex items-center justify-between">
+                        ID
+                        <button
+                          onClick={() => handleCopyUserId(user?.imtId ?? '')}
+                        >
+                          <Copy
+                            size={20}
+                            className="hover:cursor-pointer hover:text-green-600"
+                          />
+                        </button>
                       </p>
                     </div>
                   </div>

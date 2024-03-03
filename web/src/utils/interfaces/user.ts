@@ -4,6 +4,7 @@ export interface User {
   email: string
   function: 'ADMIN' | 'DIRECTOR' | 'INSTRUCTOR'
   schoolId: string
+  imtId?: string
   createdAt: Date
   school?: {
     id: string
