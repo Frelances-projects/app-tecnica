@@ -9,6 +9,7 @@ interface UserProps {
   schoolId: string
   function: 'ADMIN' | 'DIRECTOR' | 'INSTRUCTOR'
   token?: string | null
+  imtId?: string | null
   createdAt?: Date | null
 }
 
@@ -74,6 +75,14 @@ export class User {
 
   public get token(): string {
     return this.props.token
+  }
+
+  public set imtId(imtId: string) {
+    this.props.imtId = imtId
+  }
+
+  public get imtId(): string {
+    return this.props.imtId
   }
 
   public get createdAt(): Date {

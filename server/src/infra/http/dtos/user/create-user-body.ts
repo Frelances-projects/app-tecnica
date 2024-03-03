@@ -27,4 +27,6 @@ export class CreateUserBody {
 
   @IsNotEmpty()
   function: 'ADMIN' | 'DIRECTOR' | 'INSTRUCTOR'
+
+  imtId?: string
 }

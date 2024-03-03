@@ -12,6 +12,7 @@ export class PrismaUserMapper {
       schoolId: user.schoolId,
       function: user.userFunction,
       token: user.token,
+      imtId: user.imtId,
       createdAt: user.createdAt,
     }
   }
@@ -25,6 +26,7 @@ export class PrismaUserMapper {
         schoolId: raw.schoolId,
         function: raw.function,
         token: raw.token,
+        imtId: raw.imtId,
         createdAt: raw.createdAt,
         ...raw,
       },

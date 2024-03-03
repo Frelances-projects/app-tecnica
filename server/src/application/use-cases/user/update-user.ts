@@ -14,6 +14,7 @@ interface UpdateUserRequest {
   name?: string
   email?: string
   schoolId?: string
+  imtId?: string
 }
 
 interface UpdateUserResponse {
@@ -30,7 +31,7 @@ export class UpdateUser {
 
   async execute(request: UpdateUserRequest): Promise<UpdateUserResponse> {
     try {
-      const { userId, email, name, schoolId } = request
+      const { userId, email, name, schoolId, imtId } = request
 
       const { user } = await this.getUserById.execute(userId)
 
@@ -45,6 +46,7 @@ export class UpdateUser {
       user.name = name ?? user.name
       user.email = email ?? user.email
       user.schoolId = schoolId ?? user.schoolId
+      user.imtId = imtId ?? user.imtId
 
       await this.userRepository.save(user)
 

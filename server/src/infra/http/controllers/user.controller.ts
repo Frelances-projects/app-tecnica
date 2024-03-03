@@ -92,13 +92,14 @@ export class UserController {
 
   @Put(':userId')
   async update(@Param('userId') userId: string, @Body() body: UpdateUserBody) {
-    const { name, email, schoolId } = body
+    const { name, email, schoolId, imtId } = body
 
     const { user } = await this.updateUser.execute({
       userId,
       name,
       email,
       schoolId,
+      imtId,
     })
 
     return {

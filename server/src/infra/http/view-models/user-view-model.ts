@@ -8,6 +8,7 @@ export class UserViewModel {
       email: user.email,
       function: user.userFunction,
       token: user.token,
+      imtId: user.imtId,
       schoolId: user.schoolId,
       createdAt: user.createdAt,
       school: user.props.school,

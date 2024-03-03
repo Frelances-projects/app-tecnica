@@ -15,6 +15,7 @@ interface CreateUserRequest {
   email: string
   password: string
   schoolId: string
+  imtId?: string
   function: 'ADMIN' | 'DIRECTOR' | 'INSTRUCTOR'
 }
 
@@ -38,6 +39,7 @@ export class CreateUser {
         password,
         schoolId,
         function: userFunction,
+        imtId,
       } = request
 
       const { user: foundUserByEmail } = await this.getUserByEmail.execute(
@@ -56,6 +58,7 @@ export class CreateUser {
         password: passwordHashed,
         schoolId,
         function: userFunction,
+        imtId,
       })
 
       await this.userRepository.create(user)
