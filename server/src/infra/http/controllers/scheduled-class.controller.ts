@@ -182,30 +182,30 @@ export class ScheduledClassController {
   async create(@Body() body: CreateScheduledClassBody) {
     const { scheduledClass } = await this.createScheduledClass.execute(body)
 
-    if (scheduledClass.schedulingDate && scheduledClass.schedulingHour) {
-      await Promise.all([
-        this.pushNotificationService.sendNotificationToStudent({
-          studentId: scheduledClass.studentId,
-          title: 'Nova aula de condução marcada!',
-          body: `Uma nova aula de condução foi marcada para: ${format(
-            new Date(scheduledClass.schedulingDate),
-            'PPP',
-            { locale: pt },
-          )} ás ${
-            scheduledClass.schedulingHour
-          }, por favor, confirme a sua presença!`,
-        }),
+    // if (scheduledClass.schedulingDate && scheduledClass.schedulingHour) {
+    //   await Promise.all([
+    //     this.pushNotificationService.sendNotificationToStudent({
+    //       studentId: scheduledClass.studentId,
+    //       title: 'Nova aula de condução marcada!',
+    //       body: `Uma nova aula de condução foi marcada para: ${format(
+    //         new Date(scheduledClass.schedulingDate),
+    //         'PPP',
+    //         { locale: pt },
+    //       )} ás ${
+    //         scheduledClass.schedulingHour
+    //       }, por favor, confirme a sua presença!`,
+    //     }),
 
-        this.pushNotificationService.sendSmsToStudent({
-          studentId: scheduledClass.studentId,
-          body: `Nova aula de condução marcada, ${format(
-            new Date(scheduledClass.schedulingDate),
-            'PPP',
-            { locale: pt },
-          )} ás ${scheduledClass.schedulingHour}, confirma a tua presença!`,
-        }),
-      ])
-    }
+    //     this.pushNotificationService.sendSmsToStudent({
+    //       studentId: scheduledClass.studentId,
+    //       body: `Nova aula de condução marcada, ${format(
+    //         new Date(scheduledClass.schedulingDate),
+    //         'PPP',
+    //         { locale: pt },
+    //       )} ás ${scheduledClass.schedulingHour}, confirma a tua presença!`,
+    //     }),
+    //   ])
+    // }
 
     return {
       scheduledClass: ScheduledClassViewModel.toHTTP(scheduledClass),
@@ -220,28 +220,28 @@ export class ScheduledClassController {
       body,
     )
 
-    await Promise.all([
-      // this.pushNotificationService.sendNotificationToStudent({
-      //   studentId: scheduledClass.studentId,
-      //   title: 'Aula de condução marcada!',
-      //   body: `Uma nova aula de condução foi marcada para: ${format(
-      //     new Date(scheduledClass.schedulingDate),
-      //     'PPP',
-      //     { locale: pt },
-      //   )} ás ${
-      //     scheduledClass.schedulingHour
-      //   }, por favor, confirme a sua presença!`,
-      // }),
+    // await Promise.all([
+    //   // this.pushNotificationService.sendNotificationToStudent({
+    //   //   studentId: scheduledClass.studentId,
+    //   //   title: 'Aula de condução marcada!',
+    //   //   body: `Uma nova aula de condução foi marcada para: ${format(
+    //   //     new Date(scheduledClass.schedulingDate),
+    //   //     'PPP',
+    //   //     { locale: pt },
+    //   //   )} ás ${
+    //   //     scheduledClass.schedulingHour
+    //   //   }, por favor, confirme a sua presença!`,
+    //   // }),
 
-      this.pushNotificationService.sendSmsToStudent({
-        studentId: scheduledClass.studentId,
-        body: `Nova aula de condução marcada, ${format(
-          new Date(scheduledClass.schedulingDate),
-          'PPP',
-          { locale: pt },
-        )} ás ${scheduledClass.schedulingHour}, confirma a tua presença!`,
-      }),
-    ])
+    //   this.pushNotificationService.sendSmsToStudent({
+    //     studentId: scheduledClass.studentId,
+    //     body: `Nova aula de condução marcada, ${format(
+    //       new Date(scheduledClass.schedulingDate),
+    //       'PPP',
+    //       { locale: pt },
+    //     )} ás ${scheduledClass.schedulingHour}, confirma a tua presença!`,
+    //   }),
+    // ])
 
     return {
       scheduledClass: ScheduledClassViewModel.toHTTP(scheduledClass),
