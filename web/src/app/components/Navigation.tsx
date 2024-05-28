@@ -22,7 +22,6 @@ import {
   BookOpenCheck,
   ScrollText,
   Users,
-  CircleDollarSign,
   X,
   UserRoundSearch,
 } from 'lucide-react'
@@ -449,7 +448,7 @@ export function SideBar({
           </div>
         )}
 
-        {(userFunction === 'DIRECTOR' || userFunction === 'ADMIN') && (
+        {/* {(userFunction === 'DIRECTOR' || userFunction === 'ADMIN') && (
           <div className="group ml-2 cursor-pointer">
             <button
               className="flex w-full items-center justify-between bg-[#F9F9F9] px-4 py-2 text-left text-zinc-800 hover:text-[#E86255]"
@@ -491,7 +490,7 @@ export function SideBar({
               </Link>
             </div>
           </div>
-        )}
+        )} */}
 
         <div className="group ml-2 cursor-pointer">
           <button

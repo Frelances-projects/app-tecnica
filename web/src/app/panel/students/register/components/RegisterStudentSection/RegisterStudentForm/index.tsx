@@ -107,21 +107,21 @@ export function RegisterStudentForm({
         placeholder="Email Aluno"
       />
 
-      <ItemInputForm
+      {/* <ItemInputForm
         required
         id="student_birth_date"
         label="Data de nascimento do aluno"
         type="date"
         placeholder="Data de nascimento"
-      />
+      /> */}
 
-      <ItemInputForm
+      {/* <ItemInputForm
         required
         id="student_date"
         label="Data de inscrição do Aluno"
         type="date"
         placeholder="Data de Inscrição"
-      />
+      /> */}
 
       <ItemSelectForm
         required
@@ -141,12 +141,12 @@ export function RegisterStudentForm({
         onChange={(event) => setSelectedCategoryCard(event.target.value)}
       />
 
-      <ItemSelectForm
+      {/* <ItemSelectForm
         required
         id="payment_method"
         label="Método de Pagamento"
         data={paymentMethod}
-      />
+      /> */}
 
       <ItemInputForm
         required

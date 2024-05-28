@@ -166,13 +166,13 @@ export function CreateScheduledDrivingLessonForm({
         {...register('lessonName')}
       />
 
-      <textarea
+      {/* <textarea
         {...register('lessonDescription')}
         minLength={5}
         maxLength={460}
         placeholder="Insira a descrição da aula(Opcional)"
         className="h-[142px] w-full max-w-[520px] resize-none rounded-lg border border-[#C6C6C6] bg-white px-2 py-[0.375rem] text-black outline-none"
-      />
+      /> */}
 
       <fieldset>
         <label htmlFor="fileInput" className="text-sm">

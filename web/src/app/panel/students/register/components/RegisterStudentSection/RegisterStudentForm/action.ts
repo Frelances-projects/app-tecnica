@@ -18,17 +18,15 @@ export async function createStudent(data: FormData) {
     const paymentMethod = data.get('payment_method')?.toString()
     const imtId = data.get('imt_id')?.toString()
 
-    console.log(
-      '🚀 ~ file: action.ts:27 ~ createStudent ~ String(new Date(birthDate!!).toISOString()):',
-      String(new Date(birthDate!).toISOString()),
-    )
     await api.post(`/student`, {
       name,
       number: Number(number),
       phone: `+351${phone}`,
       email,
-      birthDate: String(new Date(birthDate!).toISOString()),
-      enrolledAt: String(new Date(date!).toISOString()),
+      birthDate: birthDate
+        ? String(new Date(birthDate!).toISOString())
+        : undefined,
+      enrolledAt: date ? String(new Date(date!).toISOString()) : undefined,
       schoolId,
       driverLicenseCategoryId,
       paymentMethod,
@@ -39,6 +37,7 @@ export async function createStudent(data: FormData) {
 
     return { message: 'Success!' }
   } catch (error) {
+    console.log('🚀 ~ createStudent ~ error:', error)
     if (error instanceof AxiosError) {
       if (error.response?.data?.message) {
         if (

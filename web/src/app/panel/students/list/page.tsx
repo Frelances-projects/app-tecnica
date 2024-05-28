@@ -78,14 +78,21 @@ export default async function ManageStudents() {
   }
 
   const formattedData = returnedData?.map((student) => {
-    const formattedEnrolledAt = format(
-      addDays(new Date(student.enrolledAt), 1),
-      'dd/MM/yyyy',
-    )
+    if (student.enrolledAt) {
+      const formattedEnrolledAt = format(
+        addDays(new Date(student.enrolledAt), 1),
+        'dd/MM/yyyy',
+      )
 
-    return {
-      ...student,
-      enrolledAt: formattedEnrolledAt,
+      return {
+        ...student,
+        enrolledAt: formattedEnrolledAt,
+      }
+    } else {
+      return {
+        ...student,
+        enrolledAt: 'Não informado',
+      }
     }
   })
 
