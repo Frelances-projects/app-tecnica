@@ -112,7 +112,7 @@ model Student {
   phone                   String?
   birthDate               String?
   imtId                   String?
-  enrolledAt              String
+  enrolledAt              String?
   driverLicenseCategoryId String
   schoolId                String
   paymentId               String?               @unique

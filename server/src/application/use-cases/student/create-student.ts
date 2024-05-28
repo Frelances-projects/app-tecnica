@@ -15,13 +15,13 @@ interface CreateStudentRequest {
   name: string
   email: string
   schoolId: string
-  paymentMethod: 'INSTALLMENTS' | 'INCASH'
+  paymentMethod?: 'INSTALLMENTS' | 'INCASH'
   driverLicenseCategoryId: string
   number: number
   phone: string
-  birthDate: string
+  birthDate?: string
   imtId?: string
-  enrolledAt: string
+  enrolledAt?: string
 }
 
 interface CreateStudentResponse {

@@ -13,11 +13,9 @@ export class CreateStudentBody {
   @IsUUID()
   schoolId: string
 
-  @IsNotEmpty()
-  paymentMethod: 'INSTALLMENTS' | 'INCASH'
+  paymentMethod?: 'INSTALLMENTS' | 'INCASH'
 
-  @IsNotEmpty()
-  enrolledAt: string
+  enrolledAt?: string
 
   imtId?: string
 
@@ -28,8 +26,7 @@ export class CreateStudentBody {
   @IsNotEmpty()
   phone: string
 
-  @IsNotEmpty()
-  birthDate: string
+  birthDate?: string
 
   @IsNotEmpty()
   @IsUUID()
