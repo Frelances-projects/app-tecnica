@@ -59,6 +59,10 @@ export default function PracticalClasses({ student }: PracticalClassesProps) {
       <div className='flex flex-col gap-4'>
         <div className="text-xl font-semibold">Bem-vindo(a), {student?.name}</div>
         <div className="font-regular text-sm">Aluno(a) N° {student?.number}</div>
+
+        <p className='font-semibold text-sm leading-relaxed'>
+          As faltas às aulas práticas sem aviso prévio de 24 horas são consideradas lições dadas e obrigam à compra de uma aula de repetição
+        </p>
       </div>
 
       <h1 className="text-black font-semibold text-lg">Listagem de Aulas Práticas</h1>
