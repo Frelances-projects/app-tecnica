@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
-import { useState, SetStateAction } from 'react'
+import { useState, SetStateAction, useEffect } from 'react'
 import { ChevronLeft, ChevronRight, User2 } from 'lucide-react'
+import useSWR from 'swr'
+import { format } from 'date-fns-tz'
 
 import { SearchInput } from '@/components/SearchInput'
 import { ScheduledDrivingLessonsTable } from './ScheduledDrivingLessonsTable'
@@ -16,19 +19,33 @@ import { EditScheduledDrivingLessonModal } from './ScheduledDrivingLessonsTable/
 import { DeleteScheduledDrivingLesson } from './ScheduledDrivingLessonsTable/DeleteScheduledDrivingLesson'
 
 interface ScheduledDrivingLessonsListProps {
-  scheduledClasses: ScheduleClass[]
+  scheduledClassesData: ScheduleClass[]
   students: Student[]
   userFunction: 'ADMIN' | 'DIRECTOR' | 'INSTRUCTOR'
+  schoolId: string
 }
 
+const fetcher = (url: string) => fetch(url).then((res) => res.json())
+
 export function ScheduledDrivingLessonsList({
-  scheduledClasses,
+  scheduledClassesData,
   students,
   userFunction,
+  schoolId,
 }: ScheduledDrivingLessonsListProps) {
+  const [scheduledClasses, setScheduledClasses] = useState(scheduledClassesData)
   const [inputValueName, setInputValueName] = useState<string>('')
   const [inputValueCode, setInputValueCode] = useState<string>('')
   const [inputValueDate, setInputValueDate] = useState<string>('all')
+
+  const url =
+    userFunction === 'DIRECTOR'
+      ? `${process.env.API_URL}/scheduled-class/classes/category?category=PRACTICAL`
+      : `${process.env.API_URL}/scheduled-class/category/${schoolId}?category=PRACTICAL`
+
+  const { data } = useSWR(url, fetcher, {
+    refreshInterval: 1000 * 60 * 35, // 35 minutes
+  })
 
   const filteredScheduledClasses = scheduledClasses?.filter(
     (scheduledClass) => {
@@ -88,6 +105,33 @@ export function ScheduledDrivingLessonsList({
   const handlePageChange = (pageNumber: SetStateAction<number>) => {
     setCurrentPage(pageNumber)
   }
+
+  useEffect(() => {
+    if (data?.scheduledClasses) {
+      const formattedData = data?.scheduledClasses?.map(
+        (scheduledClass: any) => {
+          if (scheduledClass.schedulingDate) {
+            const formattedSchedulingDate = format(
+              new Date(scheduledClass.schedulingDate),
+              'dd/MM/yyyy',
+            )
+
+            return {
+              ...scheduledClass,
+              schedulingDate: formattedSchedulingDate,
+              schedulingDateNotFormatted: scheduledClass.schedulingDate,
+            }
+          } else {
+            return {
+              ...scheduledClass,
+            }
+          }
+        },
+      )
+
+      setScheduledClasses(formattedData)
+    }
+  }, [data?.scheduledClasses])
 
   return (
     <section className="-mt-4 w-full max-w-7xl xl:pl-10">

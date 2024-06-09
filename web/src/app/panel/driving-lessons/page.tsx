@@ -76,9 +76,10 @@ export default async function DrivingLessons() {
       <div className="-mt-5 h-[1px] w-full max-w-[1440px] bg-[#BFBFBF] lg:mx-auto" />
 
       <ScheduledDrivingLessonsList
-        scheduledClasses={formattedData}
+        scheduledClassesData={formattedData}
         students={returnedStudentData}
         userFunction={formattedUser.function}
+        schoolId={formattedUser.schoolId}
       />
     </main>
   )
