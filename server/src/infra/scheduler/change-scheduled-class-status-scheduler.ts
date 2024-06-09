@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { Cron } from '@nestjs/schedule'
+import { Cron, CronExpression } from '@nestjs/schedule'
 
 import { PrismaService } from '../database/prisma/prisma.service'
 
@@ -7,18 +7,24 @@ import { PrismaService } from '../database/prisma/prisma.service'
 export class ChangeScheduledClassStatusScheduler {
   constructor(private prisma: PrismaService) {}
 
-  @Cron('0 0 * * *') // roda todo dia às 00:00
+  @Cron(CronExpression.EVERY_30_MINUTES)
   async execute() {
     console.log('O ChangeScheduledClassStatusScheduler executou hoje')
 
     const scheduledClasses = await this.prisma.scheduledClass.findMany({
-      where: { status: 'CONFIRMED', class: { category: 'PRACTICAL' } },
+      where: {
+        status: { notIn: ['CANCELED', 'COMPLETED', 'MISSED', 'UNCHECKED'] },
+        class: { category: 'PRACTICAL' },
+      },
     })
 
     const currentDate = new Date()
 
     for (const scheduledClass of scheduledClasses) {
+      const [hour, minute] = scheduledClass.schedulingHour.split(':')
       const scheduledDate = new Date(scheduledClass.schedulingDate)
+
+      scheduledDate.setUTCHours(parseInt(hour, 10), parseInt(minute, 10), 0, 0)
 
       if (scheduledDate < currentDate) {
         await this.prisma.scheduledClass.update({
