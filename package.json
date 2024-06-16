@@ -1,0 +1,14 @@
+{
+  "name": "app-tecnica",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "private": true,
+  "engines": {
+    "node": "18.17.1"
+  },
+  "scripts": {
+    "build": "cd server && npm run build",
+    "start": "cd server && npm run start"
+  }
+}
