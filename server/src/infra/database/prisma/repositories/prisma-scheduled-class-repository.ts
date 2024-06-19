@@ -108,6 +108,9 @@ export class PrismaScheduledClassRepository
   ): Promise<ScheduledClass[]> {
     const scheduledClass = await this.prisma.scheduledClass.findMany({
       where: { class: { category: categoryClass } },
+      orderBy: {
+        schedulingDate: { sort: 'desc', nulls: 'last' },
+      },
       include: {
         class: true,
         instructor: true,
@@ -144,6 +147,9 @@ export class PrismaScheduledClassRepository
   ): Promise<ScheduledClass[]> {
     const scheduledClass = await this.prisma.scheduledClass.findMany({
       where: { student: { schoolId }, class: { category: categoryClass } },
+      orderBy: {
+        schedulingDate: { sort: 'desc', nulls: 'last' },
+      },
       include: {
         class: true,
         instructor: true,

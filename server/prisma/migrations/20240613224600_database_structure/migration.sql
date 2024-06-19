@@ -5,7 +5,7 @@ CREATE TYPE "ClassCategory" AS ENUM ('THEORETICAL', 'PRACTICAL');
 CREATE TYPE "UserFunction" AS ENUM ('ADMIN', 'DIRECTOR', 'INSTRUCTOR');
 
 -- CreateEnum
-CREATE TYPE "ScheduledClassStatus" AS ENUM ('PENDING', 'CONFIRMED', 'CANCELED', 'COMPLETED');
+CREATE TYPE "ScheduledClassStatus" AS ENUM ('UNCHECKED', 'PENDING', 'CONFIRMED', 'CANCELED', 'MISSED', 'COMPLETED');
 
 -- CreateEnum
 CREATE TYPE "TestStatus" AS ENUM ('APPROVED', 'DISAPPROVED', 'MARKED');
@@ -54,9 +54,20 @@ CREATE TABLE "calendars" (
 );
 
 -- CreateTable
+CREATE TABLE "groups" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "groups_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "schools" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "groupId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -70,6 +81,7 @@ CREATE TABLE "driver_license_categories" (
     "price" DOUBLE PRECISION NOT NULL,
     "installments" JSONB NOT NULL,
     "schoolId" TEXT NOT NULL,
+    "vehicles" TEXT[],
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -85,6 +97,7 @@ CREATE TABLE "users" (
     "schoolId" TEXT NOT NULL,
     "function" "UserFunction" NOT NULL DEFAULT 'ADMIN',
     "token" TEXT,
+    "imtId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -98,11 +111,15 @@ CREATE TABLE "students" (
     "email" TEXT NOT NULL,
     "password" TEXT,
     "number" INTEGER NOT NULL,
-    "enrolledAt" TEXT NOT NULL,
+    "phone" TEXT,
+    "birthDate" TEXT,
+    "imtId" TEXT,
+    "enrolledAt" TEXT,
     "driverLicenseCategoryId" TEXT NOT NULL,
     "schoolId" TEXT NOT NULL,
     "paymentId" TEXT,
     "token" TEXT,
+    "firebaseTokens" TEXT[],
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -114,9 +131,12 @@ CREATE TABLE "scheduled_classes" (
     "id" TEXT NOT NULL,
     "schedulingDate" TEXT,
     "schedulingHour" TEXT,
+    "justification" TEXT,
     "status" "ScheduledClassStatus" NOT NULL DEFAULT 'PENDING',
     "studentId" TEXT NOT NULL,
     "classId" TEXT NOT NULL,
+    "vehicle" TEXT,
+    "instructorId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -128,8 +148,10 @@ CREATE TABLE "tests" (
     "id" TEXT NOT NULL,
     "testDate" TEXT NOT NULL,
     "testHour" TEXT NOT NULL,
+    "place" TEXT,
     "status" "TestStatus" NOT NULL DEFAULT 'MARKED',
     "studentId" TEXT NOT NULL,
+    "instructorId" TEXT,
     "category" "TestCategory" NOT NULL DEFAULT 'THEORETICAL',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -176,6 +198,9 @@ ALTER TABLE "information" ADD CONSTRAINT "information_schoolId_fkey" FOREIGN KEY
 ALTER TABLE "calendars" ADD CONSTRAINT "calendars_schoolId_fkey" FOREIGN KEY ("schoolId") REFERENCES "schools"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "schools" ADD CONSTRAINT "schools_groupId_fkey" FOREIGN KEY ("groupId") REFERENCES "groups"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "driver_license_categories" ADD CONSTRAINT "driver_license_categories_schoolId_fkey" FOREIGN KEY ("schoolId") REFERENCES "schools"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -194,7 +219,13 @@ ALTER TABLE "students" ADD CONSTRAINT "students_driverLicenseCategoryId_fkey" FO
 ALTER TABLE "scheduled_classes" ADD CONSTRAINT "scheduled_classes_classId_fkey" FOREIGN KEY ("classId") REFERENCES "classes"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "scheduled_classes" ADD CONSTRAINT "scheduled_classes_studentId_fkey" FOREIGN KEY ("studentId") REFERENCES "students"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "scheduled_classes" ADD CONSTRAINT "scheduled_classes_studentId_fkey" FOREIGN KEY ("studentId") REFERENCES "students"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "tests" ADD CONSTRAINT "tests_studentId_fkey" FOREIGN KEY ("studentId") REFERENCES "students"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "scheduled_classes" ADD CONSTRAINT "scheduled_classes_instructorId_fkey" FOREIGN KEY ("instructorId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "tests" ADD CONSTRAINT "tests_studentId_fkey" FOREIGN KEY ("studentId") REFERENCES "students"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "tests" ADD CONSTRAINT "tests_instructorId_fkey" FOREIGN KEY ("instructorId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
