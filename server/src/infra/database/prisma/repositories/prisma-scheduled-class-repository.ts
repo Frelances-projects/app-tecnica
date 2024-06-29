@@ -4,7 +4,12 @@ import { PrismaService } from '../prisma.service'
 import { PrismaScheduledClassMapper } from '../mappers/prisma-scheduled-class-mapper'
 
 import { ScheduledClass } from '../../../../application/entities/scheduled-class'
-import { ScheduledClassRepository } from '../../../../application/repositories/scheduled-class-repository'
+import {
+  PaginationParams,
+  ScheduledClassRepository,
+  ScheduledClassResponse,
+} from '../../../../application/repositories/scheduled-class-repository'
+import { Prisma } from '@prisma/client'
 
 @Injectable()
 export class PrismaScheduledClassRepository
@@ -105,79 +110,167 @@ export class PrismaScheduledClassRepository
 
   async findManyByCategoryClass(
     categoryClass: 'THEORETICAL' | 'PRACTICAL',
-  ): Promise<ScheduledClass[]> {
-    const scheduledClass = await this.prisma.scheduledClass.findMany({
-      where: { class: { category: categoryClass } },
-      orderBy: {
-        schedulingDate: { sort: 'desc', nulls: 'last' },
-      },
-      include: {
-        class: true,
-        instructor: true,
-        student: {
-          include: {
-            school: {
-              include: {
-                users: {
-                  select: {
-                    id: true,
-                    schoolId: true,
-                    name: true,
-                    function: true,
+    { page }: PaginationParams,
+  ): Promise<ScheduledClassResponse> {
+    if (page) {
+      const query: Prisma.ScheduledClassFindManyArgs = {
+        where: { class: { category: categoryClass } },
+        orderBy: {
+          schedulingDate: { sort: 'desc', nulls: 'last' },
+        },
+        take: 10,
+        skip: (page - 1) * 10,
+        include: {
+          class: true,
+          instructor: true,
+          student: {
+            include: {
+              school: {
+                include: {
+                  users: {
+                    select: {
+                      id: true,
+                      schoolId: true,
+                      name: true,
+                      function: true,
+                    },
                   },
                 },
               },
+              driverLicenseCategory: true,
             },
-            driverLicenseCategory: true,
           },
         },
-      },
-    })
+      }
 
-    const scheduledClassesToDomain = scheduledClass.map((scheduledClass) =>
-      PrismaScheduledClassMapper.toDomain(scheduledClass),
-    )
+      const [scheduledClass, count] = await this.prisma.$transaction([
+        this.prisma.scheduledClass.findMany(query),
+        this.prisma.scheduledClass.count({ where: query.where }),
+      ])
 
-    return scheduledClassesToDomain
+      const scheduledClassesToDomain = scheduledClass.map((scheduledClass) =>
+        PrismaScheduledClassMapper.toDomain(scheduledClass),
+      )
+
+      return { scheduledClasses: scheduledClassesToDomain, total: count }
+    } else {
+      const scheduledClass = await this.prisma.scheduledClass.findMany({
+        where: { class: { category: categoryClass } },
+        orderBy: {
+          schedulingDate: { sort: 'desc', nulls: 'last' },
+        },
+        include: {
+          class: true,
+          instructor: true,
+          student: {
+            include: {
+              school: {
+                include: {
+                  users: {
+                    select: {
+                      id: true,
+                      schoolId: true,
+                      name: true,
+                      function: true,
+                    },
+                  },
+                },
+              },
+              driverLicenseCategory: true,
+            },
+          },
+        },
+      })
+
+      const scheduledClassesToDomain = scheduledClass.map((scheduledClass) =>
+        PrismaScheduledClassMapper.toDomain(scheduledClass),
+      )
+
+      return { scheduledClasses: scheduledClassesToDomain, total: 0 }
+    }
   }
 
   async findManyBySchoolAndCategoryClass(
     schoolId: string,
     categoryClass: 'THEORETICAL' | 'PRACTICAL',
-  ): Promise<ScheduledClass[]> {
-    const scheduledClass = await this.prisma.scheduledClass.findMany({
-      where: { student: { schoolId }, class: { category: categoryClass } },
-      orderBy: {
-        schedulingDate: { sort: 'desc', nulls: 'last' },
-      },
-      include: {
-        class: true,
-        instructor: true,
-        student: {
-          include: {
-            school: {
-              include: {
-                users: {
-                  select: {
-                    id: true,
-                    schoolId: true,
-                    name: true,
-                    function: true,
+    { page }: PaginationParams,
+  ): Promise<ScheduledClassResponse> {
+    if (page) {
+      const query: Prisma.ScheduledClassFindManyArgs = {
+        where: { student: { schoolId }, class: { category: categoryClass } },
+        orderBy: {
+          schedulingDate: { sort: 'desc', nulls: 'last' },
+        },
+        take: 10,
+        skip: (page - 1) * 10,
+        include: {
+          class: true,
+          instructor: true,
+          student: {
+            include: {
+              school: {
+                include: {
+                  users: {
+                    select: {
+                      id: true,
+                      schoolId: true,
+                      name: true,
+                      function: true,
+                    },
                   },
                 },
               },
+              driverLicenseCategory: true,
             },
-            driverLicenseCategory: true,
           },
         },
-      },
-    })
+      }
 
-    const scheduledClassesToDomain = scheduledClass.map((scheduledClass) =>
-      PrismaScheduledClassMapper.toDomain(scheduledClass),
-    )
+      const [scheduledClass, count] = await this.prisma.$transaction([
+        this.prisma.scheduledClass.findMany(query),
+        this.prisma.scheduledClass.count({ where: query.where }),
+      ])
 
-    return scheduledClassesToDomain
+      const scheduledClassesToDomain = scheduledClass.map((scheduledClass) =>
+        PrismaScheduledClassMapper.toDomain(scheduledClass),
+      )
+
+      return { scheduledClasses: scheduledClassesToDomain, total: count }
+    } else {
+      const scheduledClass = await this.prisma.scheduledClass.findMany({
+        where: { student: { schoolId }, class: { category: categoryClass } },
+        orderBy: {
+          schedulingDate: { sort: 'desc', nulls: 'last' },
+        },
+        include: {
+          class: true,
+          instructor: true,
+          student: {
+            include: {
+              school: {
+                include: {
+                  users: {
+                    select: {
+                      id: true,
+                      schoolId: true,
+                      name: true,
+                      function: true,
+                    },
+                  },
+                },
+              },
+              driverLicenseCategory: true,
+            },
+          },
+        },
+      })
+
+      const scheduledClassesToDomain = scheduledClass.map((scheduledClass) =>
+        PrismaScheduledClassMapper.toDomain(scheduledClass),
+      )
+
+      return { scheduledClasses: scheduledClassesToDomain, total: 0 }
+    }
   }
 
   async findManyByStudentAndCategoryClass(

@@ -5,6 +5,7 @@ import { ScheduledClass } from '../../entities/scheduled-class'
 
 interface GetManyScheduledClassesByClassResponse {
   scheduledClasses: ScheduledClass[]
+  total: number
 }
 
 @Injectable()
@@ -14,16 +15,19 @@ export class GetManyScheduledClassesBySchoolAndCategoryClass {
   async execute(
     schoolId: string,
     categoryClass: 'THEORETICAL' | 'PRACTICAL',
+    page?: number,
   ): Promise<GetManyScheduledClassesByClassResponse> {
     try {
-      const scheduledClasses =
+      const { scheduledClasses, total } =
         await this.scheduledClassRepository.findManyBySchoolAndCategoryClass(
           schoolId,
           categoryClass,
+          { page },
         )
 
       return {
         scheduledClasses,
+        total,
       }
     } catch (error) {
       if (error) throw error
