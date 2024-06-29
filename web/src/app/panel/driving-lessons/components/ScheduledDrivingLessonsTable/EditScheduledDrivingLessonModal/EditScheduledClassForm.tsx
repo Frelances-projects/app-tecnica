@@ -71,6 +71,8 @@ export function EditScheduledClassForm({
         description:
           'A marcação da aula de condução foi atualizada com sucesso!',
       })
+
+      location.reload()
     } else {
       toast({
         title: 'Erro!',

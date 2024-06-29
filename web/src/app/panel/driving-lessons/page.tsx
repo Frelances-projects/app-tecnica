@@ -10,6 +10,7 @@ import { Student } from '@/utils/interfaces/student'
 
 type AxiosData = {
   scheduledClasses: ScheduleClass[]
+  total: number
 }
 
 type StudentsAxiosData = {
@@ -21,13 +22,14 @@ export default async function DrivingLessons() {
   const formattedUser = JSON.parse(user!)
 
   let returnedData
+  let total: number
   let returnedStudentData
 
   if (formattedUser.function === 'DIRECTOR') {
     const [scheduleClassesData, studentData] = await Promise.all([
       api
         .get<AxiosData>(`/scheduled-class/classes/category`, {
-          params: { category: 'PRACTICAL' },
+          params: { category: 'PRACTICAL', page: 1 },
         })
         .then((result) => result.data),
       api.get<StudentsAxiosData>(`/student`).then((result) => result.data),
@@ -35,11 +37,12 @@ export default async function DrivingLessons() {
 
     returnedData = scheduleClassesData.scheduledClasses
     returnedStudentData = studentData.students
+    total = scheduleClassesData.total
   } else {
     const [scheduleClassesData, studentData] = await Promise.all([
       api
         .get<AxiosData>(`/scheduled-class/category/${formattedUser.schoolId}`, {
-          params: { category: 'PRACTICAL' },
+          params: { category: 'PRACTICAL', page: 1 },
         })
         .then((result) => result.data),
       api
@@ -49,6 +52,7 @@ export default async function DrivingLessons() {
 
     returnedData = scheduleClassesData.scheduledClasses
     returnedStudentData = studentData.students
+    total = scheduleClassesData.total
   }
 
   const formattedData = returnedData?.map((scheduledClass) => {
@@ -80,6 +84,7 @@ export default async function DrivingLessons() {
         students={returnedStudentData}
         userFunction={formattedUser.function}
         schoolId={formattedUser.schoolId}
+        totalCount={total}
       />
     </main>
   )

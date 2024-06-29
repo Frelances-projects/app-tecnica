@@ -17,12 +17,14 @@ import { Select } from '@/components/Select'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { EditScheduledDrivingLessonModal } from './ScheduledDrivingLessonsTable/EditScheduledDrivingLessonModal'
 import { DeleteScheduledDrivingLesson } from './ScheduledDrivingLessonsTable/DeleteScheduledDrivingLesson'
+import { Skeleton } from '@/components/ui/skeleton'
 
 interface ScheduledDrivingLessonsListProps {
   scheduledClassesData: ScheduleClass[]
   students: Student[]
   userFunction: 'ADMIN' | 'DIRECTOR' | 'INSTRUCTOR'
   schoolId: string
+  totalCount: number
 }
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
@@ -32,18 +34,22 @@ export function ScheduledDrivingLessonsList({
   students,
   userFunction,
   schoolId,
+  totalCount,
 }: ScheduledDrivingLessonsListProps) {
   const [scheduledClasses, setScheduledClasses] = useState(scheduledClassesData)
   const [inputValueName, setInputValueName] = useState<string>('')
   const [inputValueCode, setInputValueCode] = useState<string>('')
   const [inputValueDate, setInputValueDate] = useState<string>('all')
+  const [currentPage, setCurrentPage] = useState(0)
+
+  const itemsPerPage = 10
 
   const url =
     userFunction === 'DIRECTOR'
-      ? `${process.env.API_URL}/scheduled-class/classes/category?category=PRACTICAL`
-      : `${process.env.API_URL}/scheduled-class/category/${schoolId}?category=PRACTICAL`
+      ? `${process.env.API_URL}/scheduled-class/classes/category?category=PRACTICAL&page=${currentPage + 1}`
+      : `${process.env.API_URL}/scheduled-class/category/${schoolId}?category=PRACTICAL&page=${currentPage + 1}`
 
-  const { data } = useSWR(url, fetcher, {
+  const { data, isLoading } = useSWR(url, fetcher, {
     refreshInterval: 1000 * 60 * 35, // 35 minutes
   })
 
@@ -93,14 +99,7 @@ export function ScheduledDrivingLessonsList({
       index === self.findIndex((t) => t.value === date.value),
   )
 
-  const itemsPerPage = 10
-  const [currentPage, setCurrentPage] = useState(0)
-
   const startIndex = currentPage * itemsPerPage
-  const slicedData = filteredScheduledClassesByDate?.slice(
-    startIndex,
-    startIndex + itemsPerPage,
-  )
 
   const handlePageChange = (pageNumber: SetStateAction<number>) => {
     setCurrentPage(pageNumber)
@@ -133,6 +132,86 @@ export function ScheduledDrivingLessonsList({
     }
   }, [data?.scheduledClasses])
 
+  if (isLoading && currentPage > 0) {
+    return (
+      <section className="-mt-4 w-full max-w-7xl xl:pl-10">
+        <h1 className="mb-9 mt-6 text-lg font-medium">
+          Listagem das aulas de condução marcadas
+        </h1>
+
+        <div className="flex max-w-3xl flex-col items-center xl:flex-row">
+          <SearchInput
+            setInputValue={setInputValueName}
+            placeholder="Filtrar por nome de aluno"
+            className="lg:!w-96"
+          >
+            {userFunction !== 'INSTRUCTOR' && (
+              <>
+                <CreateScheduleDrivingClassModal
+                  students={students?.map((student) => {
+                    return {
+                      label: student.name,
+                      value: student.id,
+                      number: String(student.number),
+                      vehicles: student.driverLicenseCategory?.vehicles,
+                      school: student.school,
+                    }
+                  })}
+                />
+
+                <CreateManyScheduleDrivingClassModal
+                  students={students?.map((student) => {
+                    return {
+                      label: student.name,
+                      value: student.id,
+                      number: String(student.number),
+                      vehicles: student.driverLicenseCategory?.vehicles,
+                      school: student.school,
+                    }
+                  })}
+                />
+              </>
+            )}
+          </SearchInput>
+        </div>
+
+        <SearchInput
+          className="lg:!w-80"
+          placeholder="Pesquisar pelo número do aluno"
+          setInputValue={setInputValueCode}
+          type="number"
+        >
+          <Select
+            className="lg:!w-96"
+            placeHolder="Filtrar por dia"
+            data={[{ label: 'Todos', value: 'all' }, ...uniqueDates]}
+            onChange={(event) => setInputValueDate(event.target.value)}
+          />
+        </SearchInput>
+
+        <Skeleton className="mt-11 h-[28.688rem] w-full rounded-lg" />
+
+        <div className="mt-4 flex items-center justify-center gap-6">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 0}
+            className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-slate-950 text-white duration-200 ease-linear hover:bg-[#E86255]"
+          >
+            <ChevronLeft size={20} />
+          </button>
+          <span className="">Página {currentPage + 1}</span>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={startIndex + itemsPerPage >= totalCount}
+            className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-slate-950 text-white duration-200 ease-linear hover:bg-[#E86255]"
+          >
+            <ChevronRight size={20} />
+          </button>
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section className="-mt-4 w-full max-w-7xl xl:pl-10">
       <h1 className="mb-9 mt-6 text-lg font-medium">
@@ -148,7 +227,7 @@ export function ScheduledDrivingLessonsList({
           {userFunction !== 'INSTRUCTOR' && (
             <>
               <CreateScheduleDrivingClassModal
-                students={students.map((student) => {
+                students={students?.map((student) => {
                   return {
                     label: student.name,
                     value: student.id,
@@ -160,7 +239,7 @@ export function ScheduledDrivingLessonsList({
               />
 
               <CreateManyScheduleDrivingClassModal
-                students={students.map((student) => {
+                students={students?.map((student) => {
                   return {
                     label: student.name,
                     value: student.id,
@@ -190,7 +269,7 @@ export function ScheduledDrivingLessonsList({
       </SearchInput>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:hidden">
-        {slicedData?.map((schedule) => {
+        {filteredScheduledClassesByDate?.map((schedule) => {
           return (
             <Dialog key={schedule?.id}>
               <DialogTrigger className="flex w-full gap-3 rounded-md border px-4 py-2 hover:border-[#E86255]">
@@ -294,7 +373,9 @@ export function ScheduledDrivingLessonsList({
       </div>
 
       <div className="hidden lg:block">
-        <ScheduledDrivingLessonsTable scheduledClasses={slicedData} />
+        <ScheduledDrivingLessonsTable
+          scheduledClasses={filteredScheduledClassesByDate}
+        />
       </div>
 
       <div className="mt-4 flex items-center justify-center gap-6">
@@ -308,9 +389,7 @@ export function ScheduledDrivingLessonsList({
         <span className="">Página {currentPage + 1}</span>
         <button
           onClick={() => handlePageChange(currentPage + 1)}
-          disabled={
-            startIndex + itemsPerPage >= filteredScheduledClassesByDate?.length
-          }
+          disabled={startIndex + itemsPerPage >= totalCount}
           className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-slate-950 text-white duration-200 ease-linear hover:bg-[#E86255]"
         >
           <ChevronRight size={20} />

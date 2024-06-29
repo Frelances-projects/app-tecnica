@@ -129,6 +129,8 @@ export function CreateScheduledDrivingLessonForm({
             ? 'As aulas foram marcadas com sucesso!'
             : 'A aula foi marcada com sucesso!',
       })
+
+      location.reload()
     } else {
       toast({
         variant: 'destructive',
