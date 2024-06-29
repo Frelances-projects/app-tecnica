@@ -65,7 +65,7 @@ export function ListOfUsers({ users }: ListOfUsersProps) {
                 </div>
 
                 <div className="w-[80%] text-left">
-                  <p className="w-[85%]  truncate font-medium">{user?.name}</p>
+                  <p className="w-[85%] truncate font-medium">{user?.name}</p>
                   <p className="w-[85%] truncate text-sm text-[#b1b2bc]">
                     {user?.email}
                   </p>

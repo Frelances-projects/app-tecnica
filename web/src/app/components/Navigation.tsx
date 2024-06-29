@@ -73,25 +73,22 @@ export function SideBar({
 
   return (
     <div
-      className={`sidebar 
-      ${
+      className={`sidebar ${
         hasMobile
           ? `fixed left-0 top-0 h-screen w-[90vw] max-w-80 transition-transform duration-300 ease-linear lg:hidden ${
               openSideBar ? '' : '-translate-x-[90vw]'
             }`
           : ''
-      } 
-      ${
+      } ${
         collapsed ? 'w-20' : 'w-full'
-      } bg-[#F9F9F9] text-zinc-800 transition-all duration-300
-       ${
-         pathname !== '/panel/students/list' &&
-         pathname !== '/panel/payment' &&
-         pathname !== '/panel/code-lessons' &&
-         pathname !== '/panel/students/register' &&
-         pathname !== '/panel/prices/list' &&
-         'h-[92vh]'
-       }`}
+      } bg-[#F9F9F9] text-zinc-800 transition-all duration-300 ${
+        pathname !== '/panel/students/list' &&
+        pathname !== '/panel/payment' &&
+        pathname !== '/panel/code-lessons' &&
+        pathname !== '/panel/students/register' &&
+        pathname !== '/panel/prices/list' &&
+        'h-[92vh]'
+      }`}
     >
       {hasMobile ? (
         <button

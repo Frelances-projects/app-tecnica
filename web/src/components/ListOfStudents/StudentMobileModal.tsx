@@ -75,7 +75,7 @@ export function StudentMobileModal({
           </div>
 
           <div className="w-[80%] text-left">
-            <p className="w-[85%]  truncate font-medium">{student?.name}</p>
+            <p className="w-[85%] truncate font-medium">{student?.name}</p>
             <p className="w-[85%] truncate text-sm text-[#b1b2bc]">
               {student?.email}
             </p>
@@ -165,7 +165,7 @@ export function StudentMobileModal({
           </div>
 
           <div className="w-[80%] text-left">
-            <p className="w-[85%]  truncate font-medium">{student?.name}</p>
+            <p className="w-[85%] truncate font-medium">{student?.name}</p>
             <p className="w-[85%] truncate text-sm text-[#b1b2bc]">
               {student?.email}
             </p>

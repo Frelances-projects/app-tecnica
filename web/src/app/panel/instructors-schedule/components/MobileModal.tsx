@@ -95,7 +95,7 @@ export function InstructorScheduledMobileModal({
           </div>
 
           <div className="w-[80%] text-left">
-            <p className="w-[85%]  truncate font-medium">
+            <p className="w-[85%] truncate font-medium">
               {test.category === 'THEORETICAL'
                 ? 'Teste Teórico'
                 : 'Teste Prático'}

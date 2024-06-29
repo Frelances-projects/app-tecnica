@@ -105,7 +105,7 @@ export function DrivingExamsList({
                   <User2 size={24} />
                 </div>
                 <div className="w-[80%] text-left">
-                  <p className="w-[85%]  truncate font-medium">
+                  <p className="w-[85%] truncate font-medium">
                     {exam?.student?.name}
                   </p>
                   <p className="w-[85%] truncate text-sm text-[#b1b2bc]">
