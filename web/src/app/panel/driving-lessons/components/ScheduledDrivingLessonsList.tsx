@@ -20,38 +20,60 @@ import { DeleteScheduledDrivingLesson } from './ScheduledDrivingLessonsTable/Del
 import { Skeleton } from '@/components/ui/skeleton'
 
 interface ScheduledDrivingLessonsListProps {
-  scheduledClassesData: ScheduleClass[]
   students: Student[]
   userFunction: 'ADMIN' | 'DIRECTOR' | 'INSTRUCTOR'
   schoolId: string
-  totalCount: number
 }
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
 export function ScheduledDrivingLessonsList({
-  scheduledClassesData,
   students,
   userFunction,
   schoolId,
-  totalCount,
 }: ScheduledDrivingLessonsListProps) {
-  const [scheduledClasses, setScheduledClasses] = useState(scheduledClassesData)
+  const [scheduledClasses, setScheduledClasses] = useState<
+    ScheduleClass[] | undefined
+  >(undefined)
   const [inputValueName, setInputValueName] = useState<string>('')
   const [inputValueCode, setInputValueCode] = useState<string>('')
   const [inputValueDate, setInputValueDate] = useState<string>('all')
   const [currentPage, setCurrentPage] = useState(0)
+  const [total, setTotal] = useState(0)
 
   const itemsPerPage = 10
 
-  const url =
-    userFunction === 'DIRECTOR'
-      ? `${process.env.API_URL}/scheduled-class/classes/category?category=PRACTICAL&page=${currentPage + 1}`
-      : `${process.env.API_URL}/scheduled-class/category/${schoolId}?category=PRACTICAL&page=${currentPage + 1}`
+  const urlDirector = new URL(
+    `${process.env.API_URL}/scheduled-class/classes/category`,
+  )
+  urlDirector.searchParams.append('category', 'PRACTICAL')
+  urlDirector.searchParams.append('page', (currentPage + 1).toString())
+  if (inputValueName && inputValueName.trim() !== '')
+    urlDirector.searchParams.append('studentName', inputValueName)
+  if (inputValueCode && inputValueCode.trim() !== '')
+    urlDirector.searchParams.append('studentNumber', inputValueCode)
+  // if (inputValueDate && inputValueDate !== 'all') urlDirector.searchParams.append('schedulingDate', inputValueDate);
 
-  const { data, isLoading } = useSWR(url, fetcher, {
-    refreshInterval: 1000 * 60 * 35, // 35 minutes
-  })
+  const url = new URL(
+    `${process.env.API_URL}/scheduled-class/category/${schoolId}`,
+  )
+  url.searchParams.append('category', 'PRACTICAL')
+  url.searchParams.append('page', (currentPage + 1).toString())
+  if (inputValueName && inputValueName.trim() !== '')
+    url.searchParams.append('studentName', inputValueName)
+  if (inputValueCode && inputValueCode.trim() !== '')
+    url.searchParams.append('studentNumber', inputValueCode)
+
+  console.log('🚀 ~ urlDirector.toString():', urlDirector.toString())
+  console.log('🚀 ~ url.toString():', url.toString())
+  const { data, isLoading } = useSWR(
+    userFunction === 'DIRECTOR' ? urlDirector.toString() : url.toString(),
+    fetcher,
+    {
+      refreshInterval: 1000 * 60 * 35, // 35 minutes
+    },
+  )
+  console.log('🚀 ~ data:', data)
 
   const filteredScheduledClasses = scheduledClasses?.filter(
     (scheduledClass) => {
@@ -66,7 +88,7 @@ export function ScheduledDrivingLessonsList({
   )
 
   const filteredScheduledClassesByStudentNumber =
-    filteredScheduledClasses.filter((scheduledClass) => {
+    filteredScheduledClasses?.filter((scheduledClass) => {
       if (inputValueCode === '') return filteredScheduledClasses
 
       const studentFiltered = String(scheduledClass.student?.number)
@@ -77,7 +99,7 @@ export function ScheduledDrivingLessonsList({
     })
 
   const filteredScheduledClassesByDate =
-    filteredScheduledClassesByStudentNumber.filter((scheduledClass) => {
+    filteredScheduledClassesByStudentNumber?.filter((scheduledClass) => {
       if (inputValueDate === 'all') return filteredScheduledClasses
 
       const dateFiltered = scheduledClass.schedulingDate === inputValueDate
@@ -86,7 +108,7 @@ export function ScheduledDrivingLessonsList({
     })
 
   const dates = scheduledClasses
-    .map((scheduledClass) => {
+    ?.map((scheduledClass) => {
       return {
         label: scheduledClass.schedulingDate!,
         value: scheduledClass.schedulingDate!,
@@ -94,7 +116,7 @@ export function ScheduledDrivingLessonsList({
     })
     .filter((date) => date.value !== null && date.value !== undefined)
 
-  const uniqueDates = dates.filter(
+  const uniqueDates = dates?.filter(
     (date, index, self) =>
       index === self.findIndex((t) => t.value === date.value),
   )
@@ -128,11 +150,12 @@ export function ScheduledDrivingLessonsList({
         },
       )
 
+      setTotal(data?.total)
       setScheduledClasses(formattedData)
     }
   }, [data?.scheduledClasses])
 
-  if (isLoading && currentPage > 0) {
+  if (isLoading) {
     return (
       <section className="-mt-4 w-full max-w-7xl xl:pl-10">
         <h1 className="mb-9 mt-6 text-lg font-medium">
@@ -184,8 +207,10 @@ export function ScheduledDrivingLessonsList({
           <Select
             className="lg:!w-96"
             placeHolder="Filtrar por dia"
-            data={[{ label: 'Todos', value: 'all' }, ...uniqueDates]}
-            onChange={(event) => setInputValueDate(event.target.value)}
+            data={[{ label: 'Todos', value: 'all' }, ...(uniqueDates ?? [])]}
+            onChange={(event) =>
+              setInputValueDate(event.target.value.split('T')[0])
+            }
           />
         </SearchInput>
 
@@ -202,7 +227,7 @@ export function ScheduledDrivingLessonsList({
           <span className="">Página {currentPage + 1}</span>
           <button
             onClick={() => handlePageChange(currentPage + 1)}
-            disabled={startIndex + itemsPerPage >= totalCount}
+            disabled={startIndex + itemsPerPage >= total}
             className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-slate-950 text-white duration-200 ease-linear hover:bg-[#E86255]"
           >
             <ChevronRight size={20} />
@@ -263,7 +288,7 @@ export function ScheduledDrivingLessonsList({
         <Select
           className="lg:!w-96"
           placeHolder="Filtrar por dia"
-          data={[{ label: 'Todos', value: 'all' }, ...uniqueDates]}
+          data={[{ label: 'Todos', value: 'all' }, ...(uniqueDates ?? [])]}
           onChange={(event) => setInputValueDate(event.target.value)}
         />
       </SearchInput>
@@ -374,7 +399,7 @@ export function ScheduledDrivingLessonsList({
 
       <div className="hidden lg:block">
         <ScheduledDrivingLessonsTable
-          scheduledClasses={filteredScheduledClassesByDate}
+          scheduledClasses={filteredScheduledClassesByDate ?? []}
         />
       </div>
 
@@ -389,7 +414,7 @@ export function ScheduledDrivingLessonsList({
         <span className="">Página {currentPage + 1}</span>
         <button
           onClick={() => handlePageChange(currentPage + 1)}
-          disabled={startIndex + itemsPerPage >= totalCount}
+          disabled={startIndex + itemsPerPage >= total}
           className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-slate-950 text-white duration-200 ease-linear hover:bg-[#E86255]"
         >
           <ChevronRight size={20} />
