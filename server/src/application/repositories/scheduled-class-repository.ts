@@ -2,6 +2,9 @@ import { ScheduledClass } from '../entities/scheduled-class'
 
 export interface PaginationParams {
   page?: number
+  studentName?: string
+  studentNumber?: number
+  schedulingDate?: string
 }
 
 export interface ScheduledClassResponse {
@@ -19,13 +22,13 @@ export abstract class ScheduledClassRepository {
   abstract findManyByClassId(classId: string): Promise<ScheduledClass[]>
   abstract findManyByCategoryClass(
     categoryClass: 'THEORETICAL' | 'PRACTICAL',
-    { page }: PaginationParams,
+    { page, studentName, studentNumber, schedulingDate }: PaginationParams,
   ): Promise<ScheduledClassResponse>
 
   abstract findManyBySchoolAndCategoryClass(
     schoolId: string,
     categoryClass: 'THEORETICAL' | 'PRACTICAL',
-    { page }: PaginationParams,
+    { page, studentName, studentNumber, schedulingDate }: PaginationParams,
   ): Promise<ScheduledClassResponse>
 
   abstract findManyByStudentAndCategoryClass(

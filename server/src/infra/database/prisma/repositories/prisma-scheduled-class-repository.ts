@@ -110,11 +110,37 @@ export class PrismaScheduledClassRepository
 
   async findManyByCategoryClass(
     categoryClass: 'THEORETICAL' | 'PRACTICAL',
-    { page }: PaginationParams,
+    { page, studentName, studentNumber, schedulingDate }: PaginationParams,
   ): Promise<ScheduledClassResponse> {
     if (page) {
+      const filters: Prisma.ScheduledClassWhereInput = {
+        class: { category: categoryClass },
+      }
+
+      if (studentName || studentNumber) {
+        filters.student = {}
+
+        if (studentName) {
+          filters.student.name = {
+            startsWith: studentName,
+            mode: 'insensitive',
+          }
+        }
+
+        if (studentNumber) {
+          filters.student.number = Number(studentNumber)
+        }
+      }
+
+      if (schedulingDate && schedulingDate !== 'all') {
+        const formattedDate = schedulingDate.split('T')[0] // Considera apenas a parte YYYY-MM-DD da data
+        filters.schedulingDate = {
+          contains: formattedDate,
+        }
+      }
+
       const query: Prisma.ScheduledClassFindManyArgs = {
-        where: { class: { category: categoryClass } },
+        where: filters,
         orderBy: {
           schedulingDate: { sort: 'desc', nulls: 'last' },
         },
@@ -193,11 +219,38 @@ export class PrismaScheduledClassRepository
   async findManyBySchoolAndCategoryClass(
     schoolId: string,
     categoryClass: 'THEORETICAL' | 'PRACTICAL',
-    { page }: PaginationParams,
+    { page, studentName, studentNumber, schedulingDate }: PaginationParams,
   ): Promise<ScheduledClassResponse> {
     if (page) {
+      const filters: Prisma.ScheduledClassWhereInput = {
+        student: { schoolId },
+        class: { category: categoryClass },
+      }
+
+      if (studentName || studentNumber) {
+        filters.student = { schoolId }
+
+        if (studentName) {
+          filters.student.name = {
+            startsWith: studentName,
+            mode: 'insensitive',
+          }
+        }
+
+        if (studentNumber) {
+          filters.student.number = Number(studentNumber)
+        }
+      }
+
+      if (schedulingDate && schedulingDate !== 'all') {
+        const formattedDate = schedulingDate.split('T')[0] // Considera apenas a parte YYYY-MM-DD da data
+        filters.schedulingDate = {
+          contains: formattedDate,
+        }
+      }
+
       const query: Prisma.ScheduledClassFindManyArgs = {
-        where: { student: { schoolId }, class: { category: categoryClass } },
+        where: filters,
         orderBy: {
           schedulingDate: { sort: 'desc', nulls: 'last' },
         },

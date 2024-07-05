@@ -146,12 +146,18 @@ export class ScheduledClassController {
   async getManyByCategoryClass(
     @Query('category') category: 'THEORETICAL' | 'PRACTICAL',
     @Query('page') page?: number,
+    @Query('studentName') studentName?: string,
+    @Query('studentNumber') studentNumber?: number,
+    @Query('schedulingDate') schedulingDate?: string,
   ) {
     const { scheduledClasses, total } =
-      await this.getManyScheduledClassesByCategoryClass.execute(
-        category,
-        page ? Number(page) : undefined,
-      )
+      await this.getManyScheduledClassesByCategoryClass.execute({
+        categoryClass: category,
+        page: page ? Number(page) : undefined,
+        studentName,
+        studentNumber,
+        schedulingDate,
+      })
 
     const scheduledClassesToHTTP = scheduledClasses.map((scheduledClass) =>
       ScheduledClassViewModel.toHTTP(scheduledClass),
@@ -168,13 +174,19 @@ export class ScheduledClassController {
     @Param('schoolId') schoolId: string,
     @Query('category') category: 'THEORETICAL' | 'PRACTICAL',
     @Query('page') page?: number,
+    @Query('studentName') studentName?: string,
+    @Query('studentNumber') studentNumber?: number,
+    @Query('schedulingDate') schedulingDate?: string,
   ) {
     const { scheduledClasses, total } =
-      await this.getManyScheduledClassesBySchoolAndCategoryClass.execute(
+      await this.getManyScheduledClassesBySchoolAndCategoryClass.execute({
         schoolId,
-        category,
-        page ? Number(page) : undefined,
-      )
+        categoryClass: category,
+        page: page ? Number(page) : undefined,
+        studentName,
+        studentNumber,
+        schedulingDate,
+      })
 
     const scheduledClassesToHTTP = scheduledClasses.map((scheduledClass) =>
       ScheduledClassViewModel.toHTTP(scheduledClass),

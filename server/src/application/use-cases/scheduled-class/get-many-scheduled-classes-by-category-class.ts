@@ -3,6 +3,14 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common'
 import { ScheduledClassRepository } from '../../repositories/scheduled-class-repository'
 import { ScheduledClass } from '../../entities/scheduled-class'
 
+interface GetManyScheduledClassesByClassRequest {
+  categoryClass: 'THEORETICAL' | 'PRACTICAL'
+  page?: number
+  studentName?: string
+  studentNumber?: number
+  schedulingDate?: string
+}
+
 interface GetManyScheduledClassesByClassResponse {
   scheduledClasses: ScheduledClass[]
   total: number
@@ -12,10 +20,13 @@ interface GetManyScheduledClassesByClassResponse {
 export class GetManyScheduledClassesByCategoryClass {
   constructor(private scheduledClassRepository: ScheduledClassRepository) {}
 
-  async execute(
-    categoryClass: 'THEORETICAL' | 'PRACTICAL',
-    page?: number,
-  ): Promise<GetManyScheduledClassesByClassResponse> {
+  async execute({
+    categoryClass,
+    page,
+    studentName,
+    studentNumber,
+    schedulingDate,
+  }: GetManyScheduledClassesByClassRequest): Promise<GetManyScheduledClassesByClassResponse> {
     try {
       console.log(
         '🚀 ~ file: get-many-scheduled-classes-by-category-class.ts:19 ~ GetManyScheduledClassesByCategoryClass ~ scheduledClasses:',
@@ -24,7 +35,7 @@ export class GetManyScheduledClassesByCategoryClass {
       const { scheduledClasses, total } =
         await this.scheduledClassRepository.findManyByCategoryClass(
           categoryClass,
-          { page },
+          { page, studentName, studentNumber, schedulingDate },
         )
 
       return {
