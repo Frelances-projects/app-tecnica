@@ -64,8 +64,6 @@ export function ScheduledDrivingLessonsList({
   if (inputValueCode && inputValueCode.trim() !== '')
     url.searchParams.append('studentNumber', inputValueCode)
 
-  console.log('🚀 ~ urlDirector.toString():', urlDirector.toString())
-  console.log('🚀 ~ url.toString():', url.toString())
   const { data, isLoading } = useSWR(
     userFunction === 'DIRECTOR' ? urlDirector.toString() : url.toString(),
     fetcher,
