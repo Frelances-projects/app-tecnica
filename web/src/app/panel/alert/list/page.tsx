@@ -23,15 +23,15 @@ export default async function ManageAlerts() {
   let returnedData
 
   if (formattedUser.function === 'DIRECTOR') {
-    const { data } = await api.get<AxiosData>(`/information`)
+    const response = await api.get<AxiosData>(`/information`)
 
-    returnedData = data.information
+    returnedData = response?.data?.information
   } else {
-    const { data } = await api.get<AxiosData>(
+    const response = await api.get<AxiosData>(
       `/information/school/${formattedUser.schoolId}`,
     )
 
-    returnedData = data.information
+    returnedData = response?.data?.information
   }
 
   return (
